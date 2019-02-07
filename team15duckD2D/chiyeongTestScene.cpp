@@ -28,7 +28,7 @@ HRESULT chiyeongTestScene::init()
 	_count = 0;
 	_start = 0;
 
-	
+	_rc2 = { 0, 0, WINSIZEX, WINSIZEY };
 
 
 	return S_OK;
@@ -53,11 +53,16 @@ void chiyeongTestScene::update()
 		_angle[6] = RND->getFromIntTo(-15, 15);
 		_angle[7] = RND->getFromIntTo(-15, 15);
 		_angle[8] = 0;
+		_scale = 1;
 	}
 
 	if (_start && _count < 500)
 	{
 		_count++;
+		if (_scale > 0)
+		{
+			_scale -= 0.005f;
+		}
 	}
 }
 
@@ -65,63 +70,23 @@ void chiyeongTestScene::render()
 {
 	for (int i = 0; i < 9; i++)
 	{
-		if (_count > i * 30 + 10)
+		if (_count > i * 10 + 10)
 		{
 			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[i], Point2F(400, 300)));
 			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[i]);
 			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 	}
-	//if (_count > 10)
+	
+	//if (_start)
 	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[0], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[0]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+	//	D2D1_SIZE_F size;
+	//	size.width = _scale;
+	//	size.height = _scale;
+	//	Matrix3x2F mat = D2D1::Matrix3x2F::Rotation(_count, Point2F(400, 300));
+	//	mat.SetProduct(mat, D2D1::Matrix3x2F::Scale(size, Point2F(400, 300)));
+	//	D2D1::Matrix3x2F::Scale(size, Point2F(400, 300));
+	//	D2DMANAGER->_renderTarget->SetTransform(mat);
 	//}
-	//if (_count > 20)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(-_angle[1], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[1]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 30)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(-_angle[2], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[2]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 40)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[3], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[3]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 50)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[4], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[4]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 60)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[5], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[5]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 70)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[6], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[6]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 80)
-	//{
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[7], Point2F(0, 300)));
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[7]);
-	//	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-	//}
-	//if (_count > 90)
-	//{
-	//	D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[8]);
-	//}
+	//D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc2);
 }
