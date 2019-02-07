@@ -154,6 +154,7 @@
     <ClInclude Include="battleScene2.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="chiyeongTestScene.h" />
     <ClInclude Include="d2dManager.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="field1Scnee.h" />
@@ -189,6 +190,7 @@
     <ClCompile Include="battleScene2.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="chiyeongTestScene.cpp" />
     <ClCompile Include="d2dManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="field1Scnee.cpp" />

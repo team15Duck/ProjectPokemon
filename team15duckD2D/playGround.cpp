@@ -14,7 +14,11 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
-	IMAGEMANAGER->addFrameImage("Å×½ºÆ®", L"image/playerM.png", 1500, 1500, 10, 10);
+	SCENEMANAGER->addScene("Ä¡¿µ¾À", new chiyeongTestScene);
+
+
+
+	SCENEMANAGER->changeScene("Ä¡¿µ¾À");
 
 	return S_OK;
 }
@@ -29,7 +33,7 @@ void playGround::update()
 {
 	gameNode::update();
 
-
+	SCENEMANAGER->update();
 
 }
 
@@ -42,9 +46,7 @@ void playGround::render()
 
 
 
-	IMAGEMANAGER->findImage("Å×½ºÆ®")->frameRenderReverseX(0, 0, 0, 2, 1);
-
-	
+	SCENEMANAGER->render();
 
 
 

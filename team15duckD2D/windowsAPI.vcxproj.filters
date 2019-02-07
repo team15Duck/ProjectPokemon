@@ -198,6 +198,9 @@
     <ClInclude Include="battle.h">
       <Filter>PlayGround\battleScene</Filter>
     </ClInclude>
+    <ClInclude Include="chiyeongTestScene.h">
+      <Filter>PlayGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -286,6 +289,9 @@
     </ClCompile>
     <ClCompile Include="playerDataBase.cpp">
       <Filter>PlayGround\player\playerData</Filter>
+    </ClCompile>
+    <ClCompile Include="chiyeongTestScene.cpp">
+      <Filter>PlayGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
