@@ -5,4 +5,3 @@ public:
 	field1Scnee();
 	~field1Scnee();
 };
-

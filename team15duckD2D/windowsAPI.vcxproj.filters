@@ -79,6 +79,15 @@
     <Filter Include="PlayGround\pokemon">
       <UniqueIdentifier>{a53108e5-b726-4a5d-b878-e03a4e561626}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\player">
+      <UniqueIdentifier>{c310319e-0447-4e10-8d72-afb5731657c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\object">
+      <UniqueIdentifier>{0961a003-ec0b-4bca-b3f3-2264fa2e1b67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\item">
+      <UniqueIdentifier>{88380362-976e-4e63-b1ac-0af5258b60cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
