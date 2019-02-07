@@ -91,6 +91,9 @@
     <Filter Include="PlayGround\objectTool">
       <UniqueIdentifier>{3862a2fa-0288-4ab9-a3ea-23b17bc18348}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\player\playerData">
+      <UniqueIdentifier>{9df3559d-a6f9-47dc-825e-c8e4ef1b5d0e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -186,6 +189,12 @@
     <ClInclude Include="objectToolScene.h">
       <Filter>PlayGround\objectTool</Filter>
     </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>PlayGround\player</Filter>
+    </ClInclude>
+    <ClInclude Include="playerDataBase.h">
+      <Filter>PlayGround\player\playerData</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -268,6 +277,12 @@
     </ClCompile>
     <ClCompile Include="objectToolScene.cpp">
       <Filter>PlayGround\objectTool</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>PlayGround\player</Filter>
+    </ClCompile>
+    <ClCompile Include="playerDataBase.cpp">
+      <Filter>PlayGround\player\playerData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
