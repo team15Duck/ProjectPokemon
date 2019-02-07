@@ -173,6 +173,39 @@ void image::frameRender(float destX, float destY, int showWidth, int showHeight,
 	}
 }
 
+void image::frameRenderReverseX(float destX, float destY, int currentFrameX, int currentFrameY, float alpha)
+{
+	frameRenderReverseX(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, currentFrameX, currentFrameY, alpha);
+}
+
+void image::frameRenderReverseX(float destX, float destY, int showWidth, int showHeight, int currentFrameX, int currentFrameY, float alpha)
+{
+
+	POINTFLOAT pf = GetRenderPosition(destX, destY);
+
+	if (_imageInfo->bitmap != NULL)
+	{
+		if (!IsRnderPositionInWindow(pf, showWidth, showHeight))
+			return;
+
+		D2D1_SIZE_F size;
+		size.width = -1;
+		size.height = 1;
+		D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Scale(size, Point2F(destX + _imageInfo->frameWidth / 2, destY + _imageInfo->frameHeight / 2)));
+		D2D1_RECT_F dxArea = RectF(pf.x, pf.y, pf.x + showWidth, pf.y + showHeight);
+		D2D1_RECT_F dxArea2 = RectF(currentFrameX * _imageInfo->frameWidth
+			, currentFrameY * _imageInfo->frameHeight
+			, (currentFrameX + 1) * _imageInfo->frameWidth
+			, (currentFrameY + 1) * _imageInfo->frameHeight);
+		D2DMANAGER->_renderTarget->DrawBitmap(_imageInfo->bitmap
+			, dxArea
+			, alpha
+			, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR
+			, dxArea2);
+		D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+	}
+}
+
 void image::aniRender(int destX, int destY, animation * ani)
 {
 	render(destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());

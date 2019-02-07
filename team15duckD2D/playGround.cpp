@@ -14,7 +14,7 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
-	
+	IMAGEMANAGER->addFrameImage("테스트", L"image/playerM.png", 1500, 1500, 10, 10);
 
 	return S_OK;
 }
@@ -42,7 +42,7 @@ void playGround::render()
 
 
 
-	//IMAGEMANAGER->findImage("테스트")->frameRender(100, 100, _index, 0, 1);
+	IMAGEMANAGER->findImage("테스트")->frameRenderReverseX(0, 0, 0, 2, 1);
 
 	
 

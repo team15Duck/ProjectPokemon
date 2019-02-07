@@ -173,3 +173,15 @@ void imageManager::frameRender(string strKey, float destX, float destY, int show
 	image* img = findImage(strKey);
 	if (img) img->frameRender(destX, destY, showWidth, showHeight, currentFrameX, currentFrameY, alpha);
 }
+
+void imageManager::frameRenderReverseX(string strKey, float destX, float destY, int currentFrameX, int currentFrameY, float alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->frameRenderReverseX(destX, destY, currentFrameX, currentFrameY, alpha);
+}
+
+void imageManager::frameRenderReverseX(string strKey, float destX, float destY, int showWidth, int showHeight, int currentFrameX, int currentFrameY, float alpha)
+{
+	image* img = findImage(strKey);
+	if (img) img->frameRenderReverseX(destX, destY, showWidth, showHeight, currentFrameX, currentFrameY, alpha);
+}
