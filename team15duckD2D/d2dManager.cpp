@@ -151,18 +151,23 @@ void d2dManager::drawRectangle(float left, float top, float right, float bottom)
 
 void d2dManager::drawRectangle(D2D_RECT_F rc)
 {
-	if (!isRectFInRangeWindow(rc))
+	D2D1_RECT_F rcf = getDrawRectfArea(rc.left, rc.top, rc.right, rc.bottom);
+
+	if (!isRectFInRangeWindow(rcf))
 		return;
 
-	_renderTarget->DrawRectangle(rc, _defaultBrush, 1);
+
+	_renderTarget->DrawRectangle(rcf, _defaultBrush, 1);
 }
 
 void d2dManager::drawRectangle(COLORREF rgb, D2D_RECT_F rc)
 {
-	if (!isRectFInRangeWindow(rc))
+	D2D1_RECT_F rcf = getDrawRectfArea(rc.left, rc.top, rc.right, rc.bottom);
+
+	if (!isRectFInRangeWindow(rcf))
 		return;
 
-	_renderTarget->DrawRectangle(rc, createBrush(rgb, 1), 1);
+	_renderTarget->DrawRectangle(rcf, createBrush(rgb, 1), 1);
 }
 
 void d2dManager::drawEllipse(COLORREF rgb, float left, float top, float right, float bottom)
@@ -235,11 +240,12 @@ void d2dManager::fillRectangle(ID2D1SolidColorBrush * brush, float startX, float
 
 void d2dManager::fillRectangle(COLORREF rgb, D2D_RECT_F rc)
 {
+	D2D1_RECT_F rcf = getDrawRectfArea(rc.left, rc.top, rc.right, rc.bottom);
 
-	if (!isRectFInRangeWindow(rc))
+	if (!isRectFInRangeWindow(rcf))
 		return;
 
-	_renderTarget->FillRectangle(rc, createBrush(rgb, 1));
+	_renderTarget->FillRectangle(rcf, createBrush(rgb, 1));
 }
 
 void d2dManager::fillEllipse(ID2D1SolidColorBrush * brush, float startX, float startY, float endX, float endY)
@@ -259,6 +265,7 @@ void d2dManager::fillEllipse(ID2D1SolidColorBrush * brush, float startX, float s
 	ellipse.radiusY = height * 0.5;
 
 	_renderTarget->FillEllipse(&ellipse, brush);
+
 }
 
 void d2dManager::fillEllipse(COLORREF rgb, D2D1_ELLIPSE e)
