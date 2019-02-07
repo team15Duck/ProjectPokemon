@@ -195,6 +195,9 @@
     <ClInclude Include="playerDataBase.h">
       <Filter>PlayGround\player\playerData</Filter>
     </ClInclude>
+    <ClInclude Include="battle.h">
+      <Filter>PlayGround\battleScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
