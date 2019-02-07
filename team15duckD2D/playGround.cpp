@@ -14,7 +14,7 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
-	_count = _index = 0;
+	
 
 	return S_OK;
 }
@@ -29,12 +29,7 @@ void playGround::update()
 {
 	gameNode::update();
 
-	_count++;
-	if (_count % 5 == 0)
-	{
-		_index++;
-		if (_index >= 8) _index = 0;
-	}
+
 
 }
 
@@ -58,9 +53,9 @@ void playGround::render()
 	//===========================================================================
 	//				##카메라 정보 마우스 정보 시간정보 출력	##===================
 	WCHAR str[128];
-	swprintf_s(str, L"cameraX : %.1f / %.1f", CAMERA->getPosX(), (float)(MAPSIZEX - WINSIZEX));
+	swprintf_s(str, L"cameraX : %.1f / %.1f", CAMERA->getPosX(), (float)CAMERA->getMaxX());
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 80);
-	swprintf_s(str, L"cameraY : %.1f / %.1f", CAMERA->getPosY(), (float)(MAPSIZEY - WINSIZEY));
+	swprintf_s(str, L"cameraY : %.1f / %.1f", CAMERA->getPosY(), (float)CAMERA->getMaxY());
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 100);
 	swprintf_s(str, L"mouseX : %.2f", _ptMouse.x);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 140);

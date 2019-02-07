@@ -52,6 +52,33 @@
     <Filter Include="2DFramework\effect">
       <UniqueIdentifier>{6c16437b-1960-48f5-bd50-52809067e246}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\mapTool">
+      <UniqueIdentifier>{5b9fe1a7-7085-4f80-b02e-14b7eff68eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map">
+      <UniqueIdentifier>{52a6aab5-4c29-4f28-b0c1-06143e4d3349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\battleScene">
+      <UniqueIdentifier>{072715c2-fedb-4992-92a8-b73874887d2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\townScene">
+      <UniqueIdentifier>{6ec0e00d-0b3e-41a0-b3bc-0c7ad903133a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\field">
+      <UniqueIdentifier>{6017b05f-18f7-4736-bb95-3b11249cc78f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui">
+      <UniqueIdentifier>{fb82d6fe-e2aa-4a9c-8cf1-507fe868475a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\npc">
+      <UniqueIdentifier>{1b8bcb14-c951-4cb0-bd0d-0656d28fd99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\enemyNpc">
+      <UniqueIdentifier>{c1b56b76-5406-492e-91fc-4ce803b975dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\pokemon">
+      <UniqueIdentifier>{a53108e5-b726-4a5d-b878-e03a4e561626}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -126,6 +153,24 @@
     <ClInclude Include="soundManager.h">
       <Filter>2DFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="tileNode.h">
+      <Filter>PlayGround\map</Filter>
+    </ClInclude>
+    <ClInclude Include="mapToolScene.h">
+      <Filter>PlayGround\mapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="battleScene.h">
+      <Filter>PlayGround\battleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="battleScene2.h">
+      <Filter>PlayGround\battleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="townScene.h">
+      <Filter>PlayGround\townScene</Filter>
+    </ClInclude>
+    <ClInclude Include="field1Scnee.h">
+      <Filter>PlayGround\field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -190,6 +235,21 @@
     </ClCompile>
     <ClCompile Include="soundManager.cpp">
       <Filter>2DFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="mapToolScene.cpp">
+      <Filter>PlayGround\mapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="battleScene.cpp">
+      <Filter>PlayGround\battleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="battleScene2.cpp">
+      <Filter>PlayGround\battleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="townScene.cpp">
+      <Filter>PlayGround\townScene</Filter>
+    </ClCompile>
+    <ClCompile Include="field1Scnee.cpp">
+      <Filter>PlayGround\field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

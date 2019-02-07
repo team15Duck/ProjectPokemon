@@ -13,14 +13,18 @@ camera::~camera()
 
 HRESULT camera::init()
 {
-	posX = posY = 0;
+	_posX = _posY = 0;
+	_maxX = 0;
+	_maxY = 0;
 	return S_OK;
 }
 
-HRESULT camera::init(float x, float y)
+HRESULT camera::init(float x, float y, int mX, int mY)
 {
-	posX = x;
-	posY = y;
+	_posX = x;
+	_posY = y;
+	_maxX = mX;
+	_maxY = mY;
 	return S_OK;
 }
 
@@ -39,31 +43,31 @@ void camera::render()
 
 void camera::move()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && posX + WINSIZEX < MAPSIZEX)
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _posX + WINSIZEX < MAPSIZEX)
 	{
-		posX += (CAMERA_SPEED);
-		if (posX + WINSIZEX > MAPSIZEX)
-			posX = MAPSIZEX - WINSIZEX;
+		_posX += (CAMERA_SPEED);
+		if (_posX + WINSIZEX > MAPSIZEX)
+			_posX = MAPSIZEX - WINSIZEX;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && posX > 0)
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _posX > 0)
 	{
-		posX -= CAMERA_SPEED;
-		if (posX < 0)
-			posX = 0;
-	}
-
-
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && posY + WINSIZEY < MAPSIZEY)
-	{
-		posY += CAMERA_SPEED;
-		if (posY + WINSIZEY > MAPSIZEY)
-			posY = MAPSIZEY - WINSIZEY;
+		_posX -= CAMERA_SPEED;
+		if (_posX < 0)
+			_posX = 0;
 	}
 
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && posY > 0)
+
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _posY + WINSIZEY < MAPSIZEY)
 	{
-		posY -= CAMERA_SPEED;
-		if (posY < 0)
-			posY = 0;
+		_posY += CAMERA_SPEED;
+		if (_posY + WINSIZEY > MAPSIZEY)
+			_posY = MAPSIZEY - WINSIZEY;
+	}
+
+	if (KEYMANAGER->isStayKeyDown(VK_UP) && _posY > 0)
+	{
+		_posY -= CAMERA_SPEED;
+		if (_posY < 0)
+			_posY = 0;
 	}
 }

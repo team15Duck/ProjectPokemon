@@ -5,8 +5,6 @@
 class playGround : public gameNode
 {
 private:
-	int _count;
-	int _index;
 
 public:
 	virtual HRESULT init();

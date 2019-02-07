@@ -35,7 +35,7 @@ void keyAniManager::update(string type)
 		{
 			if (!iter->second->isPlay()) continue;
 
-			iter->second->frameUpdate(TIMEMANAGER->getElpasedTime() * 1.0f);
+			iter->second->frameUpdate(TIMEMANAGER->getElapsedTime() * 1.0f);
 		}
 	}
 }

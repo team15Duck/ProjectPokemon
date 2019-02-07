@@ -102,5 +102,4 @@ namespace TEAM_15DUCK_UTILL
 	//원 사각형 충돌
 	bool RectEllipseCollition(RECT& rc, ELLIPSE& e);
 
-
 }

@@ -6,25 +6,29 @@
 class camera : public singletonBase<camera>
 {
 private:
-	float posX;
-	float posY;
-	
+	float _posX;
+	float _posY;
+	int _maxX;
+	int _maxY;
 public:
 	camera();
 	~camera();
 
 	HRESULT init();
-	HRESULT init(float x, float y);
+	HRESULT init(float x, float y, int mX, int mY);
 	void release();
 	void update();
 	void render();
 	void move();
 
-	float getPosX()			{ return posX; }
-	float getPosY()			{ return posY; }
-	float setPosX(float x)  { posX = x; }
-	float setPosY(float y)  { posX = y; }
+	float getPosX()			{ return _posX; }
+	float getPosY()			{ return _posY; }
+	void setPosX(float x)	{ _posX = x; }
+	void setPosY(float y)	{ _posX = y; }
 
-
+	float getMaxX()			{ return _maxX; }
+	float getMaxY()			{ return _maxY; }
+	void setMaxX(int x)		{ _maxX = x; }
+	void setMaxY(int y)		{ _maxY = y; }
 };
 

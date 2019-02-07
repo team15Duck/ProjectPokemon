@@ -17,7 +17,7 @@ public:
 	void render();
 
 	//cpu경과시간을 받아오는 함수
-	inline float getElpasedTime() const { return _timer->getElapsedTime(); }
+	inline float getElapsedTime() const { return _timer->getElapsedTime(); }
 
 	//총 경과시간을 받아오는 함수
 	inline float getWorldTime() const { return _timer->getWorldTime(); }
