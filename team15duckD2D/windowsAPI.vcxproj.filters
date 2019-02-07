@@ -88,6 +88,9 @@
     <Filter Include="PlayGround\item">
       <UniqueIdentifier>{88380362-976e-4e63-b1ac-0af5258b60cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\objectTool">
+      <UniqueIdentifier>{3862a2fa-0288-4ab9-a3ea-23b17bc18348}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -180,6 +183,9 @@
     <ClInclude Include="field1Scnee.h">
       <Filter>PlayGround\field</Filter>
     </ClInclude>
+    <ClInclude Include="objectToolScene.h">
+      <Filter>PlayGround\objectTool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -259,6 +265,9 @@
     </ClCompile>
     <ClCompile Include="field1Scnee.cpp">
       <Filter>PlayGround\field</Filter>
+    </ClCompile>
+    <ClCompile Include="objectToolScene.cpp">
+      <Filter>PlayGround\objectTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
