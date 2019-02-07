@@ -1,8 +1,17 @@
 #pragma once
-class mapToolScene
+#include "gameNode.h"
+
+class mapToolScene : public gameNode
 {
+private:
+
 public:
 	mapToolScene();
 	~mapToolScene();
+
+	HRESULT init();
+	void release();
+	void update();
+	void render();
 };
 
