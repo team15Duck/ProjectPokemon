@@ -13,7 +13,7 @@ player::~player()
 
 HRESULT player::init()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void player::release()

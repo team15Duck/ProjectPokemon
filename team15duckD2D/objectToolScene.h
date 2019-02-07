@@ -1,5 +1,7 @@
 #pragma once
-class objectToolScene
+#include "gameNode.h"
+
+class objectToolScene : public gameNode
 {
 public:
 	objectToolScene();
