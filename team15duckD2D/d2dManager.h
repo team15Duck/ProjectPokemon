@@ -38,10 +38,31 @@ public:
 	
 
 	void drawLine(ID2D1SolidColorBrush* brush, float startX, float startY, float endX, float endY, float strokeWidth = 1.0f);
-	void drawRectangle(ID2D1SolidColorBrush* brush, float startX, float startY, float endX, float endY, float strokeWidth = 1.0f);
-	void drawEllipse(ID2D1SolidColorBrush* brush, float startX, float startY, float endX, float endY, float strokeWidth = 1.0f);
+	//검은색
+	void drawLine(float startX, float startY, float endX, float endY);
+	//색깔선
+	void drawLine(COLORREF rgb, float startX, float startY, float endX, float endY);
+
+
+	void drawRectangle(COLORREF rgb, float left, float top, float right, float bottom);
+	void drawRectangle(float left, float top, float right, float bottom);
+
+	void drawRectangle(D2D_RECT_F rc);
+	void drawRectangle(COLORREF rgb, D2D_RECT_F rc);
+
+	void drawEllipse(COLORREF rgb, float left, float top, float right, float bottom);
+	void drawEllipse(float left, float top, float right, float bottom);
+
+	void drawEllipse(D2D1_ELLIPSE e);
+	void drawEllipse(COLORREF rgb, D2D1_ELLIPSE e);
+
+
+
+
 	void fillRectangle(ID2D1SolidColorBrush* brush, float startX, float startY, float endX, float endY);
+	void fillRectangle(COLORREF rgb, D2D_RECT_F rc);
 	void fillEllipse(ID2D1SolidColorBrush* brush, float startX, float startY, float endX, float endY);
+	void fillEllipse(COLORREF rgb, D2D1_ELLIPSE e);
 
 	
 	void drawText(LPCWSTR string, float x, float y);
