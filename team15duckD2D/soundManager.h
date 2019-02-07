@@ -12,7 +12,7 @@ using namespace FMOD;
 
 #define TOTALSOUNDBUFFER SOUNDBUFFER + EXTRACHANNELBUFFER
 
-class soundManager : public singletonBase<soundManager>
+class soundManager: public singletonBase<soundManager>
 {
 private:
 	typedef unordered_map<string, Sound**> arrSounds;
@@ -21,11 +21,17 @@ private:
 	typedef unordered_map<string, Channel**>::iterator arrChannelsIter;
 
 private:
-	System * _system;
+	System* _system;
 	Sound** _sound;
 	Channel** _channel;
 
 	arrSounds _mTotalSounds;
+
+	ChannelGroup* _bgmGroup;
+	ChannelGroup* _effectGroup;
+
+	SoundGroup* _bgmSoundGroup;
+	SoundGroup* _effectSoundGroup;
 
 public:
 	HRESULT init();
@@ -40,6 +46,23 @@ public:
 
 	bool isPlaySound(string keyName);
 	bool isPauseSound(string keyName);
+
+	// effect voluem control
+	void setEffectVolume(float volume);
+	// bgm volume control
+	void setBgmVolume(float volume);
+	// ¸ðµç sound volume control
+	void setAllSoundVolume(float volume);
+
+	// pause
+	void setEffectPause();
+	void setBgmPause();
+	void setAllSoundPause();
+
+	// resume
+	void setEffectResume();
+	void setBgmResume();
+	void setAllSoundResume();
 
 
 	soundManager();

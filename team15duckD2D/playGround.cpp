@@ -13,7 +13,6 @@ playGround::~playGround()
 HRESULT playGround::init()
 {
 	gameNode::init(true);
-	IMAGEMANAGER->addFrameImage("Å×½ºÆ®", L"ef.png", 1600, 200,8,1);
 	
 	_count = _index = 0;
 
