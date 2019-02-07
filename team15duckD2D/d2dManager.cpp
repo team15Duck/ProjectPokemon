@@ -275,6 +275,7 @@ void d2dManager::fillEllipse(COLORREF rgb, D2D1_ELLIPSE e)
 	if (!isRectFInRangeWindow(rcf))
 		return;
 	_renderTarget->FillEllipse(&e, createBrush(rgb, 1));
+
 }
 
 void d2dManager::drawText(LPCWSTR string, float x, float y)
