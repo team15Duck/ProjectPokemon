@@ -1,10 +1,11 @@
 #pragma once
  
-//턴 ----------- 인티저변수로 하나가 지나갈때마다 ++해주고 이걸로 비교 %2
+//턴 ----------- 1에서 현재값을 빼주며 변경
 enum BattleTurn
 {
 	TURN_PLAYER,
-	TURN_ENEMY
+	TURN_ENEMY,
+	TURN_MAX = TURN_ENEMY
 };
 
 //페이즈 이넘으로 나눠서 ㄱㄱ
