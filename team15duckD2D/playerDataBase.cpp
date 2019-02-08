@@ -28,3 +28,11 @@ void playerDataBase::update()
 void playerDataBase::render()
 {
 }
+
+void playerDataBase::dataLoad()
+{
+}
+
+void playerDataBase::dataSet(player * p)
+{
+}

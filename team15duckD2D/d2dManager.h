@@ -13,7 +13,7 @@ public:
 	IDWriteTextFormat*			_customTextFormat;		//커스텀 텍스트 포맷
 	ID2D1SolidColorBrush*		_defaultBrush;			//기본 검정색 브러쉬
 
-	IDWriteFontCollection*		_collection;
+	IDWriteFontCollection*		_collection;			//폰트들이 모여있는곳~ 커스텀폰트 쓸때 씀ㅋ
 	
 
 public:
@@ -28,6 +28,8 @@ public:
 	void endDraw();
 	ID2D1SolidColorBrush* createBrush(COLORREF rgb, float opacity = 1.0f);
 
+
+	HRESULT createCollection(wstring path);
 
 
 	
