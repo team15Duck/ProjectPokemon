@@ -216,9 +216,6 @@
     <ClInclude Include="hayoungTestScene.h">
       <Filter>PlayGround\ui</Filter>
     </ClInclude>
-    <ClInclude Include="mapTool.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
     <ClInclude Include="fontLoaderCommon.h">
       <Filter>2DFramework\Manager\font</Filter>
     </ClInclude>
@@ -233,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="loadScene.h">
       <Filter>PlayGround\loadScene</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>PlayGround\mapTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -329,9 +329,6 @@
     <ClCompile Include="hayoungTestScene.cpp">
       <Filter>PlayGround\ui</Filter>
     </ClCompile>
-    <ClCompile Include="mapTool.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
     <ClCompile Include="fontLoader.cpp">
       <Filter>2DFramework\Manager\font</Filter>
     </ClCompile>
@@ -343,6 +340,9 @@
     </ClCompile>
     <ClCompile Include="loadScene.cpp">
       <Filter>PlayGround\loadScene</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>PlayGround\mapTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
