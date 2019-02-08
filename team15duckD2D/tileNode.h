@@ -11,8 +11,13 @@
 #define ATTR_WATER  0x00000004
 #define ATTR_FOREST 0x00000008
 #define ATTR_TREE   0x00000010
-#define ATTR_ROCK	0X00000020
-#define ATTR_HILL	0X00000040
+#define ATTR_HILL	0X00000020
+
+#define ATTR_ROCK	0X00000100
+
+
+
+
 
 ///////// 어트리뷰트는 처음에 0으로 초기화하고 |= 이걸로 더해주세요
 ///////// 빼낼떄는 ^=
@@ -21,9 +26,17 @@
 
 //타일 이미지 이름
 static string TERRAIN_NAME_NONE = "";
-static string TERRAIN_NAME1		= "";
-static string TERRAIN_NAME2		= "";
-static string TERRAIN_NAME3		= "";
+static string TERRAIN_NAME1		= "tile_01";
+static string TERRAIN_NAME2		= "tile_02";
+static string TERRAIN_NAME3		= "tile_03";
+static string TERRAIN_NAME4		= "tile_04";
+static string TERRAIN_NAME5		= "tile_05";
+static string TERRAIN_NAME6		= "tile_06";
+static string TERRAIN_NAME7		= "tile_07";
+static string TERRAIN_NAME8		= "tile_08";
+static string TERRAIN_NAME9		= "tile_09";
+static string TERRAIN_NAME10	= "tile_10";
+
 
 //오브젝트 이미지 이름
 static string OBJECT_NAME_NONE	= "";
