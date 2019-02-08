@@ -7,12 +7,12 @@
 
 #define ATTR_NONE   0x00000000
 #define ATTR_UNMOVE 0x00000001
-#define ATTR_WALL	0X00000010
-#define ATTR_WATER  0x00000020
-#define ATTR_FOREST 0x00000040
-#define ATTR_TREE   0x00000080
-#define ATTR_ROCK	0X00000100
-#define ATTR_HILL	0X00000200
+#define ATTR_WALL	0X00000002
+#define ATTR_WATER  0x00000004
+#define ATTR_FOREST 0x00000008
+#define ATTR_TREE   0x00000010
+#define ATTR_ROCK	0X00000020
+#define ATTR_HILL	0X00000040
 
 ///////// 어트리뷰트는 처음에 0으로 초기화하고 |= 이걸로 더해주세요
 ///////// 빼낼떄는 ^=
@@ -20,17 +20,17 @@
 
 
 //타일 이미지 이름
-#define TERRAIN_NAME_NONE	""
-#define TERRAIN_NAME1		""
-#define TERRAIN_NAME2		""
-#define TERRAIN_NAME3		""
+static string TERRAIN_NAME_NONE = "";
+static string TERRAIN_NAME1		= "";
+static string TERRAIN_NAME2		= "";
+static string TERRAIN_NAME3		= "";
 
 //오브젝트 이미지 이름
-#define OBJECT_NAME_NONE	""
-#define OBJECT_NAME1		""
-#define OBJECT_NAME2		""
-#define OBJECT_NAME3		""
-#define OBJECT_NAME4		""
+static string OBJECT_NAME_NONE	= "";
+static string OBJECT_NAME1		= "";
+static string OBJECT_NAME2		= "";
+static string OBJECT_NAME3		= "";
+static string OBJECT_NAME4		= "";
 
 
 typedef struct tagTile
