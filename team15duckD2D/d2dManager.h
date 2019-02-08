@@ -1,6 +1,6 @@
 #pragma once
 #include "singletonBase.h"
-
+#include "fontLoader.h"
 
 class camera;
 class d2dManager : public singletonBase<d2dManager>
@@ -13,7 +13,7 @@ public:
 	IDWriteTextFormat*			_customTextFormat;		//커스텀 텍스트 포맷
 	ID2D1SolidColorBrush*		_defaultBrush;			//기본 검정색 브러쉬
 
-	
+	IDWriteFontCollection*		_collection;
 	
 
 public:

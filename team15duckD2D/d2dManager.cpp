@@ -46,6 +46,16 @@ HRESULT d2dManager::init()
 	_writeFactory->CreateTextFormat(L"맑은고딕", NULL, DWRITE_FONT_WEIGHT_REGULAR,
 		DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 17.0f, L"", &_defaultTextFormat);
 
+
+	// 내 폰트 컬렉션 생성
+	MFFontContext fContext(_writeFactory);
+	std::vector<std::wstring> filePaths; // vector containing ABSOLUTE file paths of the font files which are to be added to the collection
+	std::wstring fontFileFilePath = L"font/DungGeunMo.ttf";
+	filePaths.push_back(fontFileFilePath);
+	hr = fContext.CreateFontCollection(filePaths, &_collection); // create custom font collection
+	assert(hr == S_OK);
+
+
 	// COM 라이브러리 초기화 -> 호출하지 않으면 CoCreateInstance가 제대로 수행되지 않음
 	CoInitialize(NULL);
 
@@ -286,7 +296,9 @@ void d2dManager::drawText(LPCWSTR string, float x, float y)
 		return;
 
 	//	TextFormat 생성
-	_writeFactory->CreateTextFormat(L"나눔고딕", NULL, DWRITE_FONT_WEIGHT_REGULAR,
+	
+
+	_writeFactory->CreateTextFormat(L"둥근모꼴", _collection, DWRITE_FONT_WEIGHT_REGULAR,
 		DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 15, L"", &_customTextFormat);
 
 	_renderTarget->DrawTextA(string, lstrlenW(string), _customTextFormat, rcf, _defaultBrush);
