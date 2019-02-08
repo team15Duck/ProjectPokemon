@@ -4,7 +4,7 @@
 //요거 속성별로 다 추가해주세요 이거 있으면 판단이 너무쉬워집니다
 //2배로 더해주세요
 #define TILE_SIZE	64
-#define SMAPLETILE  6
+#define SAMPLETILE  6
 
 #define ATTR_NONE			0x00000000UL					//NONE
 #define ATTR_UNMOVE			0x00000001UL					//못움직임
@@ -52,7 +52,6 @@ static string TERRAIN_NAME7		= "tile_07";
 static string TERRAIN_NAME8		= "tile_08";
 static string TERRAIN_NAME9		= "tile_09";
 static string TERRAIN_NAME10	= "tile_10";
-
 
 //오브젝트 이미지 이름
 static string OBJECT_NAME_NONE	= "";

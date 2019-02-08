@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "mapTool.h"
 
 class mapToolScene : public gameNode
 {
