@@ -1,5 +1,6 @@
 #pragma once
 
+// 포켓몬 번호
 enum POKEMON
 {
 	PM_BULBASAUR,	PM_IVYSAUR,		PM_VENUSAUR,
@@ -40,7 +41,7 @@ enum POKEMON
 	POKEMON_COUNT = POKEMON_NONE,
 };
 
-
+// 타입, 속성
 enum POKEMON_TYPE
 {
 	PM_TYPE_NORMAL,
@@ -53,25 +54,49 @@ enum POKEMON_TYPE
 	PM_TYPE_COUNT = PM_TYPE_NONE,
 };
 
+// 상태이상
 enum POKEMON_UPSET_CONDITION
 {
-	PMS_POISON,			// 독
-	PMS_PALALYSIS,		// 마비
-	PMS_CONFUSE	,		// 혼란
-	PMS_SLEEP,			// 잠듦
+	PMUC_POISON,		// 독
+	PMUC_PALALYSIS,		// 마비
+	PMUC_CONFUSE,		// 혼란
+	PMUC_SLEEP,			// 잠듦
+	  
+	PMUC_NONE,
+	PMUC_COUNT = PMUC_NONE,
 };
 
 
-struct tagPokemonStatus
+typedef struct tagPokemonStatus
 {
-	int _hp;			// 체력
-	int _attk;			// 공격력
-	int _dex;			// 방어력
-	int _spAttk;		// 특수 공격력
-	int _spDex;			// 특수 방어력
+	unsigned int _hp;			// 체력
+	unsigned int _attk;			// 공격력
+	unsigned int _dex;			// 방어력
+	unsigned int _spAttk;		// 특수 공격력
+	unsigned int _spDex;		// 특수 방어력
+	
+	unsigned int _speed;		// 속도
 
-	int _speed;			// 속도
-};
+	void operator=(tagPokemonStatus status)
+	{
+		_hp		= status._hp;
+		_attk	= status._attk;
+		_dex	= status._dex;
+		_spAttk = status._spAttk;
+		_spDex	= status._spDex;
+		_speed	= status._speed;
+	}
+
+	void operator=(tagPokemonStatus* status)
+	{
+		_hp		= status->_hp;
+		_attk	= status->_attk;
+		_dex	= status->_dex;
+		_spAttk = status->_spAttk;
+		_spDex	= status->_spDex;
+		_speed	= status->_speed;
+	}
+}pokemonStatus;
 
 
 // 포켓몬 기본 정보
@@ -80,10 +105,14 @@ class pokemonInfo
 {
 private:
 
-	POKEMON	_pokemon;				// 포켓몬
-	POKEMON_TYPE _type;				// 포켓몬 타입
+	POKEMON			_index;				// 포켓몬 넘버
+	POKEMON_TYPE	_type;				// 포켓몬 타입
+	string			_name;				// 포켓몬 이름
+	
+	pokemonStatus	_defaultStatus;		// 포켓몬 정보
 
-	tagPokemonStatus _defaultStatus;// 포켓몬 정보
+	string			_description;		// 설명
+	
 
 public:
 	pokemonInfo();
