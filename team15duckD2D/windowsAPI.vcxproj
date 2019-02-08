@@ -23,7 +23,7 @@
     <ProjectGuid>{BE5C2545-DA5C-402F-8068-3E1EDF185C1C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>windowsAPI</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -158,6 +158,8 @@
     <ClInclude Include="d2dManager.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="field1Scnee.h" />
+    <ClInclude Include="fontLoader.h" />
+    <ClInclude Include="fontLoaderCommon.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="hayoungTestScene.h" />
     <ClInclude Include="image.h" />
@@ -196,6 +198,7 @@
     <ClCompile Include="d2dManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="field1Scnee.cpp" />
+    <ClCompile Include="fontLoader.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="hayoungTestScene.cpp" />
     <ClCompile Include="image.cpp" />

@@ -94,6 +94,9 @@
     <Filter Include="PlayGround\player\playerData">
       <UniqueIdentifier>{9df3559d-a6f9-47dc-825e-c8e4ef1b5d0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFramework\Manager\font">
+      <UniqueIdentifier>{f009092f-1b68-4317-b4cd-87a928eabfc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -207,6 +210,12 @@
     <ClInclude Include="mapTool.h">
       <Filter>PlayGround\map</Filter>
     </ClInclude>
+    <ClInclude Include="fontLoaderCommon.h">
+      <Filter>2DFramework\Manager\font</Filter>
+    </ClInclude>
+    <ClInclude Include="fontLoader.h">
+      <Filter>2DFramework\Manager\font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -304,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="mapTool.cpp">
       <Filter>PlayGround\map</Filter>
+    </ClCompile>
+    <ClCompile Include="fontLoader.cpp">
+      <Filter>2DFramework\Manager\font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
