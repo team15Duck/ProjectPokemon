@@ -18,6 +18,19 @@ HRESULT menuFrameManager::init()
 
 void menuFrameManager::release()
 {
+	mapMenuFrameIter miMenuFrameList = _mMenuFrameList.begin();
+
+	for (; miMenuFrameList != _mMenuFrameList.end();)
+	{
+		//만약에 리스트의 2번째에 무언가있다면 
+		if (miMenuFrameList->second != nullptr)
+		{
+			miMenuFrameList->second->release();
+			SAFE_DELETE(miMenuFrameList->second);
+			miMenuFrameList++;
+		}
+	}
+	_mMenuFrameList.clear();
 }
 
 menuFrame * menuFrameManager::addFrame(string key, UINT destX, UINT destY, UINT frameWidth, UINT frameHeight)

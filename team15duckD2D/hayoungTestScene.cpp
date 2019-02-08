@@ -13,7 +13,7 @@ hayoungTestScene::~hayoungTestScene()
 
 HRESULT hayoungTestScene::init()
 {
-	//frameImageinit();
+	frameImageinit();
 	//_rc = { 0, 490, 960, 640 };
 	//
 	//uiframeMake(10, 15, 32, 630, 5);
@@ -30,7 +30,7 @@ HRESULT hayoungTestScene::init()
 	//	}
 	//}
 
-	MENUMANAGER->addFrame("전체메뉴프레임", 0, 0, 30, 20);
+	MENUMANAGER->addFrame("전체메뉴프레임", 630, 5, 10, 15);
 
 	
 	return S_OK;
@@ -102,75 +102,7 @@ void hayoungTestScene::render()
 	}
 	*/
 
-	//D2DMANAGER->fillRectangle(RGB(255, 0, 255), rc[10*15]);
-	//
-	//IMAGEMANAGER->findImage("기본하단")->render(_rc.left + CAMERA->getPosX(), _rc.top + CAMERA->getPosY());
-}
-
-
-D2D1_RECT_F hayoungTestScene::uiframeMake(int width, int height, float size, float positionX, float positionY)
-{
-	D2D1_RECT_F* rc = new D2D1_RECT_F[width * height];
-
-	for (int i = 0; i < height; ++i)
-	{
-		for (int j = 0; j < width; j++)
-		{
-			float left = positionX + (j * size);
-			float top = positionY + (i * size);
-			float right = left + size;
-			float bottom = top + size;
-
-			rc[i * width + j] = { left, top, right, bottom };
-		}
-	}
-	return rc[width * height];
-}
-
-void hayoungTestScene::uiframeRender(int width, int height, float left, float top)
-{
-	for (int i = 0; i < height; ++i)
-	{
-		for (int j = 0; j < width; ++j)
-		{
-			if (i == 0 && j == 0)
-			{
-				//왼쪽 위
-			}
-			else if (i == 0 && j == width)
-			{
-				//오른쪽 위
-			}
-			else if (i == height && j == 0)
-			{
-				//왼쪽 아래
-			}
-			else if (i == height && j == width)
-			{
-				//오른쪽아래
-			}
-			else if (i == 0)
-			{
-				//위
-			}
-			else if (i == height)
-			{
-				//아래
-			}
-			else if (j == 0)
-			{
-				//왼쪽
-			}
-			else if (j == width)
-			{
-				//오른쪽
-			}
-			else
-			{
-				//나머지
-			}
-		}
-	}
+	IMAGEMANAGER->findImage("기본하단")->render(_rc.left + CAMERA->getPosX(), _rc.top + CAMERA->getPosY());
 }
 
 void hayoungTestScene::frameImageinit()
