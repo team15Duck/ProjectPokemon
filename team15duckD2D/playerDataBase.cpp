@@ -36,3 +36,7 @@ void playerDataBase::dataLoad()
 void playerDataBase::dataSet(player * p)
 {
 }
+
+void playerDataBase::dataSave(int num)
+{
+}
