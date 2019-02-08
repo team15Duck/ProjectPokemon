@@ -201,6 +201,9 @@
     <ClInclude Include="chiyeongTestScene.h">
       <Filter>PlayGround</Filter>
     </ClInclude>
+    <ClInclude Include="hayoungTestScene.h">
+      <Filter>PlayGround\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -292,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="chiyeongTestScene.cpp">
       <Filter>PlayGround</Filter>
+    </ClCompile>
+    <ClCompile Include="hayoungTestScene.cpp">
+      <Filter>PlayGround\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
