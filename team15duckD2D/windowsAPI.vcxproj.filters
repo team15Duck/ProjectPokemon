@@ -246,6 +246,12 @@
     <ClInclude Include="mapTool.h">
       <Filter>PlayGround\mapTool</Filter>
     </ClInclude>
+    <ClInclude Include="pokemonInfo.h">
+      <Filter>PlayGround\pokemon</Filter>
+    </ClInclude>
+    <ClInclude Include="pokemon.h">
+      <Filter>PlayGround\pokemon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -364,6 +370,12 @@
     </ClCompile>
     <ClCompile Include="mapTool.cpp">
       <Filter>PlayGround\mapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="pokemonInfo.cpp">
+      <Filter>PlayGround\pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="pokemon.cpp">
+      <Filter>PlayGround\pokemon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
