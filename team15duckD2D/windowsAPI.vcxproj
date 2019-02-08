@@ -165,6 +165,7 @@
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="keyAniManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="mapTool.h" />
     <ClInclude Include="mapToolScene.h" />
     <ClInclude Include="objectToolScene.h" />
     <ClInclude Include="player.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="keyAniManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
+    <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="mapToolScene.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
     <ClCompile Include="player.cpp" />

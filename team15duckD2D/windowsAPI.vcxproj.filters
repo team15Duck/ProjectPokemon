@@ -204,6 +204,9 @@
     <ClInclude Include="hayoungTestScene.h">
       <Filter>PlayGround\ui</Filter>
     </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>PlayGround\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="hayoungTestScene.cpp">
       <Filter>PlayGround\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>PlayGround\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
