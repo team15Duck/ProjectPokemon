@@ -21,7 +21,9 @@ struct tagCurrentTile
 class mapTool
 {
 private:
-		
+	
+	string			_currentSample[TILE_IMAGE_NUM];
+	int				_currentSampleImgNumber;
 
 	tagSampleTerrain _sampleTerrain[SAMPLETILE * SAMPLETILE];	//샘플배치할 타일
 	tagSampleTerrain _currentSampleTile;						//선택한 sample 타일을 이 변수에 넣어줌.
