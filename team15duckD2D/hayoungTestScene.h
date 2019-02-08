@@ -29,6 +29,9 @@ public:
 	void update();
 	void render();
 
+	//					가로개수	  새로개수		크기				위치			위치		
+	D2D1_RECT_F uiframeMake(int width, int height, float size, float positionX, float positionY);
+	void uiframeRender(int width, int height, float left, float top);
 	void frameImageinit();
 
 };
