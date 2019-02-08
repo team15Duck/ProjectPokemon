@@ -106,6 +106,9 @@
     <Filter Include="PlayGround\loadScene">
       <UniqueIdentifier>{fa4efec6-4331-49f6-8384-7d540f1a657b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFramework\meneFrame">
+      <UniqueIdentifier>{a597e975-466c-4ca6-a003-f6837cebc204}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -216,6 +219,9 @@
     <ClInclude Include="hayoungTestScene.h">
       <Filter>PlayGround\ui</Filter>
     </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>PlayGround\map</Filter>
+    </ClInclude>
     <ClInclude Include="fontLoaderCommon.h">
       <Filter>2DFramework\Manager\font</Filter>
     </ClInclude>
@@ -231,8 +237,11 @@
     <ClInclude Include="loadScene.h">
       <Filter>PlayGround\loadScene</Filter>
     </ClInclude>
-    <ClInclude Include="mapTool.h">
-      <Filter>PlayGround\mapTool</Filter>
+    <ClInclude Include="menuFrame.h">
+      <Filter>2DFramework\meneFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="menuFrameManager.h">
+      <Filter>2DFramework\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -329,6 +338,9 @@
     <ClCompile Include="hayoungTestScene.cpp">
       <Filter>PlayGround\ui</Filter>
     </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>PlayGround\map</Filter>
+    </ClCompile>
     <ClCompile Include="fontLoader.cpp">
       <Filter>2DFramework\Manager\font</Filter>
     </ClCompile>
@@ -341,8 +353,11 @@
     <ClCompile Include="loadScene.cpp">
       <Filter>PlayGround\loadScene</Filter>
     </ClCompile>
-    <ClCompile Include="mapTool.cpp">
-      <Filter>PlayGround\mapTool</Filter>
+    <ClCompile Include="menuFrame.cpp">
+      <Filter>2DFramework\meneFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="menuFrameManager.cpp">
+      <Filter>2DFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

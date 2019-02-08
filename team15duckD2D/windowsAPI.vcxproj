@@ -171,6 +171,8 @@
     <ClInclude Include="loadScene.h" />
     <ClInclude Include="mapTool.h" />
     <ClInclude Include="mapToolScene.h" />
+    <ClInclude Include="menuFrame.h" />
+    <ClInclude Include="menuFrameManager.h" />
     <ClInclude Include="objectToolScene.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerDataBase.h" />
@@ -213,6 +215,8 @@
     <ClCompile Include="loadScene.cpp" />
     <ClCompile Include="mapTool.cpp" />
     <ClCompile Include="mapToolScene.cpp" />
+    <ClCompile Include="menuFrame.cpp" />
+    <ClCompile Include="menuFrameManager.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerDataBase.cpp" />
