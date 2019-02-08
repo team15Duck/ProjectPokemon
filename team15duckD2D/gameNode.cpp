@@ -47,6 +47,8 @@ void gameNode::release()
 	{
 		KillTimer(_hWnd, 1);
 
+		PLAYERDATA->release();
+		PLAYERDATA->releaseSingleton();
 		KEYMANAGER->release();
 		KEYMANAGER->releaseSingleton();
 		IMAGEMANAGER->release();
