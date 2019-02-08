@@ -243,6 +243,9 @@
     <ClInclude Include="menuFrameManager.h">
       <Filter>2DFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -358,6 +361,9 @@
     </ClCompile>
     <ClCompile Include="menuFrameManager.cpp">
       <Filter>2DFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>PlayGround\item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
