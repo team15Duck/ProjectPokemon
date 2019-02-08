@@ -13,7 +13,7 @@ objectToolScene::~objectToolScene()
 
 HRESULT objectToolScene::init()
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void objectToolScene::release()
