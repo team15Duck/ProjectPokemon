@@ -106,7 +106,7 @@
     <Filter Include="PlayGround\loadScene">
       <UniqueIdentifier>{fa4efec6-4331-49f6-8384-7d540f1a657b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DFramework\meneFrame">
+    <Filter Include="2DFramework\menuFrame">
       <UniqueIdentifier>{a597e975-466c-4ca6-a003-f6837cebc204}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -235,7 +235,7 @@
       <Filter>PlayGround\loadScene</Filter>
     </ClInclude>
     <ClInclude Include="menuFrame.h">
-      <Filter>2DFramework\meneFrame</Filter>
+      <Filter>2DFramework\menuFrame</Filter>
     </ClInclude>
     <ClInclude Include="menuFrameManager.h">
       <Filter>2DFramework\Manager</Filter>
@@ -354,7 +354,7 @@
       <Filter>PlayGround\loadScene</Filter>
     </ClCompile>
     <ClCompile Include="menuFrame.cpp">
-      <Filter>2DFramework\meneFrame</Filter>
+      <Filter>2DFramework\menuFrame</Filter>
     </ClCompile>
     <ClCompile Include="menuFrameManager.cpp">
       <Filter>2DFramework\Manager</Filter>
