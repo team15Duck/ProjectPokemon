@@ -180,6 +180,7 @@
     <ClInclude Include="playGround.h" />
     <ClInclude Include="pokemon.h" />
     <ClInclude Include="pokemonInfo.h" />
+    <ClInclude Include="pokemonSkill.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="pokemon.cpp" />
     <ClCompile Include="pokemonInfo.cpp" />
+    <ClCompile Include="pokemonSkill.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="startScene.cpp" />

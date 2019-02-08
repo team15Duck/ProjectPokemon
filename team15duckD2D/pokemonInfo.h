@@ -53,21 +53,37 @@ enum POKEMON_TYPE
 	PM_TYPE_COUNT = PM_TYPE_NONE,
 };
 
-class pokemonInfo
+enum POKEMON_UPSET_CONDITION
 {
-private:
+	PMS_POISON,			// 독
+	PMS_PALALYSIS,		// 마비
+	PMS_CONFUSE	,		// 혼란
+	PMS_SLEEP,			// 잠듦
+};
 
-	POKEMON	_pokemon;	// 포켓몬
-	POKEMON_TYPE _type;	// 포켓몬 타입
 
+struct tagPokemonStatus
+{
 	int _hp;			// 체력
 	int _attk;			// 공격력
 	int _dex;			// 방어력
 	int _spAttk;		// 특수 공격력
 	int _spDex;			// 특수 방어력
-						
-	int _speed;			// 속도
 
+	int _speed;			// 속도
+};
+
+
+// 포켓몬 기본 정보
+// 데이터에서 정보를 받아온 뒤 수정되지 않을 정보들
+class pokemonInfo
+{
+private:
+
+	POKEMON	_pokemon;				// 포켓몬
+	POKEMON_TYPE _type;				// 포켓몬 타입
+
+	tagPokemonStatus _defaultStatus;// 포켓몬 정보
 
 public:
 	pokemonInfo();

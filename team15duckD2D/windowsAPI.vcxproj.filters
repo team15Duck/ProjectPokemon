@@ -252,6 +252,9 @@
     <ClInclude Include="pokemon.h">
       <Filter>PlayGround\pokemon</Filter>
     </ClInclude>
+    <ClInclude Include="pokemonSkill.h">
+      <Filter>PlayGround\pokemon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -375,6 +378,9 @@
       <Filter>PlayGround\pokemon</Filter>
     </ClCompile>
     <ClCompile Include="pokemon.cpp">
+      <Filter>PlayGround\pokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="pokemonSkill.cpp">
       <Filter>PlayGround\pokemon</Filter>
     </ClCompile>
   </ItemGroup>
