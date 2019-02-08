@@ -111,8 +111,8 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	
 
-	SCENEMANAGER->changeScene("го©╣╬ю");
-	//SCENEMANAGER->changeScene("mapToolScene");
+	//SCENEMANAGER->changeScene("го©╣╬ю");
+	SCENEMANAGER->changeScene("mapToolScene");
 
 	return S_OK;
 }

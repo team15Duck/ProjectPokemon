@@ -5,6 +5,7 @@
 class mapToolScene : public gameNode
 {
 private:
+	mapTool* _maptool;
 
 public:
 	mapToolScene();
@@ -14,5 +15,6 @@ public:
 	void release();
 	void update();
 	void render();
+
 };
 
