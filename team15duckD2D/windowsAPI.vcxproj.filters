@@ -97,6 +97,15 @@
     <Filter Include="2DFramework\Manager\font">
       <UniqueIdentifier>{f009092f-1b68-4317-b4cd-87a928eabfc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\loadingScene">
+      <UniqueIdentifier>{276b5bee-3ef9-4f6b-a1dd-e64af67d7f72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\startScene">
+      <UniqueIdentifier>{58c4b3cb-acf4-4b8b-af52-69511a7903e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\loadScene">
+      <UniqueIdentifier>{fa4efec6-4331-49f6-8384-7d540f1a657b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -216,6 +225,15 @@
     <ClInclude Include="fontLoader.h">
       <Filter>2DFramework\Manager\font</Filter>
     </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>PlayGround\loadingScene</Filter>
+    </ClInclude>
+    <ClInclude Include="startScene.h">
+      <Filter>PlayGround\startScene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadScene.h">
+      <Filter>PlayGround\loadScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -316,6 +334,15 @@
     </ClCompile>
     <ClCompile Include="fontLoader.cpp">
       <Filter>2DFramework\Manager\font</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>PlayGround\loadingScene</Filter>
+    </ClCompile>
+    <ClCompile Include="startScene.cpp">
+      <Filter>PlayGround\startScene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadScene.cpp">
+      <Filter>PlayGround\loadScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
