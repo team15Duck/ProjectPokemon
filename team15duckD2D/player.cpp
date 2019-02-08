@@ -13,6 +13,9 @@ player::~player()
 
 HRESULT player::init()
 {
+	dataLoad();
+	aniSetUp();
+
 	return S_OK;
 }
 
@@ -25,5 +28,13 @@ void player::update()
 }
 
 void player::render()
+{
+}
+
+void player::aniSetUp()
+{
+}
+
+void player::dataLoad()
 {
 }
