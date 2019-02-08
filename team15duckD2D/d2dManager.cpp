@@ -312,6 +312,24 @@ void d2dManager::drawText(LPCWSTR string, float x, float y)
 	SAFE_RELEASE2(_customTextFormat);
 }
 
+void d2dManager::drawText(LPCWSTR string, float x, float y, int fontSize)
+{
+	D2D1_RECT_F rcf = getDrawRectfArea(x, y, x + lstrlenW(string) * 15, y + 20);
+
+	if (!isRectFInRangeWindow(rcf))
+		return;
+
+	//	TextFormat 생성
+
+
+	_writeFactory->CreateTextFormat(L"둥근모꼴", _collection, DWRITE_FONT_WEIGHT_REGULAR,
+		DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, fontSize, L"", &_customTextFormat);
+
+	_renderTarget->DrawTextA(string, lstrlenW(string), _customTextFormat, rcf, _defaultBrush);
+
+	SAFE_RELEASE2(_customTextFormat);
+}
+
 
 void d2dManager::drawTextD2D(ID2D1SolidColorBrush * brush, LPCWSTR string, float startX, float startY, float endX, float endY)
 {
