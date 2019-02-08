@@ -9,7 +9,6 @@
 #define ATTR_FOREST 0x00000004
 #define ATTR_TREE   0x00000008
 
-
 ///////// 어트리뷰트는 처음에 0으로 초기화하고 |= 이걸로 더해주세요
 ///////// 빼낼떄는 ^=
 typedef struct tagTile
@@ -23,4 +22,3 @@ typedef struct tagTile
 
 //타일의 포인터를 LPTILE이라고 하겠다
 typedef struct tagTile *LPTILE;
-
