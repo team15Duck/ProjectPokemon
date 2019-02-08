@@ -15,10 +15,11 @@ HRESULT playGround::init()
 	gameNode::init(true);
 	
 	SCENEMANAGER->addScene("Ä¡¿µ¾À", new chiyeongTestScene);
+	SCENEMANAGER->addScene("ÇÏ¿µ¾À", new hayoungTestScene);
 
 	
 
-	SCENEMANAGER->changeScene("Ä¡¿µ¾À");
+	SCENEMANAGER->changeScene("ÇÏ¿µ¾À");
 
 	return S_OK;
 }
