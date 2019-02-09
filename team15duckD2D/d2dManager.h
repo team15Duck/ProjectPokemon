@@ -69,6 +69,7 @@ public:
 	
 	void drawText(LPCWSTR string, float x, float y);
 	void drawText(LPCWSTR string, float x, float y, int fontSize);
+	void drawText(LPCWSTR string, float x, float y, int fontSize, COLORREF rgb);
 	//출력할 문자열, 문자열을 그릴 Rect의 Left, Top, Right, Bottom, 그릴 브러쉬
 	void drawTextD2D(ID2D1SolidColorBrush* brush, LPCWSTR string, float startX, float startY, float endX, float endY);
 
