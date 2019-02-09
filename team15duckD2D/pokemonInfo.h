@@ -66,37 +66,65 @@ enum POKEMON_UPSET_CONDITION
 	PMUC_COUNT = PMUC_NONE,
 };
 
-
+// 능력치
 typedef struct tagPokemonStatus
 {
-	unsigned int _hp;			// 체력
-	unsigned int _attk;			// 공격력
-	unsigned int _dex;			// 방어력
-	unsigned int _spAttk;		// 특수 공격력
-	unsigned int _spDex;		// 특수 방어력
+	unsigned int hp;		// 체력
+	unsigned int attk;		// 공격력
+	unsigned int dex;		// 방어력
+	unsigned int spAttk;	// 특수 공격력
+	unsigned int spDex;		// 특수 방어력
 	
-	unsigned int _speed;		// 속도
+	unsigned int speed;		// 속도
 
+	// 값 복사
 	void operator=(tagPokemonStatus status)
 	{
-		_hp		= status._hp;
-		_attk	= status._attk;
-		_dex	= status._dex;
-		_spAttk = status._spAttk;
-		_spDex	= status._spDex;
-		_speed	= status._speed;
+		hp		= status.hp;
+		attk	= status.attk;
+		dex		= status.dex;
+		spAttk	= status.spAttk;
+		spDex	= status.spDex;
+		speed	= status.speed;
 	}
 
-	void operator=(tagPokemonStatus* status)
+	// 초기화
+	void clear()
 	{
-		_hp		= status->_hp;
-		_attk	= status->_attk;
-		_dex	= status->_dex;
-		_spAttk = status->_spAttk;
-		_spDex	= status->_spDex;
-		_speed	= status->_speed;
+		hp		= 0;
+		attk	= 0;
+		dex		= 0;
+		spAttk	= 0;
+		spDex	= 0;
+		speed	= 0;
 	}
 }pokemonStatus;
+
+
+typedef struct tagPokemonUpsetCondition
+{
+	POKEMON_UPSET_CONDITION type;	// 상태이상
+	int value;						// 상태 이상 시 적용 될 값(ex. 독 데미지, 마비 확률 등)
+	int count;						// 상태이상 지속 턴
+
+	// 값 복사
+	void operator= (tagPokemonUpsetCondition condition)
+	{
+		type  = condition.type;
+		value = condition.value;
+		count = condition.count;
+	}
+
+	// 초기화
+	void clear()
+	{
+		type = PMUC_NONE;
+		value = 0;
+		count = 0;
+	}
+
+}pokemonUC;
+
 
 
 // 포켓몬 기본 정보
@@ -107,15 +135,23 @@ private:
 
 	POKEMON			_index;				// 포켓몬 넘버
 	POKEMON_TYPE	_type;				// 포켓몬 타입
-	string			_name;				// 포켓몬 이름
-	
-	pokemonStatus	_defaultStatus;		// 포켓몬 정보
+	pokemonStatus	_defaultStatus;		// 포켓몬 능력치(Lv 1)
 
+	string			_name;				// 포켓몬 이름
 	string			_description;		// 설명
 	
-
 public:
 	pokemonInfo();
 	~pokemonInfo();
+
+	HRESULT init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status, string text);
+	void clear();
+
+	POKEMON getPokemonIndex()					{ return _index;			}
+	POKEMON_TYPE getPokemonType()				{ return _type;				}
+	const pokemonStatus* getPokemonStatus()		{ return &_defaultStatus;	}
+	const string* getPokemonName()				{ return &_name;			}
+	const string* getPokemonDescription()		{ return &_description;		}
+
 };
 
