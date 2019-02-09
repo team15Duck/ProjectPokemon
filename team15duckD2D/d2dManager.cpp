@@ -314,7 +314,7 @@ void d2dManager::drawText(LPCWSTR string, float x, float y)
 
 void d2dManager::drawText(LPCWSTR string, float x, float y, int fontSize)
 {
-	D2D1_RECT_F rcf = getDrawRectfArea(x, y, x + lstrlenW(string) * 15, y + 20);
+	D2D1_RECT_F rcf = getDrawRectfArea(x, y, x + lstrlenW(string) * fontSize, y + 20);
 
 	if (!isRectFInRangeWindow(rcf))
 		return;

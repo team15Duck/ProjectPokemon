@@ -6,19 +6,20 @@ enum MENU_DIRECTION
 	MD_LT, MD_RT, MD_LB, MD_RB, MD_L, MD_R, MD_T, MD_B, MD_NONE
 };
 
-
-
-struct tagMenuFrameInfo
+struct tagCommonMenu
 {
-	D2D1_RECT_F rc;
-	MENU_DIRECTION direction;
+	D2D1_RECT_F _bottom;
+	D2D1_RECT_F _menu[6];
+	D2D1_RECT_F _cursor[6];
 };
-
 class hayoungTestScene : public gameNode
 {
 private:
 	D2D1_RECT_F _rc;
-	D2D1_RECT_F _test[150];
+
+	tagCommonMenu _cm;
+
+	bool _isCommonMenu;	//기본메뉴
 
 public:
 	hayoungTestScene();
@@ -30,6 +31,9 @@ public:
 	void render();
 
 	void frameImageinit();
+
+	//================================ GET && SET ===================================//
+
 
 };
 
