@@ -258,6 +258,9 @@
     <ClInclude Include="mainUi.h">
       <Filter>PlayGround\ui</Filter>
     </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>PlayGround\item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -388,6 +391,9 @@
     </ClCompile>
     <ClCompile Include="mainUi.cpp">
       <Filter>PlayGround\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>PlayGround\item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
