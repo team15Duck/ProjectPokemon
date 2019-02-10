@@ -2,11 +2,11 @@
 #include "pokemonInfo.h"
 #include "pokemonSkill.h"
 #include "item.h"
+#include <functional>
 
 
 #define POKEMON_SKILL_MAX_COUNT 4			// 최대 보유할 수 있는 스킬의 수
-
-
+#define PROGRESSING_TERM 0.1
 
 // 세이브용 데이터
 typedef struct tagPokemonPackage
@@ -45,6 +45,9 @@ typedef struct tagPokemonPackage
 class pokemon
 {
 private:
+	//typedef function<void(void)> CALLBACK_FUNCTION;
+
+private:
 
 	unsigned int _idNo;							// 고유 번호
 	POKEMON _index;								// 도감 번호
@@ -65,13 +68,17 @@ private:
 	pokemonStatus _currentStatus;				// 현재 status
 
 	int _displayHp;								// 연출용 hp
-	int _displyExp;								// 연출용 경험치
+	int _displayExp;							// 연출용 경험치
+
+	float _displayTime;							// 연출 용 시간
 
 	pokemonUC	  _upsetCondition;				// 상태 이상
 
 	pmSkill _skills[POKEMON_SKILL_MAX_COUNT];	// 스킬
 
 	image*		_img;	// 이미지
+
+	function<void(void)> _function;				// 연출용 함수
 
 public:
 	pokemon();
@@ -92,6 +99,8 @@ public:
 	// 몇 번째(idx) 스킬 사용
 	void useSkill(int idx);
 
+	// 데미지 입음
+	void takeDamage(int value);
 	// hp full 회복
 	void fillHp();
 	// hp 회복
@@ -138,7 +147,7 @@ public:
 	// 현재 경험치
 	unsigned int getCurrentExp(){ return _currentExp; }
 	// 레벨업에 필요한 경험치
-	unsigned int getNextExp()	{ return _nextExp; }
+	unsigned int getNextExp()	{ return _nextExp - _currentExp; }
 	// 현재 체력
 	int getHp()			{ return _currentStatus.hp; }
 	// 풀 체력
@@ -161,7 +170,7 @@ public:
 	// 연출용 hp
 	int getDisplayHp()	{ return _displayHp; }
 	//  연출용 exp
-	int getDisplayExp() { return _displyExp; }
+	int getDisplayExp() { return _displayExp; }
 
 
 
@@ -174,5 +183,14 @@ private:
 	void evolution();
 	// 레벨업에 따른 스킬 획득
 	void gainSkill();
+
+	// 연출 시작
+	void startProgessingValue(function<void(void)> func);
+	// hp 변화
+	void progressingIncreaseHp();
+	void progressingDecreaseHp();
+	// exp 변화
+	void progressingIncreseExp(void);
+
 };
 

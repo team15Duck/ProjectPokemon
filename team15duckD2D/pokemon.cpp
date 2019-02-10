@@ -11,6 +11,8 @@ pokemon::pokemon()
 , _nextExp(0)
 , _isAwake(false)
 , _isMyPokemon(false)
+, _displayHp(0)
+, _displayExp(0)
 , _img(nullptr)
 {
 	_defaultStatus.clear();
@@ -45,6 +47,16 @@ void pokemon::release()
 
 void pokemon::update()
 {
+	if ( _function != NULL )
+	{
+		_displayTime -= TIMEMANAGER->getElapsedTime();
+		if ( _displayTime < 0 )
+		{
+			_function();
+			_displayTime = PROGRESSING_TERM;
+		}
+	}
+
 }
 
 void pokemon::render()
@@ -139,29 +151,52 @@ void pokemon::levelUpForce()
 {
 	++_level;
 	settingStatus();
+	// 강제 렙업은 경험치 오르는 효과 없음
 }
 
 void pokemon::useSkill(int idx)
 {
 }
 
+void pokemon::takeDamage(int value)
+{
+	_displayHp = _currentStatus.hp;
+	_currentStatus.hp -= value;
+	if ( _currentStatus.hp < 0 )
+	{
+		_currentStatus.hp = 0;
+	}
+
+	_displayTime = PROGRESSING_TERM;
+	startProgessingValue(bind(&pokemon::progressingDecreaseHp, this));
+}
+
 void pokemon::fillHp()
 {
+	_displayHp = _currentStatus.hp;
 	_currentStatus.hp = _defaultStatus.hp;
+	startProgessingValue(bind(&pokemon::progressingIncreaseHp, this));
 }
 
 void pokemon::hillHp(int value)
 {
+	_displayHp = _currentStatus.hp;
 	_currentStatus.hp += value;
-	if( _defaultStatus.hp < _currentStatus.hp)
+	if ( _defaultStatus.hp < _currentStatus.hp )
+	{
 		fillHp();
+	}
+	else
+	{
+		startProgessingValue(bind(&pokemon::progressingIncreaseHp, this));
+	}
 }
 
 void pokemon::gainExp(int exp)
 {
+	_displayExp = _currentExp;
 	_currentExp += exp;
-	if(_nextExp < _currentExp)
-		levelUp();
+	startProgessingValue(bind(&pokemon::progressingIncreseExp, this));
 }
 
 item* pokemon::withdrawItem()
@@ -192,6 +227,7 @@ void pokemon::levelUp()
 	
 	evolution();
 	gainSkill();
+	//_nextExp =  : 채워야 할 경험치 갱신
 }
 
 void pokemon::settingStatus()
@@ -204,4 +240,48 @@ void pokemon::evolution()
 
 void pokemon::gainSkill()
 {
+}
+
+void pokemon::startProgessingValue(function<void(void)> func)
+{
+	_displayTime = PROGRESSING_TERM;
+	_function = std::move(func);
+}
+
+void pokemon::progressingIncreaseHp()
+{
+	++_displayExp;
+	
+	// 필요 경험치 채웠으면 레벨업
+	if ( _displayExp == _nextExp )
+	{
+		levelUp();
+	}
+	// 경험치 다 올렸으면 콜백함수 해제
+	else if ( _displayExp == _currentExp )
+	{
+		_function = NULL;
+	}
+}
+
+void pokemon::progressingDecreaseHp()
+{
+	--_displayHp;
+
+	// 피를 뻈으면 콜백함수 해제
+	if ( _displayHp == _currentStatus.hp )
+	{
+		_function = NULL;
+	}
+}
+
+void pokemon::progressingIncreseExp(void)
+{
+	++_displayHp;
+
+	// 피 채웠으면 콜백함수 해제
+	if ( _displayHp == _currentStatus.hp )
+	{
+		_function = NULL;
+	}
 }
