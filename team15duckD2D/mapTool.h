@@ -4,6 +4,7 @@
 #include <assert.h>
 #define	TILE_IMAGE_NUM		10
 #define SAMPLE_TOTAL_SIZE	384
+#define	CAMERA_SHOW_RANGE	8 * TILE_SIZE
 
 //지형 상태 enum문(길, 벽, 그외...나중에 오브젝트 추가)
 enum SAMPLETERRAIN
@@ -41,6 +42,7 @@ private:
 	//샘플타일의 배열
 	tagSampleTile	_sampleTile[SAMPLETILE][SAMPLETILE];
 
+	
 
 	//맵그릴 부분의 이중벡터 
 	vector<vector<tagTile*>> _vvTile;
@@ -59,10 +61,13 @@ private:
 	unsigned int TILEX;
 	unsigned int TILEY;
 
+	//선택한 샘플 타일
 	tagCurrentTile	_pickSampleTile;
-
+	//맵내에서 선택한 타일에 샘플타일을 넣을 용도
+	//tagCurrentTile	 _curTile;
 
 	bool _isTileClick;
+	//bool _isMapClick;
 
 public:
 	mapTool();
@@ -77,5 +82,28 @@ public:
 	void turnMap();
 	void pickSampleMap();
 	void mapSizeUp();
+
+	void drawMap();
+
+	void save();
+	void load();
+
+
+
+
+private:
+	//내부함수
+
+	inline RECT makeRECT(D2D1_RECT_F rc)
+	{
+		return RECT{(LONG)rc.left, (LONG)rc.top, (LONG)rc.right, (LONG)rc.bottom};
+	}
+
+	inline POINT makePOINT(POINTF pt)
+	{
+		return POINT{ (LONG)pt.x, (LONG)pt.y };
+	}
+
+	DWORD setAttribute(string imgName, UINT frameX, UINT frameY);
 };
 

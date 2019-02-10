@@ -41,9 +41,9 @@ HRESULT mapTool::init()
 	//MENUMANAGER->addFrame("∏  ∆≤", WINSIZEX - SAMPLE_TOTAL_SIZE, 1, 9, 15);
 	_isTileClick = false;
 
-
-
+	CAMERA->init(0, 0, 3000, 3000);
 	return S_OK;
+
 }
 
 void mapTool::release()
@@ -54,6 +54,17 @@ void mapTool::update()
 {
 	turnMap();
 	pickSampleMap();
+	drawMap();
+	//mapSizeUp();
+
+	if (KEYMANAGER->isOnceKeyDown(VK_CONTROL))
+	{
+		save();
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
+	{
+		load();
+	}
 }
 
 void mapTool::render()
@@ -101,18 +112,29 @@ void mapTool::render()
 									  , CAMERA->getPosY() + _sampleTile[i][j].sampleRc.bottom);
 		}
 	}
-	if (_isTileClick)
-	{
-		IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
-	}
+	
 	//∏  ∑ª¥ı
 	for (int i = 0; i < TILEY; ++i)
 	{
 		for (int j = 0; j < TILEX; ++j)
 		{
+			if (_vvRect[i][j].right > CAMERA->getPosX() + CAMERA_SHOW_RANGE)
+				continue;
 			D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
+			if (_vvTile[i][j]->terrainImageName == TERRAIN_NAME_NONE) continue;
+			IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 		}
 	}
+
+	if (_isTileClick)
+	{
+		IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
+	}
+
+	WCHAR str[128];
+	swprintf_s(str, L"TILEX : %d, TILEY : %d", TILEX, TILEY);
+	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 200);
+
 	//MENUMANAGER->findMenuFrame("∏„ ∆≤")->render("≈∏¿‘1");
 }
 
@@ -133,8 +155,8 @@ void mapTool::setTile()
 	}
 
 	//∏ 
-	TILEX = 5;
-	TILEY = 5;
+	TILEX = 100;
+	TILEY = 100;
 	for (int i = 0; i < TILEY; ++i)
 	{
 		vector<tagTile*> vTile;
@@ -151,6 +173,9 @@ void mapTool::setTile()
 			tempTile->objectFrameY = 0;
 
 			tempTile->attr |= ATTR_NONE;
+
+			tempTile->terrainImageName = TERRAIN_NAME_NONE;
+			tempTile->objectImageName = OBJECT_NAME_NONE;
 
 			*tempRect = { (float)j * TILE_SIZE, (float)i * TILE_SIZE, (float)(j + 1) * TILE_SIZE, (float)(i + 1) * TILE_SIZE };
 
@@ -321,8 +346,200 @@ void mapTool::pickSampleMap()
 
 void mapTool::mapSizeUp()
 {
+	POINT tempPT = { _ptMouse.x, _ptMouse.y };
+	
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && TILEX > 1)
 	{
-		//if()
+		if (PtInRect(&makeRECT(_sizeDownWidth), tempPT))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				tagTile* target = _vvTile[i].back();
+				_vvTile[i].pop_back();
+
+				D2D1_RECT_F targetRc = _vvRect[i].back();
+				_vvRect[i].pop_back();
+				SAFE_DELETE(target);
+				
+			}
+			TILEX--;
+		}
+
+		if (PtInRect(&makeRECT(_sizeUpWidth), tempPT))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				tagTile* tempTile = new tagTile;
+				D2D1_RECT_F* tempRect = new D2D1_RECT_F;
+				tempTile->terrainFrameX = 0;
+				tempTile->terrainFrameY = 0;
+
+				tempTile->objectFrameX = 0;
+				tempTile->objectFrameY = 0;
+
+				tempTile->attr |= ATTR_NONE;
+
+				tempTile->terrainImageName = TERRAIN_NAME_NONE;
+				tempTile->objectImageName = OBJECT_NAME_NONE;
+
+				*tempRect = { (float)_vvRect[i].back().right
+							, (float)_vvRect[i].back().top
+							, (float)_vvRect[i].back().right + TILE_SIZE
+							, (float)_vvRect[i].back().bottom };
+				_vvTile[i].push_back(tempTile);
+				_vvRect[i].push_back(*tempRect);
+			}
+			++TILEX;
+		}
 	}
+	
+}
+
+void mapTool::drawMap()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+	{
+		for (int i = 0; i < TILEY; ++i)
+		{
+			for (int j = 0; j < TILEX; ++j)
+			{
+				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+				{
+					_vvTile[i][j]->terrainImageName = _sampleImgStr[_curImgNum];
+					
+					_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
+					_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
+					_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->terrainImageName, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+				}
+			}
+		}
+	}
+
+
+}
+
+void mapTool::save()
+{
+	HANDLE file;
+	DWORD write;
+
+	char mapSize[128];
+	sprintf_s(mapSize, "%d, %d", TILEX, TILEY);
+	file = CreateFile("mapSize1.map", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	
+
+	WriteFile(file, mapSize, strlen(mapSize), &write, NULL);
+
+	CloseHandle(file);
+
+	tagTile* tile = new tagTile[TILEX * TILEY];
+	for (int i = 0; i < TILEY; ++i)
+	{
+		for (int j = 0; j < TILEX; ++j)
+		{
+			tile[j + i * TILEX] = *_vvTile[i][j];
+		}
+	}
+
+	HANDLE file2;
+	DWORD write2;
+	file2 = CreateFile("mapData.map", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	WriteFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+
+	CloseHandle(file2);
+
+	delete[] tile;
+}
+
+void mapTool::load()
+{
+	_vvTile.clear();
+
+	HANDLE file;
+	DWORD read;
+	char mapSize[128] = { 0, };
+
+	file = CreateFile("mapSize1.map", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	ReadFile(file, mapSize, 128, &read, NULL);
+	CloseHandle(file);
+
+	string mapX, mapY;
+	mapX.clear();
+	mapY.clear();
+	bool x = true;
+	for (int i = 0; i < strlen(mapSize); ++i)
+	{
+		if (mapSize[i] == ',')
+		{
+			x = false;
+			continue;
+		}
+		if (mapSize[i] == NULL) break;
+		if (x)
+		{
+			mapX += mapSize[i];
+		}
+		else
+		{
+			mapY += mapSize[i];
+		}
+
+	}
+
+	TILEX = stoi(mapX);
+	TILEY = stoi(mapY);
+	_vvTile.resize(TILEY);
+
+	for (int i = 0; i < TILEY; ++i)
+	{
+		_vvTile[i].resize(TILEX);
+	}
+
+	tagTile* tile = new tagTile[TILEX * TILEY];
+	ZeroMemory(tile, sizeof(tagTile) * (TILEX * TILEY));
+
+	HANDLE file2;
+	DWORD read2;
+
+	file2 = CreateFile("mapData.map", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	ReadFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &read2, NULL);
+
+	CloseHandle(file2);
+
+	for (int i = 0; i < TILEY; ++i)
+	{
+		for (int j = 0; j < TILEX; ++j)
+		{
+			_vvTile[i][j] = &tile[j + i * TILEX];
+		}
+	}
+}
+
+DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
+{
+	DWORD result = ATTR_NONE;
+	
+	if (imgName == TERRAIN_NAME6)
+	{
+
+	}
+	if (imgName == TERRAIN_NAME7)
+	{
+
+	}
+	if (imgName == TERRAIN_NAME8)
+	{
+
+	}
+	if (imgName == TERRAIN_NAME9)
+	{
+
+	}
+	if (imgName == TERRAIN_NAME10)
+	{
+
+	}
+	return result;
 }
