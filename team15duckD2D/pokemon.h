@@ -64,6 +64,9 @@ private:
 	pokemonStatus _defaultStatus;				// 원래 status
 	pokemonStatus _currentStatus;				// 현재 status
 
+	int _displayHp;								// 연출용 hp
+	int _displyExp;								// 연출용 경험치
+
 	pokemonUC	  _upsetCondition;				// 상태 이상
 
 	pmSkill _skills[POKEMON_SKILL_MAX_COUNT];	// 스킬
@@ -154,6 +157,11 @@ public:
 	POKEMON_UPSET_CONDITION getUpsetCondition() { return _upsetCondition.type; }
 	// 스킬
 	const pmSkill* getPokemonSkills() { return _skills; }
+
+	// 연출용 hp
+	int getDisplayHp()	{ return _displayHp; }
+	//  연출용 exp
+	int getDisplayExp() { return _displyExp; }
 
 
 
