@@ -5,54 +5,77 @@
 #define	TILE_IMAGE_NUM		10
 #define SAMPLE_TOTAL_SIZE	384
 
-struct tagSampleTerrain
+//지형 상태 enum문(길, 벽, 그외...나중에 오브젝트 추가)
+enum SAMPLETERRAIN
 {
-	int sampleTerrainX;
-	int sampleTerrainY;
-	D2D1_RECT_F sampeTerrainRect;
+	TR_ROAD,
+	TR_WALL,
+
+
+	SAMPLE_NONE
+};
+
+//샘플타일의 프레임 번호 구조체. (Rect는 넣을까 말까...)
+struct tagSampleTile
+{
+	D2D1_RECT_F sampleRc;
+	int frameX;
+	int frameY;
 };
 
 struct tagCurrentTile
 {
-	int curX;
-	int curY;
+	bool isObj = false;	//->일단 지형으로 시작해서
+	int curX = 0;
+	int curY = 0;
 };
-
 class mapTool
 {
 private:
-	
-	string			_currentSample[TILE_IMAGE_NUM];
-	int				_currentSampleImgNumber;
+	//샘플타일의 이미지
+	image*	_sampleImg[TILE_IMAGE_NUM];
+	//샘플타일 이미지를 string으로(이미지매니저에서 findeImg 할때 쓰려고)
+	string _sampleImgStr[TILE_IMAGE_NUM];
+	int		_curImgNum;
 
-	tagSampleTerrain _sampleTerrain[SAMPLETILE * SAMPLETILE];	//샘플배치할 타일
-	tagSampleTerrain _currentSampleTile;						//선택한 sample 타일을 이 변수에 넣어줌.
-	
-	tagSampleTerrain _currentTile;								//현재 타일(선택한 sample 타일을 이 변수에 넣어줌).
+	//샘플타일의 배열
+	tagSampleTile	_sampleTile[SAMPLETILE][SAMPLETILE];
 
-	vector<vector<tagTile*>> _vvTiles;
-	
+
+	//맵그릴 부분의 이중벡터 
+	vector<vector<tagTile*>> _vvTile;
+	vector<vector<D2D1_RECT_F>> _vvRect;
+
+	//이전, 다음 버튼
 	D2D1_RECT_F		_preButton;
 	D2D1_RECT_F		_nextButton;
-	
-	unsigned int	TILEX;
-	unsigned int	TILEY;
+
+	//맵의 타일 사이즈를 늘리는 버튼
+	D2D1_RECT_F		_sizeUpWidth;
+	D2D1_RECT_F		_sizeDownWidth;
+	D2D1_RECT_F		_sizeUpHeight;
+	D2D1_RECT_F		_sizeDownHeight;
+
+	unsigned int TILEX;
+	unsigned int TILEY;
+
+	tagCurrentTile	_pickSampleTile;
 
 
+	bool _isTileClick;
 
 public:
 	mapTool();
 	~mapTool();
 
-	
 	HRESULT init();
 	void release();
 	void update();
 	void render();
 
-
-
-
-
+	void setTile();
+	void turnMap();
+	void pickSampleMap();
+	void mapSizeUp();
 };
 
