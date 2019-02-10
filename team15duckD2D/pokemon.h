@@ -58,8 +58,9 @@ private:
 	item* _item;								// 소지하고 있는 아이템
 
 	unsigned int _level;						// 레벨
-	unsigned int _currentExp;					// 현재 경험치
-	unsigned int _nextExp;						// 다음 레벨까지 필요한 경험치
+	unsigned int _currentLvExp;					// 현재 레벨의 누적 경험치
+	unsigned int _currentExp;					// 현재 누적 경험치
+	unsigned int _nextLvExp;					// 다음 레벨까지 누적 경험치
 
 	bool _isAwake;								// 깨어 있는가, 기절하지 않았는가
 	bool _isMyPokemon;							// 플레이어의 포켓몬인가
@@ -144,12 +145,19 @@ public:
 
 	// 레벨
 	unsigned int getLevel()		{ return _level;}
+	
 	// 현재 경험치
-	unsigned int getCurrentExp(){ return _currentExp; }
-	// 레벨업에 필요한 총 경험치
-	unsigned int getNextExp()	{ return _nextExp; }
+	unsigned int getCurrentExp()		{ return _currentExp - _currentLvExp; }
+	// 다음 레벨까지 경험치
+	unsigned int getNextExp()			{ return _nextLvExp - _currentLvExp; }
 	// 레벨업에 필요한 남은 경험치
-	unsigned int getRemainExp()	{ return _nextExp - _currentExp; }
+	unsigned int getRemainExp()			{ return _nextLvExp - _currentExp; }
+	
+	// 현재 누적된 경험치
+	unsigned int getCurrentTotalExp()	{ return _currentExp; }
+	// 다음 레벨 누적 경험치
+	unsigned int getNextTotalExp()		{ return _nextLvExp; }
+	
 	// 현재 체력
 	int getHp()			{ return _currentStatus.hp; }
 	// 풀 체력

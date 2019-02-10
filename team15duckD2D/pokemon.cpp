@@ -7,8 +7,9 @@ pokemon::pokemon()
 , _index(POKEMON_NONE)
 , _item(nullptr)
 , _level(0)
+, _currentLvExp(0)
 , _currentExp(0)
-, _nextExp(0)
+, _nextLvExp(0)
 , _isAwake(false)
 , _isMyPokemon(false)
 , _displayHp(0)
@@ -120,7 +121,8 @@ void pokemon::loadSavePack(pmPack* pack)
 		ownerItem->init();
 
 		_item = ownerItem;
-		// pack->itemIdx = _item->getItemID(); // 아이템 아이디
+		// todo 아이템 아이디
+		// pack->itemIdx = _item->getItemID(); 
 	}
 
 	_level = pack->level;
@@ -227,11 +229,13 @@ void pokemon::levelUp()
 	
 	evolution();
 	gainSkill();
-	//_nextExp =  : 채워야 할 경험치 갱신
 }
 
 void pokemon::settingStatus()
 {
+	// todo 그 다음 레벨까지 필요한 누적 경험치 갱신
+	// _currentLvExp = _nextLvExp; 
+	//_nextLvExp =  
 }
 
 void pokemon::evolution()
@@ -253,7 +257,7 @@ void pokemon::progressingIncreaseHp()
 	++_displayExp;
 	
 	// 필요 경험치 채웠으면 레벨업
-	if ( _displayExp == _nextExp )
+	if ( _displayExp == _nextLvExp )
 	{
 		levelUp();
 	}
