@@ -110,10 +110,15 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("го©╣╬ю", new hayoungTestScene);
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	
-
-	SCENEMANAGER->changeScene("го©╣╬ю");
-	//SCENEMANAGER->changeScene("mapToolScene");
-
+	if (MAPTOOLSCENE)
+	{
+		SCENEMANAGER->changeScene("mapToolScene");
+	}
+	else
+	{
+		SCENEMANAGER->changeScene("го©╣╬ю");
+	}
+	
 	return S_OK;
 }
 
