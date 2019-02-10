@@ -146,8 +146,10 @@ public:
 	unsigned int getLevel()		{ return _level;}
 	// 현재 경험치
 	unsigned int getCurrentExp(){ return _currentExp; }
-	// 레벨업에 필요한 경험치
-	unsigned int getNextExp()	{ return _nextExp - _currentExp; }
+	// 레벨업에 필요한 총 경험치
+	unsigned int getNextExp()	{ return _nextExp; }
+	// 레벨업에 필요한 남은 경험치
+	unsigned int getRemainExp()	{ return _nextExp - _currentExp; }
 	// 현재 체력
 	int getHp()			{ return _currentStatus.hp; }
 	// 풀 체력
