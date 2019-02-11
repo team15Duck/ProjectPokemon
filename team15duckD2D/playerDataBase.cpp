@@ -29,7 +29,7 @@ void playerDataBase::render()
 {
 }
 
-void playerDataBase::dataLoad()
+void playerDataBase::dataLoad(UINT dataNum)
 {
 }
 

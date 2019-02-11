@@ -13,7 +13,7 @@ chiyeongTestScene::~chiyeongTestScene()
 
 HRESULT chiyeongTestScene::init()
 {
-
+	_map = new mapData;
 	_rc[0] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
 	_rc[1] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
 	_rc[2] = { 600, -WINSIZEY, 1200, WINSIZEY * 2};
