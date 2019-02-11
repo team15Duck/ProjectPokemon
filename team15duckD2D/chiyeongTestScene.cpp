@@ -71,6 +71,7 @@ void chiyeongTestScene::update()
 
 void chiyeongTestScene::render()
 {
+	_player->render();
 	for (int i = 0; i < 9; i++)
 	{
 		if (_count > i * 10 + 10)
@@ -80,7 +81,6 @@ void chiyeongTestScene::render()
 			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 	}
-	_player->render();
 
 
 
