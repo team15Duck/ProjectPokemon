@@ -24,7 +24,7 @@ HRESULT player::init()
 	_isMan = true;
 	_state = PS_IDLE_DOWN;
 	_isMoving = false;
-	_playTime = 7784;
+	_playTime = 5461;
 	_isRight = false;
 	_posZ = 0;
 	//////////////////////////////////////
@@ -55,14 +55,26 @@ void player::update()
 
 void player::render()
 {
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
+			D2DMANAGER->drawRectangle(tile);
+		}
+	}
+
+
+
+
 	if (_isRight)
-		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 150 - _posZ, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 - _posZ, _playerAni);
 	else
-		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150 - _posZ, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 - _posZ, _playerAni);
 
 	WCHAR str[128];
-	int min = (int)_playTime % 3600 / 60;
-	int hour = (int)_playTime / 3600;
+	int min =  ((int)_playTime * 10) % 3600 / 60;
+	int hour = ((int)_playTime * 10) / 3600;
 	swprintf_s(str, L"playTime - %d %d : %d %d", hour / 10, hour % 10, min / 10, min % 10);
 	D2DMANAGER->drawText(str, 700, 0, 25);
 
