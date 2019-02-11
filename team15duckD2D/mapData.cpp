@@ -14,6 +14,7 @@ mapData::~mapData()
 HRESULT mapData::init(const char * mapSizeFileName, const char * mapFileName)
 {
 	ii = iiMax = jj = jjMax = 0;
+	load(mapSizeFileName, mapFileName);
 	return S_OK;
 }
 
