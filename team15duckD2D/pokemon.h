@@ -46,6 +46,14 @@ class pokemon
 {
 private:
 	//typedef function<void(void)> CALLBACK_FUNCTION;
+	enum PROGRESSING_TYPE
+	{
+		PROGRESSING_VALUE,
+		PROGRESSING_SKILL,
+
+		PROGRESSING_NONE,
+		PROGRESSING_COUNT = PROGRESSING_NONE,
+	};
 
 private:
 
@@ -72,20 +80,24 @@ private:
 	int _displayExp;							// 연출용 경험치
 
 	float _displayTime;							// 연출 용 시간
+	bool _isProgressing;						// 연출중인가
+	PROGRESSING_TYPE	_progressingType;
 
 	pokemonUC	  _upsetCondition;				// 상태 이상
-
 	pmSkill _skills[POKEMON_SKILL_MAX_COUNT];	// 스킬
-
+	
 	image*		_img;	// 이미지
-
+	pokemon* _target;	// 적이당
 	function<void(void)> _function;				// 연출용 함수
+
+	int			_hitDamage;				// 적에게 적용할 데미지
+	pokemonUC	_hitUpsetCondition;		// 적에게 적용할 상태 이상
 
 public:
 	pokemon();
 	~pokemon();
 
-	HRESULT init(int idNo, pokemonInfo* info, int level, int nextExp, bool isMyPokemon, pokemonStatus* status, pokemonSkill* skills);
+	HRESULT init(int idNo, pokemonInfo* info, int level, bool isMyPokemon);
 	void release();
 	void update();
 	void render();
@@ -99,7 +111,7 @@ public:
 	void levelUpForce();
 	// 몇 번째(idx) 스킬 사용
 	void useSkill(int idx);
-
+	
 	// 데미지 입음
 	void takeDamage(int value);
 	// hp full 회복
@@ -118,6 +130,9 @@ public:
 	
 	//============================================== set
 	
+	// 적 포켓몬 세팅
+	void setTargetPokemon(pokemon* pm) { _target = pm; }
+
 	// 상태이상 세팅
 	void setUpsetCondition(pokemonUC upsetCondition){ _upsetCondition = upsetCondition; }
 	// 소지 아이템 세팅
@@ -129,6 +144,8 @@ public:
 
 	//============================================== get
 	
+	// 연출 중인가 : 연출 중일 때는 연출만 하고 아무런 행동을 취할 수 읎다아
+	bool isProgressing() {return _isProgressing;}
 	// 깨어있는가
 	bool isAwake()		{ return _isAwake;}
 	// 플레이어 포켓몬인가
@@ -193,14 +210,20 @@ private:
 	void evolution();
 	// 레벨업에 따른 스킬 획득
 	void gainSkill();
+	// 공격
+	void attack();
 
 	// 연출 시작
-	void startProgessingValue(function<void(void)> func);
+	void startProgessing(function<void(void)> func, PROGRESSING_TYPE type);
+	// 연출 끝
+	void endProgressing();
+
 	// hp 변화
 	void progressingIncreaseHp();
 	void progressingDecreaseHp();
 	// exp 변화
 	void progressingIncreseExp(void);
-
+	// 스킬 이펙트
+	void progressintSkillEffect(int idx);
 };
 
