@@ -25,6 +25,7 @@ HRESULT player::init()
 	_state = PS_IDLE_DOWN;
 	_isMoving = false;
 	_playTime = 7784;
+	_isRight = false;
 	//////////////////////////////////////
 
 	//성별따라 키값 셋팅해줌
@@ -53,7 +54,12 @@ void player::update()
 
 void player::render()
 {
-	IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150, _playerAni);
+	if (_isRight)
+		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 150, _playerAni);
+	else
+		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150, _playerAni);
+
+
 
 	WCHAR str[128];
 	int min = (int)_playTime % 3600 / 60;
@@ -120,7 +126,10 @@ void player::keyUpdate()
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 	{
-
+		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+		_playerAni->start();
+		_isMoving = true;
+		_state = PS_MOVE_RIGHT;
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 	{
@@ -156,14 +165,19 @@ void player::stateUpdate()
 	switch (_state)
 	{
 		case player::PS_IDLE_LEFT:
+			_isRight = false;
 		break;
 		case player::PS_IDLE_UP:
+			_isRight = false;
 		break;
 		case player::PS_IDLE_RIGHT:
+			_isRight = true;
 		break;
 		case player::PS_IDLE_DOWN:
+			_isRight = false;
 		break;
 		case player::PS_MOVE_LEFT:
+			_isRight = false;
 			_posX -= 5;
 			if (!_isMoving)
 			{
@@ -177,6 +191,7 @@ void player::stateUpdate()
 			}
 		break;
 		case player::PS_MOVE_UP:
+			_isRight = false;
 			_posY -= 5;
 			if (!_isMoving)
 			{
@@ -190,8 +205,21 @@ void player::stateUpdate()
 			}
 		break;
 		case player::PS_MOVE_RIGHT:
+			_isRight = true;
+			_posX += 5;
+			if (!_isMoving)
+			{
+				if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
+				{
+					_posX = (int)_posX / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
+					_playerAni->start();
+					_state = PS_IDLE_RIGHT;
+				}
+			}
 		break;
 		case player::PS_MOVE_DOWN:
+			_isRight = false;
 			_posY += 5;
 			if (!_isMoving)
 			{
@@ -205,28 +233,40 @@ void player::stateUpdate()
 			}
 		break;
 		case player::PS_FASTMOVE_LEFT:
+			_isRight = false;
 		break;
 		case player::PS_FASTMOVE_UP:
+			_isRight = false;
 		break;
 		case player::PS_FASTMOVE_RIGHT:
+			_isRight = true;
 		break;
 		case player::PS_FASTMOVE_DOWN:
+			_isRight = false;
 		break;
 		case player::PS_BICYCLE_IDLE_LEFT:
+			_isRight = false;
 		break;
 		case player::PS_BICYCLE_IDLE_UP:
+			_isRight = false;
 		break;
 		case player::PS_BICYCLE_IDLE_RIGHT:
+			_isRight = true;
 		break;
 		case player::PS_BICYCLE_IDLE_DOWN:
+			_isRight = false;
 		break;
 		case player::PS_BICYCLE_LEFT:
+			_isRight = false;
 		break;
 		case player::PS_BICYCLE_UP:
+			_isRight = false;
 		break;
 		case player::PS_BICYCLE_RIGHT:
+			_isRight = true;
 		break;
 		case player::PS_BICYCLE_DOWN:
+			_isRight = false;
 		break;
 		default:
 		break;

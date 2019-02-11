@@ -211,6 +211,16 @@ void image::aniRender(int destX, int destY, animation * ani)
 	render(destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
 }
 
+void image::aniRenderReverseX(int destX, int destY, animation * ani)
+{
+	D2D1_SIZE_F size;
+	size.width = -1;
+	size.height = 1;
+	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Scale(size, Point2F(destX + _imageInfo->frameWidth / 2, destY + _imageInfo->frameHeight / 2)));
+	render(destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
+	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+}
+
 POINTFLOAT image::GetRenderPosition(float destX, float destY)
 {
 	POINTFLOAT pf = { destX - CAMERA->getPosX() , destY - CAMERA->getPosY() };

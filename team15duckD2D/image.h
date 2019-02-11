@@ -104,7 +104,7 @@ public:
 	//void LoopRender(const LPRECT drawArea, int offSetX = 0, int offSetY = 0, float opacity = 1.0f);
 
 	void aniRender(int destX, int destY, animation* ani);
-
+	void aniRenderReverseX(int destX, int destY, animation* ani);
 
 	
 	//===================================================================

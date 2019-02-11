@@ -33,6 +33,7 @@ private:
 	string _key;					//키값
 
 	bool _isMoving;					//이동중이니?
+	bool _isRight;					//오른쪽보니?
 
 public:
 	player();
