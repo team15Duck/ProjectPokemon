@@ -41,6 +41,20 @@ enum ITEM_TYPE
 
 };
 
+enum ITEM_VALUE
+{
+
+};
+
+enum ITEM_PRICE
+{
+
+};
+
+enum ITEM_SELL_PRICE
+{
+
+};
 
 class item
 {
