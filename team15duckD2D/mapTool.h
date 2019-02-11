@@ -81,10 +81,7 @@ private:
 	int	tempCount;	//오브젝트 이미지 띄웠다 지웠다 할때 쓰는 변수
 
 	//세이브 파일의 스트링 벡터
-	vector<string> _vSizeFile;
 	map<MAP_NAME, string> _mSizeNames;
-	
-	vector<string> _vDataFile;
 	map<MAP_NAME, string> _mDataNames;
 	int _mapCase;
 
@@ -109,6 +106,7 @@ public:
 
 	void nextSaveName();
 
+	void nameInit();
 
 	//void getSizeFile(string sizeFile){ _vSizeFile[]
 	//void getDataFile(){}

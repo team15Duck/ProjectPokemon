@@ -53,15 +53,14 @@ HRESULT mapTool::init()
 	tempCount = 0;
 	CAMERA->init(0, 0, 3000, 3000);
 	
-	_mapCase = 0;
+	_mapCase = MAP_TEST;
 
-	/*_vSizeFile.push_back("test1.map");
-	_vSizeFile.push_back("test2.map");
-	_vSizeFile.push_back("test3.map");
-	_vSizeFile.push_back("test4.map");
-	_vSizeFile.push_back("test5.map");
-*/
 
+
+	nameInit();
+
+
+	
 	return S_OK;
 
 }
@@ -82,7 +81,7 @@ void mapTool::update()
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		save(_mapCase);
-		nextSaveName();
+		//nextSaveName();
 	}
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
@@ -527,9 +526,8 @@ void mapTool::save(int mapCase)
 	char mapSize[128];
 	sprintf_s(mapSize, "%d, %d", TILEX, TILEY);
 	file = CreateFile(_mSizeNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	file = CreateFile("mapSize1.map", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	//file = CreateFile("mapSize1.map", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	
-
 	WriteFile(file, mapSize, strlen(mapSize), &write, NULL);
 
 	CloseHandle(file);
@@ -562,7 +560,7 @@ void mapTool::load()
 	DWORD read;
 	char mapSize[128] = { 0, };
 
-	file = CreateFile("mapSize1.map", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	file = CreateFile(_mSizeNames[(MAP_NAME)_mapCase].c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	ReadFile(file, mapSize, 128, &read, NULL);
 	CloseHandle(file);
 
@@ -604,7 +602,7 @@ void mapTool::load()
 	HANDLE file2;
 	DWORD read2;
 
-	file2 = CreateFile("mapData1.map", GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	file2 = CreateFile(_mDataNames[(MAP_NAME)_mapCase].c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	ReadFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &read2, NULL);
 
@@ -624,6 +622,18 @@ void mapTool::nextSaveName()
 	_mapCase = 1 + _mapCase;
 	if (_mapCase == MAP_COUNT)
 		_mapCase = 0;
+}
+
+void mapTool::nameInit()
+{
+	//Å×½ºÆ®¿ë ¸Ê
+	_mSizeNames.insert(make_pair(MAP_TEST, "data/testMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_TEST, "data/testMapData.map"));
+
+	//_mSizeNames.insert(make_pair(MAP_TEST, "testMapSize.map"));
+	//_mDataNames.insert(make_pair(MAP_TEST, "testMapSize.map"));
+
+
 }
 
 DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
