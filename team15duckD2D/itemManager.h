@@ -17,10 +17,6 @@ public:
 	void update();
 	void render();
 
-	void initItems();
-
-
-
 	// ========== GET & SET ==========
 	vector<item*> getItems() { return _vItems; }
 

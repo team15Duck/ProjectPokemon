@@ -16,7 +16,7 @@ HRESULT item::init()
 	return S_OK;
 }
 
-HRESULT item::init(string name, ITEM_TYPE type, int value, int buyPrice, int sellPrice, int num)
+HRESULT item::init(string name, ITEM_TYPE type, ITEM_VALUE value, ITEM_BUY_PRICE buyPrice, ITEM_SELL_PRICE sellPrice, int num)
 {
 	_img = IMAGEMANAGER->findImage("items");
 	_itemName = name;											//아이템이름
@@ -24,7 +24,7 @@ HRESULT item::init(string name, ITEM_TYPE type, int value, int buyPrice, int sel
 	_itemType = type;											//종류
 	_buyPrice = buyPrice;										//구입가
 	_sellPrice = sellPrice;										//매매가
-	_rcPos = { 80, WINSIZEY - 100 };							//렉트위치
+	_rcPos = { 80, WINSIZEY - 95 };								//렉트위치
 	_imgPos.x = _rcPos.x - _img->GetFrameWidth() / 2;			//이미지 그릴위치 (X)
 	_imgPos.y = _rcPos.y - _img->GetFrameWidth() / 2;			//이미지 그릴위치 (Y)
 
@@ -46,6 +46,7 @@ HRESULT item::init(string name, ITEM_TYPE type, int value, int buyPrice, int sel
 
 			_imgSize = { 60, 84 };
 			break;
+
 		}
 		case MAX_POTION:
 		{
@@ -54,7 +55,6 @@ HRESULT item::init(string name, ITEM_TYPE type, int value, int buyPrice, int sel
 		}
 		case FULL_RESTORE:
 		{
-			//여기서 상태이상을 가져와서 바꾸면 어떨까?
 			_imgSize = { 64, 88 };
 			break;
 		}
