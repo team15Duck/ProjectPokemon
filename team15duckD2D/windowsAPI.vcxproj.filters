@@ -261,6 +261,12 @@
     <ClInclude Include="itemManager.h">
       <Filter>PlayGround\item</Filter>
     </ClInclude>
+    <ClInclude Include="testMap.h">
+      <Filter>PlayGround\map</Filter>
+    </ClInclude>
+    <ClInclude Include="mapData.h">
+      <Filter>PlayGround\map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +400,12 @@
     </ClCompile>
     <ClCompile Include="itemManager.cpp">
       <Filter>PlayGround\item</Filter>
+    </ClCompile>
+    <ClCompile Include="testMap.cpp">
+      <Filter>PlayGround\map</Filter>
+    </ClCompile>
+    <ClCompile Include="mapData.cpp">
+      <Filter>PlayGround\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

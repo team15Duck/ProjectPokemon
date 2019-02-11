@@ -17,17 +17,17 @@ public:
 	typedef unordered_set<item*>				setItemList;
 	typedef unordered_set<item*>::iterator		setItemIter;
 private:
-	string _name;				//이름
-	bool _isMan;				//남자니?
-	int _playTime;				//플레이타임
-	float _posX;				//좌표
-	float _posY;				//좌표
-	int _tileX;					//현재 위치하고 있는 타일 번호
-	int _tileY;					//현재 위치하고 있는 타일 번호
+	string	_name;					//이름
+	bool	_isMan;					//남자니?
+	int		_playTime;				//플레이타임
+	float	_posX;					//좌표
+	float	_posY;					//좌표
+	int		_tileX;					//현재 위치하고 있는 타일 번호
+	int		_tileY;					//현재 위치하고 있는 타일 번호
 
-	setItemList _sItemList;		//아이템을 담고 있는 셋
+	setItemList _sItemList;			//아이템을 담고 있는 셋
 
-
+	
 public:
 	player();
 	~player();
