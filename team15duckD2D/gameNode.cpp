@@ -36,6 +36,7 @@ HRESULT gameNode::init(bool managerInit)
 		CAMERA->init();
 		TXTDATA->init();
 		MENUMANAGER->init();
+		POKEMONDATA->init();
 	}
 
 	return S_OK;
@@ -71,6 +72,8 @@ void gameNode::release()
 		KEYANIMANAGER->releaseSingleton();
 		MENUMANAGER->release();
 		MENUMANAGER->releaseSingleton();
+		POKEMONDATA->release();
+		POKEMONDATA->releaseSingleton();
 	}
 }
 
