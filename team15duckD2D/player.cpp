@@ -38,3 +38,11 @@ void player::aniSetUp()
 void player::dataLoad()
 {
 }
+
+void player::keyUpdate()
+{
+}
+
+void player::stateUpdate()
+{
+}

@@ -1,6 +1,7 @@
 #pragma once
-#include <unordered_set>
+#include <unordered_map>
 #include "item.h"
+#include "pokemon.h"
 
 class player
 {
@@ -14,19 +15,20 @@ public:
 		PS_BICYCLE_LEFT,		PS_BICYCLE_UP,			PS_BICYCLE_RIGHT,			PS_BICYCLE_DOWN,		//자전거
 	};
 
-	typedef unordered_set<item*>				setItemList;
-	typedef unordered_set<item*>::iterator		setItemIter;
+	typedef unordered_map<string,item*>					mapItemList;
+	typedef unordered_map<string,item*>::iterator		mapItemIter;
+
 private:
 	string	_name;					//이름
 	bool	_isMan;					//남자니?
-	int		_playTime;				//플레이타임
+	float	_playTime;				//플레이타임
 	float	_posX;					//좌표
 	float	_posY;					//좌표
-	int		_tileX;					//현재 위치하고 있는 타일 번호
-	int		_tileY;					//현재 위치하고 있는 타일 번호
+	UINT	_tileX;					//현재 위치하고 있는 타일 번호
+	UINT	_tileY;					//현재 위치하고 있는 타일 번호
 
-	setItemList _sItemList;			//아이템을 담고 있는 셋
-
+	mapItemList _mItemList;			//아이템을 담고 있는 셋
+	pokemon*	_pokemon[6];		//포켓몬ㅋ
 	
 public:
 	player();
@@ -35,6 +37,7 @@ public:
 	HRESULT init();
 	void release();
 	void update();
+	//얘는 맵에 끼워넣어서 그려야함
 	void render();	
 
 private:
@@ -42,8 +45,22 @@ private:
 	void aniSetUp();
 	void dataLoad();
 
+	void keyUpdate();
+	void stateUpdate();
+
+
 
 public:
 	//겟셋
+	UINT getTileX() { return _tileX; }
+	UINT getTileY() { return _tileY; }
+	
+	string getName() { return _name; }
+	bool getIsMan() { return _isMan; }
+
+	mapItemList getItem() { return _mItemList; }
+	pokemon** getPokemon() { return _pokemon; }
+
+
 };
 
