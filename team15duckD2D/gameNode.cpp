@@ -76,7 +76,7 @@ void gameNode::release()
 
 void gameNode::update()
 {
-	CAMERA->update();
+	
 }
 
 void gameNode::render()
