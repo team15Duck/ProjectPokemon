@@ -3,18 +3,11 @@
 #include <vector>
 #include <assert.h>
 #define	TILE_IMAGE_NUM		10
-#define SAMPLE_TOTAL_SIZE	384
-#define	CAMERA_SHOW_RANGE	8 * TILE_SIZE
+#define SAMPLE_TOTAL_SIZE	TILE_SIZE * SAMPLETILE
+#define SAMPLETILE_STARTX  ( WINSIZEX - SAMPLE_TOTAL_SIZE)
+#define	CAMERA_SHOW_RANGE	16 * TILE_SIZE
 
-//지형 상태 enum문(길, 벽, 그외...나중에 오브젝트 추가)
-enum SAMPLETERRAIN
-{
-	TR_ROAD,
-	TR_WALL,
-
-
-	SAMPLE_NONE
-};
+#define OBJ_IMG_NUM			16
 
 //샘플타일의 프레임 번호 구조체. (Rect는 넣을까 말까...)
 struct tagSampleTile
@@ -37,12 +30,14 @@ private:
 	image*	_sampleImg[TILE_IMAGE_NUM];
 	//샘플타일 이미지를 string으로(이미지매니저에서 findeImg 할때 쓰려고)
 	string _sampleImgStr[TILE_IMAGE_NUM];
+
+	image* _tempImg[OBJ_IMG_NUM];
+	string	_tempImgStr[OBJ_IMG_NUM];
+
 	int		_curImgNum;
 
 	//샘플타일의 배열
 	tagSampleTile	_sampleTile[SAMPLETILE][SAMPLETILE];
-
-	
 
 	//맵그릴 부분의 이중벡터 
 	vector<vector<tagTile*>> _vvTile;
@@ -63,11 +58,13 @@ private:
 
 	//선택한 샘플 타일
 	tagCurrentTile	_pickSampleTile;
-	//맵내에서 선택한 타일에 샘플타일을 넣을 용도
-	//tagCurrentTile	 _curTile;
+	//선택한 오브젝트 타일
+	tagCurrentTile _tempObjTile;
 
 	bool _isTileClick;
-	//bool _isMapClick;
+	bool _isObj;
+	int	tempCount;	//오브젝트 이미지 띄웠다 지웠다 할때 쓰는 변수
+
 
 public:
 	mapTool();
