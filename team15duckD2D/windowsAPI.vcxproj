@@ -184,12 +184,14 @@
     <ClInclude Include="playerDataBase.h" />
     <ClInclude Include="playGround.h" />
     <ClInclude Include="pokemon.h" />
+    <ClInclude Include="pokemonDataBase.h" />
     <ClInclude Include="pokemonInfo.h" />
     <ClInclude Include="pokemonSkill.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="skillDataBase.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="startScene.h" />
     <ClInclude Include="stdafx.h" />
@@ -238,9 +240,11 @@
     <ClCompile Include="playerDataBase.cpp" />
     <ClCompile Include="playGround.cpp" />
     <ClCompile Include="pokemon.cpp" />
+    <ClCompile Include="pokemonDataBase.cpp" />
     <ClCompile Include="pokemonInfo.cpp" />
     <ClCompile Include="pokemonSkill.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="skillDataBase.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="startScene.cpp" />
     <ClCompile Include="stdafx.cpp">
