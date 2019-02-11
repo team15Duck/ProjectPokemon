@@ -17,7 +17,7 @@ HRESULT player::init()
 
 	
 	/////////////이건나중에지울거야/////////
-	_tileX = 3;
+	_tileX = 14;
 	_tileY = 3;
 	_posX = _tileX * 64 + 32;
 	_posY = _tileY * 64 + 32;
