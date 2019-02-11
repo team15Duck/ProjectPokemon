@@ -24,7 +24,7 @@ HRESULT player::init()
 	_isMan = true;
 	_state = PS_IDLE_DOWN;
 	_isMoving = false;
-	_playTime = 7784;
+	_playTime = 5461;
 	_isRight = false;
 	_posZ = 0;
 	//////////////////////////////////////
@@ -55,14 +55,26 @@ void player::update()
 
 void player::render()
 {
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
+			D2DMANAGER->drawRectangle(tile);
+		}
+	}
+
+
+
+
 	if (_isRight)
-		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 150 - _posZ, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 - _posZ, _playerAni);
 	else
-		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150 - _posZ, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 - _posZ, _playerAni);
 
 	WCHAR str[128];
-	int min = (int)_playTime % 3600 / 60;
-	int hour = (int)_playTime / 3600;
+	int min =  ((int)_playTime * 10) % 3600 / 60;
+	int hour = ((int)_playTime * 10) / 3600;
 	swprintf_s(str, L"playTime - %d %d : %d %d", hour / 10, hour % 10, min / 10, min % 10);
 	D2DMANAGER->drawText(str, 700, 0, 25);
 
@@ -165,7 +177,7 @@ void player::dataLoad()
 
 void player::keyUpdate()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && !_isMoving)
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
 		_playerAni->start();
@@ -173,7 +185,7 @@ void player::keyUpdate()
 		_state = PS_MOVE_LEFT;
 	}
 	
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && !_isMoving)
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
 		_playerAni->start();
@@ -181,7 +193,7 @@ void player::keyUpdate()
 		_state = PS_MOVE_RIGHT;
 	}
 	
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && !_isMoving)
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
 		_playerAni->start();
@@ -189,7 +201,7 @@ void player::keyUpdate()
 		_state = PS_MOVE_DOWN;
 	}
 	
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	if (KEYMANAGER->isOnceKeyDown(VK_UP) && !_isMoving)
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
 		_playerAni->start();
@@ -223,57 +235,137 @@ void player::stateUpdate()
 		case player::PS_MOVE_LEFT:
 			_isRight = false;
 			_posX -= 5;
-			if (!_isMoving)
+			if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
 			{
-				if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
+				if (!_isMoving)
 				{
 					_posX = (int)_posX / 64 * 64 + 32;
 					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
 					_playerAni->start();
 					_state = PS_IDLE_LEFT;
 				}
+				if (KEYMANAGER->isStayKeyDown(VK_UP))
+				{
+					_posX = (int)_posX / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
+					_playerAni->start();
+					_state = PS_MOVE_UP;
+				}
+				if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+				{
+					_posX = (int)_posX / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
+					_playerAni->start();
+					_state = PS_MOVE_DOWN;
+				}
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+			{
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+				_playerAni->start();
+				_state = PS_MOVE_RIGHT;
 			}
 		break;
 		case player::PS_MOVE_UP:
 			_isRight = false;
 			_posY -= 5;
-			if (!_isMoving)
+			if (29 < (int)_posY % 64 && (int)_posY % 64 < 35)
 			{
-				if (29 < (int)_posY % 64 && (int)_posY % 64 < 35)
+				if (!_isMoving)
 				{
 					_posY = (int)_posY / 64 * 64 + 32;
 					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_up");
 					_playerAni->start();
 					_state = PS_IDLE_UP;
 				}
+				if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+				{
+					_posY = (int)_posY / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+					_playerAni->start();
+					_state = PS_MOVE_LEFT;
+				}
+				if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+				{
+					_posY = (int)_posY / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+					_playerAni->start();
+					_state = PS_MOVE_RIGHT;
+				}	
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+			{
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
+				_playerAni->start();
+				_state = PS_MOVE_DOWN;
 			}
 		break;
 		case player::PS_MOVE_RIGHT:
 			_isRight = true;
 			_posX += 5;
-			if (!_isMoving)
+			if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
 			{
-				if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
+				if (!_isMoving)
 				{
 					_posX = (int)_posX / 64 * 64 + 32;
 					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
 					_playerAni->start();
 					_state = PS_IDLE_RIGHT;
 				}
+				if (KEYMANAGER->isStayKeyDown(VK_UP))
+				{
+					_posX = (int)_posX / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
+					_playerAni->start();
+					_state = PS_MOVE_UP;
+				}
+				if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+				{
+					_posX = (int)_posX / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
+					_playerAni->start();
+					_state = PS_MOVE_DOWN;
+				}
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+			{
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+				_playerAni->start();
+				_state = PS_MOVE_LEFT;
 			}
 		break;
 		case player::PS_MOVE_DOWN:
 			_isRight = false;
 			_posY += 5;
-			if (!_isMoving)
+			if (29 < (int)_posY % 64 && (int)_posY % 64 < 35)
 			{
-				if (29 < (int)_posY % 64 && (int)_posY % 64 < 35)
+				if (!_isMoving)
 				{
 					_posY = (int)_posY / 64 * 64 + 32;
 					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_down");
 					_playerAni->start();
 					_state = PS_IDLE_DOWN;
 				}
+				if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+				{
+					_posY = (int)_posY / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+					_playerAni->start();
+					_state = PS_MOVE_LEFT;
+				}
+				if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+				{
+					_posY = (int)_posY / 64 * 64 + 32;
+					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+					_playerAni->start();
+					_state = PS_MOVE_RIGHT;
+				}
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_UP))
+			{
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
+				_playerAni->start();
+				_state = PS_MOVE_UP;
 			}
 		break;
 		case player::PS_FASTMOVE_LEFT:
