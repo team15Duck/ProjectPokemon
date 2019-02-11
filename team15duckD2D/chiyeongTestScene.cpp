@@ -42,6 +42,7 @@ void chiyeongTestScene::release()
 
 void chiyeongTestScene::update()
 {
+	_player->update();
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
 		_start = true;

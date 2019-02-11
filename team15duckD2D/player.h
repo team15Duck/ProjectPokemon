@@ -30,6 +30,10 @@ private:
 	mapItemList _mItemList;			//아이템을 담고 있는 셋
 	pokemon*	_pokemon[6];		//포켓몬ㅋ
 	animation* _playerAni;			//플레이어 애니
+	string _key;					//키값
+
+	bool _isMoving;					//이동중이니?
+
 public:
 	player();
 	~player();
@@ -61,6 +65,6 @@ public:
 	mapItemList getItem() { return _mItemList; }
 	pokemon** getPokemon() { return _pokemon; }
 
-
+	
 };
 
