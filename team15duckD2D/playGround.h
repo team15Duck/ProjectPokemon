@@ -3,6 +3,7 @@
 #include "chiyeongTestScene.h"
 #include "hayoungTestScene.h"
 #include "mapToolScene.h"
+#include "mapTestScene.h"
 
 class playGround : public gameNode
 {

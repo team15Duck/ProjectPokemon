@@ -111,7 +111,8 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("Ä¡¿µ¾À", new chiyeongTestScene);
 	SCENEMANAGER->addScene("ÇÏ¿µ¾À", new hayoungTestScene);
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
-	
+	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
+
 	if (MAPTOOLSCENE)
 	{
 		SCENEMANAGER->changeScene("mapToolScene");
