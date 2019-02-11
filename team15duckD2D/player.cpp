@@ -26,6 +26,7 @@ HRESULT player::init()
 	_isMoving = false;
 	_playTime = 7784;
 	_isRight = false;
+	_posZ = 0;
 	//////////////////////////////////////
 
 	//성별따라 키값 셋팅해줌
@@ -55,9 +56,9 @@ void player::update()
 void player::render()
 {
 	if (_isRight)
-		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 150, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 150 - _posZ, _playerAni);
 	else
-		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150 - _posZ, _playerAni);
 
 
 

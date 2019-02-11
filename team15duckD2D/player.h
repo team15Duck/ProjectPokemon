@@ -24,6 +24,7 @@ private:
 	float	_playTime;				//플레이타임
 	float	_posX;					//좌표
 	float	_posY;					//좌표
+	float	_posZ;					//Z축 ============= 점프하기위함
 	UINT	_tileX;					//현재 위치하고 있는 타일 번호
 	UINT	_tileY;					//현재 위치하고 있는 타일 번호
 	PLAYER_STATE _state;			//스테이트
