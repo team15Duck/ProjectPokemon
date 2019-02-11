@@ -34,7 +34,7 @@ void camera::release()
 
 void camera::update()
 {
-	move();
+	
 }
 
 void camera::render()
