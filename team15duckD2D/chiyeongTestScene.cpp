@@ -31,6 +31,8 @@ HRESULT chiyeongTestScene::init()
 	_rc2 = { 0, 0, WINSIZEX, WINSIZEY };
 
 
+	_player = new player;
+	_player->init();
 	return S_OK;
 }
 
@@ -77,7 +79,10 @@ void chiyeongTestScene::render()
 			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 	}
-	
+	_player->render();
+
+
+
 	//if (_start)
 	//{
 	//	D2D1_SIZE_F size;

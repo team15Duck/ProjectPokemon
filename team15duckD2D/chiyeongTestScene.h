@@ -1,6 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "mapData.h"
+#include "player.h"
 
 class chiyeongTestScene : public gameNode
 {
@@ -11,7 +12,7 @@ private:
 	float _angle[9];
 
 	mapData* _map;
-
+	player* _player;
 	float _scale;
 	D2D1_RECT_F _rc2;
 public:

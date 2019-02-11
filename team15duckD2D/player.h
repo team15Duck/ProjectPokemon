@@ -26,10 +26,10 @@ private:
 	float	_posY;					//좌표
 	UINT	_tileX;					//현재 위치하고 있는 타일 번호
 	UINT	_tileY;					//현재 위치하고 있는 타일 번호
-
+	PLAYER_STATE _state;			//스테이트
 	mapItemList _mItemList;			//아이템을 담고 있는 셋
 	pokemon*	_pokemon[6];		//포켓몬ㅋ
-	
+	animation* _playerAni;			//플레이어 애니
 public:
 	player();
 	~player();

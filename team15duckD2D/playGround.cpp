@@ -105,6 +105,8 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addImage("Å¸ÀÔ10_07", L"image/Menu_Frames/Menu_Frames_Type10_07.png", 32, 32);
 	IMAGEMANAGER->addImage("Å¸ÀÔ10_08", L"image/Menu_Frames/Menu_Frames_Type10_08.png", 32, 32);
 
+	IMAGEMANAGER->addFrameImage("playerM", L"image/player/playerM.png", 1500, 1500, 10, 10);
+	IMAGEMANAGER->addFrameImage("playerF", L"image/player/playerF.png", 1500, 1500, 10, 10);
 
 	SCENEMANAGER->addScene("Ä¡¿µ¾À", new chiyeongTestScene);
 	SCENEMANAGER->addScene("ÇÏ¿µ¾À", new hayoungTestScene);
@@ -116,7 +118,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("ÇÏ¿µ¾À");
+		SCENEMANAGER->changeScene("Ä¡¿µ¾À");
 	}
 	
 	return S_OK;
