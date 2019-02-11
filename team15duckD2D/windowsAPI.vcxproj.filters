@@ -109,6 +109,12 @@
     <Filter Include="2DFramework\menuFrame">
       <UniqueIdentifier>{a597e975-466c-4ca6-a003-f6837cebc204}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\newGameScene">
+      <UniqueIdentifier>{242d706f-a9af-468f-ae1b-2aae74585eb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\IllustratedBook">
+      <UniqueIdentifier>{898ffac7-03b8-4ed9-b263-ae7c3c05a774}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -267,6 +273,12 @@
     <ClInclude Include="mapData.h">
       <Filter>PlayGround\map</Filter>
     </ClInclude>
+    <ClInclude Include="newGameScene.h">
+      <Filter>PlayGround\newGameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="IllustratedBook.h">
+      <Filter>PlayGround\IllustratedBook</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -406,6 +418,12 @@
     </ClCompile>
     <ClCompile Include="mapData.cpp">
       <Filter>PlayGround\map</Filter>
+    </ClCompile>
+    <ClCompile Include="newGameScene.cpp">
+      <Filter>PlayGround\newGameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="IllustratedBook.cpp">
+      <Filter>PlayGround\IllustratedBook</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

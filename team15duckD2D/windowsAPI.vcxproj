@@ -162,6 +162,7 @@
     <ClInclude Include="fontLoaderCommon.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="hayoungTestScene.h" />
+    <ClInclude Include="IllustratedBook.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="iniDataManager.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="mapToolScene.h" />
     <ClInclude Include="menuFrame.h" />
     <ClInclude Include="menuFrameManager.h" />
+    <ClInclude Include="newGameScene.h" />
     <ClInclude Include="objectToolScene.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerDataBase.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="fontLoader.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="hayoungTestScene.cpp" />
+    <ClCompile Include="IllustratedBook.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
@@ -229,6 +232,7 @@
     <ClCompile Include="mapToolScene.cpp" />
     <ClCompile Include="menuFrame.cpp" />
     <ClCompile Include="menuFrameManager.cpp" />
+    <ClCompile Include="newGameScene.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerDataBase.cpp" />
