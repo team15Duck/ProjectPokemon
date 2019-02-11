@@ -43,31 +43,10 @@ void camera::render()
 
 void camera::move()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _posX + WINSIZEX < MAPSIZEX)
-	{
-		_posX += (CAMERA_SPEED);
-		if (_posX + WINSIZEX > MAPSIZEX)
-			_posX = MAPSIZEX - WINSIZEX;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _posX > 0)
-	{
-		_posX -= CAMERA_SPEED;
-		if (_posX < 0)
-			_posX = 0;
-	}
+	
+}
 
-
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _posY + WINSIZEY < MAPSIZEY)
-	{
-		_posY += CAMERA_SPEED;
-		if (_posY + WINSIZEY > MAPSIZEY)
-			_posY = MAPSIZEY - WINSIZEY;
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && _posY > 0)
-	{
-		_posY -= CAMERA_SPEED;
-		if (_posY < 0)
-			_posY = 0;
-	}
+//재원이는 여기에 너꺼 무브 작성해서 너꺼에서 업데이트 돌리도록 하여라
+void camera::moveMapTool()
+{
 }
