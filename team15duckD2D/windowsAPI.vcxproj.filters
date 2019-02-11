@@ -288,6 +288,9 @@
     <ClInclude Include="pokemonDataBase.h">
       <Filter>PlayGround\pokemon\data</Filter>
     </ClInclude>
+    <ClInclude Include="mapTestScene.h">
+      <Filter>PlayGround</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -439,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="pokemonDataBase.cpp">
       <Filter>PlayGround\pokemon\data</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTestScene.cpp">
+      <Filter>PlayGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

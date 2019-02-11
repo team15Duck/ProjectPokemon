@@ -60,14 +60,60 @@ void player::render()
 	else
 		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 150 - _posZ, _playerAni);
 
-
-
 	WCHAR str[128];
 	int min = (int)_playTime % 3600 / 60;
 	int hour = (int)_playTime / 3600;
 	swprintf_s(str, L"playTime - %d %d : %d %d", hour / 10, hour % 10, min / 10, min % 10);
-	D2DMANAGER->drawText(str, 700, 0,25);
+	D2DMANAGER->drawText(str, 700, 0, 25);
 
+
+	D2D_RECT_F left = { 600,500,700,570 };
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	{
+		D2DMANAGER->fillRectangle(RGB(0, 0, 255), left);
+	}
+	else
+	{
+		D2DMANAGER->fillRectangle(RGB(40, 40, 40), left);
+	}
+	swprintf_s(str, L"LEFT");
+	D2DMANAGER->drawText(str, left.left + 17, left.top + 20, 30);
+
+	D2D_RECT_F down = { 710,500,810,570 };
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		D2DMANAGER->fillRectangle(RGB(0, 0, 255), down);
+	}
+	else
+	{
+		D2DMANAGER->fillRectangle(RGB(40, 40, 40), down);
+	}
+	swprintf_s(str, L"DOWN");
+	D2DMANAGER->drawText(str, down.left + 17, down.top + 20, 30);
+
+	D2D_RECT_F right = { 820,500,920,570 };
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		D2DMANAGER->fillRectangle(RGB(0, 0, 255), right);
+	}
+	else
+	{
+		D2DMANAGER->fillRectangle(RGB(40, 40, 40), right);
+	}
+	swprintf_s(str, L"RIGHT");
+	D2DMANAGER->drawText(str, right.left + 10, right.top + 20, 30);
+	
+	D2D_RECT_F up = { 710,420,810,490 };
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		D2DMANAGER->fillRectangle(RGB(0, 0, 255), up);
+	}
+	else
+	{
+		D2DMANAGER->fillRectangle(RGB(40, 40, 40), up);
+	}
+	swprintf_s(str, L"UP");
+	D2DMANAGER->drawText(str, up.left + 30, up.top + 20, 30);
 }
 
 void player::aniSetUp()

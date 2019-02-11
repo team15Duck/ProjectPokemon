@@ -13,9 +13,7 @@ testMap::~testMap()
 
 HRESULT testMap::init()
 {
-	_map = new mapData;
-	_map->init("testMapSize.map", "testMapData.map");
-
+	
 
 	return S_OK;
 }
