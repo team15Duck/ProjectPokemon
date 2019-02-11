@@ -1,7 +1,7 @@
 #pragma once
-#include "map.h"
+#include "mapData.h"
 
-class testMap : public map
+class testMap : public mapData
 {
 public:
 	testMap();
