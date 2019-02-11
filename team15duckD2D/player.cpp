@@ -120,10 +120,7 @@ void player::keyUpdate()
 		_isMoving = true;
 		_state = PS_MOVE_LEFT;
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
-	{
-		_isMoving = false;
-	}
+	
 	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
@@ -131,10 +128,7 @@ void player::keyUpdate()
 		_isMoving = true;
 		_state = PS_MOVE_RIGHT;
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
-	{
-		_isMoving = false;
-	}
+	
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
@@ -142,10 +136,7 @@ void player::keyUpdate()
 		_isMoving = true;
 		_state = PS_MOVE_DOWN;
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
-	{
-		_isMoving = false;
-	}
+	
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
 		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
@@ -153,11 +144,12 @@ void player::keyUpdate()
 		_isMoving = true;
 		_state = PS_MOVE_UP;
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_UP))
-	{
-		_isMoving = false;
-	}
 
+
+	if (KEYMANAGER->isOnceKeyUp(VK_LEFT) || KEYMANAGER->isOnceKeyUp(VK_UP) || KEYMANAGER->isOnceKeyUp(VK_RIGHT) || KEYMANAGER->isOnceKeyUp(VK_DOWN))
+		if (!KEYMANAGER->isStayKeyDown(VK_LEFT) && !KEYMANAGER->isStayKeyDown(VK_UP) && !KEYMANAGER->isStayKeyDown(VK_RIGHT) && !KEYMANAGER->isStayKeyDown(VK_DOWN))
+			_isMoving = false;
+	
 }
 
 void player::stateUpdate()
