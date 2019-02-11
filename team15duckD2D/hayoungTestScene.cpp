@@ -18,10 +18,20 @@ HRESULT hayoungTestScene::init()
 
 	_isFemale = false;
 	_isMale = true;
-	IMAGEMANAGER->addFrameImage("트레이너카드", L"image/trainerCard.png", 1920, 640, 2, 1);
 
+	_cmpm._pcs = MAIN_POKEMON;
+
+	IMAGEMANAGER->addFrameImage("트레이너카드", L"image/common_menu/player/trainerCard.png", 1920, 640, 2, 1);
+
+	IMAGEMANAGER->addFrameImage("도감", L"image/common_menu/pokemonbook/cm_pokemon_book.png", 1920, 640, 2, 1);
+
+	IMAGEMANAGER->addImage("보유중포켓몬", L"image/common_menu/pokemon/pokemonMenu_background.png", 960, 640);
+	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 384, 512, 1, 2);
+	IMAGEMANAGER->addFrameImage("포켓몬메뉴_취소", L"image/common_menu/pokemon/pokemonMenu_btn_cancle.png", 216, 192, 1, 2);
+	IMAGEMANAGER->addFrameImage("서브포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot.png", 620, 256, 1, 2);
 	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
 	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
+	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
 	
 	return S_OK;
 }
@@ -37,10 +47,10 @@ void hayoungTestScene::update()
 	{
 		_isCommonMenu = true;
 	}
-	//창닫는 키세팅 조건 
+	//하위메뉴가 열려있는 상태에서
 	if (_cm._ms == YES)
 	{
-		//만약에 하위메뉴창이 켜진상태에서 x키를 누르면 
+		//만약에 x키를 누르면 
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			switch (_cm._cstate)
@@ -56,6 +66,35 @@ void hayoungTestScene::update()
 				break;
 			}
 		}
+
+		//만약에 포켓몬 메뉴에서 위로키를 누르면
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			switch (_cmpm._pcs)
+			{
+			case MAIN_POKEMON:
+				_cmpm._pcs = CANCEL;
+				break;
+			case SUB_POKEMON1:
+				_cmpm._pcs = MAIN_POKEMON;
+				break;
+			case SUB_POKEMON2:
+				
+				break;
+			case SUB_POKEMON3:
+				
+				break;
+			case SUB_POKEMON4:
+				
+				break;
+			case SUB_POKEMON5:
+				
+				break;
+			case CANCEL:
+			
+				break;
+			}
+		}
 	}
 	if (_cm._ms == NO && _isCommonMenu)
 	{
@@ -64,10 +103,8 @@ void hayoungTestScene::update()
 			_isCommonMenu = false;
 		}
 	}
-
-
-	//만약에 메뉴가 켜진상태에서의 키세팅 
-	if (_isCommonMenu)
+	//만약에 기본메뉴가 켜진상태에서의 키세팅 
+	if (_isCommonMenu && _cm._ms != YES)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
@@ -145,18 +182,75 @@ void hayoungTestScene::update()
 		}
 	}
 
+
 }
 
 void hayoungTestScene::render()
 {
 	commonMenurender();
-	if (_cm._cstate == PLAYER && _cm._ms == YES)
+	if (_cm._cstate == POKEMON_BOOK && _cm._ms == YES)
 	{
+		IMAGEMANAGER->findImage("도감")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+		WCHAR pokemon_book[1024];
+		swprintf_s(pokemon_book, L"포켓몬 도감 목록");
+		D2DMANAGER->drawText(pokemon_book, 285 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(160, 160, 160));
+		swprintf_s(pokemon_book, L"포켓몬 도감 목록");
+		D2DMANAGER->drawText(pokemon_book, 280 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(255,255,255));
 
+	}
+	else if (_cm._cstate == POKEMON && _cm._ms == YES)
+	{
+		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+		IMAGEMANAGER->findImage("메인포켓몬")->frameRender(0 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 0);
+		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render("타입1");
+		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
+		IMAGEMANAGER->findImage("서브포켓몬")->frameRender(345 + CAMERA->getPosX(), 20 + CAMERA->getPosY(), 0, 0);
+		
+		switch (_cmpm._pcs)
+		{
+			case MAIN_POKEMON:
+				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(0 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 1);
+			break;
+			case SUB_POKEMON1:
+
+			break;
+			case SUB_POKEMON2:
+
+			break;
+			case SUB_POKEMON3:
+
+			break;
+			case SUB_POKEMON4:
+
+			break;
+			case SUB_POKEMON5:
+
+			break;
+			case CANCEL:
+				IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 1);
+			break;
+		}
+
+		WCHAR pokemon[1024];
+		swprintf_s(pokemon, L"취소");
+		D2DMANAGER->drawText(pokemon, 820 + CAMERA->getPosX(), 552 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
+	}
+	else if (_cm._cstate == BAG && _cm._ms == YES)
+	{
+		//if (_isMale)b
+		{
+
+		}
+	}
+	else if (_cm._cstate == PLAYER && _cm._ms == YES)
+	{
 		IMAGEMANAGER->findImage("트레이너카드")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
 	}
-	
-	if (_cm._cstate == SETTING && _cm._ms == YES)
+	else if (_cm._cstate == SAVE_REPORT && _cm._ms == YES)
+	{
+
+	}
+	else if (_cm._cstate == SETTING && _cm._ms == YES)
 	{
 		IMAGEMANAGER->findImage("테스트2")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		IMAGEMANAGER->findImage("기본상단")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
@@ -176,9 +270,9 @@ void hayoungTestScene::render()
 
 void hayoungTestScene::frameImageinit()
 {
-	IMAGEMANAGER->addImage("기본하단", L"image/common_menu_bg.png", 960, 160);
-	IMAGEMANAGER->addImage("기본상단", L"image/common_menu_top.png", 960, 64);
-	IMAGEMANAGER->addImage("화살표", L"image/pokemonMenu_cursor.png", 24, 40);
+	IMAGEMANAGER->addImage("기본하단", L"image/common_menu/common_menu_bg.png", 960, 160);
+	IMAGEMANAGER->addImage("기본상단", L"image/common_menu/common_menu_top.png", 960, 64);
+	IMAGEMANAGER->addImage("화살표", L"image/common_menu/pokemonMenu_cursor.png", 24, 40);
 	IMAGEMANAGER->addImage("테스트", L"image/test/aaa.png", 960, 640);
 	IMAGEMANAGER->addImage("테스트2", L"image/test/bbb.png", 960, 640);
 

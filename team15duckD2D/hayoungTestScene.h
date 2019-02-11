@@ -16,6 +16,16 @@ enum CUSSOR_STATE
 	CLOSE,
 	NONE
 };
+enum POKEMON_CURRENT_SELECT
+{
+	MAIN_POKEMON = 1,
+	SUB_POKEMON1,
+	SUB_POKEMON2,
+	SUB_POKEMON3,
+	SUB_POKEMON4,
+	SUB_POKEMON5,
+	CANCEL,
+};
 
 enum MENU_SELECT
 {
@@ -37,6 +47,8 @@ struct tagCMPokemonBook
 };
 struct tagCMPokemon
 {
+	D2D1_RECT_F _subPokemon[5];
+	POKEMON_CURRENT_SELECT _pcs;
 
 };
 struct tagCMBag
