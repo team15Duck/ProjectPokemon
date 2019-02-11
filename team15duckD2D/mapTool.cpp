@@ -52,6 +52,16 @@ HRESULT mapTool::init()
 	_isObj = false;
 	tempCount = 0;
 	CAMERA->init(0, 0, 3000, 3000);
+	
+	_mapCase = 0;
+
+	/*_vSizeFile.push_back("test1.map");
+	_vSizeFile.push_back("test2.map");
+	_vSizeFile.push_back("test3.map");
+	_vSizeFile.push_back("test4.map");
+	_vSizeFile.push_back("test5.map");
+*/
+
 	return S_OK;
 
 }
@@ -69,11 +79,13 @@ void mapTool::update()
 	drawMap();
 	mapSizeUp();
 
-	if (KEYMANAGER->isOnceKeyDown(VK_CONTROL))
+	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
-		save();
+		save(_mapCase);
+		nextSaveName();
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_F3))
 	{
 		load();
 	}
@@ -142,15 +154,13 @@ void mapTool::render()
 				continue;
 			D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
 			if (_vvTile[i][j]->terrainImageName == TERRAIN_NAME_NONE) continue;
-			if (_vvTile[i][j]->attr == ATTR_GRASS)
+			if (_vvTile[i][j]->attr == ATTR_APPEAR)
 			{
 				IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 				IMAGEMANAGER->findImage(_vvTile[i][j]->objectImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 			}
 			else
 					IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-				
-		
 		}
 	}
 
@@ -509,13 +519,14 @@ void mapTool::drawMap()
 	}
 }
 
-void mapTool::save()
+void mapTool::save(int mapCase)
 {
 	HANDLE file;
 	DWORD write;
 
 	char mapSize[128];
 	sprintf_s(mapSize, "%d, %d", TILEX, TILEY);
+	file = CreateFile(_mSizeNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	file = CreateFile("mapSize1.map", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	
 
@@ -534,7 +545,7 @@ void mapTool::save()
 
 	HANDLE file2;
 	DWORD write2;
-	file2 = CreateFile("mapData1.map", GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	file2 = CreateFile(_mDataNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	WriteFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
 
@@ -606,6 +617,13 @@ void mapTool::load()
 			_vvTile[i][j] = &tile[j + i * TILEX];
 		}
 	}
+}
+
+void mapTool::nextSaveName()
+{
+	_mapCase = 1 + _mapCase;
+	if (_mapCase == MAP_COUNT)
+		_mapCase = 0;
 }
 
 DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)

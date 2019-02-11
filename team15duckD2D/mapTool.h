@@ -9,6 +9,21 @@
 
 #define OBJ_IMG_NUM			16
 
+
+enum MAP_NAME
+{
+	MAP_FIELD,
+	MAP_HOME,
+	MAP_O_LIBRARY,
+	MAP_STORE,
+	MAP_TEST,
+
+	MAP_NONE,
+	MAP_COUNT = MAP_NONE,
+
+};
+
+
 //샘플타일의 프레임 번호 구조체. (Rect는 넣을까 말까...)
 struct tagSampleTile
 {
@@ -65,6 +80,13 @@ private:
 	bool _isObj;
 	int	tempCount;	//오브젝트 이미지 띄웠다 지웠다 할때 쓰는 변수
 
+	//세이브 파일의 스트링 벡터
+	vector<string> _vSizeFile;
+	map<MAP_NAME, string> _mSizeNames;
+	
+	vector<string> _vDataFile;
+	map<MAP_NAME, string> _mDataNames;
+	int _mapCase;
 
 public:
 	mapTool();
@@ -82,9 +104,14 @@ public:
 
 	void drawMap();
 
-	void save();
+	void save(int mapCase);
 	void load();
 
+	void nextSaveName();
+
+
+	//void getSizeFile(string sizeFile){ _vSizeFile[]
+	//void getDataFile(){}
 
 
 
