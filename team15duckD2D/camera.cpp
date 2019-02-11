@@ -35,7 +35,6 @@ void camera::release()
 void camera::update()
 {
 	move();
-	mapToolMove();
 }
 
 void camera::render()
