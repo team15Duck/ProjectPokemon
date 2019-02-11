@@ -69,51 +69,56 @@ void player::render()
 
 	D2D_RECT_F left = { 600,500,700,570 };
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	{
-		D2DMANAGER->fillRectangle(RGB(0, 0, 255), left);
-	}
+		D2DMANAGER->fillRectangle(RGB(50, 50, 255), left);
 	else
-	{
-		D2DMANAGER->fillRectangle(RGB(40, 40, 40), left);
-	}
+		D2DMANAGER->fillRectangle(RGB(180, 180, 180), left);
 	swprintf_s(str, L"LEFT");
 	D2DMANAGER->drawText(str, left.left + 17, left.top + 20, 30);
 
 	D2D_RECT_F down = { 710,500,810,570 };
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		D2DMANAGER->fillRectangle(RGB(0, 0, 255), down);
-	}
+		D2DMANAGER->fillRectangle(RGB(50, 50, 255), down);
 	else
-	{
-		D2DMANAGER->fillRectangle(RGB(40, 40, 40), down);
-	}
+		D2DMANAGER->fillRectangle(RGB(180, 180, 180), down);
 	swprintf_s(str, L"DOWN");
 	D2DMANAGER->drawText(str, down.left + 17, down.top + 20, 30);
 
 	D2D_RECT_F right = { 820,500,920,570 };
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		D2DMANAGER->fillRectangle(RGB(0, 0, 255), right);
-	}
+		D2DMANAGER->fillRectangle(RGB(50, 50, 255), right);
 	else
-	{
-		D2DMANAGER->fillRectangle(RGB(40, 40, 40), right);
-	}
+		D2DMANAGER->fillRectangle(RGB(180, 180, 180), right);
 	swprintf_s(str, L"RIGHT");
 	D2DMANAGER->drawText(str, right.left + 10, right.top + 20, 30);
 	
 	D2D_RECT_F up = { 710,420,810,490 };
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		D2DMANAGER->fillRectangle(RGB(0, 0, 255), up);
-	}
+		D2DMANAGER->fillRectangle(RGB(50, 50, 255), up);
 	else
-	{
-		D2DMANAGER->fillRectangle(RGB(40, 40, 40), up);
-	}
+		D2DMANAGER->fillRectangle(RGB(180, 180, 180), up);
 	swprintf_s(str, L"UP");
-	D2DMANAGER->drawText(str, up.left + 30, up.top + 20, 30);
+	D2DMANAGER->drawText(str, up.left + 33, up.top + 20, 30);
+
+
+	D2D_RECT_F z = { 100,500,200,570 };
+	if (KEYMANAGER->isStayKeyDown('Z'))
+		D2DMANAGER->fillRectangle(RGB(50, 50, 255), z);
+	else
+		D2DMANAGER->fillRectangle(RGB(180, 180, 180), z);
+	swprintf_s(str, L"Z");
+	D2DMANAGER->drawText(str, z.left + 40, z.top + 20, 30);
+
+	D2D_RECT_F x = { 210,500,310,570 };
+	if (KEYMANAGER->isStayKeyDown('X'))
+		D2DMANAGER->fillRectangle(RGB(50, 50, 255), x);
+	else
+		D2DMANAGER->fillRectangle(RGB(180, 180, 180), x);
+	swprintf_s(str, L"X");
+	D2DMANAGER->drawText(str, x.left + 40, x.top + 20, 30);
+
+
+
+
 }
 
 void player::aniSetUp()
