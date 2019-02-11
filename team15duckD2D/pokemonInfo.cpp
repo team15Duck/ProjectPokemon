@@ -5,8 +5,11 @@
 pokemonInfo::pokemonInfo()
 : _index(POKEMON_NONE)
 , _type(PM_TYPE_NONE)
+, _weight(0.f)
+, _height(0.f)
+, _captureRate(0)
 {
-	_defaultStatus.clear();
+	_kindStatus.clear();
 	_name.clear();
 	_description.clear();
 }
@@ -16,13 +19,23 @@ pokemonInfo::~pokemonInfo()
 }
 
 
-HRESULT pokemonInfo::init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status, string text)
+HRESULT pokemonInfo::init(	POKEMON index
+						  , POKEMON_TYPE type
+						  , string name
+						  , pokemonStatus* status
+						  , string text
+						  , float weight
+						  , float height
+						  , int captureRate)
 {
 	_index = index;
 	_type = type;
 	_name = name;
-	_defaultStatus = *status;
+	_kindStatus = *status;
 	_description = text;
+	_weight = weight;
+	_height = height;
+	_captureRate = captureRate;
 
 	return S_OK;
 }
@@ -31,7 +44,10 @@ void pokemonInfo::clear()
 {
 	_index = POKEMON_NONE;
 	_type = PM_TYPE_NONE;
-	_defaultStatus.clear();
+	_kindStatus.clear();
 	_name.clear();
 	_description.clear();
+	_weight = 0.f;
+	_height = 0.f;
+	_captureRate = 0;
 }

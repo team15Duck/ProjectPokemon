@@ -69,6 +69,9 @@ static string OBJECT_NAME12		= "oak_House";
 static string OBJECT_NAME13		= "pokemon_Center";
 static string OBJECT_NAME14		= "pokemon_Shop";
 static string OBJECT_NAME15		= "pokemon_Gym";
+static string OBJECT_NAME16		= "openTheDoor";
+static string OBJECT_NAME17		= "healing_Pokemon";
+
 
 
 typedef struct tagTile

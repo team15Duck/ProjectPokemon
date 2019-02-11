@@ -1,5 +1,7 @@
 #pragma once
 
+#define POKEMON_MAX_LEVEL 100
+
 // 포켓몬 번호
 enum POKEMON
 {
@@ -135,23 +137,31 @@ private:
 
 	POKEMON			_index;				// 포켓몬 넘버
 	POKEMON_TYPE	_type;				// 포켓몬 타입
-	pokemonStatus	_defaultStatus;		// 포켓몬 능력치(Lv 1)
+	pokemonStatus	_kindStatus;		// 포켓몬 종족값
 
 	string			_name;				// 포켓몬 이름
 	string			_description;		// 설명
+
+	float			_weight;			// 무게
+	float			_height;			// 키
+
+	int				_captureRate;		// 표획률
 	
 public:
 	pokemonInfo();
 	~pokemonInfo();
 
-	HRESULT init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status, string text);
+	HRESULT init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status, string text, float weight, float height, int captureRate);
 	void clear();
 
 	POKEMON getPokemonIndex()					{ return _index;			}
 	POKEMON_TYPE getPokemonType()				{ return _type;				}
-	const pokemonStatus* getPokemonStatus()		{ return &_defaultStatus;	}
+	const pokemonStatus* getPokemonKindStatus()	{ return &_kindStatus;		}
 	const string* getPokemonName()				{ return &_name;			}
 	const string* getPokemonDescription()		{ return &_description;		}
+	float getWeight()							{ return _weight;			}
+	float getHeight()							{ return _height;			}
+	int getCaptureRate()						{ return _captureRate;		}
 
 };
 
