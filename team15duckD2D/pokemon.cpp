@@ -272,6 +272,9 @@ void pokemon::changeSkill(int idx, pmSkill* skill)
 
 void pokemon::levelUp()
 {
+	if(POKEMON_MAX_LEVEL == _level)
+		return;
+
 	++_level;
 	settingStatus();
 	
