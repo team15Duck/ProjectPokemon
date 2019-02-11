@@ -20,7 +20,6 @@ public:
 	void update();
 	void render();
 	void move();
-	void moveMapTool();
 
 	float getPosX()			{ return _posX; }
 	float getPosY()			{ return _posY; }
