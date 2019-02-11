@@ -41,35 +41,10 @@ void camera::render()
 {
 }
 
-void camera::move()
+void camera::move(float x, float y)
 {
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT) && _posX + WINSIZEX < MAPSIZEX)
-	{
-		_posX += (CAMERA_SPEED);
-		if (_posX + WINSIZEX > MAPSIZEX)
-			_posX = MAPSIZEX - WINSIZEX;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT) && _posX > 0)
-	{
-		_posX -= CAMERA_SPEED;
-		if (_posX < 0)
-			_posX = 0;
-	}
-
-
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN) && _posY + WINSIZEY < MAPSIZEY)
-	{
-		_posY += CAMERA_SPEED;
-		if (_posY + WINSIZEY > MAPSIZEY)
-			_posY = MAPSIZEY - WINSIZEY;
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_UP) && _posY > 0)
-	{
-		_posY -= CAMERA_SPEED;
-		if (_posY < 0)
-			_posY = 0;
-	}
+	_posX = x - WINSIZEX / 2;
+	_posY = y - WINSIZEY / 2;
 }
 
 void camera::mapToolMove()
