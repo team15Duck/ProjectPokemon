@@ -115,6 +115,9 @@
     <Filter Include="PlayGround\IllustratedBook">
       <UniqueIdentifier>{898ffac7-03b8-4ed9-b263-ae7c3c05a774}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\pokemon\data">
+      <UniqueIdentifier>{64963311-2d9d-4467-902d-cb2f74f1eb64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -279,6 +282,12 @@
     <ClInclude Include="IllustratedBook.h">
       <Filter>PlayGround\IllustratedBook</Filter>
     </ClInclude>
+    <ClInclude Include="skillDataBase.h">
+      <Filter>PlayGround\pokemon\data</Filter>
+    </ClInclude>
+    <ClInclude Include="pokemonDataBase.h">
+      <Filter>PlayGround\pokemon\data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -424,6 +433,12 @@
     </ClCompile>
     <ClCompile Include="IllustratedBook.cpp">
       <Filter>PlayGround\IllustratedBook</Filter>
+    </ClCompile>
+    <ClCompile Include="skillDataBase.cpp">
+      <Filter>PlayGround\pokemon\data</Filter>
+    </ClCompile>
+    <ClCompile Include="pokemonDataBase.cpp">
+      <Filter>PlayGround\pokemon\data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
