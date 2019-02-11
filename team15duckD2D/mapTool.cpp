@@ -561,20 +561,21 @@ void mapTool::load()
 	bool x = true;
 	for (int i = 0; i < strlen(mapSize); ++i)
 	{
-	if (mapSize[i] == ',')
-	{
-		x = false;
-		continue;
-	}
-	if (mapSize[i] == NULL) break;
-	if (x)
-	{
-		mapX += mapSize[i];
-	}
-	else
-	{
-		mapY += mapSize[i];
-	}
+		if (mapSize[i] == ',')
+		{
+			x = false;
+			continue;
+		}
+		if (mapSize[i] == NULL)
+			break;
+		if (x)
+		{
+			mapX += mapSize[i];
+		}
+		else
+		{
+			mapY += mapSize[i];
+		}
 	}
 
 	TILEX = stoi(mapX);
@@ -611,6 +612,19 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 {
 	DWORD result = ATTR_NONE;
 	//타일
+	//동굴은 어딜가든 다 만남
+	if (imgName == TERRAIN_NAME5)
+	{
+		if ((frameX <= 0 && frameX < SAMPLETILE - 1) && (frameY == 0 || frameY == 1)
+			|| (frameX == 0 || frameX == 2 || frameX == 3) && (frameY == 2)
+			|| (frameX <= 0 && frameX < 3) && frameY == 3)
+		{
+			result |= ATTR_NONE;
+			result |= ATTR_APPEAR;		//몬스터 출몰 속성
+		}
+		
+	}
+
 	if (imgName == TERRAIN_NAME6)
 	{
 		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2) ||
@@ -686,7 +700,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		if (frameX == 0 && frameY == 5)
 		{
 			result |= ATTR_NONE;
-			result |= ATTR_GRASS;
+			result |= ATTR_APPEAR;
 		}
 	}
 
