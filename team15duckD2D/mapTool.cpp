@@ -16,18 +16,17 @@ mapTool::~mapTool()
 
 HRESULT mapTool::init()
 {
-	_sampleImg[0] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME1, L"image/tile/tile_01.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[1] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME2, L"image/tile/tile_02.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[2] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME3, L"image/tile/tile_03.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[3] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME4, L"image/tile/tile_04.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[4] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME5, L"image/tile/tile_05.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[5] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME6, L"image/tile/tile_06.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[6] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME7, L"image/tile/tile_07.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[7] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME8, L"image/tile/tile_08.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[8] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME9, L"image/tile/tile_09.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[9] = IMAGEMANAGER->addFrameImage(TERRAIN_NAME10, L"image/tile/tile_10.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	
-	_tempImg[0] = IMAGEMANAGER->addFrameImage(OBJECT_NAME1, L"image/object/object_1.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
+	_sampleImg[0] = IMAGEMANAGER->findImage(TERRAIN_NAME1 );
+	_sampleImg[1] = IMAGEMANAGER->findImage(TERRAIN_NAME2 );
+	_sampleImg[2] = IMAGEMANAGER->findImage(TERRAIN_NAME3 );
+	_sampleImg[3] = IMAGEMANAGER->findImage(TERRAIN_NAME4 );
+	_sampleImg[4] = IMAGEMANAGER->findImage(TERRAIN_NAME5 );
+	_sampleImg[5] = IMAGEMANAGER->findImage(TERRAIN_NAME6 );
+	_sampleImg[6] = IMAGEMANAGER->findImage(TERRAIN_NAME7 );
+	_sampleImg[7] = IMAGEMANAGER->findImage(TERRAIN_NAME8 );
+	_sampleImg[8] = IMAGEMANAGER->findImage(TERRAIN_NAME9 );
+	_sampleImg[9] = IMAGEMANAGER->findImage(TERRAIN_NAME10);
+	_tempImg[0] =   IMAGEMANAGER->findImage(OBJECT_NAME1  );
 	for (int i = 1; i < OBJ_IMG_NUM; ++i)
 	{
 		_tempImg[i] = nullptr;
@@ -51,7 +50,7 @@ HRESULT mapTool::init()
 	//윤정언니가 쓸 오브젝트의 불값
 	_isObj = false;
 	tempCount = 0;
-	CAMERA->init(0, 0, 3000, 3000);
+	CAMERA->init(0, 0, 5000, 5000);
 	
 	_mapCase = MAP_TEST;
 
