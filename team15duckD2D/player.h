@@ -5,6 +5,7 @@
 
 #define PLYAER_SPEED 150.0f
 
+class mapData;
 class player
 {
 public:
@@ -21,26 +22,27 @@ public:
 	typedef unordered_map<string,item*>::iterator		mapItemIter;
 
 private:
-	string	_name;					//이름
-	bool	_isMan;					//남자니?
-	float	_playTime;				//플레이타임
-	float	_posX;					//좌표
-	float	_posY;					//좌표
-	float	_posZ;					//Z축 ============= 점프하기위함
-	UINT	_tileX;					//현재 위치하고 있는 타일 번호
-	UINT	_tileY;					//현재 위치하고 있는 타일 번호
-	PLAYER_STATE _state;			//스테이트
-	mapItemList _mItemList;			//아이템을 담고 있는 셋
-	pokemon*	_pokemon[6];		//포켓몬ㅋ
-	animation* _playerAni;			//플레이어 애니
-	string _key;					//키값
+	string				_name;									//이름
+	bool				_isMan;									//남자니?
+	float				_playTime;								//플레이타임
+	float				_posX;									//좌표
+	float				_posY;									//좌표
+	float				_posZ;									//Z축 ============= 점프하기위함
+	UINT				_tileX;									//현재 위치하고 있는 타일 번호
+	UINT				_tileY;									//현재 위치하고 있는 타일 번호
+	PLAYER_STATE		_state;									//스테이트
+	mapItemList			_mItemList;								//아이템을 담고 있는 셋
+	pokemon*			_pokemon[6];							//포켓몬ㅋ
+	animation*			_playerAni;								//플레이어 애니
+	string				_key;									//키값
+	float				_moveDistance;							//이동할거리 ㅎㅎ
+	bool				_isRight;								//오른쪽보니?
 
 
-	float _moveDistance;
 
-	bool _isMoving;					//이동중이니?
-	bool _isRight;					//오른쪽보니?
 
+
+	mapData* _map;									//이거슨 맵데이터?!
 public:
 	player();
 	~player();
@@ -51,10 +53,11 @@ public:
 	//얘는 맵에 끼워넣어서 그려야함
 	void render();	
 
+	void dataLoad();
 private:
 	//내부함수
 	void aniSetUp();
-	void dataLoad();
+	
 
 	void keyUpdate();
 	void stateUpdate();
@@ -63,6 +66,10 @@ private:
 
 public:
 	//겟셋
+
+	float getPosX() { return _posX; }
+	float getPosY() { return _posY; }
+
 	UINT getTileX() { return _tileX; }
 	UINT getTileY() { return _tileY; }
 	
@@ -72,6 +79,6 @@ public:
 	mapItemList getItem() { return _mItemList; }
 	pokemon** getPokemon() { return _pokemon; }
 
-	
+	void setMapDataMemoryAdressLink(mapData* map) { _map = map; }
 };
 
