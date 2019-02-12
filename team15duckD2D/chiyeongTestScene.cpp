@@ -43,6 +43,7 @@ void chiyeongTestScene::release()
 void chiyeongTestScene::update()
 {
 	_player->update();
+	CAMERA->move(_player->getPosX(), _player->getPosY());
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
 		_start = true;

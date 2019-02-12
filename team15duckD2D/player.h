@@ -3,7 +3,7 @@
 #include "item.h"
 #include "pokemon.h"
 
-#define PLYAER_SPEED 150.0f
+#define PLAYER_SPEED 150.0f
 
 class mapData;
 class player

@@ -43,8 +43,8 @@ void camera::render()
 
 void camera::move(float x, float y)
 {
-	_posX = x - WINSIZEX / 2;
-	_posY = y - WINSIZEY / 2;
+	_posX = x - 480.0f;
+	_posY = y - 320.0f;
 }
 
 void camera::mapToolMove()

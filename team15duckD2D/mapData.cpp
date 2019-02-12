@@ -26,9 +26,13 @@ void mapData::release()
 void mapData::update()
 {
 	ii = CAMERA->getPosY() / TILE_SIZE;
-	iiMax = ii + WINSIZEY / TILE_SIZE;
+	if (ii < 0) ii = 0;
+	iiMax = ((CAMERA->getPosY() + WINSIZEY) / TILE_SIZE) + 1;
+	if (iiMax >= TILEY) iiMax = TILEY - 1;
 	jj = CAMERA->getPosX() / TILE_SIZE;
-	jjMax = jj + WINSIZEX / TILE_SIZE;
+	if (jj < 0) jj = 0;
+	jjMax = ((CAMERA->getPosX() + WINSIZEX) / TILE_SIZE) + 1;
+	if (jjMax >= TILEX) jjMax = TILEX - 1;
 }
 
 void mapData::render()
@@ -42,7 +46,8 @@ void mapData::render()
 			if (_vvTile[ii][jj]->objectImageName.size() > 0)
 				IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY);
 		}
-		jj = 0;
+		jj = CAMERA->getPosX() / TILE_SIZE;
+		if (jj < 0) jj = 0;
 	}
 }
 

@@ -32,7 +32,7 @@ void mapTestScene::update()
 {
 	_testMap->update();
 	_player->update();
-	//CAMERA->move(_player-)
+	CAMERA->move(_player->getPosX(), _player->getPosY());
 }
 
 void mapTestScene::render()

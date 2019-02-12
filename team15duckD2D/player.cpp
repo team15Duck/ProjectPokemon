@@ -55,14 +55,14 @@ void player::update()
 
 void player::render()
 {
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 15; j++)
-		{
-			D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
-			D2DMANAGER->drawRectangle(tile);
-		}
-	}
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	for (int j = 0; j < 15; j++)
+	//	{
+	//		D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
+	//		D2DMANAGER->drawRectangle(tile);
+	//	}
+	//}
 
 
 
@@ -76,10 +76,10 @@ void player::render()
 	int min =  ((int)_playTime * 10) % 3600 / 60;
 	int hour = ((int)_playTime * 10) / 3600;
 	swprintf_s(str, L"playTime - %d %d : %d %d", hour / 10, hour % 10, min / 10, min % 10);
-	D2DMANAGER->drawText(str, 700, 0, 25);
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 25);
 
 
-	D2D_RECT_F left = { 600,500,700,570 };
+	D2D_RECT_F left = { 600 + CAMERA->getPosX(),500 + CAMERA->getPosY(),700 + CAMERA->getPosX(),570 + CAMERA->getPosY() };
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 		D2DMANAGER->fillRectangle(RGB(50, 50, 255), left);
 	else
@@ -87,7 +87,7 @@ void player::render()
 	swprintf_s(str, L"LEFT");
 	D2DMANAGER->drawText(str, left.left + 17, left.top + 20, 30);
 
-	D2D_RECT_F down = { 710,500,810,570 };
+	D2D_RECT_F down = { 710 + CAMERA->getPosX(),500 + CAMERA->getPosY(),810 + CAMERA->getPosX(),570 + CAMERA->getPosY() };
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 		D2DMANAGER->fillRectangle(RGB(50, 50, 255), down);
 	else
@@ -95,7 +95,7 @@ void player::render()
 	swprintf_s(str, L"DOWN");
 	D2DMANAGER->drawText(str, down.left + 17, down.top + 20, 30);
 
-	D2D_RECT_F right = { 820,500,920,570 };
+	D2D_RECT_F right = { 820 + CAMERA->getPosX(),500 + CAMERA->getPosY(),920 + CAMERA->getPosX(),570 + CAMERA->getPosY() };
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		D2DMANAGER->fillRectangle(RGB(50, 50, 255), right);
 	else
@@ -103,7 +103,7 @@ void player::render()
 	swprintf_s(str, L"RIGHT");
 	D2DMANAGER->drawText(str, right.left + 10, right.top + 20, 30);
 	
-	D2D_RECT_F up = { 710,420,810,490 };
+	D2D_RECT_F up = { 710 + CAMERA->getPosX(),420 + CAMERA->getPosY(),810 + CAMERA->getPosX(),490 + CAMERA->getPosY() };
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
 		D2DMANAGER->fillRectangle(RGB(50, 50, 255), up);
 	else
@@ -112,7 +112,7 @@ void player::render()
 	D2DMANAGER->drawText(str, up.left + 33, up.top + 20, 30);
 
 
-	D2D_RECT_F z = { 100,500,200,570 };
+	D2D_RECT_F z = { 100 + CAMERA->getPosX(),500 + CAMERA->getPosY(),200 + CAMERA->getPosX(),570 + CAMERA->getPosY() };
 	if (KEYMANAGER->isStayKeyDown('Z'))
 		D2DMANAGER->fillRectangle(RGB(50, 50, 255), z);
 	else
@@ -120,7 +120,7 @@ void player::render()
 	swprintf_s(str, L"Z");
 	D2DMANAGER->drawText(str, z.left + 40, z.top + 20, 30);
 
-	D2D_RECT_F x = { 210,500,310,570 };
+	D2D_RECT_F x = { 210 + CAMERA->getPosX(),500 + CAMERA->getPosY(),310 + CAMERA->getPosX(),570 + CAMERA->getPosY() };
 	if (KEYMANAGER->isStayKeyDown('X'))
 		D2DMANAGER->fillRectangle(RGB(50, 50, 255), x);
 	else
@@ -129,10 +129,13 @@ void player::render()
 	D2DMANAGER->drawText(str, x.left + 40, x.top + 20, 30);
 
 	swprintf_s(str, L"moveDistance : %.1f", _moveDistance);
-	D2DMANAGER->drawText(str, 700, 30, 15, RGB(40, 120, 40));
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 30 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
 	swprintf_s(str, L"x : %d , y : %d", _tileX, _tileY);
-	D2DMANAGER->drawText(str, 700, 45, 15, RGB(40, 120, 40));
-
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 45 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
+	swprintf_s(str, L"x : %.1f , y : %.1f", _posX, _posY);
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
+	swprintf_s(str, L"speed : %.1f", TIMEMANAGER->getElapsedTime() * PLAYER_SPEED);
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 75 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
 }
 
 void player::aniSetUp()
@@ -216,7 +219,7 @@ void player::keyUpdate()
 
 void player::stateUpdate()
 {
-	float speed = TIMEMANAGER->getElapsedTime() * PLYAER_SPEED;
+	float speed = TIMEMANAGER->getElapsedTime() * PLAYER_SPEED;
 
 
 
