@@ -3,10 +3,11 @@
 
 typedef struct tagPokemonBookInfo
 {
-	string name;	//이름
-	string attr;	//속성
-	string weight;	//무게
-	string height;	//키
+	wstring name;	//이름
+	wstring attr;	//속성
+	wstring weight;	//무게
+	wstring height;	//키
+
 }POKEMONBOOK;
 
 
@@ -16,7 +17,9 @@ private:
 
 	POKEMONBOOK _book[151];
 
-
+	UINT _currentSelectNum;		//현재 선택한 번호
+	float _selectNumMoveCount;
+	float _selectNumMoveDelay;
 
 public:
 	IllustratedBook();

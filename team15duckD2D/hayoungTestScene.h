@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "IllustratedBook.h"
 
 enum MENU_DIRECTION
 {
@@ -85,7 +86,7 @@ private:
 	tagCMSetting		_cms;		//기본메뉴 - 세팅
 	tagCMClose			_cmc;		//기본메뉴 - 닫기
 
-
+	IllustratedBook* _book;
 
 	bool _isCommonMenu;		//기본메뉴
 

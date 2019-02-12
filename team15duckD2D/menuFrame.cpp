@@ -25,6 +25,7 @@ HRESULT menuFrame::init(UINT destX, UINT destY, UINT frameWidth, UINT frameHeigh
 	return S_OK;
 }
 
+
 void menuFrame::release()
 {
 	if (_menuFrameInfo)

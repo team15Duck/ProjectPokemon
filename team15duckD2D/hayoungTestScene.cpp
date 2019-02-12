@@ -13,6 +13,9 @@ hayoungTestScene::~hayoungTestScene()
 
 HRESULT hayoungTestScene::init()
 {
+
+	_book = new IllustratedBook;
+	_book->init();
 	frameImageinit();
 	commonMenuinit();
 
@@ -26,9 +29,12 @@ HRESULT hayoungTestScene::init()
 	IMAGEMANAGER->addFrameImage("도감", L"image/common_menu/pokemonbook/cm_pokemon_book.png", 1920, 640, 2, 1);
 
 	IMAGEMANAGER->addImage("보유중포켓몬", L"image/common_menu/pokemon/pokemonMenu_background.png", 960, 640);
-	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 384, 512, 1, 2);
+	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 336, 456, 1, 2);
 	IMAGEMANAGER->addFrameImage("포켓몬메뉴_취소", L"image/common_menu/pokemon/pokemonMenu_btn_cancle.png", 216, 192, 1, 2);
-	IMAGEMANAGER->addFrameImage("서브포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot.png", 620, 256, 1, 2);
+	IMAGEMANAGER->addFrameImage("서브포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot.png", 1200, 96, 2, 1);
+
+	_cmpm._subPokemon[0] = { 345, 20, 945, 116 };
+
 	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
 	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
 	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
@@ -42,6 +48,7 @@ void hayoungTestScene::release()
 
 void hayoungTestScene::update()
 {
+	
 	//만약에 엔터키를 누르면 
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
@@ -181,8 +188,8 @@ void hayoungTestScene::update()
 			}
 		}
 	}
-
-
+	
+	_book->update();
 }
 
 void hayoungTestScene::render()
@@ -197,19 +204,23 @@ void hayoungTestScene::render()
 		swprintf_s(pokemon_book, L"포켓몬 도감 목록");
 		D2DMANAGER->drawText(pokemon_book, 280 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(255,255,255));
 
+		_book->render();
 	}
 	else if (_cm._cstate == POKEMON && _cm._ms == YES)
 	{
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		IMAGEMANAGER->findImage("메인포켓몬")->frameRender(0 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 0);
+		IMAGEMANAGER->findImage("메인포켓몬")->frameRender(5 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 0);
 		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render("타입1");
 		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
-		IMAGEMANAGER->findImage("서브포켓몬")->frameRender(345 + CAMERA->getPosX(), 20 + CAMERA->getPosY(), 0, 0);
-		
+
+		//D2DMANAGER->fillRectangle(RGB(255, 255, 255), _cmpm._subPokemon[0]);
+		IMAGEMANAGER->findImage("서브포켓몬")->frameRender(_cmpm._subPokemon[0].left + CAMERA->getPosX(), _cmpm._subPokemon[0].top + CAMERA->getPosY(), 0, 0);
+	
+
 		switch (_cmpm._pcs)
 		{
 			case MAIN_POKEMON:
-				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(0 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 1);
+				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(5 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 1);
 			break;
 			case SUB_POKEMON1:
 
