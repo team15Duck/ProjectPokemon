@@ -35,6 +35,7 @@ HRESULT mapTool::init()
 	_curImgNum = 0;
 	_sampleImgStr[0] = TERRAIN_NAME1;
 	_tempImgStr[0] = OBJECT_NAME1;
+	setSampleTile();
 	setTile();
 	
 
@@ -50,10 +51,16 @@ HRESULT mapTool::init()
 	_isTileClick = false;
 	//윤정언니가 쓸 오브젝트의 불값
 	_isObj = false;
+	_isRND = false;
 	tempCount = 0;
+
+	_isShift = false;
+	_savePointX = 0;
+	_savePointY = 0;
+
 	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_HOME;
+	_mapCase = MAP_STORE;
 
 	nameInit();
 
@@ -73,11 +80,14 @@ void mapTool::update()
 	pickSampleMap();
 	drawMap();
 	mapSizeChange();
-
+	if (KEYMANAGER->isOnceKeyDown(VK_F5))
+	{
+		nextSaveName();
+		setTile();
+	}
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
 		save(_mapCase);
-		//nextSaveName();
 	}
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
@@ -100,7 +110,6 @@ void mapTool::render()
 	//이미지 렌더
 	if (_isObj)		//오브젝트인경우
 	{
-		//IMAGEMANAGER->findImage(_tempImgStr[0])->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
 		_tempImg[0]->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
 	}
 	else			//오브젝트가 아닌경우
@@ -164,7 +173,9 @@ void mapTool::render()
 				IMAGEMANAGER->findImage(_vvTile[i][j]->objectImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 			}
 			else
+			{
 				IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+			}
 		}
 	}
 
@@ -177,6 +188,16 @@ void mapTool::render()
 
 	}
 
+	if (_isShift)
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			D2D1_RECT_F dragRc = { _savePointX * TILE_SIZE + 5, _savePointY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
+
+			D2DMANAGER->drawRectangle(RGB(135, 12, 255), dragRc);
+		}
+	}
+
 	WCHAR str[128];
 	swprintf_s(str, L"TILEX : %d, TILEY : %d", TILEX, TILEY);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 200);
@@ -187,7 +208,7 @@ void mapTool::render()
 	//MENUMANAGER->findMenuFrame("멥 틀")->render("타입1");
 }
 
-void mapTool::setTile()
+void mapTool::setSampleTile()
 {
 	//샘플타일의 배치
 	for (int i = 0; i < SAMPLETILE; ++i)
@@ -202,7 +223,10 @@ void mapTool::setTile()
 										  ,(float)30 + ((i + 1) * TILE_SIZE) };
 		}
 	}
+}
 
+void mapTool::setTile()
+{
 	//맵
 	TILEX = 50;
 	TILEY = 50;
@@ -321,16 +345,37 @@ void mapTool::pickSampleMap()
 			if (_curImgNum == 0 || _curImgNum == 1 || _curImgNum == 2 || _curImgNum == 3)
 			{
 				if (!_isObj)
-				{
-					if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3)
-						|| (indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5))
+				{	
+					if (_curImgNum == 1 )
 					{
-						_pickSampleTile.curX = indX;
-						_pickSampleTile.curY = indY;
-						_pickSampleTile.isObj = false;
+						_isRND = false;
+						if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3)
+							|| (indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5))
+						{
+							if ((indX >= 0 && indX < 4) && indY == 5)
+								_isRND = true;
+							else
+								_isRND = false;
+							_pickSampleTile.curX = indX;
+							_pickSampleTile.curY = indY;
+							_pickSampleTile.isObj = false;
+						}
+						else
+							_isTileClick = false;
 					}
 					else
-						_isTileClick = false;
+					{
+						_isRND = false;
+						if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3)
+								 || (indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5))
+						{
+							_pickSampleTile.curX = indX;
+							_pickSampleTile.curY = indY;
+							_pickSampleTile.isObj = false;
+						}
+						else
+							_isTileClick = false;
+					}
 				}
 				else					//오브젝트 샘플 1번 중에서 부쉬만 추가했음
 				{
@@ -373,7 +418,7 @@ void mapTool::pickSampleMap()
 			if (_curImgNum == 6)
 			{
 				if ((indX >= 0 && indX < SAMPLETILE - 2) && indY == 0 ||
-					(indX >= 0 && indX < SAMPLETILE - 1) && indY == 1)
+					(indX >= 0 && indX < SAMPLETILE) && indY == 1)
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -398,8 +443,8 @@ void mapTool::pickSampleMap()
 			//상점
 			if (_curImgNum == 8)
 			{
-				if ((indX >= 0 && indX < 3) && (indY >= 0 && indY < 3) ||
-					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 3 && indY < SAMPLETILE))
+				if ((indX >= 0 && indX < 3) && (indY == 0) ||
+					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 1 && indY < SAMPLETILE))
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -436,6 +481,11 @@ void mapTool::pickSampleMap()
 					_isTileClick = false;
 			}
 		}
+	}
+	
+	if (_isRND)
+	{
+		_pickSampleTile.curX = RND->getInt(4);
 	}
 }
 
@@ -534,11 +584,115 @@ void mapTool::mapSizeChange()
 
 void mapTool::drawMap()
 {
+	if (_isRND)
+	{
+		_pickSampleTile.curX = RND->getInt(4);
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
+		_isShift = true;
+
+	if (KEYMANAGER->isOnceKeyUp(VK_SHIFT))
+		_isShift = false;
+	
 	if (_ptMouse.x - CAMERA->getPosX() > SAMPLETILE_STARTX) return;
 	if (_ptMouse.x > _vvRect[0][TILEX - 1].right) return;
 	if (_ptMouse.x < _vvRect[0][0].left) return;
 	if (_ptMouse.y > _vvRect[TILEY - 1][0].bottom) return;
 	if (_ptMouse.y < _vvRect[0][0].top) return;
+
+	if (_isShift)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						_savePointY = i;
+						_savePointX = j;
+					}
+				}
+			}
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			int savePX2;
+			int savePY2;
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						savePY2 = i;
+						savePX2 = j;
+					}
+				}
+			}
+			savePX2++;
+			savePY2++;
+			if (savePX2 < _savePointX) return;
+			if (savePY2 < _savePointY) return;
+
+			for (int i = _savePointY; i < savePY2; ++i)
+			{
+				for (int j = _savePointX; j < savePX2; ++j)
+				{
+					if (!_isObj)
+					{
+						_vvTile[i][j]->terrainImageName = _sampleImgStr[_curImgNum];
+
+						_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
+						_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
+						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->terrainImageName, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+					}
+					//타일맵에 오브젝트 정보 추가
+					else
+					{
+						_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+						_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
+						_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
+						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+					}
+				}
+			}
+		}
+	}
+	else
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						if (!_isObj)
+						{
+							_vvTile[i][j]->terrainImageName = _sampleImgStr[_curImgNum];
+
+							_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
+							_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->terrainImageName, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+						}
+						//타일맵에 오브젝트 정보 추가
+						else
+						{
+							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
+							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+					}
+				}
+			}
+		}
+	}
+
+
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		for (int i = 0; i < TILEY; ++i)
@@ -672,7 +826,7 @@ void mapTool::nextSaveName()
 {
 	_mapCase = 1 + _mapCase;
 	if (_mapCase == MAP_COUNT)
-		_mapCase = 0;
+		_mapCase = 1;
 }
 
 void mapTool::nameInit()
@@ -680,21 +834,30 @@ void mapTool::nameInit()
 	//테스트용 맵
 	_mSizeNames.insert(make_pair(MAP_TEST, "data/testMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_TEST, "data/testMapData.map"));
+	
+	_mDataNames.insert(make_pair(MAP_TOWN, "data/townMapData.map"));
+	_mSizeNames.insert(make_pair(MAP_TOWN, "data/townMapSize.map"));
 
 	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
-
-	_mSizeNames.insert(make_pair(MAP_FIELD, "data/fieldMapSize.map"));
-	_mDataNames.insert(make_pair(MAP_FIELD, "data/fieldMapData.map"));
 
 	_mSizeNames.insert(make_pair(MAP_O_LAB, "data/oLabMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_O_LAB, "data/oLabMapData.map"));
 
-	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
-	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
+	_mSizeNames.insert(make_pair(MAP_FIELD, "data/fieldMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_FIELD, "data/fieldMapData.map"));
 
-	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
-	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
+	_mSizeNames.insert(make_pair(MAP_CAVE, "data/caveMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_CAVE, "data/caveMapData.map"));
+
+	_mSizeNames.insert(make_pair(MAP_STORE, "data/storeMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_STORE, "data/storeMapData.map"));
+
+	_mSizeNames.insert(make_pair(MAP_CENTER, "data/centerMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_CENTER, "data/centerMapData.map"));
+
+	_mSizeNames.insert(make_pair(MAP_GYM, "data/gymMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_GYM, "data/gymMapData.map"));
 }
 
 DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
@@ -712,7 +875,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_APPEAR;		//몬스터 출몰 속성
 		}
 	}
-
+	//물
 	if (imgName == TERRAIN_NAME6)
 	{
 		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2) ||
@@ -727,20 +890,22 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_WATER;		//프레임을 돌려야 해서 있어야 함
 		}
 	}
+	//집, 오박사
 	if (imgName == TERRAIN_NAME7)
 	{
 		if ((frameX == 0 || frameX == 1) && (frameY == 0) ||
-			(frameX >= 0 && frameX < 3) && (frameY == 1))
+			(frameX >= 0 && frameX < SAMPLETILE - 1)  && (frameY == 1))
 		{
 			result |= ATTR_NONE;
 		}
 		else if ((frameX == 2 || frameX == 3) && frameY == 0 ||
-				 frameX == 3 && frameY == 1)
+				 frameX == 5 && frameY == 1)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;		//이건 속성을 빼도 될것 같은 UNMOVE랑 WALL의 차이가 딱히 없어보임
 		}
 	}
+	//포켓몬 센터
 	if (imgName == TERRAIN_NAME8)
 	{
 		if ((frameX == 4 || frameX == 5) && (frameY >= 0 && frameY < 3) ||
@@ -754,6 +919,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_WALL;
 		}
 	}
+	//상점
 	if (imgName == TERRAIN_NAME9)
 	{
 		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 3))
@@ -766,6 +932,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_NONE;
 		}
 	}
+	//체육관
 	if (imgName == TERRAIN_NAME10)
 	{
 		if ((frameX > 0 && frameX < SAMPLETILE - 1) && (frameY >= 2 && frameY <= 4) ||

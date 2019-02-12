@@ -13,16 +13,14 @@
 enum MAP_NAME
 {
 	MAP_TEST,		//테스트맵
-
+	MAP_TOWN,		//마을
 	MAP_HOME,		//내집
-	MAP_RIVAL,		//라이벌 집
-	MAP_FIELD,		//필드
-	MAP_CAVE,		//동굴
 	MAP_O_LAB,		//오박사 연구소
 	MAP_STORE,		//상점
 	MAP_CENTER,		//포켓몬센터
-
-
+	MAP_GYM,		//체육관
+	MAP_FIELD,		//필드
+	MAP_CAVE,		//동굴
 
 	MAP_NONE,		//
 	MAP_COUNT = MAP_NONE,
@@ -84,12 +82,17 @@ private:
 
 	bool _isTileClick;
 	bool _isObj;
+	bool _isRND;
 	int	tempCount;	//오브젝트 이미지 띄웠다 지웠다 할때 쓰는 변수
 
 	//세이브 파일의 스트링 벡터
 	map<MAP_NAME, string> _mSizeNames;
 	map<MAP_NAME, string> _mDataNames;
 	int _mapCase;
+
+	bool _isShift;
+	UINT _savePointX;
+	UINT _savePointY;
 
 public:
 	mapTool();
@@ -100,7 +103,9 @@ public:
 	void update();
 	void render();
 
+	void setSampleTile();
 	void setTile();
+
 	void turnMap();
 	void pickSampleMap();
 	void mapSizeChange();
