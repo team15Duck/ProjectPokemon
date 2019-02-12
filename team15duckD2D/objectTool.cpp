@@ -43,6 +43,7 @@ HRESULT objectTool::init()
 	CAMERA->init(0, 0, 3000, 3000);
 
 	_isShift = false;
+	_isCtrl = false;
 	_savePointX = 0;
 	_savePointY = 0;
 	return S_OK;
@@ -456,6 +457,16 @@ void objectTool::drawObject()
 		_isShift = false;
 
 
+
+	if (KEYMANAGER->isOnceKeyDown(VK_CONTROL))
+	{
+		_isCtrl = true;
+	}
+	
+
+	if (KEYMANAGER->isOnceKeyUp(VK_CONTROL))
+		_isCtrl = false;
+
 	if (_ptMouse.x - CAMERA->getPosX() > SAMPLETILE_STARTX) return;
 	if (_ptMouse.x > _vvRect[0][TILEX - 1].right) return;
 	if (_ptMouse.x < _vvRect[0][0].left) return;
@@ -463,7 +474,8 @@ void objectTool::drawObject()
 	if (_ptMouse.y < _vvRect[0][0].top) return;
 
 
-	if (_isShift)
+
+	if (_isShift && !_isCtrl)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
@@ -526,8 +538,82 @@ void objectTool::drawObject()
 
 		}
 	}
+	else if (_isCtrl)
+	{
+
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						_saveTile.objectImageName = _vvTile[i][j]->objectImageName;
+						_saveTile.objectFrameX = _vvTile[i][j]->objectFrameX;
+						_saveTile.objectFrameY = _vvTile[i][j]->objectFrameY;
+						_saveTile.terrainImageName = _vvTile[i][j]->terrainImageName;
+						_saveTile.terrainFrameX = _vvTile[i][j]->terrainFrameX;
+						_saveTile.terrainFrameY = _vvTile[i][j]->terrainFrameY;
+						if (_isObj)
+						{
+							_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+
+							_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
+							_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+						//타일맵에 오브젝트 정보 추가
+						else
+						{
+							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
+							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+					}
+				}
+			}
+
+
+		}
+
+
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (_saveTile.terrainImageName == _vvTile[i][j]->terrainImageName && _saveTile.objectImageName == _vvTile[i][j]->objectImageName &&
+						_saveTile.terrainFrameX == _vvTile[i][j]->terrainFrameX		  && _saveTile.terrainFrameY == _vvTile[i][j]->terrainFrameY &&
+						_saveTile.objectFrameX == _vvTile[i][j]->objectFrameX		  && _saveTile.objectFrameY == _vvTile[i][j]->objectFrameY)
+					{
+						if (_isObj)
+						{
+							_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+
+							_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
+							_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+						//타일맵에 오브젝트 정보 추가
+						else
+						{
+							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
+							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+					}
+				}
+			}
+		}
+
+	}
 	else
 	{
+
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
 			for (int i = 0; i < TILEY; ++i)
@@ -557,7 +643,6 @@ void objectTool::drawObject()
 			}
 		}
 	}
-
 	
 }
 

@@ -76,8 +76,12 @@ private:
 
 
 	bool _isShift;
+	bool _isCtrl;
 	UINT _savePointX;
 	UINT _savePointY;
+
+	tagTile _saveTile;
+
 public:
 	objectTool();
 	~objectTool();
