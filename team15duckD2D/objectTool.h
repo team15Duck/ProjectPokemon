@@ -74,6 +74,10 @@ private:
 	bool _isTileClick;
 	bool _isObj;
 
+
+	bool _isShift;
+	UINT _savePointX;
+	UINT _savePointY;
 public:
 	objectTool();
 	~objectTool();

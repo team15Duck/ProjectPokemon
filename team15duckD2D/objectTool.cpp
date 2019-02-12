@@ -42,6 +42,9 @@ HRESULT objectTool::init()
 	_isObj = true;
 	CAMERA->init(0, 0, 3000, 3000);
 
+	_isShift = false;
+	_savePointX = 0;
+	_savePointY = 0;
 	return S_OK;
 }
 
@@ -120,6 +123,23 @@ void objectTool::render()
 			IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
 
 	}
+
+	if (_isShift)
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			D2D1_RECT_F dragRc = { _savePointX * TILE_SIZE + 5, _savePointY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
+
+			D2DMANAGER->drawRectangle(RGB(135,12,255),dragRc);
+		}
+		
+
+
+
+	}
+
+
+
 
 }
 
@@ -429,19 +449,59 @@ void objectTool::pickSampleObject()
 
 void objectTool::drawObject()
 {
+	if (KEYMANAGER->isOnceKeyDown(VK_SHIFT))
+		_isShift = true;
+
+	if (KEYMANAGER->isOnceKeyUp(VK_SHIFT))
+		_isShift = false;
+
+
 	if (_ptMouse.x - CAMERA->getPosX() > SAMPLETILE_STARTX) return;
 	if (_ptMouse.x > _vvRect[0][TILEX - 1].right) return;
 	if (_ptMouse.x < _vvRect[0][0].left) return;
 	if (_ptMouse.y > _vvRect[TILEY - 1][0].bottom) return;
 	if (_ptMouse.y < _vvRect[0][0].top) return;
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+
+	if (_isShift)
 	{
-		for (int i = 0; i < TILEY; ++i)
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
-			for (int j = 0; j < TILEX; ++j)
+			for (int i = 0; i < TILEY; ++i)
 			{
-				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						_savePointY = i;
+						_savePointX = j;
+					}
+				}
+			}
+		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			int savePX2;
+			int savePY2;
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						savePY2 = i;
+						savePX2 = j;
+					}
+				}
+			}
+			savePX2++;
+			savePY2++;
+			if (savePX2 < _savePointX) return;
+			if (savePY2 < _savePointY) return;
+
+			for (int i = _savePointY; i < savePY2; ++i)
+			{
+				for (int j = _savePointX; j < savePX2; ++j)
 				{
 					if (_isObj)
 					{
@@ -461,8 +521,44 @@ void objectTool::drawObject()
 					}
 				}
 			}
+
+
+
 		}
 	}
+	else
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			for (int i = 0; i < TILEY; ++i)
+			{
+				for (int j = 0; j < TILEX; ++j)
+				{
+					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+					{
+						if (_isObj)
+						{
+							_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+
+							_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
+							_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+						//타일맵에 오브젝트 정보 추가
+						else
+						{
+							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
+							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
+							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	
 }
 
 DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
