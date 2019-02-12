@@ -146,12 +146,21 @@ private:
 	float			_height;			// 키
 
 	int				_captureRate;		// 표획률
+
+	int				_evolutionLv;		// 진화를 위한 레벨
+	POKEMON			_evolutionIndex;	// 진화 넘버
 	
 public:
 	pokemonInfo();
 	~pokemonInfo();
 
-	HRESULT init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status, string text, float weight, float height, int captureRate);
+	// 초기화 : 진화 없음
+	HRESULT init(	POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status
+				 ,	string text, float weight, float height, int captureRate);
+	// 초기화 : 진화 있음
+	HRESULT init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status
+				 , string text, float weight, float height, int captureRate
+				 , int evolutionLv, POKEMON evolutionIndex);
 	void clear();
 
 	POKEMON getPokemonIndex()					{ return _index;			}
@@ -162,6 +171,8 @@ public:
 	float getWeight()							{ return _weight;			}
 	float getHeight()							{ return _height;			}
 	int getCaptureRate()						{ return _captureRate;		}
+	int getEvolutionLevel()						{ return _evolutionLv;		}
+	POKEMON getEvolutionIndex()					{ return _evolutionIndex;	}	
 
 };
 

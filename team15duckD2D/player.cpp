@@ -27,6 +27,7 @@ HRESULT player::init()
 	_playTime = 5461;
 	_isRight = false;
 	_posZ = 0;
+	_moveDistance = 0;
 	//////////////////////////////////////
 
 	//성별따라 키값 셋팅해줌
@@ -128,8 +129,10 @@ void player::render()
 	swprintf_s(str, L"X");
 	D2DMANAGER->drawText(str, x.left + 40, x.top + 20, 30);
 
-
-
+	swprintf_s(str, L"moveDistance : %.1f", _moveDistance);
+	D2DMANAGER->drawText(str, 700, 30, 15, RGB(40, 120, 40));
+	swprintf_s(str, L"x : %d , y : %d", _tileX, _tileY);
+	D2DMANAGER->drawText(str, 700, 45, 15, RGB(40, 120, 40));
 
 }
 
@@ -177,47 +180,47 @@ void player::dataLoad()
 
 void player::keyUpdate()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && !_isMoving)
+	if (_moveDistance == 0)
 	{
-		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-		_playerAni->start();
-		_isMoving = true;
-		_state = PS_MOVE_LEFT;
-	}
-	
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && !_isMoving)
-	{
-		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-		_playerAni->start();
-		_isMoving = true;
-		_state = PS_MOVE_RIGHT;
-	}
-	
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && !_isMoving)
-	{
-		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
-		_playerAni->start();
-		_isMoving = true;
-		_state = PS_MOVE_DOWN;
-	}
-	
-	if (KEYMANAGER->isOnceKeyDown(VK_UP) && !_isMoving)
-	{
-		_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
-		_playerAni->start();
-		_isMoving = true;
-		_state = PS_MOVE_UP;
+		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+		{
+			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+			_playerAni->start();
+			_state = PS_MOVE_LEFT;
+			_moveDistance = 64.0f;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+		{
+			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+			_playerAni->start();
+			_state = PS_MOVE_RIGHT;
+			_moveDistance = 64.0f;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+		{
+			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
+			_playerAni->start();
+			_state = PS_MOVE_DOWN;
+			_moveDistance = 64.0f;
+		}
+		if (KEYMANAGER->isStayKeyDown(VK_UP))
+		{
+			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
+			_playerAni->start();
+			_state = PS_MOVE_UP;
+			_moveDistance = 64.0f;
+		}
 	}
 
 
-	if (KEYMANAGER->isOnceKeyUp(VK_LEFT) || KEYMANAGER->isOnceKeyUp(VK_UP) || KEYMANAGER->isOnceKeyUp(VK_RIGHT) || KEYMANAGER->isOnceKeyUp(VK_DOWN))
-		if (!KEYMANAGER->isStayKeyDown(VK_LEFT) && !KEYMANAGER->isStayKeyDown(VK_UP) && !KEYMANAGER->isStayKeyDown(VK_RIGHT) && !KEYMANAGER->isStayKeyDown(VK_DOWN))
-			_isMoving = false;
-	
 }
 
 void player::stateUpdate()
 {
+	float speed = TIMEMANAGER->getElapsedTime() * PLYAER_SPEED;
+
+
+
 	switch (_state)
 	{
 		case player::PS_IDLE_LEFT:
@@ -232,140 +235,61 @@ void player::stateUpdate()
 		case player::PS_IDLE_DOWN:
 			_isRight = false;
 		break;
+
 		case player::PS_MOVE_LEFT:
 			_isRight = false;
-			_posX -= 5;
-			if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
+			_posX -= speed;
+			_moveDistance -= speed;
+			if (_moveDistance < speed)
 			{
-				if (!_isMoving)
-				{
-					_posX = (int)_posX / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
-					_playerAni->start();
-					_state = PS_IDLE_LEFT;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_UP))
-				{
-					_posX = (int)_posX / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
-					_playerAni->start();
-					_state = PS_MOVE_UP;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-				{
-					_posX = (int)_posX / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
-					_playerAni->start();
-					_state = PS_MOVE_DOWN;
-				}
-			}
-			if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-			{
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+				_posX = (int)_posX / 64 * 64 + 32;
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
 				_playerAni->start();
-				_state = PS_MOVE_RIGHT;
+				_state = PS_IDLE_LEFT;
+				_moveDistance = 0;
+				_tileX--;
 			}
 		break;
 		case player::PS_MOVE_UP:
 			_isRight = false;
-			_posY -= 5;
-			if (29 < (int)_posY % 64 && (int)_posY % 64 < 35)
+			_posY -= speed;
+			_moveDistance -= speed;
+			if (_moveDistance < speed)
 			{
-				if (!_isMoving)
-				{
-					_posY = (int)_posY / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_up");
-					_playerAni->start();
-					_state = PS_IDLE_UP;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-				{
-					_posY = (int)_posY / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-					_playerAni->start();
-					_state = PS_MOVE_LEFT;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-				{
-					_posY = (int)_posY / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-					_playerAni->start();
-					_state = PS_MOVE_RIGHT;
-				}	
-			}
-			if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-			{
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
+				_posY = (int)_posY / 64 * 64 + 32;
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_up");
 				_playerAni->start();
-				_state = PS_MOVE_DOWN;
+				_state = PS_IDLE_UP;
+				_moveDistance = 0;
+				_tileY--;
 			}
 		break;
 		case player::PS_MOVE_RIGHT:
 			_isRight = true;
-			_posX += 5;
-			if (29 < (int)_posX % 64 && (int)_posX % 64 < 35)
+			_posX += speed;
+			_moveDistance -= speed;
+			if (_moveDistance < speed)
 			{
-				if (!_isMoving)
-				{
-					_posX = (int)_posX / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
-					_playerAni->start();
-					_state = PS_IDLE_RIGHT;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_UP))
-				{
-					_posX = (int)_posX / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
-					_playerAni->start();
-					_state = PS_MOVE_UP;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-				{
-					_posX = (int)_posX / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
-					_playerAni->start();
-					_state = PS_MOVE_DOWN;
-				}
-			}
-			if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-			{
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
+				_posX = (int)_posX / 64 * 64 + 32;
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
 				_playerAni->start();
-				_state = PS_MOVE_LEFT;
+				_state = PS_IDLE_RIGHT;
+				_moveDistance = 0;
+				_tileX++;
 			}
 		break;
 		case player::PS_MOVE_DOWN:
 			_isRight = false;
-			_posY += 5;
-			if (29 < (int)_posY % 64 && (int)_posY % 64 < 35)
+			_posY += speed;
+			_moveDistance -= speed;
+			if (_moveDistance < speed)
 			{
-				if (!_isMoving)
-				{
-					_posY = (int)_posY / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_down");
-					_playerAni->start();
-					_state = PS_IDLE_DOWN;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-				{
-					_posY = (int)_posY / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-					_playerAni->start();
-					_state = PS_MOVE_LEFT;
-				}
-				if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-				{
-					_posY = (int)_posY / 64 * 64 + 32;
-					_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-					_playerAni->start();
-					_state = PS_MOVE_RIGHT;
-				}
-			}
-			if (KEYMANAGER->isStayKeyDown(VK_UP))
-			{
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
+				_posY = (int)_posY / 64 * 64 + 32;
+				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_down");
 				_playerAni->start();
-				_state = PS_MOVE_UP;
+				_state = PS_IDLE_DOWN;
+				_moveDistance = 0;
+				_tileY++;
 			}
 		break;
 		case player::PS_FASTMOVE_LEFT:
@@ -407,4 +331,6 @@ void player::stateUpdate()
 		default:
 		break;
 	}
+
+	
 }

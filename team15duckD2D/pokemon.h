@@ -1,5 +1,4 @@
 #pragma once
-#include "pokemonInfo.h"
 #include "pokemonSkill.h"
 #include "item.h"
 #include <functional>
@@ -41,6 +40,8 @@ typedef struct tagPokemonPackage
 
 }pmPack;
 
+class pokemonInfo;
+
 // 포켓몬
 class pokemon
 {
@@ -66,7 +67,7 @@ private:
 	item* _item;								// 소지하고 있는 아이템
 
 	unsigned int _level;						// 레벨
-	unsigned int _currentLvExp;					// 현재 레벨의 누적 경험치
+	unsigned int _currentLvExp;					// 현재 레벨까지의 누적 경험치
 	unsigned int _currentExp;					// 현재 누적 경험치
 	unsigned int _nextLvExp;					// 다음 레벨까지 누적 경험치
 
@@ -97,7 +98,7 @@ public:
 	pokemon();
 	~pokemon();
 
-	HRESULT init(int idNo, pokemonInfo* info, int level, bool isMyPokemon);
+	HRESULT init(int idNo, POKEMON index, int level, bool isMyPokemon);
 	void release();
 	void update();
 	void render();

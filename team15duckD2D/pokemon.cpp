@@ -37,22 +37,21 @@ pokemon::~pokemon()
 }
 
 HRESULT pokemon::init( int idNo
-					  ,pokemonInfo* info
+					  ,POKEMON index
 					  ,int level
 					  ,bool isMyPokemon)
 {
+	pokemonInfo info = *POKEMONDATA->getPokemonInfomation(index);
+
 	_idNo = idNo;
-	_index = info->getPokemonIndex();
+	_index = info.getPokemonIndex();
+	_nickName = *info.getPokemonName();
 	_level = level;
 	_isMyPokemon = isMyPokemon;
 
 	_isAwake = true;
 
 	settingStatus();
-	_currentStatus = _defaultStatus;
-
-	_displayHp = _currentStatus.hp;
-	_displayExp = _currentExp;
 
 	// todo : 로딩씬으로 이동
 	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon.png", 5120, 4696, 20, 16);
@@ -167,8 +166,8 @@ void pokemon::loadSavePack(pmPack* pack)
 	}
 
 	_level = pack->level;
-	_currentExp = pack->currentExp;
 	settingStatus();
+	_currentExp = pack->currentExp;
 
 	_upsetCondition.type = (POKEMON_UPSET_CONDITION)pack->upsetConditionType;
 	_upsetCondition.value = pack->upsetConditionValue;
@@ -276,23 +275,46 @@ void pokemon::levelUp()
 		return;
 
 	++_level;
-	settingStatus();
 	
 	evolution();
+	settingStatus();
 	gainSkill();
 }
 
 void pokemon::settingStatus()
 {
-	// todo defaultStatus
-	// todo 스킬 세팅
-	// todo 그 다음 레벨까지 필요한 누적 경험치 갱신
-	// _currentLvExp = _nextLvExp; 
-	//_nextLvExp =  
+	// 능력치
+	_defaultStatus = POKEMONDATA->calculateStatus(_level, _index);
+	_currentStatus = _defaultStatus;
+	
+	// 그 다음 레벨까지 필요한 누적 경험치 갱신
+	_currentLvExp = POKEMONDATA->calcuateExp(_level, _index);
+	_currentExp = _currentLvExp;
+	if (_level < POKEMON_MAX_LEVEL)
+	{
+		_nextLvExp = POKEMONDATA->calcuateExp(_level + 1, _index);
+	}
+	else
+	{
+		_nextLvExp = _currentLvExp;
+	}
+
+	_displayHp = _currentStatus.hp;
+	_displayExp = _currentExp;
 }
 
 void pokemon::evolution()
 {
+	pokemonInfo info = *POKEMONDATA->getPokemonInfomation(_index);
+	int evolutionLv = info.getEvolutionLevel();
+	if( 0 != evolutionLv && evolutionLv == _level )
+	{
+		int evolutionIndex = info.getEvolutionIndex();
+		if (POKEMON_NONE != evolutionIndex)
+		{
+			_level = evolutionIndex;
+		}
+	}
 }
 
 void pokemon::gainSkill()

@@ -3,6 +3,8 @@
 #include "item.h"
 #include "pokemon.h"
 
+#define PLYAER_SPEED 150.0f
+
 class player
 {
 public:
@@ -32,6 +34,9 @@ private:
 	pokemon*	_pokemon[6];		//포켓몬ㅋ
 	animation* _playerAni;			//플레이어 애니
 	string _key;					//키값
+
+
+	float _moveDistance;
 
 	bool _isMoving;					//이동중이니?
 	bool _isRight;					//오른쪽보니?

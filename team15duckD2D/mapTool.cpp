@@ -16,6 +16,7 @@ mapTool::~mapTool()
 
 HRESULT mapTool::init()
 {
+	//이미지 설정은 플레이그라운드에 있어영
 	_sampleImg[0] = IMAGEMANAGER->findImage(TERRAIN_NAME1 );
 	_sampleImg[1] = IMAGEMANAGER->findImage(TERRAIN_NAME2 );
 	_sampleImg[2] = IMAGEMANAGER->findImage(TERRAIN_NAME3 );
@@ -35,33 +36,29 @@ HRESULT mapTool::init()
 	_sampleImgStr[0] = TERRAIN_NAME1;
 	_tempImgStr[0] = OBJECT_NAME1;
 	setTile();
-	//MENUMANAGER->addFrame("맵틀", CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA	->getPosY() + 0, (WINSIZEX - SAMPLE_TOTAL_SIZE) / TILE_SIZE, WINSIZEY / TILE_SIZE);
-	//MENUMANAGER->addFrame("맵 틀", WINSIZEX - SAMPLE_TOTAL_SIZE, 1, 9, 15);
+	
 
-	_preButton = { WINSIZEX / 2 + 100, WINSIZEY / 2 + 120, WINSIZEX / 2 + 150, WINSIZEY / 2 + 150 };
-	_nextButton = { WINSIZEX / 2 + 250, WINSIZEY / 2 + 120, WINSIZEX / 2 + 300, WINSIZEY / 2 + 150 };
 
-	_sizeUpWidth = { _preButton.left + 100, _preButton.bottom + 50, _preButton.left + 130, _preButton.bottom + 90 };
-	_sizeDownWidth = { _preButton.left, _sizeUpWidth.top, _preButton.left + 30, _sizeUpWidth.bottom };
-	_sizeUpHeight = { _preButton.left + 40, _preButton.bottom + 10, _preButton.left + 90, _preButton.bottom + 40 };
-	_sizeDownHeight = { _preButton.left + 40, _sizeUpWidth.bottom + 10 ,  _preButton.left + 90 , _sizeUpWidth.bottom + 40 };
+	_preButton = { WINSIZEX / 2 + 400, WINSIZEY / 2 + 50, WINSIZEX / 2 + 450, WINSIZEY / 2 + 80 };
+	_nextButton = { WINSIZEX / 2 + 550, WINSIZEY / 2 + 50, WINSIZEX / 2 + 600, WINSIZEY / 2 + 80 };
+
+	_sizeUpWidth = { _preButton.left + 135, _preButton.bottom + 50, _preButton.left + 165, _preButton.bottom + 90 };
+	_sizeDownWidth = { _preButton.left + 35, _sizeUpWidth.top, _preButton.left + 65, _sizeUpWidth.bottom };
+	_sizeUpHeight = { _preButton.left + 75, _preButton.bottom + 10, _preButton.left + 125, _preButton.bottom + 40 };
+	_sizeDownHeight = { _preButton.left + 75, _sizeUpWidth.bottom + 10 ,  _preButton.left + 125 , _sizeUpWidth.bottom + 40 };
 
 	_isTileClick = false;
 	//윤정언니가 쓸 오브젝트의 불값
 	_isObj = false;
 	tempCount = 0;
-	CAMERA->init(0, 0, 5000, 5000);
+	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_TEST;
-
-
+	_mapCase = MAP_HOME;
 
 	nameInit();
 
 
-	
 	return S_OK;
-
 }
 
 void mapTool::release()
@@ -75,7 +72,7 @@ void mapTool::update()
 	turnMap();
 	pickSampleMap();
 	drawMap();
-	mapSizeUp();
+	mapSizeChange();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
@@ -87,6 +84,15 @@ void mapTool::update()
 	{
 		load();
 	}
+
+	_preButton = { CAMERA->getPosX() + WINSIZEX / 2 + 400, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 450, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
+	_nextButton = { CAMERA->getPosX() + WINSIZEX / 2 + 550, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 600, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
+
+	_sizeUpWidth = { _preButton.left + 135, _preButton.bottom + 50,  _preButton.left + 165, _preButton.bottom + 90 };
+	_sizeDownWidth = { _preButton.left + 35, _sizeUpWidth.top,_preButton.left + 65, _sizeUpWidth.bottom };
+	_sizeUpHeight = { _preButton.left + 75, _preButton.bottom + 10, _preButton.left + 125, _preButton.bottom + 40 };
+	_sizeDownHeight = { _preButton.left + 75, _sizeUpWidth.bottom + 10 , _preButton.left + 125, _sizeUpWidth.bottom + 40 };
+
 }
 
 void mapTool::render()
@@ -101,33 +107,33 @@ void mapTool::render()
 		IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
 
 	//이전,다음 버튼 렌더
-	D2DMANAGER->drawRectangle(CAMERA->getPosX() + _preButton.left
-							  , CAMERA->getPosY() + _preButton.top
-							  , CAMERA->getPosX() + _preButton.right
-							  , CAMERA->getPosY() + _preButton.bottom);
-	D2DMANAGER->drawRectangle(CAMERA->getPosX() + _nextButton.left
-							  , CAMERA->getPosY() + _nextButton.top
-							  , CAMERA->getPosX() + _nextButton.right
-							  , CAMERA->getPosY() + _nextButton.bottom);
+	D2DMANAGER->drawRectangle( _preButton.left
+							,  _preButton.top
+							,  _preButton.right
+							,  _preButton.bottom);
+	D2DMANAGER->drawRectangle( _nextButton.left
+							  ,_nextButton.top
+							  ,_nextButton.right
+							  ,_nextButton.bottom);
 
 	//맵 사이즈 버튼 렌더
-	D2DMANAGER->drawRectangle(CAMERA->getPosX() + _sizeUpWidth.left
-							  , CAMERA->getPosY() + _sizeUpWidth.top
-							  , CAMERA->getPosX() + _sizeUpWidth.right
-							  , CAMERA->getPosY() + _sizeUpWidth.bottom);
-	D2DMANAGER->drawRectangle(CAMERA->getPosX() + _sizeDownWidth.left
-							  , CAMERA->getPosY() + _sizeDownWidth.top
-							  , CAMERA->getPosX() + _sizeDownWidth.right
-							  , CAMERA->getPosY() + _sizeDownWidth.bottom);
-	D2DMANAGER->drawRectangle(CAMERA->getPosX() + _sizeUpHeight.left
-							  , CAMERA->getPosY() + _sizeUpHeight.top
-							  , CAMERA->getPosX() + _sizeUpHeight.right
-							  , CAMERA->getPosY() + _sizeUpHeight.bottom);
+	D2DMANAGER->drawRectangle(_sizeUpWidth.left
+							  , _sizeUpWidth.top
+							  , _sizeUpWidth.right
+							  , _sizeUpWidth.bottom);
+	D2DMANAGER->drawRectangle( _sizeDownWidth.left
+							  , _sizeDownWidth.top
+							  , _sizeDownWidth.right
+							  , _sizeDownWidth.bottom);
+	D2DMANAGER->drawRectangle( _sizeUpHeight.left
+							  , _sizeUpHeight.top
+							  , _sizeUpHeight.right
+							  , _sizeUpHeight.bottom);
 
-	D2DMANAGER->drawRectangle(CAMERA->getPosX() + _sizeDownHeight.left
-							  , CAMERA->getPosY() + _sizeDownHeight.top
-							  , CAMERA->getPosX() + _sizeDownHeight.right
-							  , CAMERA->getPosY() + _sizeDownHeight.bottom);
+	D2DMANAGER->drawRectangle(_sizeDownHeight.left
+							  , _sizeDownHeight.top
+							  , _sizeDownHeight.right
+							  , _sizeDownHeight.bottom);
 
 	//샘플 RECT 렌더
 	for (int i = 0; i < SAMPLETILE; ++i)
@@ -158,7 +164,7 @@ void mapTool::render()
 				IMAGEMANAGER->findImage(_vvTile[i][j]->objectImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 			}
 			else
-					IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+				IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 		}
 	}
 
@@ -174,6 +180,9 @@ void mapTool::render()
 	WCHAR str[128];
 	swprintf_s(str, L"TILEX : %d, TILEY : %d", TILEX, TILEY);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 200);
+
+	swprintf_s(str, L"mapcase : %d", _mapCase);
+	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 250);
 
 	//MENUMANAGER->findMenuFrame("멥 틀")->render("타입1");
 }
@@ -233,7 +242,8 @@ void mapTool::turnMap()
 	const RECT tempPre = { _preButton.left, _preButton.top, _preButton.right, _preButton.bottom };
 	POINT tempPTPre = { _ptMouse.x, _ptMouse.y };
 
-	if (PtInRect(&tempPre, tempPTPre))
+	//if (PtInRect(&tempPre, tempPTPre))
+	if (PtInRect(&makeRECT(_preButton), tempPTPre))
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
@@ -289,7 +299,6 @@ void mapTool::turnMap()
 	}
 
 }
-
 
 void mapTool::pickSampleMap()
 {
@@ -430,12 +439,13 @@ void mapTool::pickSampleMap()
 	}
 }
 
-void mapTool::mapSizeUp()
+void mapTool::mapSizeChange()
 {
 	POINT tempPT = { _ptMouse.x, _ptMouse.y };
 	
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) && TILEX > 1)
 	{
+		//가로 사이즈 줄이는 버튼 눌렀을때
 		if (PtInRect(&makeRECT(_sizeDownWidth), tempPT))
 		{
 			for (int i = 0; i < TILEY; ++i)
@@ -450,7 +460,7 @@ void mapTool::mapSizeUp()
 			}
 			TILEX--;
 		}
-
+		//가로 사이즈 늘리는 버튼 눌렀을 때
 		if (PtInRect(&makeRECT(_sizeUpWidth), tempPT))
 		{
 			for (int i = 0; i < TILEY; ++i)
@@ -477,6 +487,48 @@ void mapTool::mapSizeUp()
 			}
 			++TILEX;
 		}
+
+		//세로 사이즈 줄이는 버튼 눌렀을 때
+		if (PtInRect(&makeRECT(_sizeDownHeight), tempPT))
+		{
+			for (int i = 0; i < TILEX; ++i)
+			{
+				delete _vvTile.back()[i];		//데이터를 메모리에서 삭제함
+				_vvTile.back()[i] = nullptr;	//포인터의 주소를 없앰
+				//(삭제를 먼저 하고 포인터를 지워야함. 그래야 그 주소의 데이터를 삭제할 수 있음)
+			}
+			_vvTile.pop_back();
+			TILEY--;
+		}
+		//세로 사이즈 늘리는 버튼 눌렀을 때
+		if (PtInRect(&makeRECT(_sizeUpHeight), tempPT))
+		{
+			vector<tagTile*> vTile;
+			vector<D2D1_RECT_F> vRect;
+			for (int i = 0; i < TILEX; ++i)
+			{
+				tagTile* tempTile = new tagTile;
+				D2D1_RECT_F* tempRect = new D2D1_RECT_F;
+				tempTile->terrainFrameX = 0;
+				tempTile->terrainFrameY = 0;
+				tempTile->objectFrameX = 0;
+				tempTile->objectFrameY = 0;
+				tempTile->attr |= ATTR_NONE;
+				tempTile->terrainImageName = TERRAIN_NAME_NONE;
+				tempTile->objectImageName = OBJECT_NAME_NONE;
+				*tempRect = { (float)_vvRect.back()[i].right
+							, (float)_vvRect.back()[i].top
+							, (float)_vvRect.back()[i].right + TILE_SIZE
+							, (float)_vvRect.back()[i].bottom };
+
+				vTile.push_back(tempTile);
+				vRect.push_back(*tempRect);
+			}
+			_vvTile.push_back(vTile);
+			_vvRect.push_back(vRect);
+			TILEY++;
+		}
+
 	}
 }
 
@@ -629,10 +681,20 @@ void mapTool::nameInit()
 	_mSizeNames.insert(make_pair(MAP_TEST, "data/testMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_TEST, "data/testMapData.map"));
 
-	//_mSizeNames.insert(make_pair(MAP_TEST, "testMapSize.map"));
-	//_mDataNames.insert(make_pair(MAP_TEST, "testMapSize.map"));
+	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
 
+	_mSizeNames.insert(make_pair(MAP_FIELD, "data/fieldMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_FIELD, "data/fieldMapData.map"));
 
+	_mSizeNames.insert(make_pair(MAP_O_LAB, "data/oLabMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_O_LAB, "data/oLabMapData.map"));
+
+	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
+
+	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
+	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
 }
 
 DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
@@ -649,7 +711,6 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_NONE;
 			result |= ATTR_APPEAR;		//몬스터 출몰 속성
 		}
-		
 	}
 
 	if (imgName == TERRAIN_NAME6)

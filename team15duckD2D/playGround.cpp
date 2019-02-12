@@ -127,7 +127,7 @@ HRESULT playGround::init()
 
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("mapTestScene");
+		SCENEMANAGER->changeScene("mapToolScene");
 	}
 	else
 	{

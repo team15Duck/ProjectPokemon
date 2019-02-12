@@ -12,13 +12,19 @@
 
 enum MAP_NAME
 {
-	MAP_FIELD,
-	MAP_HOME,
-	MAP_O_LIBRARY,
-	MAP_STORE,
-	MAP_TEST,
+	MAP_TEST,		//테스트맵
 
-	MAP_NONE,
+	MAP_HOME,		//내집
+	MAP_RIVAL,		//라이벌 집
+	MAP_FIELD,		//필드
+	MAP_CAVE,		//동굴
+	MAP_O_LAB,		//오박사 연구소
+	MAP_STORE,		//상점
+	MAP_CENTER,		//포켓몬센터
+
+
+
+	MAP_NONE,		//
 	MAP_COUNT = MAP_NONE,
 
 };
@@ -97,7 +103,7 @@ public:
 	void setTile();
 	void turnMap();
 	void pickSampleMap();
-	void mapSizeUp();
+	void mapSizeChange();
 
 	void drawMap();
 
