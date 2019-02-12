@@ -43,12 +43,28 @@ void mapData::render()
 		{
 			if (_vvTile[ii][jj]->terrainImageName.size() > 0)
 				IMAGEMANAGER->findImage(_vvTile[ii][jj]->terrainImageName)->frameRender(jj * TILE_SIZE, ii * TILE_SIZE , _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
+		}
+		jj = CAMERA->getPosX() / TILE_SIZE;
+		if (jj < 0) jj = 0;
+	}
+	ii = CAMERA->getPosY() / TILE_SIZE;
+	if (ii < 0) ii = 0;
+	for (; ii < iiMax; ++ii)
+	{
+		for (; jj < jjMax; ++jj)
+		{
+			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)
+			{
+				_player->render();
+			}
+
 			if (_vvTile[ii][jj]->objectImageName.size() > 0)
 				IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY);
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 	}
+
 }
 
 void mapData::load(const char * mapSizeFileName, const char * mapFileName)

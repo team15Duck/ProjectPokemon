@@ -19,6 +19,7 @@ HRESULT mapTestScene::init()
 	_player = new player;
 	_player->init();
 	_testMap->setPlayerMemoryAdressLink(_player);
+	_player->setMapDataMemoryAdressLink(_testMap);
 
 	return S_OK;
 }
@@ -38,5 +39,4 @@ void mapTestScene::update()
 void mapTestScene::render()
 {
 	_testMap->render();
-	_player->render();
 }
