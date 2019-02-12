@@ -23,13 +23,13 @@ HRESULT objectTool::init()
 	_sampleImg[7] = IMAGEMANAGER->addFrameImage(OBJECT_NAME8, L"image/object/object_8.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 	_sampleImg[8] = IMAGEMANAGER->addFrameImage(OBJECT_NAME9, L"image/object/object_9.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 	_sampleImg[9] = IMAGEMANAGER->addFrameImage(OBJECT_NAME10, L"image/object/object_10.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[10] = IMAGEMANAGER->addFrameImage(OBJECT_NAME11, L"image/object/myHouse4x4.png", 320, 320, 5, 5);
-	_sampleImg[11] = IMAGEMANAGER->addFrameImage(OBJECT_NAME12, L"image/object/OBakSaJHouse7x5.png", 448, 320, 7, 5);
-	_sampleImg[12] = IMAGEMANAGER->addFrameImage(OBJECT_NAME13, L"image/object/pokemonCenter5x5.png", 320, 320, 5, 5);
-	_sampleImg[13] = IMAGEMANAGER->addFrameImage(OBJECT_NAME14, L"image/object/pokemonShop4x4.png", 256, 256, 4, 4);
-	_sampleImg[14] = IMAGEMANAGER->addFrameImage(OBJECT_NAME15, L"image/object/pokemonGym8x5.png", 512, 320, 8, 5);
+	_sampleImg[10] = IMAGEMANAGER->addFrameImage(OBJECT_NAME11, L"image/object/myHouse.png", 320, 320, 5, 5);
+	_sampleImg[11] = IMAGEMANAGER->addFrameImage(OBJECT_NAME12, L"image/object/oakHouse.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
+	_sampleImg[12] = IMAGEMANAGER->addFrameImage(OBJECT_NAME13, L"image/object/pokemonCenter.png", 320, 320, 5, 5);
+	_sampleImg[13] = IMAGEMANAGER->addFrameImage(OBJECT_NAME14, L"image/object/pokemonShop.png", 256, 256, 4, 4);
+	_sampleImg[14] = IMAGEMANAGER->addFrameImage(OBJECT_NAME15, L"image/object/gym.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 	_sampleImg[15] = IMAGEMANAGER->addFrameImage(OBJECT_NAME16, L"image/object/openTheDoor.png", 320, 256, 5, 4);
-	_sampleImg[16] = IMAGEMANAGER->addFrameImage(OBJECT_NAME17, L"image/object/healing_Pokemon.png", 120, 24, 5, 1);
+	_sampleImg[16] = IMAGEMANAGER->addFrameImage(OBJECT_NAME17, L"image/object/etc.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 
 	_curImgNum = 0;
 	_sampleImgStr[0] = OBJECT_NAME1;
@@ -216,43 +216,43 @@ void objectTool::turnObject()
 				}
 				else if (_curImgNum + 1 == 11)
 				{
-					sprintf_s(str, "my_House", _curImgNum + 1);
+					sprintf_s(str, "object_11", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 12)
 				{
-					sprintf_s(str, "oak_House", _curImgNum + 1);
+					sprintf_s(str, "object_12", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 13)
 				{
-					sprintf_s(str, "pokemon_Center", _curImgNum + 1);
+					sprintf_s(str, "object_13", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 14)
 				{
-					sprintf_s(str, "pokemon_Shop", _curImgNum + 1);
+					sprintf_s(str, "object_14", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 15)
 				{
-					sprintf_s(str, "pokemon_Gym", _curImgNum + 1);
+					sprintf_s(str, "object_15", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 16)
 				{
-					sprintf_s(str, "openTheDoor", _curImgNum + 1);
+					sprintf_s(str, "object_16", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 17)
 				{
-					sprintf_s(str, "healing_Pokemon", _curImgNum + 1);
+					sprintf_s(str, "object_17", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
@@ -284,43 +284,43 @@ void objectTool::turnObject()
 				}
 				else if (_curImgNum + 1 == 11)
 				{
-					sprintf_s(str, "my_House", _curImgNum + 1);
+					sprintf_s(str, "object_11", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 12)
 				{
-					sprintf_s(str, "oak_House", _curImgNum + 1);
+					sprintf_s(str, "object_12", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 13)
 				{
-					sprintf_s(str, "pokemon_Center", _curImgNum + 1);
+					sprintf_s(str, "object_13", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 14)
 				{
-					sprintf_s(str, "pokemon_Shop", _curImgNum + 1);
+					sprintf_s(str, "object_14", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 15)
 				{
-					sprintf_s(str, "pokemon_Gym", _curImgNum + 1);
+					sprintf_s(str, "object_15", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 16)
 				{
-					sprintf_s(str, "openTheDoor", _curImgNum + 1);
+					sprintf_s(str, "object_16", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
 				else if (_curImgNum + 1 == 17)
 				{
-					sprintf_s(str, "healing_Pokemon", _curImgNum + 1);
+					sprintf_s(str, "object_17", _curImgNum + 1);
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
@@ -384,7 +384,7 @@ void objectTool::pickSampleObject()
 			}
 			if (_curImgNum == 1)
 			{
-				if ((idxX != 4 && idxY != 1) && 
+				if ((idxX != 4 && idxY != 1) || 
 					(idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
 				{
 					_pickSampleTile.curX = idxX;
@@ -644,6 +644,13 @@ void objectTool::drawObject()
 		}
 	}
 	
+}
+
+void objectTool::dragSample()
+{
+
+
+
 }
 
 DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)

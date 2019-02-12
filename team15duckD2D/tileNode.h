@@ -64,13 +64,14 @@ static string OBJECT_NAME7		= "object_07";
 static string OBJECT_NAME8		= "object_08";
 static string OBJECT_NAME9		= "object_09";
 static string OBJECT_NAME10		= "object_10";
-static string OBJECT_NAME11		= "my_House";
-static string OBJECT_NAME12		= "oak_House";
-static string OBJECT_NAME13		= "pokemon_Center";
-static string OBJECT_NAME14		= "pokemon_Shop";
-static string OBJECT_NAME15		= "pokemon_Gym";
-static string OBJECT_NAME16		= "openTheDoor";
-static string OBJECT_NAME17		= "healing_Pokemon";
+static string OBJECT_NAME11		= "object_11";
+static string OBJECT_NAME12		= "object_12";
+static string OBJECT_NAME13		= "object_13";
+static string OBJECT_NAME14		= "object_14";
+static string OBJECT_NAME15		= "object_15";
+static string OBJECT_NAME16		= "object_16";
+static string OBJECT_NAME17		= "object_17";
+static string OBJECT_NAME18		= "object_18";
 
 
 

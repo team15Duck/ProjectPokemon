@@ -95,6 +95,7 @@ public:
 	void turnObject();
 	void pickSampleObject();
 	void drawObject();
+	void dragSample();
 
 
 private:
