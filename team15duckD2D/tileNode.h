@@ -51,6 +51,7 @@ static string TERRAIN_NAME7		= "tile_07";
 static string TERRAIN_NAME8		= "tile_08";
 static string TERRAIN_NAME9		= "tile_09";
 static string TERRAIN_NAME10	= "tile_10";
+static string TERRAIN_NAME11	= "tile_11";
 
 
 //enum TERRAIN_NAME_INFO

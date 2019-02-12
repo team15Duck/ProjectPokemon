@@ -27,6 +27,7 @@ HRESULT mapTool::init()
 	_sampleImg[7] = IMAGEMANAGER->findImage(TERRAIN_NAME8 );
 	_sampleImg[8] = IMAGEMANAGER->findImage(TERRAIN_NAME9 );
 	_sampleImg[9] = IMAGEMANAGER->findImage(TERRAIN_NAME10);
+	_sampleImg[10] = IMAGEMANAGER->findImage(TERRAIN_NAME11);
 	_tempImg[0] =   IMAGEMANAGER->findImage(OBJECT_NAME1  );
 	for (int i = 1; i < OBJ_IMG_NUM; ++i)
 	{
@@ -60,7 +61,7 @@ HRESULT mapTool::init()
 
 	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_STORE;
+	_mapCase = MAP_GYM;
 
 	nameInit();
 
@@ -283,6 +284,12 @@ void mapTool::turnMap()
 					_sampleImgStr[_curImgNum] = str;
 					return;
 				}
+				if (_curImgNum + 1 == 11)
+				{
+					sprintf_s(str, "tile_%d", _curImgNum + 1);
+					_sampleImgStr[_curImgNum] = str;
+					return;
+				}
 				sprintf_s(str, "tile_0%d", _curImgNum + 1);
 				_sampleImgStr[_curImgNum] = str;
 			}
@@ -302,6 +309,12 @@ void mapTool::turnMap()
 				_curImgNum = 0;
 			char str[128];
 			if (_curImgNum + 1 == 10)
+			{
+				sprintf_s(str, "tile_%d", _curImgNum + 1);
+				_sampleImgStr[_curImgNum] = str;
+				return;
+			}
+			if (_curImgNum + 1 == 11)
 			{
 				sprintf_s(str, "tile_%d", _curImgNum + 1);
 				_sampleImgStr[_curImgNum] = str;
@@ -431,7 +444,8 @@ void mapTool::pickSampleMap()
 			if (_curImgNum == 7)
 			{
 				if ((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY < 3) ||
-					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 3 && indY < SAMPLETILE))
+					(indX >= 0 && indX < SAMPLETILE - 1) && indY == 3 ||
+					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 4 && indY < SAMPLETILE))
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -457,6 +471,18 @@ void mapTool::pickSampleMap()
 			if (_curImgNum == 9)
 			{
 				if ((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY < SAMPLETILE))
+				{
+					_pickSampleTile.curX = indX;
+					_pickSampleTile.curY = indY;
+					_pickSampleTile.isObj = false;
+				}
+				else
+					_isTileClick = false;
+			}
+			//체육관(웅) 2번째 이미지
+			if (_curImgNum == 10)
+			{
+				if ((indX >= 0 && indX < 4) && (indY == 0 || indY == 1))
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -946,6 +972,20 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;
+		}
+	}
+	//체육관 두번째 이미지
+	if (imgName == TERRAIN_NAME11)
+	{
+		if ((frameX == 0 || frameX == 1) && frameY == 0)
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_WALL;
+		}
+		else if ((frameX >= 0 && frameX < 4) && frameY == 1 ||
+			(( frameX == 2 || frameX == 3 )&& frameY == 0))
+		{
+			result |= ATTR_NONE;
 		}
 	}
 

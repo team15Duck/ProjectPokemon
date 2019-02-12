@@ -2,7 +2,7 @@
 #include "tileNode.h"
 #include <vector>
 #include <assert.h>
-#define	TILE_IMAGE_NUM		10
+#define	TILE_IMAGE_NUM		11
 #define SAMPLE_TOTAL_SIZE	TILE_SIZE * SAMPLETILE
 #define SAMPLETILE_STARTX  ( WINSIZEX - SAMPLE_TOTAL_SIZE)
 #define	CAMERA_SHOW_RANGE	16 * TILE_SIZE
