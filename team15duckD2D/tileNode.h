@@ -52,6 +52,25 @@ static string TERRAIN_NAME8		= "tile_08";
 static string TERRAIN_NAME9		= "tile_09";
 static string TERRAIN_NAME10	= "tile_10";
 
+
+//enum TERRAIN_NAME_INFO
+//{
+//	TERRAIN_NAME_NONE,
+//	TERRAIN_NAME1	 ,
+//	TERRAIN_NAME2	 ,
+//	TERRAIN_NAME3	 ,
+//	TERRAIN_NAME4	 ,
+//	TERRAIN_NAME5	 ,
+//	TERRAIN_NAME6	 ,
+//	TERRAIN_NAME7	 ,
+//	TERRAIN_NAME8	 ,
+//	TERRAIN_NAME9	 ,
+//	TERRAIN_NAME10	 ,
+//	TERRAIN_NAME_COUNT
+//};
+//
+//static string TERRAIN_NAME[TERRAIN_NAME_COUNT] = { "","tile_01" ,"tile_02" ,"tile_03" ,"tile_04" ,"tile_05" ,"tile_06" ,"tile_07" ,"tile_08" ,"tile_09", "tile_10" };
+
 //오브젝트 이미지 이름
 static string OBJECT_NAME_NONE	= "";
 static string OBJECT_NAME1		= "object_01";
@@ -77,7 +96,8 @@ static string OBJECT_NAME18		= "object_18";
 
 typedef struct tagTile
 {
-	string terrainImageName;	//TERRAIN_NAME_NONE 으로 초기화
+	string terrainImageName;
+	//TERRAIN_NAME_INFO terrainImageName;	//TERRAIN_NAME_NONE 으로 초기화
 	UINT terrainFrameX;			//0으로 초기화
 	UINT terrainFrameY;			//0으로 초기화
 	string objectImageName;		//OBJECT_NAME_NONE 으로 초기화
