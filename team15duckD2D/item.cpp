@@ -24,6 +24,7 @@ HRESULT item::init(string name, ITEM_TYPE type, ITEM_VALUE value, ITEM_BUY_PRICE
 	_itemType = type;											//종류
 	_buyPrice = buyPrice;										//구입가
 	_sellPrice = sellPrice;										//매매가
+	_itemNum = num;												//개수
 	_rcPos = { 80, WINSIZEY - 95 };								//렉트위치
 	_imgPos.x = _rcPos.x - _img->GetFrameWidth() / 2;			//이미지 그릴위치 (X)
 	_imgPos.y = _rcPos.y - _img->GetFrameWidth() / 2;			//이미지 그릴위치 (Y)

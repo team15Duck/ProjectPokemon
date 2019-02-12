@@ -4,6 +4,7 @@
 #include "hayoungTestScene.h"
 #include "mapToolScene.h"
 #include "mapTestScene.h"
+#include "objectTool.h"
 
 class playGround : public gameNode
 {

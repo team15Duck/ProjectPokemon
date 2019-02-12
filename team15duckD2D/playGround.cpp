@@ -124,6 +124,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("하영씬", new hayoungTestScene);
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
+	SCENEMANAGER->addScene("옵젝", new objectTool);
 
 	if (MAPTOOLSCENE)
 	{
@@ -131,7 +132,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("치영씬");
+		SCENEMANAGER->changeScene("옵젝");
 	}
 	
 	return S_OK;
