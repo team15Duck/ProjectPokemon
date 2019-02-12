@@ -249,7 +249,7 @@ pokemonStatus pokemonDataBase::calculateStatus(int level, POKEMON pokemonId)
 int pokemonDataBase::calcuateExp(int level, POKEMON pokemonId)
 {
 	if(POKEMON151 == pokemonId)
-		return ((1.2f * level * level * level) - (15 * level * level) + ( 100 * level) - 140);
+		return ((1 * level * level * level) - (15 * level * level) + ( 100 * level) - 140);
 	else
 		return level * level * level;
 }

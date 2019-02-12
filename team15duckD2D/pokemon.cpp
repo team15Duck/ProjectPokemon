@@ -15,7 +15,6 @@ pokemon::pokemon()
 , _displayHp(0)
 , _displayExp(0)
 , _displayTime(0.f)
-, _isProgressing(false)
 , _target(nullptr)
 , _img(nullptr)
 {
@@ -79,7 +78,7 @@ void pokemon::update()
 				if (_displayTime < 0)
 				{
 					_function();
-					_displayTime = PROGRESSING_TERM;
+					_displayTime = static_cast<float>(PROGRESSING_TERM);
 				}
 				break;
 			}
@@ -136,9 +135,8 @@ pmPack* pokemon::makeSavePack()
 
 	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
 	{
-		pack->skillIds[ii] = _skills[ii]._skillId;
-		pack->currentPPs[ii] = _skills[ii]._currentPP;
-		pack->maxPPs[ii] = _skills[ii]._maxPP;
+		pack->skillIds[ii] = _skills[ii].getSkillID();
+		pack->currentPPs[ii] = _skills[ii].getCurrentPP();
 	}
 
 	return pack;
@@ -183,35 +181,84 @@ void pokemon::loadSavePack(pmPack* pack)
 
 	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
 	{
-		_skills[ii]._skillId	= pack->skillIds[ii];
-		_skills[ii]._currentPP	= pack->currentPPs[ii];
-		_skills[ii]._maxPP		= pack->maxPPs[ii];
+		_skills[ii].init(pack->skillIds[ii]);
+		_skills[ii].setCurrentPP(pack->currentPPs[ii]);
 	}
 }
 
-void pokemon::active()
+
+void pokemon::ready()
 {
-	//if(_ == _upsetCondition.type)
+	_state = ACTIVE_WAIT_APPLY_CONDITION;
 }
 
-bool pokemon::levelUpForce()
+void pokemon::applyUpsetCondition()
 {
-	if(POKEMON_MAX_LEVEL == _level)
-		return false;
+	_state = ACTIVE_APPLY_CONDITON;
+	switch (_upsetCondition.type)
+	{
+		case PMUC_POISON:
+		{
+			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
+			takeDamage(damage);
+			break;
+		}
+		case PMUC_FROZEN:
+		{
+			int percent = RND->getInt(100);
+			if (percent < 20) // 1/5 확률로 상태 해제
+			{
+				clearUpsetCondtion();
+			}
+			break;
+		}
+		case PMUC_PALALYSIS:
+		case PMUC_SLEEP:
+		{
+			if (_upsetCondition.releaseValue <= 0)
+			{
+				clearUpsetCondtion();
+			}
+			else
+				--_upsetCondition.releaseValue;
 
-	_beforeLvStatus = _currentLvStatus;
-	
-	++_level;
-	settingStatus();
-	_currentExp += (_nextLvExp - _currentLvExp);
-	// 강제 렙업은 경험치 오르는 효과 없음
+			break;
+		}
 
-	return true;
+		case PMUC_BURN:
+		{
+			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
+			takeDamage(damage);
+			break;
+		}
+
+		default:
+			break;
+	}
+
+	if (PMUC_NONE != _upsetCondition.type) // 상태 이상효과가 해제가 안되었다면 
+	{
+		startProgessing(bind(&pokemon::progressingApplyUpsetCondition, this), PROGRESSING_SKILL);
+	}
+	else
+	{
+		// 다음 행동 대기
+		_state = ACTIVE_WAIT_ACTIVE;
+	}
+}
+
+void pokemon::applyItem(item* item)
+{
+	_state = ACTIVE_ACTIVE;
+
+	// todo 아이템 사용
+
 }
 
 void pokemon::useSkill(int idx)
 {
-	int skillId = _skills[idx]._skillId;
+	_state = ACTIVE_ACTIVE;
+	int skillId = _skills[idx].getSkillID();
 
 	// todo
 	pokemonSkill skill;
@@ -222,7 +269,37 @@ void pokemon::useSkill(int idx)
 	startProgessing(bind(&pokemon::progressintSkillEffect, this, idx), PROGRESSING_SKILL);
 }
 
+void pokemon::useSkill()
+{
+	_state = ACTIVE_ACTIVE;
+	int ii = 0;
+	for (; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
+	{
+		if (-1 == _skills[ii].getSkillID())
+			break;
+	}
 
+	int index = 0;
+	if (0 != ii)
+		RND->getInt(ii);
+
+	useSkill(index);
+}
+
+bool pokemon::levelUpForce()
+{
+	if (POKEMON_MAX_LEVEL == _level)
+		return false;
+
+	_beforeLvStatus = _currentLvStatus;
+
+	++_level;
+	settingStatus();
+	_currentExp += (_nextLvExp - _currentLvExp);
+	// 강제 렙업은 경험치 오르는 효과 없음
+
+	return true;
+}
 
 void pokemon::takeDamage(int value)
 {
@@ -282,12 +359,15 @@ void pokemon::clearUpsetCondtion()
 	_upsetCondition.clear();
 }
 
-void pokemon::changeSkill(int idx, pmSkill* skill)
+void pokemon::changeSkill(int idx, int skillId)
 {
 	if(idx < 0 || POKEMON_SKILL_MAX_COUNT <= idx)
 		return;
 
-	_skills[idx] = *skill;
+	if(-1 == skillId)
+		return;
+
+	_skills[idx].init(skillId);
 }
 
 void pokemon::startTakeDamageDisplay()
@@ -360,15 +440,31 @@ void pokemon::attack(int value, pokemonUC* upsetCondition)
 
 void pokemon::startProgessing(function<void(void)> func, PROGRESSING_TYPE type)
 {
+	_isIdle = false;
 	_progressingType = type;
-	_displayTime = PROGRESSING_TERM;
+	_displayTime = static_cast<float>(PROGRESSING_TERM);
 	_function = std::move(func);
 }
 
 void pokemon::endProgressing()
 {
+	_isIdle = true;
 	_progressingType = PROGRESSING_NONE;
 	_function = NULL;
+
+	switch (_state)
+	{
+		case pokemon::ACTIVE_APPLY_CONDITON:
+		{
+			_state = ACTIVE_WAIT_ACTIVE;
+			break;
+		}
+		case pokemon::ACTIVE_ACTIVE:
+		{
+			_state = ACTIVE_END;
+			break;
+		}
+	}
 }
 
 void pokemon::progressingIncreaseHp()
@@ -407,7 +503,6 @@ void pokemon::progressingIncreseExp(void)
 void pokemon::progressintSkillEffect(int idx)
 {
 	//_skills[idx]->update();
-
 	// todo 스킬 이펙트 끝났다면
 	//if ()
 	{
@@ -415,6 +510,74 @@ void pokemon::progressintSkillEffect(int idx)
 
 		if(_target)
 			_target->startTakeDamageDisplay();
+	}
+}
+
+void pokemon::progressingApplyUpsetCondition()
+{
+	switch (_upsetCondition.type)
+	{
+		case PMUC_POISON:
+		{
+			--_displayHp;
+
+			// 피를 뻈으면 콜백함수 해제
+			if (_displayHp == _nowStatus.hp)
+			{
+				endProgressing();
+			}
+			break;
+		}
+		case PMUC_FROZEN:
+		{
+			int percent = RND->getInt(100);
+			if (percent < 20) // 1/5 확률로 상태 해제
+			{
+				clearUpsetCondtion();
+			}
+			else
+			{
+				// 행동 불가
+				_state = ACTIVE_END;
+			}
+			endProgressing();
+
+			break;
+		}
+		case PMUC_PALALYSIS:
+		case PMUC_SLEEP:
+		{
+			if (_upsetCondition.releaseValue <= 0)
+			{
+				clearUpsetCondtion();
+			}
+			else
+			{
+				// 행동 불가
+				_state = ACTIVE_END;
+			}
+			endProgressing();
+			break;
+		}
+
+		case PMUC_BURN:
+		{
+			--_displayHp;
+
+			// 피를 뻈으면 콜백함수 해제
+			if (_displayHp == _nowStatus.hp)
+			{
+				endProgressing();
+			}
+
+			break;
+		}
+
+		default:
+		{
+			endProgressing();
+		}
+		break;
 	}
 }
 
@@ -441,16 +604,16 @@ int pokemon::calculateAttkValue(int skillIdx)
 	{
 		case PMSC_ATTACK:
 		{
-			attk = _nowStatus.attk;
-			dex = _target->getDex();
+			attk = static_cast<float>(_nowStatus.attk);
+			dex = static_cast<float>(_target->getDex());
 
 			break;
 		}
 
 		case PMSC_SPECAIL:
 		{
-			attk = _nowStatus.spAttk;
-			dex = _target->getSpDex();
+			attk = static_cast<float>(_nowStatus.spAttk);
+			dex = static_cast<float>(_target->getSpDex());
 			break;
 		}
 	}
@@ -475,6 +638,3 @@ int pokemon::calculateAttkValue(int skillIdx)
 	return static_cast<int>(damage);
 }
 
-void pokemon::applyUpsetCondition()
-{
-}

@@ -36,7 +36,6 @@ typedef struct tagPokemonPackage
 	
 	int skillIds[POKEMON_SKILL_MAX_COUNT];		// 스킬 번호
 	int currentPPs[POKEMON_SKILL_MAX_COUNT];	// 현재 남은 스킬의 수
-	int maxPPs[POKEMON_SKILL_MAX_COUNT];		// 최대 스킬의 수
 
 }pmPack;
 
@@ -54,6 +53,18 @@ private:
 
 		PROGRESSING_NONE,
 		PROGRESSING_COUNT = PROGRESSING_NONE,
+	};
+
+	enum ACTIVE_STATE
+	{
+		ACTIVE_WAIT_APPLY_CONDITION,	// 이상 상태 적용 대기
+		ACTIVE_APPLY_CONDITON,			// 이상 상태 적용
+		ACTIVE_WAIT_ACTIVE,				// 행동 대기
+		ACTIVE_ACTIVE,					// 행동 : 아이템 사용 or 스킬 사용
+		ACTIVE_END,						// 끝
+
+		ACTIVE_NONE,
+		ACTIVE_COUNT = ACTIVE_NONE,
 	};
 
 private:
@@ -82,15 +93,17 @@ private:
 	int _displayExp;							// 연출용 경험치
 
 	float _displayTime;							// 연출 용 시간
-	bool _isProgressing;						// 연출중인가
+	bool _isIdle;								// 행동 대기중인가
 	PROGRESSING_TYPE	_progressingType;
 
 	pokemonUC	  _upsetCondition;				// 상태 이상
-	pmSkill _skills[POKEMON_SKILL_MAX_COUNT];	// 스킬
+	pokemonSkill _skills[POKEMON_SKILL_MAX_COUNT]; // 스킬
 	
 	image*		_img;	// 이미지
 	pokemon* _target;	// 적이당
 	function<void(void)> _function;				// 연출용 함수
+
+	ACTIVE_STATE _state;
 
 public:
 	pokemon();
@@ -106,14 +119,23 @@ public:
 	// 로드된 데이터 적용
 	void loadSavePack(pmPack* pack);
 	
-	// 행동
-	void active();
 
+	// 1. 전투 준비
+	void ready();
+	// 2. 상태 이상 적용
+	void applyUpsetCondition();
+	// 3. 아이템 적용
+	void applyItem(item* item);
+	// 3. 몇 번째(idx) 스킬 사용
+	void useSkill(int idx);
+	// 3. 랜덤으로 스킬사용
+	void useSkill();
+	
+
+	
 	// 레벨 업 : 경험치 레벨업 외에 강제 레벨업 하는 경우 사용 ex. 이상한 사탕 사용
 	// 레벨 업을 했으면 return true, 그렇지 않다면 return false
 	bool levelUpForce();
-	// 몇 번째(idx) 스킬 사용
-	void useSkill(int idx);
 	
 	// 데미지 입음
 	void takeDamage(int value);
@@ -128,7 +150,7 @@ public:
 	// 상태이상 해제
 	void clearUpsetCondtion();
 	// 스킬 교체
-	void changeSkill(int idx, pmSkill* skill);
+	void changeSkill(int idx, int skillId);
 	// 체력감소 연출 시작 : 상대방의 스킬 연출이 끝나고나면 데미지를 입는 것 처럼 보이도록.
 	void startTakeDamageDisplay();
 	
@@ -148,8 +170,11 @@ public:
 
 	//============================================== get
 	
-	// 연출 중인가 : 연출 중일 때는 연출만 하고 아무런 행동을 취할 수 읎다아
-	bool isProgressing()		{ return _isProgressing;}
+	// 행동 대기중인가 : 행동 중일 경우 연출만 보여준다. 
+	bool isIdle()				{ return _isIdle;}
+	// 행동 상태 확인
+	ACTIVE_STATE getActiveState(){ return _state;}
+
 	// 깨어있는가
 	bool isAwake()				{ return _isAwake;}
 	// 플레이어 포켓몬인가		
@@ -196,7 +221,7 @@ public:
 	// 상태이상 
 	POKEMON_UPSET_CONDITION getUpsetCondition() { return _upsetCondition.type; }
 	// 스킬
-	const pmSkill* getPokemonSkills() { return _skills; }
+	const pokemonSkill* getPokemonSkills() { return _skills; }
 
 	// 연출용 hp
 	int getDisplayHp()	{ return _displayHp; }
@@ -217,7 +242,7 @@ private:
 	// 공격
 	void attack(int value, pokemonUC* upsetCondition);
 
-	void applyUpsetCondition();
+	
 	
 	// 연출 시작
 	void startProgessing(function<void(void)> func, PROGRESSING_TYPE type);

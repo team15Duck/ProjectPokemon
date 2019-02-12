@@ -24,8 +24,9 @@ pokemonSkill::~pokemonSkill()
 
 HRESULT pokemonSkill::init(int skillid)
 {
+	_skillId = skillid;
 	_info = *SKILLDATA->getPokemonSkillinfo(skillid);
-
+	_currentPP = _info.getDefaultPP();
 
 	return S_OK;
 }
@@ -49,6 +50,13 @@ void pokemonSkill::render()
 	{
 		// todo effect render
 	}
+}
+
+void pokemonSkill::clear()
+{
+	_skillId = -1;
+	_currentPP = 0;
+	_isPlayingEffect = false;
 }
 
 void pokemonSkill::increaseCurrentPP(int value)

@@ -12,29 +12,6 @@ enum POKEMON_SKILL_CATEGORY
 };
 
 
-typedef struct tagPokemonSkill
-{
-	int _skillId;	// 스킬 번호
-	int _currentPP;	// 현재 남은 스킬의 수
-	int _maxPP;		// 최대 스킬의 수
-
-	void operator= (tagPokemonSkill skill)
-	{
-		_skillId = skill._skillId;
-		_currentPP = skill._currentPP;
-		_maxPP = skill._maxPP;
-	}
-
-	void clear()
-	{
-		_skillId = -1;
-		_currentPP = 0;
-		_maxPP = 0;
-	}
-
-}pmSkill;
-
-
 class pokemonSkillInfo
 {
 private:
@@ -95,6 +72,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void clear();
 	
 	// 스킬 잔여량 증가 : ex pp 회복 아이템 사용
 	void increaseCurrentPP(int value);
@@ -116,6 +95,8 @@ public:
 	int getSkillID() {return _skillId;}
 	// 현재 스킬 잔여량
 	int getCurrentPP() { return _currentPP; }
+	// 맥스 스킬량
+	int getMaxPP() { return _info.getDefaultPP(); }
 	// 스킬 정보
 	const pokemonSkillInfo* getSkillInfomation() { return &_info;}
 
