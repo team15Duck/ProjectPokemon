@@ -93,18 +93,59 @@ static string OBJECT_NAME17		= "object_17";
 static string OBJECT_NAME18		= "object_18";
 
 
-
-typedef struct tagTile
+typedef class tagTile
 {
-	string terrainImageName;
+public:
+	tagTile()  :terrainImageName	("tt"),
+				objectImageName		("tt"),
+				terrainFrameX		(NULL),
+				terrainFrameY		(NULL),
+				objectFrameX		(NULL),
+				objectFrameY		(NULL),
+				attr				(NULL) 
+	{};
+	~tagTile()
+	{};
+
 	//TERRAIN_NAME_INFO terrainImageName;	//TERRAIN_NAME_NONE 으로 초기화
-	UINT terrainFrameX;			//0으로 초기화
-	UINT terrainFrameY;			//0으로 초기화
-	string objectImageName;		//OBJECT_NAME_NONE 으로 초기화
-	UINT objectFrameX;			//0으로 초기화
-	UINT objectFrameY;			//0으로 초기화
-	DWORD attr;					//이건 ATTR_NONE으로 초기화 후에 시작합시다
+	string	terrainImageName;
+	UINT	terrainFrameX;			//0으로 초기화
+	UINT	terrainFrameY;			//0으로 초기화
+	string  objectImageName;		//OBJECT_NAME_NONE 으로 초기화
+	UINT	objectFrameX;			//0으로 초기화
+	UINT	objectFrameY;			//0으로 초기화
+	DWORD	attr;					//이건 ATTR_NONE으로 초기화 후에 시작합시다
+
+	void setTile(tagTile tile)
+	{
+		if(tile.terrainImageName.size() > 0)
+			terrainImageName = tile.terrainImageName;
+		terrainFrameX = tile.terrainFrameX;
+		terrainFrameY = tile.terrainFrameY;
+		if (tile.objectImageName.size() > 0)
+			objectImageName = tile.objectImageName;
+		objectFrameX = tile.objectFrameX;
+		objectFrameY = tile.objectFrameY;
+		attr = tile.attr;
+	}
+
+
+
 }TILE;
+
+
+
+//typedef struct tagTile
+//{
+//	string terrainImageName;
+//	//TERRAIN_NAME_INFO terrainImageName;	//TERRAIN_NAME_NONE 으로 초기화
+//	UINT terrainFrameX;			//0으로 초기화
+//	UINT terrainFrameY;			//0으로 초기화
+//	string objectImageName;		//OBJECT_NAME_NONE 으로 초기화
+//	UINT objectFrameX;			//0으로 초기화
+//	UINT objectFrameY;			//0으로 초기화
+//	DWORD attr;					//이건 ATTR_NONE으로 초기화 후에 시작합시다
+//}TILE;
 
 //타일의 포인터를 LPTILE이라고 하겠다
 typedef struct tagTile *LPTILE;
