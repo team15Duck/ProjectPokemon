@@ -129,13 +129,13 @@ void player::render()
 	D2DMANAGER->drawText(str, x.left + 40, x.top + 20, 30);
 
 	swprintf_s(str, L"moveDistance : %.1f", _moveDistance);
-	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 30 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 30 + CAMERA->getPosY());
 	swprintf_s(str, L"x : %d , y : %d", _tileX, _tileY);
-	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 45 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 45 + CAMERA->getPosY());
 	swprintf_s(str, L"x : %.1f , y : %.1f", _posX, _posY);
-	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 60 + CAMERA->getPosY());
 	swprintf_s(str, L"speed : %.1f", TIMEMANAGER->getElapsedTime() * PLAYER_SPEED);
-	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 75 + CAMERA->getPosY(), 15, RGB(40, 120, 40));
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 75 + CAMERA->getPosY());
 }
 
 void player::aniSetUp()
@@ -240,11 +240,7 @@ void player::stateUpdate()
 
 		case player::PS_MOVE_LEFT:
 			_isRight = false;
-			if (!(_map->getTile(_tileX - 1, _tileY)->attr & ATTR_APPEAR))
-			{
-				_posX -= speed;
-			}
-			
+			_posX -= speed;
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -258,10 +254,7 @@ void player::stateUpdate()
 		break;
 		case player::PS_MOVE_UP:
 			_isRight = false;
-			if (!(_map->getTile(_tileX, _tileY - 1)->attr & ATTR_APPEAR))
-			{
-				_posY -= speed;
-			}
+			_posY -= speed;
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -275,10 +268,7 @@ void player::stateUpdate()
 		break;
 		case player::PS_MOVE_RIGHT:
 			_isRight = true;
-			if (!(_map->getTile(_tileX + 1, _tileY)->attr & ATTR_APPEAR))
-			{
-				_posX += speed;
-			}
+			_posX += speed;
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -292,10 +282,7 @@ void player::stateUpdate()
 		break;
 		case player::PS_MOVE_DOWN:
 			_isRight = false;
-			if (!(_map->getTile(_tileX, _tileY + 1)->attr & ATTR_APPEAR))
-			{
-				_posY += speed;
-			}
+			_posY += speed;
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{

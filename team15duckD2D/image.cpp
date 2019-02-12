@@ -173,6 +173,28 @@ void image::frameRender(float destX, float destY, int showWidth, int showHeight,
 	}
 }
 
+void image::frameRender(float destX, float destY, int sourX, int sourY, int sourWidth, int sourHeight, int currentFrameX, int currentFrameY, float alpha)
+{
+	POINTFLOAT pf = GetRenderPosition(destX, destY);
+
+	if (_imageInfo->bitmap != NULL)
+	{
+		if (!IsRnderPositionInWindow(pf, sourWidth, sourHeight))
+			return;
+
+		D2D1_RECT_F dxArea = RectF(pf.x, pf.y, pf.x + sourWidth, pf.y + sourHeight);
+		D2D1_RECT_F dxArea2 = RectF(currentFrameX * _imageInfo->frameWidth	+ sourX
+								  , currentFrameY * _imageInfo->frameHeight	+ sourY
+								  , (currentFrameX) * _imageInfo->frameWidth  + sourX + sourWidth
+								  , (currentFrameY) * _imageInfo->frameHeight + sourY + sourHeight);
+		D2DMANAGER->_renderTarget->DrawBitmap(_imageInfo->bitmap
+			, dxArea
+			, alpha
+			, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR
+			, dxArea2);
+	}
+}
+
 void image::frameRenderReverseX(float destX, float destY, int currentFrameX, int currentFrameY, float alpha)
 {
 	frameRenderReverseX(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, currentFrameX, currentFrameY, alpha);

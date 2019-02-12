@@ -53,13 +53,29 @@ void mapData::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
+			if (_vvTile[ii][jj]->objectImageName.size() > 0 && _vvTile[ii][jj]->attr & ATTR_APPEAR)
+			{
+				IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0 , 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY,1);
+			}
+
+
+
 			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)
 			{
 				_player->render();
 			}
 
 			if (_vvTile[ii][jj]->objectImageName.size() > 0)
-				IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY);
+			{
+				if (_vvTile[ii][jj]->attr & ATTR_APPEAR)
+				{
+					IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE + 40, 0, 40, 64, 24, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				}
+				else
+				{
+
+				}
+			}
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
