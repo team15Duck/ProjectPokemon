@@ -254,6 +254,11 @@ int pokemonDataBase::calcuateExp(int level, POKEMON pokemonId)
 		return level * level * level;
 }
 
+float pokemonDataBase::calculateConflictValue(POKEMON myindex, POKEMON targetIndex)
+{
+	return 0.0f;
+}
+
 int pokemonDataBase::calculatorStatusType1(int level, int kindValue)
 {
 	return static_cast<int>((kindValue + 50.f) * level / 50.f);

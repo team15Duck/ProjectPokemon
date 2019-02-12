@@ -26,6 +26,9 @@ public:
 	// 전투 경험치
 	//int calcuateBattleExp(int myLeve, int targetLevel, )
 
+	// 타입 상성
+	float calculateConflictValue(POKEMON myindex, POKEMON targetIndex);
+
 private:
 	// 능력치 계산 : HP
 	int calculatorStatusType1(int level, int kindValue);

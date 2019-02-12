@@ -60,12 +60,23 @@ enum POKEMON_TYPE
 enum POKEMON_UPSET_CONDITION
 {
 	PMUC_POISON,		// 독
+	PMUC_FROZEN,		// 얼음
 	PMUC_PALALYSIS,		// 마비
-	PMUC_CONFUSE,		// 혼란
 	PMUC_SLEEP,			// 잠듦
+	PMUC_BURN,			// 화상
 	  
 	PMUC_NONE,
 	PMUC_COUNT = PMUC_NONE,
+};
+
+enum POKEMON_UPSET_RELEASE_CONDITION
+{
+	PMURC_TURN,			// 턴 수로 회복
+	PMURC_PERCENT,		// 확률로 회복
+	PMURC_CURE,			// 치유(포션, 포켓몬센터)로 회복
+
+	PMURC_NONE,
+	PMURC_COUNT = PMUC_NONE,
 };
 
 // 능력치
@@ -105,24 +116,28 @@ typedef struct tagPokemonStatus
 
 typedef struct tagPokemonUpsetCondition
 {
-	POKEMON_UPSET_CONDITION type;	// 상태이상
-	int value;						// 상태 이상 시 적용 될 값(ex. 독 데미지, 마비 확률 등)
-	int count;						// 상태이상 지속 턴
+	POKEMON_UPSET_CONDITION type;				// 상태이상
+	POKEMON_UPSET_RELEASE_CONDITION releseType;	// 상태이상 해제 조건
+	int applyValue;								// 상태 적용 시 사용 ex) 확률 등
+	int releaseValue;							// 상태 해제 조건 ex) 턴 수, 확률 등
+
 
 	// 값 복사
 	void operator= (tagPokemonUpsetCondition condition)
 	{
 		type  = condition.type;
-		value = condition.value;
-		count = condition.count;
+		releseType = condition.releseType;
+		applyValue = condition.applyValue;
+		releaseValue = condition.releaseValue;
 	}
 
 	// 초기화
 	void clear()
 	{
 		type = PMUC_NONE;
-		value = 0;
-		count = 0;
+		releseType = PMURC_NONE;
+		applyValue = 0;
+		releaseValue = 0;
 	}
 
 }pokemonUC;
