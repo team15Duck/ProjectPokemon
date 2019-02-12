@@ -29,5 +29,15 @@ public:
 
 	virtual void setPlayerMemoryAdressLink(player* p) { _player = p; }
 
+
+
+
+
+public:
+	//°Ù¼Â
+	tagTile* getTile(UINT x, UINT y) { return _vvTile[y][x]; }
+
+
+
 };
 

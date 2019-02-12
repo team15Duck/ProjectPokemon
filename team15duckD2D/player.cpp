@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
-
+#include "mapData.h"
 
 player::player()
 {
@@ -17,8 +17,8 @@ HRESULT player::init()
 
 	
 	/////////////이건나중에지울거야/////////
-	_tileX = 14;
-	_tileY = 3;
+	_tileX = 25;
+	_tileY = 22;
 	_posX = _tileX * 64 + 32;
 	_posY = _tileY * 64 + 32;
 	_isMan = true;
@@ -240,7 +240,11 @@ void player::stateUpdate()
 
 		case player::PS_MOVE_LEFT:
 			_isRight = false;
-			_posX -= speed;
+			if (!(_map->getTile(_tileX - 1, _tileY)->attr & ATTR_APPEAR))
+			{
+				_posX -= speed;
+			}
+			
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -249,12 +253,15 @@ void player::stateUpdate()
 				_playerAni->start();
 				_state = PS_IDLE_LEFT;
 				_moveDistance = 0;
-				_tileX--;
+				_tileX = _posX / 64;
 			}
 		break;
 		case player::PS_MOVE_UP:
 			_isRight = false;
-			_posY -= speed;
+			if (!(_map->getTile(_tileX, _tileY - 1)->attr & ATTR_APPEAR))
+			{
+				_posY -= speed;
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -263,12 +270,15 @@ void player::stateUpdate()
 				_playerAni->start();
 				_state = PS_IDLE_UP;
 				_moveDistance = 0;
-				_tileY--;
+				_tileY = _posY / 64;
 			}
 		break;
 		case player::PS_MOVE_RIGHT:
 			_isRight = true;
-			_posX += speed;
+			if (!(_map->getTile(_tileX + 1, _tileY)->attr & ATTR_APPEAR))
+			{
+				_posX += speed;
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -277,12 +287,15 @@ void player::stateUpdate()
 				_playerAni->start();
 				_state = PS_IDLE_RIGHT;
 				_moveDistance = 0;
-				_tileX++;
+				_tileX = _posX / 64;
 			}
 		break;
 		case player::PS_MOVE_DOWN:
 			_isRight = false;
-			_posY += speed;
+			if (!(_map->getTile(_tileX, _tileY + 1)->attr & ATTR_APPEAR))
+			{
+				_posY += speed;
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -291,7 +304,7 @@ void player::stateUpdate()
 				_playerAni->start();
 				_state = PS_IDLE_DOWN;
 				_moveDistance = 0;
-				_tileY++;
+				_tileY = _posY / 64;
 			}
 		break;
 		case player::PS_FASTMOVE_LEFT:
