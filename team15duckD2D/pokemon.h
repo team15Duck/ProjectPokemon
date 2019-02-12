@@ -22,8 +22,8 @@ typedef struct tagPokemonPackage
 	unsigned int currentExp;		// 현재 경험치
 
 	unsigned int upsetConditionType;	// 상태이상
-	unsigned int upsetConditionValue;	// 상태이상
-	unsigned int upsetConditionCount;	// 상태이상
+	unsigned int upsetConditionApplyValue;	// 상태이상
+	unsigned int upsetConditionReleseValue;	// 상태이상
 	
 	// 현재 상태값들
 	unsigned int hp;		// 체력
@@ -74,8 +74,9 @@ private:
 	bool _isAwake;								// 깨어 있는가, 기절하지 않았는가
 	bool _isMyPokemon;							// 플레이어의 포켓몬인가
 
-	pokemonStatus _defaultStatus;				// 원래 status
-	pokemonStatus _currentStatus;				// 현재 status
+	pokemonStatus _beforeLvStatus;				// 이전 lv의 status
+	pokemonStatus _currentLvStatus;				// 현재 lv의 status
+	pokemonStatus _nowStatus;					// 현재 status
 
 	int _displayHp;								// 연출용 hp
 	int _displayExp;							// 연출용 경험치
@@ -91,9 +92,6 @@ private:
 	pokemon* _target;	// 적이당
 	function<void(void)> _function;				// 연출용 함수
 
-	int			_hitDamage;				// 적에게 적용할 데미지
-	pokemonUC	_hitUpsetCondition;		// 적에게 적용할 상태 이상
-
 public:
 	pokemon();
 	~pokemon();
@@ -108,8 +106,12 @@ public:
 	// 로드된 데이터 적용
 	void loadSavePack(pmPack* pack);
 	
+	// 행동
+	void active();
+
 	// 레벨 업 : 경험치 레벨업 외에 강제 레벨업 하는 경우 사용 ex. 이상한 사탕 사용
-	void levelUpForce();
+	// 레벨 업을 했으면 return true, 그렇지 않다면 return false
+	bool levelUpForce();
 	// 몇 번째(idx) 스킬 사용
 	void useSkill(int idx);
 	
@@ -127,7 +129,8 @@ public:
 	void clearUpsetCondtion();
 	// 스킬 교체
 	void changeSkill(int idx, pmSkill* skill);
-
+	// 체력감소 연출 시작 : 상대방의 스킬 연출이 끝나고나면 데미지를 입는 것 처럼 보이도록.
+	void startTakeDamageDisplay();
 	
 	//============================================== set
 	
@@ -146,11 +149,11 @@ public:
 	//============================================== get
 	
 	// 연출 중인가 : 연출 중일 때는 연출만 하고 아무런 행동을 취할 수 읎다아
-	bool isProgressing() {return _isProgressing;}
+	bool isProgressing()		{ return _isProgressing;}
 	// 깨어있는가
-	bool isAwake()		{ return _isAwake;}
-	// 플레이어 포켓몬인가
-	bool isMyPokemon()	{ return _isMyPokemon;}
+	bool isAwake()				{ return _isAwake;}
+	// 플레이어 포켓몬인가		
+	bool isMyPokemon()			{ return _isMyPokemon;}
 
 	// 고유번호
 	unsigned int getIdNo()		{ return _idNo; }
@@ -177,19 +180,19 @@ public:
 	unsigned int getNextTotalExp()		{ return _nextLvExp; }
 	
 	// 현재 체력
-	int getHp()			{ return _currentStatus.hp; }
+	int getHp()			{ return _nowStatus.hp; }
 	// 풀 체력
-	int getMaxHp()		{ return _defaultStatus.hp;}
+	int getMaxHp()		{ return _nowStatus.hp;}
 	// 현재 공격력
-	int getAttk()		{ return _currentStatus.attk;}
+	int getAttk()		{ return _nowStatus.attk;}
 	// 현재 방어력
-	int getDex()		{ return _currentStatus.dex; }
+	int getDex()		{ return _nowStatus.dex; }
 	// 현재 특수 공격력
-	int getSpAttk()		{ return _currentStatus.spAttk; }
+	int getSpAttk()		{ return _nowStatus.spAttk; }
 	// 현재 특수 방어력
-	int getSpDex()		{ return _currentStatus.spDex; }
+	int getSpDex()		{ return _nowStatus.spDex; }
 	// 현재 속도
-	int getspeed()		{ return _currentStatus.speed;}
+	int getspeed()		{ return _nowStatus.speed;}
 	// 상태이상 
 	POKEMON_UPSET_CONDITION getUpsetCondition() { return _upsetCondition.type; }
 	// 스킬
@@ -212,8 +215,10 @@ private:
 	// 레벨업에 따른 스킬 획득
 	void gainSkill();
 	// 공격
-	void attack();
+	void attack(int value, pokemonUC* upsetCondition);
 
+	void applyUpsetCondition();
+	
 	// 연출 시작
 	void startProgessing(function<void(void)> func, PROGRESSING_TYPE type);
 	// 연출 끝
@@ -226,5 +231,11 @@ private:
 	void progressingIncreseExp(void);
 	// 스킬 이펙트
 	void progressintSkillEffect(int idx);
+	// 상태이상 효과 적용
+	void progressingApplyUpsetCondition();
+	
+	// 데미지 계산
+	int calculateAttkValue(int skillIdx);
+
 };
 
