@@ -17,25 +17,25 @@ mapTool::~mapTool()
 HRESULT mapTool::init()
 {
 	//이미지 설정은 플레이그라운드에 있어영
-	_sampleImg[0] = IMAGEMANAGER->findImage(TERRAIN_NAME1 );
-	_sampleImg[1] = IMAGEMANAGER->findImage(TERRAIN_NAME2 );
-	_sampleImg[2] = IMAGEMANAGER->findImage(TERRAIN_NAME3 );
-	_sampleImg[3] = IMAGEMANAGER->findImage(TERRAIN_NAME4 );
-	_sampleImg[4] = IMAGEMANAGER->findImage(TERRAIN_NAME5 );
-	_sampleImg[5] = IMAGEMANAGER->findImage(TERRAIN_NAME6 );
-	_sampleImg[6] = IMAGEMANAGER->findImage(TERRAIN_NAME7 );
-	_sampleImg[7] = IMAGEMANAGER->findImage(TERRAIN_NAME8 );
-	_sampleImg[8] = IMAGEMANAGER->findImage(TERRAIN_NAME9 );
-	_sampleImg[9] = IMAGEMANAGER->findImage(TERRAIN_NAME10);
-	_sampleImg[10] = IMAGEMANAGER->findImage(TERRAIN_NAME11);
-	_tempImg[0] =   IMAGEMANAGER->findImage(OBJECT_NAME1  );
+	_sampleImg[0] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME1 ]);
+	_sampleImg[1] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME2 ]);
+	_sampleImg[2] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME3 ]);
+	_sampleImg[3] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME4 ]);
+	_sampleImg[4] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME5 ]);
+	_sampleImg[5] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME6 ]);
+	_sampleImg[6] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME7 ]);
+	_sampleImg[7] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME8 ]);
+	_sampleImg[8] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME9 ]);
+	_sampleImg[9] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME10]);
+	_sampleImg[10] = IMAGEMANAGER->findImage(TERRAIN_NAME[TERRAIN_NAME11]);
+	_tempImg[0] =   IMAGEMANAGER->findImage (OBJECT_NAME[OBJECT_NAME1  ]);
 	for (int i = 1; i < OBJ_IMG_NUM; ++i)
 	{
 		_tempImg[i] = nullptr;
 	}
-	_curImgNum = 0;
-	_sampleImgStr[0] = TERRAIN_NAME1;
-	_tempImgStr[0] = OBJECT_NAME1;
+	_curImgNum = TERRAIN_NAME1;
+	//_sampleImgStr[0] = TERRAIN_NAME1;
+	//_tempImgStr[0] = OBJECT_NAME1;
 	setSampleTile();
 	setTile();
 	
@@ -114,7 +114,7 @@ void mapTool::render()
 		_tempImg[0]->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
 	}
 	else			//오브젝트가 아닌경우
-		IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
+		IMAGEMANAGER->findImage(TERRAIN_NAME[_curImgNum])->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
 
 	//이전,다음 버튼 렌더
 	D2DMANAGER->drawRectangle( _preButton.left
@@ -167,15 +167,15 @@ void mapTool::render()
 			if (_vvRect[i][j].right - CAMERA->getPosX() > CAMERA_SHOW_RANGE )
 				continue;
 			D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
-			if (_vvTile[i][j]->terrainImageName == TERRAIN_NAME_NONE) continue;
+			if (_vvTile[i][j]->terrainImageIndex == TERRAIN_NAME_NONE) continue;
 			if (_vvTile[i][j]->attr == ATTR_APPEAR)
 			{
-				IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-				IMAGEMANAGER->findImage(_vvTile[i][j]->objectImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 			}
 			else
 			{
-				IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 			}
 		}
 	}
@@ -183,7 +183,7 @@ void mapTool::render()
 	if (_isTileClick)
 	{
 		if(!_isObj)
-			IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
+			IMAGEMANAGER->findImage(TERRAIN_NAME[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
 		else
 			_tempImg[0]->frameRender(_ptMouse.x, _ptMouse.y, _tempObjTile.curX, _tempObjTile.curY, 0.5f);
 
@@ -205,6 +205,8 @@ void mapTool::render()
 
 	swprintf_s(str, L"mapcase : %d", _mapCase);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 250);
+	swprintf_s(str, L"_curImgNum : %d", _curImgNum);
+	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 280);
 
 	//MENUMANAGER->findMenuFrame("멥 틀")->render("타입1");
 }
@@ -248,8 +250,8 @@ void mapTool::setTile()
 
 			tempTile->attr |= ATTR_NONE;
 
-			tempTile->terrainImageName = TERRAIN_NAME_NONE;
-			tempTile->objectImageName = OBJECT_NAME_NONE;
+			tempTile->terrainImageIndex = TERRAIN_NAME_NONE;
+			tempTile->objectImageIndex = OBJECT_NAME_NONE;
 
 			*tempRect = { (float)j * TILE_SIZE, (float)i * TILE_SIZE, (float)(j + 1) * TILE_SIZE, (float)(i + 1) * TILE_SIZE };
 
@@ -264,7 +266,7 @@ void mapTool::setTile()
 
 void mapTool::turnMap()
 {
-	const RECT tempPre = { _preButton.left, _preButton.top, _preButton.right, _preButton.bottom };
+	//const RECT tempPre = { _preButton.left, _preButton.top, _preButton.right, _preButton.bottom };
 	POINT tempPTPre = { _ptMouse.x, _ptMouse.y };
 
 	//if (PtInRect(&tempPre, tempPTPre))
@@ -276,63 +278,63 @@ void mapTool::turnMap()
 			{
 				--_curImgNum;
 				if (_curImgNum < 0)
-					_curImgNum = TILE_IMAGE_NUM - 1;
-				char str[128];
-				if (_curImgNum + 1 == 10)
-				{
-					sprintf_s(str, "tile_%d", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				if (_curImgNum + 1 == 11)
-				{
-					sprintf_s(str, "tile_%d", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				sprintf_s(str, "tile_0%d", _curImgNum + 1);
-				_sampleImgStr[_curImgNum] = str;
+					_curImgNum = TERRAIN_NAME11;
+				//char str[128];
+				//if (_curImgNum + 1 == 10)
+				//{
+				//	sprintf_s(str, "tile_%d", _curImgNum + 1);
+				//	_sampleImgStr[_curImgNum] = str;
+				//	return;
+				//}
+				//else if (_curImgNum + 1 == 11)
+				//{
+				//	sprintf_s(str, "tile_%d", _curImgNum + 1);
+				//	_sampleImgStr[_curImgNum] = str;
+				//	return;
+				//}
+				//sprintf_s(str, "tile_0%d", _curImgNum + 1);
+				//_sampleImgStr[_curImgNum] = str;
 			}
 		}
 	}
 	
 
-	const RECT tempNext = { _nextButton.left, _nextButton.top, _nextButton.right, _nextButton.bottom };
+	//const RECT tempNext = { _nextButton.left, _nextButton.top, _nextButton.right, _nextButton.bottom };
 	POINT tempPTNext = { _ptMouse.x, _ptMouse.y };
 
-	if (PtInRect(&tempNext, tempPTNext))
+	if (PtInRect(&makeRECT(_nextButton), tempPTNext))
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
 			++_curImgNum;
-			if (_curImgNum >= TILE_IMAGE_NUM)
+			if (_curImgNum >= TERRAIN_NAME_COUNT)
 				_curImgNum = 0;
-			char str[128];
-			if (_curImgNum + 1 == 10)
-			{
-				sprintf_s(str, "tile_%d", _curImgNum + 1);
-				_sampleImgStr[_curImgNum] = str;
-				return;
-			}
-			if (_curImgNum + 1 == 11)
-			{
-				sprintf_s(str, "tile_%d", _curImgNum + 1);
-				_sampleImgStr[_curImgNum] = str;
-				return;
-			}
-			sprintf_s(str, "tile_0%d", _curImgNum + 1);
-			_sampleImgStr[_curImgNum] = str;
+			//char str[128];
+			//if (_curImgNum + 1 == 10)
+			//{
+			//	sprintf_s(str, "tile_%d", _curImgNum + 1);
+			//	_sampleImgStr[_curImgNum] = str;
+			//	return;
+			//}
+			//else if (_curImgNum + 1 == 11)
+			//{
+			//	sprintf_s(str, "tile_%d", _curImgNum + 1);
+			//	_sampleImgStr[_curImgNum] = str;
+			//	return;
+			//}
+			//sprintf_s(str, "tile_0%d", _curImgNum + 1);
+			//_sampleImgStr[_curImgNum] = str;
 		}
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('L'))
 	{
-		_curImgNum = 0; //나중에 오브젝트 이미지에 따른 이미지 인덱스 변수를 넣어주어야함
-		char str[128];
-		sprintf_s(str, "object_%d", _curImgNum + 1);
-		_tempImgStr[_curImgNum] = str;
-		
-		_isObj = true;
+		_curImgNum = OBJECT_NAME1; //나중에 오브젝트 이미지에 따른 이미지 인덱스 변수를 넣어주어야함
+		//char str[128];
+		//sprintf_s(str, "object_%d", _curImgNum + 1);
+		//_tempImgStr[_curImgNum] = str;
+		//
+		//_isObj = true;
 	}
 
 }
@@ -542,7 +544,11 @@ void mapTool::mapSizeChange()
 			for (int i = 0; i < TILEY; ++i)
 			{
 				tagTile* tempTile = new tagTile;
-				D2D1_RECT_F* tempRect = new D2D1_RECT_F;
+				D2D1_RECT_F tempRect = { (float)_vvRect[i].back().right
+									  , (float)_vvRect[i].back().top
+									  , (float)_vvRect[i].back().right + TILE_SIZE
+									  , (float)_vvRect[i].back().bottom };
+
 				tempTile->terrainFrameX = 0;
 				tempTile->terrainFrameY = 0;
 
@@ -551,19 +557,16 @@ void mapTool::mapSizeChange()
 
 				tempTile->attr |= ATTR_NONE;
 
-				tempTile->terrainImageName = TERRAIN_NAME_NONE;
-				tempTile->objectImageName = OBJECT_NAME_NONE;
-
-				*tempRect = { (float)_vvRect[i].back().right
-							, (float)_vvRect[i].back().top
-							, (float)_vvRect[i].back().right + TILE_SIZE
-							, (float)_vvRect[i].back().bottom };
+				tempTile->terrainImageIndex = TERRAIN_NAME_NONE;
+				tempTile->objectImageIndex = OBJECT_NAME_NONE;
+							
 				_vvTile[i].push_back(tempTile);
-				_vvRect[i].push_back(*tempRect);
+				_vvRect[i].push_back(tempRect);
 			}
 			++TILEX;
 		}
 
+		//todo
 		//세로 사이즈 줄이는 버튼 눌렀을 때
 		if (PtInRect(&makeRECT(_sizeDownHeight), tempPT))
 		{
@@ -571,6 +574,8 @@ void mapTool::mapSizeChange()
 			{
 				delete _vvTile.back()[i];		//데이터를 메모리에서 삭제함
 				_vvTile.back()[i] = nullptr;	//포인터의 주소를 없앰
+				
+
 				//(삭제를 먼저 하고 포인터를 지워야함. 그래야 그 주소의 데이터를 삭제할 수 있음)
 			}
 			_vvTile.pop_back();
@@ -584,27 +589,28 @@ void mapTool::mapSizeChange()
 			for (int i = 0; i < TILEX; ++i)
 			{
 				tagTile* tempTile = new tagTile;
-				D2D1_RECT_F* tempRect = new D2D1_RECT_F;
+				D2D1_RECT_F tempRect = { (float)_vvRect.back()[i].right
+									   , (float)_vvRect.back()[i].top
+									   , (float)_vvRect.back()[i].right + TILE_SIZE
+									   , (float)_vvRect.back()[i].bottom };
+
 				tempTile->terrainFrameX = 0;
 				tempTile->terrainFrameY = 0;
+
 				tempTile->objectFrameX = 0;
 				tempTile->objectFrameY = 0;
-				tempTile->attr |= ATTR_NONE;
-				tempTile->terrainImageName = TERRAIN_NAME_NONE;
-				tempTile->objectImageName = OBJECT_NAME_NONE;
-				*tempRect = { (float)_vvRect.back()[i].right
-							, (float)_vvRect.back()[i].top
-							, (float)_vvRect.back()[i].right + TILE_SIZE
-							, (float)_vvRect.back()[i].bottom };
 
+				tempTile->attr |= ATTR_NONE;
+				tempTile->terrainImageIndex = TERRAIN_NAME_NONE;
+				tempTile->objectImageIndex = OBJECT_NAME_NONE;
+			
 				vTile.push_back(tempTile);
-				vRect.push_back(*tempRect);
+				vRect.push_back(tempRect);
 			}
 			_vvTile.push_back(vTile);
 			_vvRect.push_back(vRect);
 			TILEY++;
 		}
-
 	}
 }
 
@@ -668,19 +674,19 @@ void mapTool::drawMap()
 				{
 					if (!_isObj)
 					{
-						_vvTile[i][j]->terrainImageName = _sampleImgStr[_curImgNum];
+						_vvTile[i][j]->terrainImageIndex = _curImgNum;
 
 						_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
 						_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
-						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->terrainImageName, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+						_vvTile[i][j]->attr = setAttribute(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex], _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 					}
 					//타일맵에 오브젝트 정보 추가
 					else
 					{
-						_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+						_vvTile[i][j]->objectImageIndex = OBJECT_NAME1;
 						_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 						_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_vvTile[i][j]->objectImageIndex], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 					}
 				}
 			}
@@ -698,26 +704,25 @@ void mapTool::drawMap()
 					{
 						if (!_isObj)
 						{
-							_vvTile[i][j]->terrainImageName = _sampleImgStr[_curImgNum];
+							_vvTile[i][j]->terrainImageIndex = _curImgNum;
 
 							_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
 							_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->terrainImageName, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+							_vvTile[i][j]->attr = setAttribute(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex], _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 						}
 						//타일맵에 오브젝트 정보 추가
 						else
 						{
-							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectImageIndex = OBJECT_NAME1;
 							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_vvTile[i][j]->objectImageIndex], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 					}
 				}
 			}
 		}
 	}
-
 
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
@@ -729,19 +734,19 @@ void mapTool::drawMap()
 				{
 					if (!_isObj)
 					{
-						_vvTile[i][j]->terrainImageName = _sampleImgStr[_curImgNum];
+						_vvTile[i][j]->terrainImageIndex = _curImgNum;
 
 						_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
 						_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
-						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->terrainImageName, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+						_vvTile[i][j]->attr = setAttribute(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex], _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
 					}
 					//타일맵에 오브젝트 정보 추가
 					else
 					{
-						_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+						_vvTile[i][j]->objectImageIndex = OBJECT_NAME1;
 						_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 						_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_vvTile[i][j]->objectImageIndex], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 					}
 				}
 			}
@@ -891,7 +896,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	DWORD result = ATTR_NONE;
 	//타일
 	//동굴은 어딜가든 다 만남
-	if (imgName == TERRAIN_NAME5)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME5])
 	{
 		if ((frameX <= 0 && frameX < SAMPLETILE - 1) && (frameY == 0 || frameY == 1)
 			|| (frameX == 0 || frameX == 2 || frameX == 3) && (frameY == 2)
@@ -902,7 +907,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 	}
 	//물
-	if (imgName == TERRAIN_NAME6)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME6])
 	{
 		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2) ||
 			(frameX >= 0 && frameX < SAMPLETILE) && (frameY == 2) ||
@@ -917,7 +922,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 	}
 	//집, 오박사
-	if (imgName == TERRAIN_NAME7)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME7])
 	{
 		if ((frameX == 0 || frameX == 1) && (frameY == 0) ||
 			(frameX >= 0 && frameX < SAMPLETILE - 1)  && (frameY == 1))
@@ -932,7 +937,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 	}
 	//포켓몬 센터
-	if (imgName == TERRAIN_NAME8)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME8])
 	{
 		if ((frameX == 4 || frameX == 5) && (frameY >= 0 && frameY < 3) ||
 			(frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE))
@@ -946,7 +951,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 	}
 	//상점
-	if (imgName == TERRAIN_NAME9)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME9])
 	{
 		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 3))
 		{
@@ -959,7 +964,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 	}
 	//체육관
-	if (imgName == TERRAIN_NAME10)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME10])
 	{
 		if ((frameX > 0 && frameX < SAMPLETILE - 1) && (frameY >= 2 && frameY <= 4) ||
 			(frameX >= 0 && frameX < SAMPLETILE - 1) && frameY == 5)
@@ -975,7 +980,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 	}
 	//체육관 두번째 이미지
-	if (imgName == TERRAIN_NAME11)
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME11])
 	{
 		if ((frameX == 0 || frameX == 1) && frameY == 0)
 		{
@@ -990,7 +995,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	}
 
 	//오브젝트
-	if (imgName == OBJECT_NAME1)
+	if (imgName == OBJECT_NAME[OBJECT_NAME1])
 	{
 		if (frameX == 0 && frameY == 5)
 		{

@@ -48,10 +48,10 @@ private:
 	//샘플타일의 이미지
 	image*	_sampleImg[TILE_IMAGE_NUM];
 	//샘플타일 이미지를 string으로(이미지매니저에서 findeImg 할때 쓰려고)
-	string _sampleImgStr[TILE_IMAGE_NUM];
+	//string _sampleImgStr[TILE_IMAGE_NUM];
 
 	image* _tempImg[OBJ_IMG_NUM];
-	string	_tempImgStr[OBJ_IMG_NUM];
+	//string	_tempImgStr[OBJ_IMG_NUM];
 
 	int		_curImgNum;
 
