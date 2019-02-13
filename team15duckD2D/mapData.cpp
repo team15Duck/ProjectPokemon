@@ -82,15 +82,9 @@ void mapData::render()
 			{
 				WCHAR str[128];
 				swprintf_s(str, L"UnMove_ATTR");
-				for (int i = 0; i < TILEY; ++i)
+				if ((_vvTile[ii][jj]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
 				{
-					for (int j = 0; j < TILEX; ++j)
-					{
-						if ((_vvTile[ii][jj]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
-						{
-							D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5);
-						}
-					}
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5);
 				}
 			}
 
