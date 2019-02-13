@@ -13,8 +13,8 @@ typedef struct tagPokemonPackage
 	unsigned int idNo;				// 고유 번호
 	unsigned int index;				// 도감 번호
 
-	string nickName;				// 이름
-	string trainerNote;				// 트레이너 노트
+	const char* nickName;			// 이름
+	const char* trainerNote;		// 트레이너 노트
 
 	unsigned int itemIdx;			// 소지하고 있는 아이템의 번호
 

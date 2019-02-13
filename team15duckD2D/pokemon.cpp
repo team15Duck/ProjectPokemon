@@ -110,11 +110,8 @@ pmPack* pokemon::makeSavePack()
 	pack->idNo = _idNo;
 	pack->index = _index;
 
-	pack->nickName.clear();
-	pack->nickName.append(_nickName);
-	
-	pack->trainerNote.clear();
-	pack->trainerNote.append(_trainerNote);
+	pack->nickName = _nickName.c_str();
+	pack->trainerNote = _trainerNote.c_str();
 
 	//pack->itemIdx = _item->getItemID(); // 아이템 아이디
 
