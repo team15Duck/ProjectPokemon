@@ -41,8 +41,8 @@ void mapData::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
-			if (_vvTile[ii][jj]->terrainImageName.size() > 0)
-				IMAGEMANAGER->findImage(_vvTile[ii][jj]->terrainImageName)->frameRender(jj * TILE_SIZE, ii * TILE_SIZE , _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
+			if (TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex] != "none")
+				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex])->frameRender(jj * TILE_SIZE, ii * TILE_SIZE , _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
@@ -53,9 +53,9 @@ void mapData::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
-			if (_vvTile[ii][jj]->objectImageName.size() > 0 && _vvTile[ii][jj]->attr & ATTR_APPEAR)
+			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none" && _vvTile[ii][jj]->attr & ATTR_APPEAR)
 			{
-				IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0 , 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY,1);
+				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0 , 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY,1);
 			}
 
 
@@ -65,11 +65,11 @@ void mapData::render()
 				_player->render();
 			}
 
-			if (_vvTile[ii][jj]->objectImageName.size() > 0)
+			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
 				if (_vvTile[ii][jj]->attr & ATTR_APPEAR)
 				{
-					IMAGEMANAGER->findImage(_vvTile[ii][jj]->objectImageName)->frameRender(jj*TILE_SIZE, ii*TILE_SIZE + 40, 0, 40, 64, 24, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE + 40, 0, 40, 64, 24, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
 				}
 				else
 				{
