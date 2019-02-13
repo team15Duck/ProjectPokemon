@@ -270,5 +270,14 @@ namespace TEAM_15DUCK_UTILL
 		return false;
 	}
 
+	wstring string2wstring(string str)
+	{
+
+		int nLen = MultiByteToWideChar(CP_ACP, 0, &str[0], str.size(), NULL, NULL);
+		wstring strUni(nLen, 0);
+		MultiByteToWideChar(CP_ACP, 0, &str[0], str.size(), &strUni[0], nLen);
+
+		return strUni;
+	}
 
 }
