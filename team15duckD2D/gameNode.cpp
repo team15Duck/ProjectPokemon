@@ -37,6 +37,7 @@ HRESULT gameNode::init(bool managerInit)
 		TXTDATA->init();
 		MENUMANAGER->init();
 		POKEMONDATA->init();
+		SKILLDATA->init();
 	}
 
 	return S_OK;
@@ -74,6 +75,8 @@ void gameNode::release()
 		MENUMANAGER->releaseSingleton();
 		POKEMONDATA->release();
 		POKEMONDATA->releaseSingleton();
+		SKILLDATA->release();
+		SKILLDATA->releaseSingleton();
 	}
 }
 

@@ -17,6 +17,8 @@ pokemon::pokemon()
 , _displayTime(0.f)
 , _target(nullptr)
 , _img(nullptr)
+, _destX(0.f), _destY(0.f)
+, _frameX(0), _frameY(0)
 {
 	_beforeLvStatus.clear();
 	_currentLvStatus.clear();
@@ -37,13 +39,14 @@ pokemon::~pokemon()
 HRESULT pokemon::init( int idNo
 					  ,POKEMON index
 					  ,int level
-					  ,bool isMyPokemon)
+					  ,bool isMyPokemon
+					  )
 {
-	pokemonInfo info = *POKEMONDATA->getPokemonInfomation(index);
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(index);
 
 	_idNo = idNo;
-	_index = info.getPokemonIndex();
-	_nickName = *info.getPokemonName();
+	_index = info->getPokemonIndex();
+	_nickName = *info->getPokemonName();
 	_level = level;
 	_isMyPokemon = isMyPokemon;
 
@@ -56,6 +59,25 @@ HRESULT pokemon::init( int idNo
 	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon.png", 5120, 4696, 20, 16);
 	
 	_img = IMAGEMANAGER->findImage("pokemon_ingame");
+
+	//_destX = destX;
+	//_destY = destY;
+
+	int idx = _index * 2;
+	if (_isMyPokemon)
+	{
+		idx += 1;
+	}
+	else
+	{
+
+	}
+	
+	_frameX = idx % _img->GetMaxFrameX();
+	_frameY = idx / _img->GetMaxFrameX();
+
+
+	_skills[0].init(33);
 
 	return S_OK;
 }
@@ -409,11 +431,11 @@ void pokemon::settingStatus()
 
 void pokemon::evolution()
 {
-	pokemonInfo info = *POKEMONDATA->getPokemonInfomation(_index);
-	int evolutionLv = info.getEvolutionLevel();
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
+	int evolutionLv = info->getEvolutionLevel();
 	if( 0 != evolutionLv && evolutionLv == _level )
 	{
-		int evolutionIndex = info.getEvolutionIndex();
+		int evolutionIndex = info->getEvolutionIndex();
 		if (POKEMON_NONE != evolutionIndex)
 		{
 			_level = evolutionIndex;

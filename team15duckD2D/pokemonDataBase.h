@@ -16,7 +16,7 @@ public:
 	HRESULT init();
 	void release();
 
-	const pokemonInfo* getPokemonInfomation(POKEMON pokemonIndex);
+	pokemonInfo* getPokemonInfomation(POKEMON pokemonIndex);
 
 	// 능력치 계산 (레벨, 포켓몬 번호)
 	pokemonStatus calculateStatus(int level, POKEMON pokemonId);

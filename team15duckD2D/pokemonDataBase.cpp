@@ -217,7 +217,7 @@ void pokemonDataBase::release()
 	_pokemonMap.clear();
 }
 
-const pokemonInfo* pokemonDataBase::getPokemonInfomation(POKEMON pokemonIndex)
+pokemonInfo* pokemonDataBase::getPokemonInfomation(POKEMON pokemonIndex)
 {
 	pokemonInfo* info = nullptr;
 
@@ -256,7 +256,13 @@ int pokemonDataBase::calcuateExp(int level, POKEMON pokemonId)
 
 float pokemonDataBase::calculateConflictValue(POKEMON myindex, POKEMON targetIndex)
 {
-	return 0.0f;
+	pokemonInfo* myinfo = getPokemonInfomation(myindex);
+	pokemonInfo* targetInfo = getPokemonInfomation(targetIndex);
+
+	POKEMON_TYPE myType = myinfo->getPokemonType();
+	POKEMON_TYPE targetType = targetInfo->getPokemonType();
+
+	return 1.0f;
 }
 
 int pokemonDataBase::calculatorStatusType1(int level, int kindValue)

@@ -19,6 +19,7 @@ private:
 	POKEMON_TYPE			_type;			// 타입
 	POKEMON_SKILL_CATEGORY	_category;		// 분류
 	string					_description;	// 설명
+	string					_name;
 
 	POKEMON_UPSET_CONDITION _upsetConditionType;	// 상태변화 효과
 
@@ -32,6 +33,9 @@ private:
 public:
 	pokemonSkillInfo();
 	~pokemonSkillInfo();
+
+	HRESULT init(int id, POKEMON_TYPE type, POKEMON_SKILL_CATEGORY category, string text, string name, POKEMON_UPSET_CONDITION conditionType, int power, int rate, int maXpp);
+	void release();
 
 	// 스킬 번호
 	int						getSkillID() { return _skillId; }

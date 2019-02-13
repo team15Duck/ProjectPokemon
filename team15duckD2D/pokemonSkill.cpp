@@ -9,6 +9,33 @@ pokemonSkillInfo::~pokemonSkillInfo()
 {
 }
 
+HRESULT pokemonSkillInfo::init(	 int id
+							   , POKEMON_TYPE type
+							   , POKEMON_SKILL_CATEGORY category
+							   , string text
+							   , string name
+							   , POKEMON_UPSET_CONDITION conditionType
+							   , int power
+							   , int rate
+							   , int maXpp)
+{
+	_skillId = id;
+	_type = type;
+	_category = category;
+	_description = text;
+	_name = name;
+	_upsetConditionType = conditionType;
+	_power = power;
+	_accuracyRate = rate;
+	_defaultPP = maXpp;
+
+	return S_OK;
+}
+
+void pokemonSkillInfo::release()
+{
+}
+
 
 pokemonSkill::pokemonSkill()
 : _skillId(0)

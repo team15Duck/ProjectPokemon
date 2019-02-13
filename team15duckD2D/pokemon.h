@@ -105,10 +105,14 @@ private:
 
 	ACTIVE_STATE _state;
 
+	float _destX, _destY;						// 렌더 위치
+	int _frameX, _frameY;						// 렌더 프레임 좌표
+
 public:
 	pokemon();
 	~pokemon();
 
+	// 고유번호, 포켓몬 번호, 레벨, 플레이어 포켓몬?, 렌더 letf, 렌더 top
 	HRESULT init(int idNo, POKEMON index, int level, bool isMyPokemon);
 	void release();
 	void update();
@@ -227,8 +231,6 @@ public:
 	int getDisplayHp()	{ return _displayHp; }
 	//  연출용 exp
 	int getDisplayExp() { return _displayExp; }
-
-
 
 private:
 	// 경험치로 인한 레벨업

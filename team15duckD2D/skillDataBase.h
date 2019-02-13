@@ -4,10 +4,16 @@
 class skillDataBase : public singletonBase<skillDataBase>
 {
 private:
+
+	map<unsigned int, pokemonSkillInfo*> _skillMap;
+
 public:
 	skillDataBase();
 	~skillDataBase();
 
-	const pokemonSkillInfo* getPokemonSkillinfo(int skillId);
+	HRESULT init();
+	void release();
+
+	pokemonSkillInfo* getPokemonSkillinfo(int skillId);
 };
 
