@@ -16,6 +16,8 @@ HRESULT hayoungTestScene::init()
 
 	_book = new IllustratedBook;
 	_book->init();
+	_book->pokemonDataSet();
+
 	frameImageinit();
 	commonMenuinit();
 
@@ -33,6 +35,8 @@ HRESULT hayoungTestScene::init()
 	IMAGEMANAGER->addFrameImage("트레이너카드", L"image/common_menu/player/trainerCard.png", 1920, 640, 2, 1);
 
 	IMAGEMANAGER->addFrameImage("도감", L"image/common_menu/pokemonbook/cm_pokemon_book.png", 1920, 640, 2, 1);
+	IMAGEMANAGER->addFrameImage("포켓몬속성", L"image/Summary Menu/summary_pokemon_tage.png", 1152, 96, 9, 2);
+
 
 	IMAGEMANAGER->addImage("보유중포켓몬", L"image/common_menu/pokemon/pokemonMenu_background.png", 960, 640);
 	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 336, 456, 1, 2);
@@ -48,6 +52,8 @@ HRESULT hayoungTestScene::init()
 
 		_cmpm._subPokemon[i] = { 450, top, 950 , bottom };
 	}
+
+	IMAGEMANAGER->addFrameImage("가방메뉴배경", L"image/common_menu/bag/bag_background.png", 1920, 640, 2, 1);
 
 
 	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
@@ -294,13 +300,6 @@ void hayoungTestScene::render()
 	commonMenurender();
 	if (_cm._cstate == POKEMON_BOOK && _cm._ms == YES)
 	{
-		IMAGEMANAGER->findImage("도감")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
-		WCHAR pokemon_book[1024];
-		swprintf_s(pokemon_book, L"포켓몬 도감 목록");
-		D2DMANAGER->drawText(pokemon_book, 285 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(160, 160, 160));
-		swprintf_s(pokemon_book, L"포켓몬 도감 목록");
-		D2DMANAGER->drawText(pokemon_book, 280 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(255,255,255));
-
 		_book->render();
 	}
 	else if (_cm._cstate == POKEMON && _cm._ms == YES)
@@ -385,9 +384,13 @@ void hayoungTestScene::render()
 	}
 	else if (_cm._cstate == BAG && _cm._ms == YES)
 	{
-		//if (_isMale)b
+		if (_isMale)
 		{
-
+			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+		}
+		else if (_isFemale)
+		{
+			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
 		}
 	}
 	else if (_cm._cstate == PLAYER && _cm._ms == YES)
@@ -426,22 +429,17 @@ void hayoungTestScene::commonMenuinit()
 {
 	_cm._bottom = { 0, 490, 960, 640 };
 
-	_cm._menu[0] = { 726, 33, 926, 93 };
-	_cm._menu[1] = { 726, 93, 926, 153 };
-	_cm._menu[2] = { 726, 153, 926, 213 };
-	_cm._menu[3] = { 726, 213, 926, 273 };
-	_cm._menu[4] = { 726, 273, 926, 333 };
-	_cm._menu[5] = { 726, 333, 926, 393 };
-	_cm._menu[6] = { 726, 393, 926, 453 };
+	for (int i = 0; i < 7; ++i)
+	{
+		float menutop = 33 + (i * 60);
+		float menubottom = 93 + (i * 60);
 
-	_cm._cursor[0] = { 702, 43, 726, 83 };
-	_cm._cursor[1] = { 702, 103, 726, 143 };
-	_cm._cursor[2] = { 702, 163, 726, 203 };
-	_cm._cursor[3] = { 702, 223, 726, 263 };
-	_cm._cursor[4] = { 702, 283, 726, 323 };
-	_cm._cursor[5] = { 702, 343, 726, 383 };
-	_cm._cursor[6] = { 702, 403, 726, 443 };
+		float cursortop = 43 + (i * 60);
+		float cursorbottom = 83 + (i * 60);
 
+		_cm._menu[i] = { 726, menutop, 926, menubottom };
+		_cm._cursor[i] = { 702 ,cursortop, 726,cursorbottom };
+	}
 
 	_rc = { 0 , 480, 960, 640 };
 	MENUMANAGER->addFrame("기본메뉴", 670, 1, 9, 15);

@@ -157,7 +157,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("Ä¡¿µ¾À");
+		SCENEMANAGER->changeScene("ÇÏ¿µ¾À");
 	}
 	
 	return S_OK;
