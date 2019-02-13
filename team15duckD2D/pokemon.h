@@ -16,7 +16,7 @@ typedef struct tagPokemonPackage
 	const char* nickName;			// 이름
 	const char* trainerNote;		// 트레이너 노트
 
-	unsigned int itemIdx;			// 소지하고 있는 아이템의 번호
+	unsigned int itemType;			// 소지하고 있는 아이템의 번호(타입)
 
 	unsigned int level;				// 레벨
 	unsigned int currentExp;		// 현재 경험치
@@ -63,7 +63,7 @@ private:
 	string _nickName;							// 닉네임
 	string _trainerNote;						// 트레이너 노트
 
-	item* _item;								// 소지하고 있는 아이템
+	ITEM_TYPE _ownerItemType;					// 소지하고 있는 아이템
 
 	unsigned int _level;						// 레벨
 	unsigned int _currentLvExp;					// 현재 레벨까지의 누적 경험치
@@ -116,9 +116,6 @@ public:
 	void applyItem(item* item);
 	// 2. 몇 번째(idx) 스킬 사용
 	void useSkill(int idx);
-	// 2. 랜덤으로 스킬사용
-	void useSkill();
-	
 
 	
 	// 레벨 업 : 경험치 레벨업 외에 강제 레벨업 하는 경우 사용 ex. 이상한 사탕 사용
@@ -134,7 +131,7 @@ public:
 	// 경험치 획득
 	void gainExp(int exp);
 	// 소지 아이템 해제
-	item* withdrawItem();
+	ITEM_TYPE withdrawItem();
 	// 상태이상 해제
 	void clearUpsetCondtion();
 	// 스킬 교체
@@ -150,7 +147,7 @@ public:
 	// 상태이상 세팅
 	void setUpsetCondition(pokemonUC upsetCondition){ _upsetCondition = upsetCondition; }
 	// 소지 아이템 세팅
-	void setOwnerItem(item* ownerItem)		{ _item = ownerItem; }
+	void setOwnerItem(ITEM_TYPE itemType)	{ _ownerItemType = itemType; }
 	// 닉네임
 	void setNicName(string nickName)		{ _nickName = nickName; }
 	// 트레이너 노트
@@ -173,7 +170,7 @@ public:
 	// 트레이너 노트
 	string getTrainerNote()		{ return _trainerNote; }
 	// 소지하고 있는 아이템
-	const item* getOwnerItem()	{ return _item;}
+	ITEM_TYPE getOwnerItemType()	{ return _ownerItemType;}
 
 	// 레벨
 	unsigned int getLevel()		{ return _level;}

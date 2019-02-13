@@ -5,7 +5,7 @@
 pokemon::pokemon()
 : _idNo(0)
 , _index(POKEMON_NONE)
-, _item(nullptr)
+, _ownerItemType(ITEM_TYPE_NONE)
 , _level(0)
 , _currentLvExp(0)
 , _currentExp(0)
@@ -81,7 +81,6 @@ HRESULT pokemon::init( int idNo
 
 void pokemon::release()
 {
-	_item = nullptr;
 	_img = nullptr;
 }
 
@@ -132,7 +131,7 @@ pmPack* pokemon::makeSavePack()
 	pack->nickName = _nickName.c_str();
 	pack->trainerNote = _trainerNote.c_str();
 
-	//pack->itemIdx = _item->getItemID(); // 아이템 아이디
+	pack->itemType = _ownerItemType;
 
 	pack->level = _level;
 	pack->currentExp = _currentExp;
@@ -169,15 +168,7 @@ void pokemon::loadSavePack(pmPack* pack)
 	_trainerNote.clear();
 	_trainerNote.append(pack->trainerNote);
 
-	if (pack->itemIdx != -1)
-	{
-		item* ownerItem = new item;
-		ownerItem->init();
-
-		_item = ownerItem;
-		// todo 아이템 아이디
-		// pack->itemIdx = _item->getItemID(); 
-	}
+	_ownerItemType = static_cast<ITEM_TYPE>(pack->itemType);
 
 	_level = pack->level;
 	settingStatus();
@@ -268,33 +259,20 @@ void pokemon::applyItem(item* item)
 
 void pokemon::useSkill(int idx)
 {
-	_isIdle = false;
-	int skillId = _skills[idx].getSkillID();
+	if(idx < 0 || POKEMON_SKILL_MAX_COUNT < idx)
+		return;
+	
+	if(!_skills[idx].isUsableSkill())
+		return;
 
-	// todo
-	pokemonSkill skill;
+	_isIdle = false;
+
+	pokemonSkill skill = _skills[idx];
 	pokemonUC* upsetCondition = skill.getUpsetCondition();
 
 	int damage = calculateAttkValue(idx);
 	attack(damage, upsetCondition);
 	startProgessing(bind(&pokemon::progressintSkillEffect, this, idx), PROGRESSING_SKILL);
-}
-
-void pokemon::useSkill()
-{
-	_isIdle = false;
-	int ii = 0;
-	for (; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
-	{
-		if (-1 == _skills[ii].getSkillID())
-			break;
-	}
-
-	int index = 0;
-	if (0 != ii)
-		RND->getInt(ii);
-
-	useSkill(index);
 }
 
 bool pokemon::levelUpForce()
@@ -357,12 +335,12 @@ void pokemon::gainExp(int exp)
 	startProgessing(bind(&pokemon::progressingIncreseExp, this), PROGRESSING_VALUE);
 }
 
-item* pokemon::withdrawItem()
+ITEM_TYPE pokemon::withdrawItem()
 {
-	item* ownerItem = _item;
-	_item = nullptr;
+	ITEM_TYPE type = _ownerItemType;
+	_ownerItemType = ITEM_TYPE_NONE;
 
-	return ownerItem;
+	return type;
 }
 
 void pokemon::clearUpsetCondtion()
