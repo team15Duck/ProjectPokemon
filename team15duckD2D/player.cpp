@@ -55,14 +55,14 @@ void player::update()
 
 void player::render()
 {
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	for (int j = 0; j < 15; j++)
-	//	{
-	//		D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
-	//		D2DMANAGER->drawRectangle(tile);
-	//	}
-	//}
+	for (int i = 0; i < 10; i++)
+	{
+		for (int j = 0; j < 15; j++)
+		{
+			D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
+			D2DMANAGER->drawRectangle(tile);
+		}
+	}
 
 
 
@@ -169,10 +169,24 @@ void player::aniSetUp()
 	int fastMoveDown[4] = { 4,5,4,3 };
 	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_down", _key.c_str(), fastMoveDown, 4, 10, true);
 
+	//PS_BICYCLE ÀÚÀü°Å ¸ØÃç
+	int bicycleIdleLeft[1] = { 51 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_left", _key.c_str(), bicycleIdleLeft, 1, 10, true);
+	int bicycleIdleUp[1] = { 41 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_up", _key.c_str(), bicycleIdleUp, 1, 10, true);
+	int bicycleIdleDown[1] = { 31 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_down", _key.c_str(), bicycleIdleDown, 1, 10, true);
+
+	//ÀÚÀü°ÅÀÌµ¿
+	int bicycleMoveLeft[4] = { 51,52,51,50 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_left", _key.c_str(), bicycleMoveLeft, 4, 10, true);
+	int bicycleMoveUp[4] = { 41,42,41,40 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_up", _key.c_str(), bicycleMoveUp, 4, 10, true);
+	int bicycleMoveDown[4] = { 31,32,31,30 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_down", _key.c_str(), bicycleMoveDown, 4, 10, true);
 
 
-	_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_down");
-	_playerAni->start();
+	aniSetStart("idle_down");
 }
 
 void player::dataLoad()
@@ -335,4 +349,10 @@ void player::stateUpdate()
 	}
 
 	
+}
+
+void player::aniSetStart(string aniKeyName)
+{
+	_playerAni = KEYANIMANAGER->findAnimation(_key, aniKeyName);
+	_playerAni->start();
 }

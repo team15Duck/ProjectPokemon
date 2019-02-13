@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "item.h"
 #include "pokemon.h"
+#include <list>
 
 #define PLAYER_SPEED 150.0f
 
@@ -33,16 +34,22 @@ private:
 	PLAYER_STATE		_state;									//스테이트
 	mapItemList			_mItemList;								//아이템을 담고 있는 셋
 	pokemon*			_pokemon[6];							//포켓몬ㅋ
+	UINT				_currentPokemon;						//현재 소지하고 있는 마릿수
+
+	list<pokemon*>		_bankPokemonList;						//이자식도 저장해야됨 ㅂㄷㅂㄷ
+	
+
+
 	animation*			_playerAni;								//플레이어 애니
 	string				_key;									//키값
 	float				_moveDistance;							//이동할거리 ㅎㅎ
 	bool				_isRight;								//오른쪽보니?
+	bool				_isBicycle;								//자전거탈거?
+	bool				_isFaseMove;							//빨리갈거?
 
 
 
-
-
-	mapData* _map;									//이거슨 맵데이터?!
+	mapData*			_map;									//이거슨 맵데이터?!
 public:
 	player();
 	~player();
@@ -62,6 +69,11 @@ private:
 	void keyUpdate();
 	void stateUpdate();
 
+
+
+
+
+	void aniSetStart(string aniKeyName);
 
 
 public:
