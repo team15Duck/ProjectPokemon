@@ -15,14 +15,6 @@ struct tagSampleTile1
 	int frameY;
 };
 
-struct tagSaveTile
-{
-	string saveImgstr;
-	D2D1_RECT_F saveRC;
-	int frameX;
-	int frameY;
-};
-
 struct tagCurrentTile1
 {
 	bool isObj = true;
@@ -34,17 +26,7 @@ class objectTool : public gameNode
 {
 private:
 	image* _sampleImg[OBJECT_IMG_NUM];
-	string _sampleImgStr[OBJECT_IMG_NUM];
-
-	tagSaveTile _saveTiles[SAMPLETILE][SAMPLETILE];
-	
-	
-	
-	int _curImgNum;
-
 	tagSampleTile1 _sampleTile[SAMPLETILE][SAMPLETILE];
-
-
 	vector<vector<tagTile*>> _vvTile;
 	vector<vector<D2D1_RECT_F>> _vvRect;
 
@@ -69,6 +51,7 @@ private:
 	UINT _saveY;
 	UINT _drawX;
 	UINT _drawY;
+	tagTile _saveTiles[SAMPLETILE][SAMPLETILE];
 
 
 	bool _isShift;
@@ -76,6 +59,8 @@ private:
 	UINT _savePointX;
 	UINT _savePointY;
 	tagTile _saveTile;
+
+	int _curImgNum;
 
 public:
 	objectTool();
