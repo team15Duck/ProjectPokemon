@@ -117,7 +117,7 @@ enum OBJECT_NAME_INFO
 
 static string TERRAIN_NAME[TERRAIN_NAME_COUNT] = { "none","tile_01" ,"tile_02" ,"tile_03" ,"tile_04" ,"tile_05" ,"tile_06" ,"tile_07" ,"tile_08" ,"tile_09", "tile_10", "tile_11" };
 static string OBJECT_NAME[OBJECT_NAME_COUNT] = { "none", "object_01", "object_02", "object_03", "object_04", "object_05", "object_06", "object_07", "object_08", "object_09",
-												 "object_10", "object_11", "object_12", "object_13", "object_14", "object_15", "object_16", "object_17", "object_18"};
+												 "object_10", "object_11", "object_12", "object_13", "object_14", "object_15", "object_16", "object_17"};
 
 
 
