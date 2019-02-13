@@ -55,9 +55,6 @@ HRESULT pokemon::init( int idNo
 	settingStatus();
 	_currentExp = _currentLvExp;
 
-	// todo : 로딩씬으로 이동
-	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon.png", 5120, 4696, 20, 16);
-	
 	_img = IMAGEMANAGER->findImage("pokemon_ingame");
 
 	//_destX = destX;
@@ -205,15 +202,9 @@ void pokemon::loadSavePack(pmPack* pack)
 	}
 }
 
-
-void pokemon::ready()
-{
-	_state = ACTIVE_WAIT_APPLY_CONDITION;
-}
-
 void pokemon::applyUpsetCondition()
 {
-	_state = ACTIVE_APPLY_CONDITON;
+	_isIdle = false;
 	switch (_upsetCondition.type)
 	{
 		case PMUC_POISON:
@@ -262,13 +253,14 @@ void pokemon::applyUpsetCondition()
 	else
 	{
 		// 다음 행동 대기
-		_state = ACTIVE_WAIT_ACTIVE;
+		_isIdle = true;
 	}
 }
 
 void pokemon::applyItem(item* item)
 {
-	_state = ACTIVE_ACTIVE;
+	_isIdle = false;
+	_isIdle = true;
 
 	// todo 아이템 사용
 
@@ -276,7 +268,7 @@ void pokemon::applyItem(item* item)
 
 void pokemon::useSkill(int idx)
 {
-	_state = ACTIVE_ACTIVE;
+	_isIdle = false;
 	int skillId = _skills[idx].getSkillID();
 
 	// todo
@@ -290,7 +282,7 @@ void pokemon::useSkill(int idx)
 
 void pokemon::useSkill()
 {
-	_state = ACTIVE_ACTIVE;
+	_isIdle = false;
 	int ii = 0;
 	for (; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
 	{
@@ -470,20 +462,7 @@ void pokemon::endProgressing()
 	_isIdle = true;
 	_progressingType = PROGRESSING_NONE;
 	_function = NULL;
-
-	switch (_state)
-	{
-		case pokemon::ACTIVE_APPLY_CONDITON:
-		{
-			_state = ACTIVE_WAIT_ACTIVE;
-			break;
-		}
-		case pokemon::ACTIVE_ACTIVE:
-		{
-			_state = ACTIVE_END;
-			break;
-		}
-	}
+	_isIdle = true;
 }
 
 void pokemon::progressingIncreaseHp()
@@ -557,7 +536,7 @@ void pokemon::progressingApplyUpsetCondition()
 			else
 			{
 				// 행동 불가
-				_state = ACTIVE_END;
+				_isIdle = true;
 			}
 			endProgressing();
 
@@ -573,7 +552,7 @@ void pokemon::progressingApplyUpsetCondition()
 			else
 			{
 				// 행동 불가
-				_state = ACTIVE_END;
+				_isIdle = true;
 			}
 			endProgressing();
 			break;

@@ -55,18 +55,6 @@ private:
 		PROGRESSING_COUNT = PROGRESSING_NONE,
 	};
 
-	enum ACTIVE_STATE
-	{
-		ACTIVE_WAIT_APPLY_CONDITION,	// 이상 상태 적용 대기
-		ACTIVE_APPLY_CONDITON,			// 이상 상태 적용
-		ACTIVE_WAIT_ACTIVE,				// 행동 대기
-		ACTIVE_ACTIVE,					// 행동 : 아이템 사용 or 스킬 사용
-		ACTIVE_END,						// 끝
-
-		ACTIVE_NONE,
-		ACTIVE_COUNT = ACTIVE_NONE,
-	};
-
 private:
 
 	unsigned int _idNo;							// 고유 번호
@@ -103,8 +91,6 @@ private:
 	pokemon* _target;	// 적이당
 	function<void(void)> _function;				// 연출용 함수
 
-	ACTIVE_STATE _state;
-
 	float _destX, _destY;						// 렌더 위치
 	int _frameX, _frameY;						// 렌더 프레임 좌표
 
@@ -124,15 +110,13 @@ public:
 	void loadSavePack(pmPack* pack);
 	
 
-	// 1. 전투 준비
-	void ready();
-	// 2. 상태 이상 적용
+	// 1. 상태 이상 적용
 	void applyUpsetCondition();
-	// 3. 아이템 적용
+	// 2. 아이템 적용
 	void applyItem(item* item);
-	// 3. 몇 번째(idx) 스킬 사용
+	// 2. 몇 번째(idx) 스킬 사용
 	void useSkill(int idx);
-	// 3. 랜덤으로 스킬사용
+	// 2. 랜덤으로 스킬사용
 	void useSkill();
 	
 
@@ -176,8 +160,6 @@ public:
 	
 	// 행동 대기중인가 : 행동 중일 경우 연출만 보여준다. 
 	bool isIdle()				{ return _isIdle;}
-	// 행동 상태 확인
-	ACTIVE_STATE getActiveState(){ return _state;}
 
 	// 깨어있는가
 	bool isAwake()				{ return _isAwake;}

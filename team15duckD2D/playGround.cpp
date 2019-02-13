@@ -140,7 +140,8 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addFrameImage(OBJECT_NAME[OBJECT_NAME17], L"image/object/etc.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 
 
-
+	// 포켓몬 이미지 
+	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon/pokemon.png", 5120, 4696, 20, 16);
 
 
 
