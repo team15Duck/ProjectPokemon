@@ -39,6 +39,14 @@ private:
 
 	//선택한 샘플 타일
 	tagCurrentTile1	_pickSampleTile;
+
+	UINT _sampleSaveX;
+	UINT _sampleSaveY;
+	UINT _sampleDrawX;
+	UINT _sampleDrawY;
+
+
+
 	//선택한 오브젝트 타일
 	tagCurrentTile1 _tempObjTile;
 	

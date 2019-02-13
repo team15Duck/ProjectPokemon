@@ -49,6 +49,12 @@ HRESULT objectTool::init()
 	_savePointX = 0;
 	_savePointY = 0;
 
+
+	_sampleSaveX = 0;
+	_sampleSaveY = 0;
+	_sampleDrawX = 1;
+	_sampleDrawY = 1;
+
 	return S_OK;
 }
 
@@ -223,6 +229,11 @@ void objectTool::pickSampleObject()
 	{
 		_isTileClick = true;
 
+		_sampleSaveX = idxX;
+		_sampleSaveY = idxY;
+	
+	
+
 		if ((idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
 		{
 			_pickSampleTile.curX = idxX;
@@ -231,6 +242,13 @@ void objectTool::pickSampleObject()
 		}
 		else
 			_isTileClick = false;
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		_sampleDrawX = idxX + 1;
+		if (_sampleDrawX <= _sampleSaveX) _sampleDrawX + 1;
+		_sampleDrawY = idxY + 1;
+		if (_sampleDrawY <= _sampleSaveY) _sampleDrawY + 1;
 	}
 }
 
@@ -360,11 +378,22 @@ void objectTool::drawObject()
 				{
 					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 					{
-						_vvTile[i][j]->objectImageIndex = _curImgNum;
-
-						_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
-						_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
-						_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						int drawAreaX = 0;
+						int drawAreaY = 0;
+						for (int ii = _sampleSaveY; ii < _sampleDrawY; ii++, drawAreaY++)
+						{
+							for (int jj = _sampleSaveX; jj < _sampleDrawX; jj++, drawAreaX++)
+							{
+								_vvTile[i + drawAreaY][j + drawAreaX]->objectImageIndex = _curImgNum;
+								_vvTile[i + drawAreaY][j + drawAreaX]->objectFrameX = _pickSampleTile.curX + drawAreaX;
+								_vvTile[i + drawAreaY][j + drawAreaX]->objectFrameY = _pickSampleTile.curY + drawAreaY;
+								_vvTile[i + drawAreaY][j + drawAreaX]->attr = setAttribute(OBJECT_NAME[_curImgNum],
+																			  _vvTile[i + drawAreaY][j + drawAreaX]->objectFrameX, 
+																			  _vvTile[i + drawAreaY][j + drawAreaX]->objectFrameY);
+							}
+							drawAreaX = 0;
+						}
+	
 					}
 				}
 			}
