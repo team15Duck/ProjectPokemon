@@ -61,7 +61,7 @@ HRESULT mapTool::init()
 
 	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_TEST;
+	_mapCase = MAP_CAVE;
 
 	setTile();
 	nameInit();
@@ -188,7 +188,8 @@ void mapTool::render()
 			if (_vvTile[i][j]->attr == ATTR_APPEAR)
 			{
 				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+				if(_isObj)
+					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 			}
 			else
 			{
@@ -262,7 +263,7 @@ void mapTool::setSampleTile()
 void mapTool::setTile()
 {
 	//맵
-	TILEX = 50;
+	TILEX = 80;
 	TILEY = 50;
 	for (int i = 0; i < TILEY; ++i)
 	{
@@ -374,11 +375,11 @@ void mapTool::pickSampleMap()
 		_isTileClick = true;
 		if (!_isObj)
 		{
-			if (_curImgNum == 0 || _curImgNum == 1 || _curImgNum == 2 || _curImgNum == 3)
+			if (_curImgNum == TERRAIN_NAME1 || _curImgNum == TERRAIN_NAME2 || _curImgNum == TERRAIN_NAME3 || _curImgNum == TERRAIN_NAME4)
 			{
 				if (!_isObj)
 				{	
-					if (_curImgNum == 1 )
+					if (_curImgNum == TERRAIN_NAME2)
 					{
 						_isRND = false;
 						if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3)
@@ -409,15 +410,6 @@ void mapTool::pickSampleMap()
 							_isTileClick = false;
 					}
 				}
-				//else					//오브젝트 샘플 1번 중에서 부쉬만 추가했음
-				//{
-				//	if (indX == 0 && indY == 5)
-				//	{
-				//		_pickSampleTile.curX = indX;
-				//		_pickSampleTile.curY = indY;
-				//		_pickSampleTile.isObj;
-				//	}
-				//}
 			}
 			//동굴
 			if (_curImgNum == TERRAIN_NAME5)
@@ -449,7 +441,7 @@ void mapTool::pickSampleMap()
 			//집, 오박사
 			if (_curImgNum == TERRAIN_NAME7)
 			{
-				if ((indX >= 0 && indX < SAMPLETILE - 2) && indY == 0 ||
+				if ((indX >= 0 && indX < SAMPLETILE - 1) && indY == 0 ||
 					(indX >= 0 && indX < SAMPLETILE) && indY == 1)
 				{
 					_pickSampleTile.curX = indX;
@@ -464,7 +456,8 @@ void mapTool::pickSampleMap()
 			{
 				if ((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY < 3) ||
 					(indX >= 0 && indX < SAMPLETILE - 1) && indY == 3 ||
-					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 4 && indY < SAMPLETILE))
+					(indX >= 0 && indX < SAMPLETILE - 1) && indY == 4 ||
+					(indX >= 0 && indX <SAMPLETILE -2 ) && indY == 5)
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -476,8 +469,8 @@ void mapTool::pickSampleMap()
 			//상점
 			if (_curImgNum == TERRAIN_NAME9)
 			{
-				if ((indX >= 0 && indX < 3) && (indY == 0) ||
-					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 1 && indY < SAMPLETILE))
+				if ((indX >= 0 && indX < 3) && (indY == 0 || indY == 1) ||
+					(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 2 && indY < SAMPLETILE))
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -926,9 +919,9 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	//동굴은 어딜가든 다 만남
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME5])
 	{
-		if ((frameX <= 0 && frameX < SAMPLETILE - 1) && (frameY == 0 || frameY == 1)
-			|| (frameX == 0 || frameX == 2 || frameX == 3) && (frameY == 2)
-			|| (frameX <= 0 && frameX < 3) && frameY == 3)
+		if ((frameX >= 0 && frameX < SAMPLETILE - 1) && (frameY == 0 || frameY == 1) ||
+			(frameX >= 0 && frameX < SAMPLETILE - 2) && frameY == 2 ||
+			(frameX >= 0 && frameX <SAMPLETILE - 3) && frameY == 3)
 		{
 			result |= ATTR_NONE;
 			result |= ATTR_APPEAR;		//몬스터 출몰 속성
@@ -957,7 +950,7 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_NONE;
 		}
-		else if ((frameX == 2 || frameX == 3) && frameY == 0 ||
+		else if ((frameX == 2 || frameX == 3||frameX == 4) && frameY == 0 ||
 				 frameX == 5 && frameY == 1)
 		{
 			result |= ATTR_UNMOVE;
@@ -968,11 +961,13 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME8])
 	{
 		if ((frameX == 4 || frameX == 5) && (frameY >= 0 && frameY < 3) ||
-			(frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE))
+			(frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE) ||
+			(frameX == 4 && frameY == 4))
 		{
 			result |= ATTR_NONE;
 		}
-		else if ((frameX >= 0 && frameX < SAMPLETILE - 2) && (frameY >= 0 && frameY < 3))
+		else if ((frameX >= 0 && frameX < SAMPLETILE - 2) && (frameY >= 0 && frameY < 3) ||
+				 (frameX == 4 && frameY == 3))
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;
@@ -981,12 +976,14 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	//상점
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME9])
 	{
-		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 3))
+		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2) ||
+			((frameX == 0 || frameX == 2 || frameX == 3) && frameY == 2))
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;
 		}
-		else if ((frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE))
+		else if ((frameX == 1 && frameY == 2) ||
+				 (frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE))
 		{
 			result |= ATTR_NONE;
 		}
