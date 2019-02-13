@@ -13,26 +13,25 @@ objectTool::~objectTool()
 
 HRESULT objectTool::init()
 {
-	_sampleImg[0] = IMAGEMANAGER->addFrameImage(OBJECT_NAME1, L"image/object/object_1.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[1] = IMAGEMANAGER->addFrameImage(OBJECT_NAME2, L"image/object/object_2.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[2] = IMAGEMANAGER->addFrameImage(OBJECT_NAME3, L"image/object/object_3.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[3] = IMAGEMANAGER->addFrameImage(OBJECT_NAME4, L"image/object/object_4.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[4] = IMAGEMANAGER->addFrameImage(OBJECT_NAME5, L"image/object/object_5.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[5] = IMAGEMANAGER->addFrameImage(OBJECT_NAME6, L"image/object/object_6.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[6] = IMAGEMANAGER->addFrameImage(OBJECT_NAME7, L"image/object/object_7.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[7] = IMAGEMANAGER->addFrameImage(OBJECT_NAME8, L"image/object/object_8.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[8] = IMAGEMANAGER->addFrameImage(OBJECT_NAME9, L"image/object/object_9.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[9] = IMAGEMANAGER->addFrameImage(OBJECT_NAME10, L"image/object/object_10.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[10] = IMAGEMANAGER->addFrameImage(OBJECT_NAME11, L"image/object/myHouse.png", 320, 320, 5, 5);
-	_sampleImg[11] = IMAGEMANAGER->addFrameImage(OBJECT_NAME12, L"image/object/oakHouse.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[12] = IMAGEMANAGER->addFrameImage(OBJECT_NAME13, L"image/object/pokemonCenter.png", 320, 320, 5, 5);
-	_sampleImg[13] = IMAGEMANAGER->addFrameImage(OBJECT_NAME14, L"image/object/pokemonShop.png", 256, 256, 4, 4);
-	_sampleImg[14] = IMAGEMANAGER->addFrameImage(OBJECT_NAME15, L"image/object/gym.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
-	_sampleImg[15] = IMAGEMANAGER->addFrameImage(OBJECT_NAME16, L"image/object/openTheDoor.png", 320, 256, 5, 4);
-	_sampleImg[16] = IMAGEMANAGER->addFrameImage(OBJECT_NAME17, L"image/object/etc.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
+	_sampleImg[1] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME1]); 
+	_sampleImg[2] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME2]); 
+	_sampleImg[3] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME3]); 
+	_sampleImg[4] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME4]); 
+	_sampleImg[5] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME5]); 
+	_sampleImg[6] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME6]); 
+	_sampleImg[7] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME7]); 
+	_sampleImg[8] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME8]); 
+	_sampleImg[9] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME9]); 
+	_sampleImg[10] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME10]);
+	_sampleImg[11] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME11]);
+	_sampleImg[12] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME12]);
+	_sampleImg[13] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME13]);
+	_sampleImg[14] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME14]);
+	_sampleImg[15] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME15]);
+	_sampleImg[16] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME16]);
+	_sampleImg[17] = IMAGEMANAGER->findImage(OBJECT_NAME[OBJECT_NAME17]);
 
-	_curImgNum = 0;
-	_sampleImgStr[0] = OBJECT_NAME1;
+	_curImgNum = OBJECT_NAME1;
 	setTile();
 
 	_preButton = { WINSIZEX / 2 + 100, WINSIZEY / 2 + 120, WINSIZEX / 2 + 150, WINSIZEY / 2 + 150 };
@@ -59,19 +58,67 @@ void objectTool::update()
 	turnObject();
 	pickSampleObject();
 	drawObject();
+	dragSample();
 
-	//_preButton = { CAMERA->getPosX() + WINSIZEX / 2 + 400, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 450, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
-	//_nextButton = { CAMERA->getPosX() + WINSIZEX / 2 + 550, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 600, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
+	_preButton = { CAMERA->getPosX() + WINSIZEX / 2 + 100, CAMERA->getPosY() + WINSIZEY / 2 + 100, CAMERA->getPosX() + WINSIZEX / 2 + 150, CAMERA->getPosY() + WINSIZEY / 2 + 130 };
+	_nextButton = { CAMERA->getPosX() + WINSIZEX / 2 + 400, CAMERA->getPosY() + WINSIZEY / 2 + 100, CAMERA->getPosX() + WINSIZEX / 2 + 450, CAMERA->getPosY() + WINSIZEY / 2 + 130 };
 	
 }
 
 void objectTool::render()
 {
-	if (_isObj)
+	
+	//맵 렌더
+	for (int i = 0; i < TILEY; ++i)
 	{
-		IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
+		for (int j = 0; j < TILEX; ++j)
+		{
+			if (_vvRect[i][j].left - (CAMERA->getPosX() - 50) < 0)
+				continue;
+			if (_vvRect[i][j].right - CAMERA->getPosX() > CAMERA_SHOW_RANGE)
+				continue;
+			D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
+			if (_vvTile[i][j]->objectImageIndex == OBJECT_NAME_NONE) continue;
+			if (_vvTile[i][j]->attr == ATTR_APPEAR)
+			{
+				//IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+
+			}
+			else
+				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+				//IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+		}
 	}
 
+	if (_isTileClick)
+	{
+		if (!_isObj)
+			IMAGEMANAGER->findImage(OBJECT_NAME[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
+		else
+			IMAGEMANAGER->findImage(OBJECT_NAME[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
+
+	}
+
+	if (_isShift)
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			D2D1_RECT_F dragRc = { _savePointX * TILE_SIZE + 5, _savePointY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
+
+			D2DMANAGER->drawRectangle(RGB(135,12,255),dragRc);
+		}
+	}
+
+	if (_isDraw)
+	{
+		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+		{
+			D2D1_RECT_F dragRc = { _saveX * TILE_SIZE + 5, _saveY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
+
+			D2DMANAGER->drawRectangle(RGB(135, 12, 255), dragRc);
+		}
+	}
 
 	for (int i = 0; i < SAMPLETILE; ++i)
 	{
@@ -84,6 +131,11 @@ void objectTool::render()
 		}
 	}
 
+	if (_isObj)
+	{
+		IMAGEMANAGER->findImage(OBJECT_NAME[_curImgNum])->render(CAMERA->getPosX() + (WINSIZEX - SAMPLE_TOTAL_SIZE), CAMERA->getPosY() + 30);
+	}
+
 	//이전,다음 버튼 렌더
 	D2DMANAGER->drawRectangle(_preButton.left
 		, _preButton.top
@@ -94,54 +146,10 @@ void objectTool::render()
 		, _nextButton.right
 		, _nextButton.bottom);
 
-	//맵 렌더
-	for (int i = 0; i < TILEY; ++i)
-	{
-		for (int j = 0; j < TILEX; ++j)
-		{
-			if (_vvRect[i][j].left - (CAMERA->getPosX() - 50) < 0)
-				continue;
-			if (_vvRect[i][j].right - CAMERA->getPosX() > CAMERA_SHOW_RANGE)
-				continue;
-			D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
-			if (_vvTile[i][j]->objectImageName == OBJECT_NAME_NONE) continue;
-			if (_vvTile[i][j]->attr == ATTR_APPEAR)
-			{
-				//IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-				IMAGEMANAGER->findImage(_vvTile[i][j]->objectImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
-			}
-			else
-				IMAGEMANAGER->findImage(_vvTile[i][j]->objectImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
-				//IMAGEMANAGER->findImage(_vvTile[i][j]->terrainImageName)->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-		}
-	}
 
-	if (_isTileClick)
-	{
-		if (!_isObj)
-			IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
-		else
-			IMAGEMANAGER->findImage(_sampleImgStr[_curImgNum])->frameRender(_ptMouse.x, _ptMouse.y, _pickSampleTile.curX, _pickSampleTile.curY, 0.5f);
-
-	}
-
-	if (_isShift)
-	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			D2D1_RECT_F dragRc = { _savePointX * TILE_SIZE + 5, _savePointY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
-
-			D2DMANAGER->drawRectangle(RGB(135,12,255),dragRc);
-		}
-		
-
-
-
-	}
-
-
-
-
+	WCHAR str[128];
+	swprintf_s(str, L"현재 : %d", _curImgNum);
+	D2DMANAGER->drawText(str, 100, 400);
 }
 
 void objectTool::setTile()
@@ -179,8 +187,8 @@ void objectTool::setTile()
 
 			tempTile->attr |= ATTR_NONE;
 
-			tempTile->terrainImageName = TERRAIN_NAME_NONE;
-			tempTile->objectImageName = OBJECT_NAME_NONE;
+			tempTile->terrainImageIndex = TERRAIN_NAME_NONE;
+			tempTile->objectImageIndex = OBJECT_NAME_NONE;
 
 			*tempRect = { (float)j * TILE_SIZE, (float)i * TILE_SIZE, (float)(j + 1) * TILE_SIZE, (float)(i + 1) * TILE_SIZE };
 
@@ -206,58 +214,6 @@ void objectTool::turnObject()
 				--_curImgNum;
 				if (_curImgNum < 0)
 					_curImgNum = OBJECT_IMG_NUM - 1;
-				char str[128];
-				if (_curImgNum + 1 == 10)
-				{
-					sprintf_s(str, "object_10", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-
-				}
-				else if (_curImgNum + 1 == 11)
-				{
-					sprintf_s(str, "object_11", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 12)
-				{
-					sprintf_s(str, "object_12", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 13)
-				{
-					sprintf_s(str, "object_13", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 14)
-				{
-					sprintf_s(str, "object_14", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 15)
-				{
-					sprintf_s(str, "object_15", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 16)
-				{
-					sprintf_s(str, "object_16", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 17)
-				{
-					sprintf_s(str, "object_17", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				sprintf_s(str, "object_0%d", _curImgNum + 1);
-				_sampleImgStr[_curImgNum] = str;
 			}
 		}
 	}
@@ -272,84 +228,9 @@ void objectTool::turnObject()
 			if (_isObj)
 			{
 				++_curImgNum;
-				if (_curImgNum >= OBJECT_IMG_NUM)
-					_curImgNum = 0;
-				char str[128];
-				if (_curImgNum + 1 == 10)
-				{
-					sprintf_s(str, "object_10", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-
-				}
-				else if (_curImgNum + 1 == 11)
-				{
-					sprintf_s(str, "object_11", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 12)
-				{
-					sprintf_s(str, "object_12", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 13)
-				{
-					sprintf_s(str, "object_13", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 14)
-				{
-					sprintf_s(str, "object_14", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 15)
-				{
-					sprintf_s(str, "object_15", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 16)
-				{
-					sprintf_s(str, "object_16", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				else if (_curImgNum + 1 == 17)
-				{
-					sprintf_s(str, "object_17", _curImgNum + 1);
-					_sampleImgStr[_curImgNum] = str;
-					return;
-				}
-				sprintf_s(str, "object_0%d", _curImgNum + 1);
-				_sampleImgStr[_curImgNum] = str;
+				if (_curImgNum >= OBJECT_NAME_COUNT)
+					_curImgNum = 1;
 			}
-		}
-	}
-
-	if (KEYMANAGER->isOnceKeyDown('L'))
-	{
-		if (!_isObj)
-		{
-			_curImgNum = 0;
-			char str[128];
-			sprintf_s(str, "object_0%d", _curImgNum + 1);
-			_sampleImgStr[_curImgNum] = str;
-
-			_isObj = true;
-			
-		}
-		else
-		{
-			_curImgNum = 0;
-			char str[128];
-			sprintf_s(str, "tile_0%d", _curImgNum + 1);
-			_sampleImgStr[_curImgNum] = str;
-
-			_isObj = false;
 		}
 	}
 }
@@ -370,80 +251,14 @@ void objectTool::pickSampleObject()
 
 		if (_isObj)
 		{
-			if (_curImgNum == 0 || _curImgNum == 2 || _curImgNum == 3 || _curImgNum == 4 ||
-				_curImgNum == 6 )
+			if ((idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
 			{
-				if ((idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
-				{
-					_pickSampleTile.curX = idxX;
-					_pickSampleTile.curY = idxY;
-					_pickSampleTile.isObj = true;
-				}
-				else
-					_isTileClick = false;
+				_pickSampleTile.curX = idxX;
+				_pickSampleTile.curY = idxY;
+				_pickSampleTile.isObj = true;
 			}
-			if (_curImgNum == 1)
-			{
-				if ((idxX != 4 && idxY != 1) || 
-					(idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
-				{
-					_pickSampleTile.curX = idxX;
-					_pickSampleTile.curY = idxY;
-					_pickSampleTile.isObj = true;
-				}
-				else
-					_isTileClick = false;
-			}
-			if (_curImgNum == 5)
-			{
-				if ((idxX != 2 && idxY != 1) &&
-					(idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
-				{
-					_pickSampleTile.curX = idxX;
-					_pickSampleTile.curY = idxY;
-					_pickSampleTile.isObj = true;
-				}
-				else
-					_isTileClick = false;
-			}
-			if (_curImgNum == 7)
-			{
-				if ((idxX >= 0 && idxX < SAMPLETILE - 2) && idxY == 0 ||
-					(idxX != 2 && idxY != 5) ||
-					(idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 1 && idxY < SAMPLETILE))
-				{
-					_pickSampleTile.curX = idxX;
-					_pickSampleTile.curY = idxY;
-					_pickSampleTile.isObj = true;
-				}
-				else
-					_isTileClick = false;
-			}
-			if (_curImgNum == 8)
-			{
-				if ((idxX >= 0 && idxX < SAMPLETILE) && (idxY == 0 || idxY == 1 || idxY == 2 || idxY == 4 || idxY == 5) ||
-					(idxX >= 0 && idxX < SAMPLETILE - 1) && idxY == 3 ||
-					(idxX >= 0 && idxX < SAMPLETILE && idxX != 4) && idxY == 1)
-				{
-					_pickSampleTile.curX = idxX;
-					_pickSampleTile.curY = idxY;
-					_pickSampleTile.isObj = true;
-				}
-				else
-					_isTileClick = false;
-			}
-			if (_curImgNum == 9)
-			{
-				if (idxX == 0 && idxY == 0 ||
-					(idxX >= 0 && idxX < 3) && (idxY >= 1 && idxY < SAMPLETILE - 1))
-				{
-					_pickSampleTile.curX = idxX;
-					_pickSampleTile.curY = idxY;
-					_pickSampleTile.isObj = true;
-				}
-				else
-					_isTileClick = false;
-			}
+			else
+				_isTileClick = false;
 		}
 	}
 }
@@ -456,14 +271,9 @@ void objectTool::drawObject()
 	if (KEYMANAGER->isOnceKeyUp(VK_SHIFT))
 		_isShift = false;
 
-
-
 	if (KEYMANAGER->isOnceKeyDown(VK_CONTROL))
-	{
 		_isCtrl = true;
-	}
 	
-
 	if (KEYMANAGER->isOnceKeyUp(VK_CONTROL))
 		_isCtrl = false;
 
@@ -517,25 +327,22 @@ void objectTool::drawObject()
 				{
 					if (_isObj)
 					{
-						_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+						_vvTile[i][j]->objectImageIndex = _curImgNum;
 
 						_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
 						_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
-						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 					}
 					//타일맵에 오브젝트 정보 추가
 					else
 					{
-						_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+						_vvTile[i][j]->objectImageIndex = _curImgNum;
 						_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 						_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-						_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 					}
 				}
 			}
-
-
-
 		}
 	}
 	else if (_isCtrl)
@@ -549,27 +356,27 @@ void objectTool::drawObject()
 				{
 					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 					{
-						_saveTile.objectImageName = _vvTile[i][j]->objectImageName;
+						_saveTile.objectImageIndex = _vvTile[i][j]->objectImageIndex;
 						_saveTile.objectFrameX = _vvTile[i][j]->objectFrameX;
 						_saveTile.objectFrameY = _vvTile[i][j]->objectFrameY;
-						_saveTile.terrainImageName = _vvTile[i][j]->terrainImageName;
+						_saveTile.terrainImageIndex = _vvTile[i][j]->terrainImageIndex;
 						_saveTile.terrainFrameX = _vvTile[i][j]->terrainFrameX;
 						_saveTile.terrainFrameY = _vvTile[i][j]->terrainFrameY;
 						if (_isObj)
 						{
-							_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+							_vvTile[i][j]->objectImageIndex = _curImgNum;
 
 							_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
 							_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 						//타일맵에 오브젝트 정보 추가
 						else
 						{
-							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectImageIndex = OBJECT_NAME1;
 							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 					}
 				}
@@ -585,25 +392,25 @@ void objectTool::drawObject()
 			{
 				for (int j = 0; j < TILEX; ++j)
 				{
-					if (_saveTile.terrainImageName == _vvTile[i][j]->terrainImageName && _saveTile.objectImageName == _vvTile[i][j]->objectImageName &&
+					if (_saveTile.terrainImageIndex == _vvTile[i][j]->terrainImageIndex && _saveTile.objectImageIndex == _vvTile[i][j]->objectImageIndex &&
 						_saveTile.terrainFrameX == _vvTile[i][j]->terrainFrameX		  && _saveTile.terrainFrameY == _vvTile[i][j]->terrainFrameY &&
 						_saveTile.objectFrameX == _vvTile[i][j]->objectFrameX		  && _saveTile.objectFrameY == _vvTile[i][j]->objectFrameY)
 					{
 						if (_isObj)
 						{
-							_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+							_vvTile[i][j]->objectImageIndex = _curImgNum;
 
 							_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
 							_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 						//타일맵에 오브젝트 정보 추가
 						else
 						{
-							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectImageIndex = OBJECT_NAME1;
 							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 					}
 				}
@@ -624,19 +431,19 @@ void objectTool::drawObject()
 					{
 						if (_isObj)
 						{
-							_vvTile[i][j]->objectImageName = _sampleImgStr[_curImgNum];
+							_vvTile[i][j]->objectImageIndex = _curImgNum;
 
 							_vvTile[i][j]->objectFrameX = _pickSampleTile.curX;
 							_vvTile[i][j]->objectFrameY = _pickSampleTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 						//타일맵에 오브젝트 정보 추가
 						else
 						{
-							_vvTile[i][j]->objectImageName = OBJECT_NAME1;
+							_vvTile[i][j]->objectImageIndex = OBJECT_NAME1;
 							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
 							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-							_vvTile[i][j]->attr = setAttribute(_vvTile[i][j]->objectImageName, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_curImgNum], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 						}
 					}
 				}
@@ -648,15 +455,77 @@ void objectTool::drawObject()
 
 void objectTool::dragSample()
 {
+	if (KEYMANAGER->isOnceKeyDown('Q'))
+		_isDrag = true;
+	if (KEYMANAGER->isOnceKeyUp('Q'))
+		_isDrag = false;
 
+	if (KEYMANAGER->isOnceKeyDown('W'))
+		_isDraw = true;
+	if (KEYMANAGER->isOnceKeyUp('W'))
+		_isDraw = false;
 
+	if (_isDrag && !_isDraw)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+		{
+			for (int i = 0; i < TILEY; i++)
+			{
+				for (int j = 0; j < TILEX; j++)
+				{
+					if (PtInRect(&makeRECT(_sampleTile[i][j].sampleRC), makePOINT(_ptMouse)))
+					{
+						_saveX = j;
+						_saveY = i;
+					}
+				}
+			}
+
+		}
+
+		if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+		{
+			int saveX;
+			int saveY;
+
+			for (int i = 0; i < TILEY; i++)
+			{
+				for (int j = 0; j < TILEX; j++)
+				{
+					if (PtInRect(&makeRECT(_sampleTile[i][j].sampleRC), makePOINT(_ptMouse)))
+					{
+						saveY = i;
+						saveX = j;
+					}
+				}
+			}
+			saveX++;
+			saveY++;
+			if (saveX < _saveX) return;
+			if (saveY < _saveY) return;
+
+			for (int i = _saveY; i < saveY; ++i)
+			{
+				for (int j = _saveX; j < saveX; ++j)
+				{
+					if (_isObj)
+					{
+						_saveTiles[i][j].frameX = _sampleTile[i][j].frameX;
+						_saveTiles[i][j].frameY = _sampleTile[i][j].frameY;
+						_saveTiles[i][j].saveRC = _sampleTile[i][j].sampleRC;
+						_saveTiles[i][j].saveImgstr = _sampleImgStr[_curImgNum];
+					}
+				}
+			}
+		}
+	}
 
 }
 
 DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 {
 	DWORD result = ATTR_NONE;
-	if (imgName == OBJECT_NAME1)
+	if (imgName == OBJECT_NAME[OBJECT_NAME1])
 	{
 		if (frameX >= 0 && frameY < SAMPLETILE)
 		{
