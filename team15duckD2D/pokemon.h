@@ -110,11 +110,12 @@ public:
 	void loadSavePack(pmPack* pack);
 	
 
-	// 1. 상태 이상 적용
+	// 1. 소지하고 있는 아이템 사용 : 사용했으면 return true
+	bool useOwnerItem();
+	// 2. 상태 이상 적용
 	void applyUpsetCondition();
-	// 2. 아이템 적용
-	void applyItem(item* item);
-	// 2. 몇 번째(idx) 스킬 사용
+	// 3. 아이템 사용
+	// 3. 몇 번째(idx) 스킬 사용
 	void useSkill(int idx);
 
 	
@@ -155,7 +156,7 @@ public:
 
 	//============================================== get
 	
-	// 행동 대기중인가 : 행동 중일 경우 연출만 보여준다. 
+	// 행동 대기중인가 : 행동 대기 중일때만 다음 행동을 할 수 있다.
 	bool isIdle()				{ return _isIdle;}
 
 	// 깨어있는가
@@ -169,8 +170,8 @@ public:
 	POKEMON getPokeminIndex()	{ return _index; }
 	// 트레이너 노트
 	string getTrainerNote()		{ return _trainerNote; }
-	// 소지하고 있는 아이템
-	ITEM_TYPE getOwnerItemType()	{ return _ownerItemType;}
+	// 소지하고 있는 아이템 타입
+	ITEM_TYPE getOwnerItemType(){ return _ownerItemType;}
 
 	// 레벨
 	unsigned int getLevel()		{ return _level;}

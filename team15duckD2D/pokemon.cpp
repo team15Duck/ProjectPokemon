@@ -57,23 +57,24 @@ HRESULT pokemon::init( int idNo
 
 	_img = IMAGEMANAGER->findImage("pokemon_ingame");
 
-	//_destX = destX;
-	//_destY = destY;
-
+	// todo 화면 출력위치
 	int idx = _index * 2;
 	if (_isMyPokemon)
 	{
 		idx += 1;
+		//_destX = destX;
+		//_destY = destY;
 	}
 	else
 	{
-
+		//_destX = destX;
+		//_destY = destY;
 	}
 	
 	_frameX = idx % _img->GetMaxFrameX();
 	_frameY = idx / _img->GetMaxFrameX();
 
-
+	// todo 일단 스킬 1개만 만들어서 넣어봅니다
 	_skills[0].init(33);
 
 	return S_OK;
@@ -193,6 +194,18 @@ void pokemon::loadSavePack(pmPack* pack)
 	}
 }
 
+bool pokemon::useOwnerItem()
+{
+	// todo 아이템 타입별로 조건 체크 후 아이템 사용하긔
+	switch (_ownerItemType)
+	{
+		default:
+			break;
+	}
+
+	return false;
+}
+
 void pokemon::applyUpsetCondition()
 {
 	_isIdle = false;
@@ -246,15 +259,6 @@ void pokemon::applyUpsetCondition()
 		// 다음 행동 대기
 		_isIdle = true;
 	}
-}
-
-void pokemon::applyItem(item* item)
-{
-	_isIdle = false;
-	_isIdle = true;
-
-	// todo 아이템 사용
-
 }
 
 void pokemon::useSkill(int idx)
@@ -497,7 +501,7 @@ void pokemon::progressingApplyUpsetCondition()
 		{
 			--_displayHp;
 
-			// 피를 뻈으면 콜백함수 해제
+			// 피를 뺏으면 콜백함수 해제
 			if (_displayHp == _nowStatus.hp)
 			{
 				endProgressing();
