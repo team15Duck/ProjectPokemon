@@ -19,6 +19,12 @@ HRESULT hayoungTestScene::init()
 	frameImageinit();
 	commonMenuinit();
 
+	_issubpkm1exist = true;
+	_issubpkm2exist	= false;
+	_issubpkm3exist	= false;
+	_issubpkm4exist	= false;
+	_issubpkm5exist	= false;
+
 	_isFemale = false;
 	_isMale = true;
 
@@ -31,9 +37,18 @@ HRESULT hayoungTestScene::init()
 	IMAGEMANAGER->addImage("보유중포켓몬", L"image/common_menu/pokemon/pokemonMenu_background.png", 960, 640);
 	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 336, 456, 1, 2);
 	IMAGEMANAGER->addFrameImage("포켓몬메뉴_취소", L"image/common_menu/pokemon/pokemonMenu_btn_cancle.png", 216, 192, 1, 2);
-	IMAGEMANAGER->addFrameImage("서브포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot.png", 1200, 96, 2, 1);
+	IMAGEMANAGER->addFrameImage("서브포켓몬2", L"image/common_menu/pokemon/pokemonMenu_slot.png", 1000, 80, 2, 1);
+	IMAGEMANAGER->addImage("서브포켓몬1", L"image/common_menu/pokemon/pokemon_subpokemon_list.png", 500, 80);
 
-	_cmpm._subPokemon[0] = { 345, 20, 945, 116 };
+	//서브포켓몬 슬롯 
+	for (int i = 0; i < 5; ++i)
+	{
+		float top = 35 + (i * 95);
+		float bottom = 115 + (i * 95);
+
+		_cmpm._subPokemon[i] = { 450, top, 950 , bottom };
+	}
+
 
 	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
 	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
@@ -86,19 +101,101 @@ void hayoungTestScene::update()
 				_cmpm._pcs = MAIN_POKEMON;
 				break;
 			case SUB_POKEMON2:
-				
+				_cmpm._pcs = SUB_POKEMON1;
 				break;
 			case SUB_POKEMON3:
-				
+				_cmpm._pcs = SUB_POKEMON2;
 				break;
 			case SUB_POKEMON4:
-				
+				_cmpm._pcs = SUB_POKEMON3;
 				break;
 			case SUB_POKEMON5:
-				
+				_cmpm._pcs = SUB_POKEMON4;
 				break;
 			case CANCEL:
-			
+				if (_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
+				{
+					_cmpm._pcs = SUB_POKEMON1;
+				}
+				else if (_issubpkm1exist && _issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
+				{
+					_cmpm._pcs = SUB_POKEMON2;
+				}
+				else if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
+				{
+					_cmpm._pcs = SUB_POKEMON3;
+				}
+				else if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && _issubpkm4exist && !_issubpkm5exist)
+				{
+					_cmpm._pcs = SUB_POKEMON4;
+				}
+				else if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && _issubpkm4exist && _issubpkm5exist)
+				{
+					_cmpm._pcs = SUB_POKEMON5;
+				}
+				break;
+			}
+		}
+		//만약에 포켓몬 메뉴에서 아래키를 누르면
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			switch (_cmpm._pcs)
+			{
+			case MAIN_POKEMON:
+				if (!_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
+				{
+					_cmpm._pcs = CANCEL;
+				}
+				else if (_issubpkm1exist)
+				{
+					_cmpm._pcs = SUB_POKEMON1;
+				}
+				break;
+			case SUB_POKEMON1:
+				if (_issubpkm2exist)
+				{
+					_cmpm._pcs = SUB_POKEMON2;
+				}
+				else 
+				{
+					_cmpm._pcs = CANCEL;
+				}
+				break;
+			case SUB_POKEMON2:
+				if (_issubpkm3exist)
+				{
+					_cmpm._pcs = SUB_POKEMON3;
+				}
+				else
+				{
+					_cmpm._pcs = CANCEL;
+				}
+				break;
+			case SUB_POKEMON3:
+				if (_issubpkm4exist)
+				{
+					_cmpm._pcs = SUB_POKEMON4;
+				}
+				else
+				{
+					_cmpm._pcs = CANCEL;
+				}
+				break;
+			case SUB_POKEMON4:
+				if (_issubpkm5exist)
+				{
+					_cmpm._pcs = SUB_POKEMON5;
+				}
+				else
+				{
+					_cmpm._pcs = CANCEL;
+				}
+				break;
+			case SUB_POKEMON5:
+				_cmpm._pcs = CANCEL;
+				break;
+			case CANCEL:
+				_cmpm._pcs = MAIN_POKEMON;
 				break;
 			}
 		}
@@ -209,33 +306,71 @@ void hayoungTestScene::render()
 	else if (_cm._cstate == POKEMON && _cm._ms == YES)
 	{
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		IMAGEMANAGER->findImage("메인포켓몬")->frameRender(5 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 0);
 		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render("타입1");
 		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
-
-		//D2DMANAGER->fillRectangle(RGB(255, 255, 255), _cmpm._subPokemon[0]);
-		IMAGEMANAGER->findImage("서브포켓몬")->frameRender(_cmpm._subPokemon[0].left + CAMERA->getPosX(), _cmpm._subPokemon[0].top + CAMERA->getPosY(), 0, 0);
 	
-
+		if (_issubpkm1exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[0].left + CAMERA->getPosX(), _cmpm._subPokemon[0].top + CAMERA->getPosY(), 0, 0);
+		}
+		else if (!_issubpkm1exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬1")->render(_cmpm._subPokemon[0].left + CAMERA->getPosX(), _cmpm._subPokemon[0].top + CAMERA->getPosY());
+		}
+		if (_issubpkm2exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[1].left + CAMERA->getPosX(), _cmpm._subPokemon[1].top + CAMERA->getPosY(), 0, 0);
+		}
+		else if (!_issubpkm2exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬1")->render(_cmpm._subPokemon[1].left + CAMERA->getPosX(), _cmpm._subPokemon[1].top + CAMERA->getPosY());
+		}
+		if (_issubpkm3exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[2].left + CAMERA->getPosX(), _cmpm._subPokemon[2].top + CAMERA->getPosY(), 0, 0);
+		}
+		else if (!_issubpkm3exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬1")->render(_cmpm._subPokemon[2].left + CAMERA->getPosX(), _cmpm._subPokemon[2].top + CAMERA->getPosY());
+		}
+		if (_issubpkm4exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[3].left + CAMERA->getPosX(), _cmpm._subPokemon[3].top + CAMERA->getPosY(), 0, 0);
+		}
+		else if (!_issubpkm4exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬1")->render(_cmpm._subPokemon[3].left + CAMERA->getPosX(), _cmpm._subPokemon[3].top + CAMERA->getPosY());
+		}
+		if (_issubpkm5exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[4].left + CAMERA->getPosX(), _cmpm._subPokemon[4].top + CAMERA->getPosY(), 0, 0);
+		}
+		else if (!_issubpkm5exist)
+		{
+			IMAGEMANAGER->findImage("서브포켓몬1")->render(_cmpm._subPokemon[4].left + CAMERA->getPosX(), _cmpm._subPokemon[4].top + CAMERA->getPosY());
+		}
+		
+		IMAGEMANAGER->findImage("메인포켓몬")->frameRender(65 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 0, 0);
+		
 		switch (_cmpm._pcs)
 		{
-			case MAIN_POKEMON:
-				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(5 + CAMERA->getPosX(), 60 + CAMERA->getPosY(), 0, 1);
+		case MAIN_POKEMON:
+				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(65 + CAMERA->getPosX(), 64 + CAMERA->getPosY(), 0, 1);
 			break;
 			case SUB_POKEMON1:
-
+				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[0].left + CAMERA->getPosX(), _cmpm._subPokemon[0].top + CAMERA->getPosY(), 1, 0);
 			break;
 			case SUB_POKEMON2:
-
+				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[1].left + CAMERA->getPosX(), _cmpm._subPokemon[1].top + CAMERA->getPosY(), 1, 0);
 			break;
 			case SUB_POKEMON3:
-
+				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[2].left + CAMERA->getPosX(), _cmpm._subPokemon[2].top + CAMERA->getPosY(), 1, 0);
 			break;
 			case SUB_POKEMON4:
-
+				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[3].left + CAMERA->getPosX(), _cmpm._subPokemon[3].top + CAMERA->getPosY(), 1, 0);
 			break;
 			case SUB_POKEMON5:
-
+				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[4].left + CAMERA->getPosX(), _cmpm._subPokemon[4].top + CAMERA->getPosY(), 1, 0);
 			break;
 			case CANCEL:
 				IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 1);
@@ -245,6 +380,8 @@ void hayoungTestScene::render()
 		WCHAR pokemon[1024];
 		swprintf_s(pokemon, L"취소");
 		D2DMANAGER->drawText(pokemon, 820 + CAMERA->getPosX(), 552 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
+		swprintf_s(pokemon, L"포켓몬을 선택해 주십시오.");
+		D2DMANAGER->drawText(pokemon, 50 + CAMERA->getPosX(), 550 + CAMERA->getPosY(), 48, RGB(0, 0, 0));
 	}
 	else if (_cm._cstate == BAG && _cm._ms == YES)
 	{
@@ -273,10 +410,6 @@ void hayoungTestScene::render()
 		D2DMANAGER->drawText(settingtext, 120 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 48);
 	}
 	
-
-	//WCHAR aa[1024];
-	//swprintf_s(aa, L"하위메뉴상태: %d", _cm._ms);
-	//D2DMANAGER->drawText(aa, 140 + CAMERA->getPosX(), 150 + CAMERA->getPosY(), 40);
 }
 
 void hayoungTestScene::frameImageinit()

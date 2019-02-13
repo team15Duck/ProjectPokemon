@@ -90,6 +90,12 @@ private:
 
 	bool _isCommonMenu;		//기본메뉴
 
+	bool _issubpkm1exist;	//서브포켓몬 확인용 불값
+	bool _issubpkm2exist;	//서브포켓몬 확인용 불값
+	bool _issubpkm3exist;	//서브포켓몬 확인용 불값
+	bool _issubpkm4exist;	//서브포켓몬 확인용 불값
+	bool _issubpkm5exist;	//서브포켓몬 확인용 불값
+
 	bool _isFemale;		//여자냐
 	bool _isMale;		//남자냐
 
