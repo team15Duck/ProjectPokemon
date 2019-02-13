@@ -76,6 +76,24 @@ void mapData::render()
 
 				}
 			}
+
+			//=====================================속성확인용이에요================================
+			if (KEYMANAGER->isToggleKey(VK_CONTROL))
+			{
+				WCHAR str[128];
+				swprintf_s(str, L"UnMove_ATTR");
+				for (int i = 0; i < TILEY; ++i)
+				{
+					for (int j = 0; j < TILEX; ++j)
+					{
+						if ((_vvTile[ii][jj]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
+						{
+							D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5);
+						}
+					}
+				}
+			}
+
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;

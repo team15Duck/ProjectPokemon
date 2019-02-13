@@ -83,7 +83,7 @@ private:
 	bool _isTileClick;
 	bool _isObj;
 	bool _isRND;
-	int	tempCount;	//오브젝트 이미지 띄웠다 지웠다 할때 쓰는 변수
+	int	_turnObjCount;	//오브젝트 이미지 띄웠다 지웠다 할때 쓰는 변수
 
 	//세이브 파일의 스트링 벡터
 	map<MAP_NAME, string> _mSizeNames;
@@ -93,6 +93,9 @@ private:
 	bool _isShift;
 	UINT _savePointX;
 	UINT _savePointY;
+
+	bool _isShowAttr;
+	int _showCount;
 
 public:
 	mapTool();
