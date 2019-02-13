@@ -199,6 +199,10 @@ private:
 	image*					_img;			//이미지
 	RECT					_rc;			//렉트
 	string					_itemName;		//아이템이름
+	string					_sceneName;		//맵내에 배치되어있다면 어느씬에?
+	UINT					_tileX;			//있다면 어느 타일에?
+	UINT					_tileY;			//있다면 어느 타일에?
+
 	ITEM_TYPE				_itemType;		//종류
 	ITEM_VALUE				_itemValue;		//아이템적용값(회복값, pp회복값, 포획률 등)
 	unsigned int			_itemNum;		//개수
@@ -240,5 +244,12 @@ public:
 	
 	//판매가격
 	ITEM_SELL_PRICE getSellPrice() { return _sellPrice; }
+
+
+	ITEM_VALUE makeItemValue(ITEM_TYPE type);
+	ITEM_BUY_PRICE makeItemBuyPrice(ITEM_TYPE type);
+	ITEM_SELL_PRICE makeItemSellPrice(ITEM_TYPE type);
+
+	item* settionItemInfo(ITEM_TYPE type);
 };
 

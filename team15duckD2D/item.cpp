@@ -131,3 +131,31 @@ void item::render()
 {
 	_img->frameRender(_imgPos.x + CAMERA->getPosX(), _imgPos.y + CAMERA->getPosY(), _itemType, 0, 1.0f);
 }
+
+ITEM_VALUE item::makeItemValue(ITEM_TYPE type)
+{
+	return ITEM_VALUE();
+}
+
+ITEM_BUY_PRICE item::makeItemBuyPrice(ITEM_TYPE type)
+{
+	return ITEM_BUY_PRICE();
+}
+
+ITEM_SELL_PRICE item::makeItemSellPrice(ITEM_TYPE type)
+{
+	return ITEM_SELL_PRICE();
+}
+
+item * item::settionItemInfo(ITEM_TYPE type)
+{
+	item* newItem = new item;
+	newItem->init();
+	//¼ÂÆÃ
+
+
+
+
+
+	return newItem;
+}
