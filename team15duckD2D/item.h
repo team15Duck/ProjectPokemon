@@ -285,6 +285,9 @@ public:
 	//판매가격
 	ITEM_SELL_PRICE getSellPrice() { return _sellPrice; }
 
+	//아이템정보
+	string getItemInfo() { return _itemInfo; }
+
 
 	//ITEM_VALUE makeItemValue(ITEM_TYPE type);
 	//ITEM_BUY_PRICE makeItemBuyPrice(ITEM_TYPE type);

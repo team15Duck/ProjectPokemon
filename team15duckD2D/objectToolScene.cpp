@@ -15,6 +15,7 @@ HRESULT objectToolScene::init()
 {
 	_objectTool = new objectTool;
 	_objectTool->init();
+
 	return S_OK;
 }
 
