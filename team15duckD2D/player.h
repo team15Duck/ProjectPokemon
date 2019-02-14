@@ -73,9 +73,10 @@ private:
 
 
 
-
+	void horizonSet();
+	void verticalSet();
 	void aniSetStart(string aniKeyName);
-
+	void appearTileCheck();
 
 public:
 	//°Ù¼Â

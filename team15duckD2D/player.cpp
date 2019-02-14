@@ -261,12 +261,10 @@ void player::stateUpdate()
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
-				_posX = (int)_posX / 64 * 64 + 32;
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
-				_playerAni->start();
+				horizonSet();
+				aniSetStart("idle_left");
 				_state = PS_IDLE_LEFT;
-				_moveDistance = 0;
-				_tileX = _posX / 64;
+				appearTileCheck();
 			}
 		break;
 		case player::PS_MOVE_UP:
@@ -278,12 +276,10 @@ void player::stateUpdate()
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
-				_posY = (int)_posY / 64 * 64 + 32;
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_up");
-				_playerAni->start();
+				verticalSet();
+				aniSetStart("idle_up");
 				_state = PS_IDLE_UP;
-				_moveDistance = 0;
-				_tileY = _posY / 64;
+				appearTileCheck();
 			}
 		break;
 		case player::PS_MOVE_RIGHT:
@@ -295,12 +291,10 @@ void player::stateUpdate()
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
-				_posX = (int)_posX / 64 * 64 + 32;
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_left");
-				_playerAni->start();
+				horizonSet();
+				aniSetStart("idle_left");
 				_state = PS_IDLE_RIGHT;
-				_moveDistance = 0;
-				_tileX = _posX / 64;
+				appearTileCheck();
 			}
 		break;
 		case player::PS_MOVE_DOWN:
@@ -312,12 +306,10 @@ void player::stateUpdate()
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
-				_posY = (int)_posY / 64 * 64 + 32;
-				_playerAni = KEYANIMANAGER->findAnimation(_key, "idle_down");
-				_playerAni->start();
+				verticalSet();
+				aniSetStart("idle_down");
 				_state = PS_IDLE_DOWN;
-				_moveDistance = 0;
-				_tileY = _posY / 64;
+				appearTileCheck();
 			}
 		break;
 		case player::PS_FASTMOVE_LEFT:
@@ -363,8 +355,36 @@ void player::stateUpdate()
 	
 }
 
+void player::horizonSet()
+{
+	_posX = (int)_posX / 64 * 64 + 32;
+	_moveDistance = 0;
+	_tileX = _posX / 64;
+}
+
+void player::verticalSet()
+{
+	_posY = (int)_posY / 64 * 64 + 32;
+	_moveDistance = 0;
+	_tileY = _posY / 64;
+}
+
 void player::aniSetStart(string aniKeyName)
 {
 	_playerAni = KEYANIMANAGER->findAnimation(_key, aniKeyName);
 	_playerAni->start();
+}
+
+void player::appearTileCheck()
+{
+	if (_map->getTile(_tileX, _tileY)->attr & ATTR_APPEAR)
+	{
+		bool meet = RND->getInt(10) < 3 ? true : false;
+		if (meet)
+		{
+			//이거두개를 데이터베이스로 넘겨주고 씬체인지
+			_map->getPokemon();
+			_map->getLevel();
+		}
+	}
 }

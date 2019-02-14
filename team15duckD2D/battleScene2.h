@@ -1,10 +1,12 @@
 #pragma once
 #include "battle.h"
 #include "gameNode.h"
+
 //NPC¿Í ¹èÆ²
 class battleScene2 : public gameNode
 {
 private:
+	
 
 	BattlePhase _phase;
 	int _turn;
