@@ -9,36 +9,40 @@
 #define ATTR_UNMOVE			0x00000001UL					//못움직임
 #define ATTR_WALL			0X00000002UL					//벽
 #define ATTR_WATER			0x00000004UL					//물
-#define ATTR_FOREST			0x00000008UL					//숲
-#define ATTR_TREE			0x00000010UL					//나무
 
-#define ATTR_ROCK			0X00000020UL					//돌
-#define ATTR_JUMP			0X00000040UL					//언덕에서 점프
-#define ATTR_COMPUTER		0X00000080UL					//컴퓨터(센터/집)
-#define ATTR_DOOR			0X00000100UL					//문
-#define ATTR_CUT			0X00000200UL					//풀베기
-#define ATTR_APPEAR			0X00000400UL					//풀(몬스터등장)
-#define ATTR_OAK_MACHINE	0X00000800UL					//오박사기계
-#define ATTR_BOOKCASE		0X00001000UL					//책장
-#define ATTR_TIP			0X00002000UL					//팁게시판
-#define ATTR_MAT			0X00004000UL					//발매트
-#define ATTR_SINK			0X00008000UL					//싱크대
-#define ATTR_PANTRY			0X00010000UL					//식기장
-#define ATTR_GAME			0X00020000UL					//게임기
-#define ATTR_STONE_STATUE	0X00040000UL					//석상
-#define ATTR_STORE_STAND    0X00800000UL					//진열대(상점)
-#define ATTR_STORE_DISPLAY  0X01000000UL					//진열대2(상점)
-#define ATTR_MAP			0X02000000UL					//지도
-
-//===================포탈을 위해서 넣은 속성들이에요=====================
-#define ATTR_POTAL			0x04000000UL					//포탈
-#define ATTR_HOME			0x08000000UL					//집
-#define ATTR_O_LAB			0x10000000UL					//오박사 연구실
-#define ATTR_CENTER			0x20000000UL					//포켓몬 센터
-#define ATTR_SHOP			0x40000000UL					//상점
-#define ATTR_GYM			0x80000000UL					//체육관
+#define ATTR_DOWN_JUMP		0X00000008UL					//아래로 점프
+#define ATTR_LEFT_JUMP		0X00000010UL					//왼쪽점프
+#define ATTR_RIGHT_JUMP     0X00000020UL					//오른쪽점프
+#define ATTR_COMPUTER		0X00000040UL					//컴퓨터(센터/집)
+#define ATTR_CUT			0X00000080UL					//풀베기
+#define ATTR_APPEAR			0X00000100UL					//풀(몬스터등장)
+#define ATTR_OAK_MACHINE	0X00000200UL					//오박사기계
+#define ATTR_BOOKCASE		0X00000400UL					//책장
+#define ATTR_TIP			0X00000800UL					//팁게시판
+#define ATTR_SINK			0X00001000UL					//싱크대
+#define ATTR_PANTRY			0X00002000UL					//식기장
+#define ATTR_GAME			0X00004000UL					//게임기
+#define ATTR_STONE_STATUE 	0X00008000UL					//석상
+#define ATTR_STORE_STAND  	0X00010000UL					//진열대(상점)
+#define ATTR_STORE_DISPLAY	0X00020000UL					//진열대2(상점)
+#define ATTR_POTAL			0X00040000UL					//포탈
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+	
+  
+  
 
 
 ///////// 어트리뷰트는 처음에 0으로 초기화하고 |= 이걸로 더해주세요

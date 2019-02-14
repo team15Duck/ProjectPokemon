@@ -674,17 +674,14 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX == 2 && frameY == 1) || (frameX == 5 && frameY == 2)) //돌
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_ROCK;
 		}
 		else if (frameX == 0 && frameY == 2) //나무
 		{
 			result |= ATTR_NONE;
-			result |= ATTR_TREE;
 		}
 		else if (frameX == 0 && frameY == 3)
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_TREE;
 		}
 
 		else if (frameX == 4 && frameY == 2) //꽃밭
@@ -730,7 +727,6 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX == 1 || frameX == 2) && (frameY >= 0 && frameY < 6)) //나무
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_TREE;
 		}
 		else if (frameX == 0 && (frameY >= 2 && frameY < 6)) //오박사집 기계
 		{
@@ -743,22 +739,29 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		if ((frameX >= 0 && frameX < 6) && (frameY >= 0 && frameY < 4)) //큰나무
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_TREE;
 		}
 		else if ((frameX >= 0 && frameX < 4) && (frameY == 4 || frameY == 5)) //돌
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_ROCK;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME4])
 	{
-		if (((frameX == 0 || frameX == 2) && frameY == 1) ||
-			(frameX == 1 && frameY == 1) ||
+		if ((frameX == 1 && frameY == 1) ||
 			((frameX == 0 || frameX == 1) && frameY == 2)) //점프할 수 있는 언덕
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_JUMP;
+			result |= ATTR_DOWN_JUMP;
+		}
+		else if (frameX == 0 && frameY == 1)
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_LEFT_JUMP;
+		}
+		else if (frameX == 2 && frameY == 1)
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_RIGHT_JUMP;
 		}
 		else if ((frameX == 0 || frameY == 2) && frameY == 1) //점프할 수 있는 언덕의 대각선부분
 		{
