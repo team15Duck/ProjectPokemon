@@ -4,7 +4,13 @@
 #include "pokemon.h"
 #include <list>
 
-#define PLAYER_SPEED 150.0f
+#define PLAYER_SPEED 250.0f
+#define JUMP_POWER 350.0f
+#define GRAVITY 1450.0f
+
+
+#define ANI_SPEED 14
+
 
 class mapData;
 class player
@@ -48,7 +54,8 @@ private:
 	bool				_isBicycle;								//자전거탈거?
 	bool				_isFaseMove;							//빨리갈거?
 
-
+	float				_jumpPower;								//점프파워
+	float				_gravity;								//그래비티
 
 	mapData*			_map;									//이거슨 맵데이터?!
 public:

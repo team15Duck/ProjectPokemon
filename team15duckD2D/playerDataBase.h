@@ -41,7 +41,7 @@ public:
 	void update();
 	void render();
 
-	void dataLoad(DATA data);							//저장된 데이터를 불러오기 위한 함수
+	void dataLoad(DATA data);								//저장된 데이터를 불러오기 위한 함수
 	void dataSave(DATA data);								//몇번 데이터에 저장할거니
 
 	void bankPokemonLoad(DATA data);

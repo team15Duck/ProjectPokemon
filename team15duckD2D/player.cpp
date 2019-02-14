@@ -17,8 +17,8 @@ HRESULT player::init()
 
 	
 	/////////////이건나중에지울거야/////////
-	_tileX = 25;
-	_tileY = 22;
+	_tileX = 26;
+	_tileY = 31;
 	_posX = _tileX * 64 + 32;
 	_posY = _tileY * 64 + 32;
 	_isMan = true;
@@ -27,6 +27,8 @@ HRESULT player::init()
 	_isRight = false;
 	_posZ = 0;
 	_moveDistance = 0;
+	_jumpPower = 0;
+	_gravity = GRAVITY;
 	//////////////////////////////////////
 
 	//성별따라 키값 셋팅해줌
@@ -68,9 +70,9 @@ void player::render()
 
 
 	if (_isRight)
-		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 - _posZ, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 + _posZ, _playerAni);
 	else
-		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 - _posZ, _playerAni);
+		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 + _posZ, _playerAni);
 
 	WCHAR str[128];
 	int min =  ((int)_playTime * 10) % 3600 / 60;
@@ -136,6 +138,8 @@ void player::render()
 	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 60 + CAMERA->getPosY());
 	swprintf_s(str, L"speed : %.1f", TIMEMANAGER->getElapsedTime() * PLAYER_SPEED);
 	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 75 + CAMERA->getPosY());
+	swprintf_s(str, L"Z : %.1f", _posZ);
+	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 90 + CAMERA->getPosY());
 }
 
 void player::aniSetUp()
@@ -147,43 +151,43 @@ void player::aniSetUp()
 	
 	//가만히서있기
 	int idleLeft[1] = { 21 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "idle_left", _key.c_str(), idleLeft, 1, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "idle_left", _key.c_str(), idleLeft, 1, ANI_SPEED, true);
 	int idleUp[1] = { 11 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "idle_up", _key.c_str(), idleUp, 1, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "idle_up", _key.c_str(), idleUp, 1, ANI_SPEED, true);
 	int idleDown[1] = { 1 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "idle_down", _key.c_str(), idleDown, 1, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "idle_down", _key.c_str(), idleDown, 1, ANI_SPEED, true);
 
 	//이동
 	int moveLeft[4] = { 21,22,21,20 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "move_left", _key.c_str(), moveLeft, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "move_left", _key.c_str(), moveLeft, 4, ANI_SPEED, true);
 	int moveUp[4] = { 11,12,11,10 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "move_up", _key.c_str(), moveUp, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "move_up", _key.c_str(), moveUp, 4, ANI_SPEED, true);
 	int moveDown[4] = { 1,2,1,0 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "move_down", _key.c_str(), moveDown, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "move_down", _key.c_str(), moveDown, 4, ANI_SPEED, true);
 
 	//빨리이동
 	int fastMoveLeft[4] = { 24,25,24,23 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_left", _key.c_str(), fastMoveLeft, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_left", _key.c_str(), fastMoveLeft, 4, ANI_SPEED, true);
 	int fastMoveUp[4] = { 14,15,14,13 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_up", _key.c_str(), fastMoveUp, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_up", _key.c_str(), fastMoveUp, 4, ANI_SPEED, true);
 	int fastMoveDown[4] = { 4,5,4,3 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_down", _key.c_str(), fastMoveDown, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "fast_move_down", _key.c_str(), fastMoveDown, 4, ANI_SPEED, true);
 
 	//PS_BICYCLE 자전거 멈춰
 	int bicycleIdleLeft[1] = { 51 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_left", _key.c_str(), bicycleIdleLeft, 1, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_left", _key.c_str(), bicycleIdleLeft, 1, ANI_SPEED, true);
 	int bicycleIdleUp[1] = { 41 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_up", _key.c_str(), bicycleIdleUp, 1, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_up", _key.c_str(), bicycleIdleUp, 1, ANI_SPEED, true);
 	int bicycleIdleDown[1] = { 31 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_down", _key.c_str(), bicycleIdleDown, 1, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_idle_down", _key.c_str(), bicycleIdleDown, 1, ANI_SPEED, true);
 
 	//자전거이동
 	int bicycleMoveLeft[4] = { 51,52,51,50 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_left", _key.c_str(), bicycleMoveLeft, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_left", _key.c_str(), bicycleMoveLeft, 4, ANI_SPEED, true);
 	int bicycleMoveUp[4] = { 41,42,41,40 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_up", _key.c_str(), bicycleMoveUp, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_up", _key.c_str(), bicycleMoveUp, 4, ANI_SPEED, true);
 	int bicycleMoveDown[4] = { 31,32,31,30 };
-	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_down", _key.c_str(), bicycleMoveDown, 4, 10, true);
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_down", _key.c_str(), bicycleMoveDown, 4, ANI_SPEED, true);
 
 
 	aniSetStart("idle_down");
@@ -200,29 +204,55 @@ void player::keyUpdate()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 		{
-			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-			_playerAni->start();
-			_state = PS_MOVE_LEFT;
-			_moveDistance = 64.0f;
+			if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_LEFT_JUMP)
+			{
+				aniSetStart("move_left");
+				_state = PS_JUMP_LEFT;
+				_moveDistance = 128.0f;
+				_jumpPower = JUMP_POWER;
+			}
+			else
+			{
+				aniSetStart("move_left");
+				_state = PS_MOVE_LEFT;
+				_moveDistance = 64.0f;
+			}
 		}
 		if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		{
-			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_left");
-			_playerAni->start();
-			_state = PS_MOVE_RIGHT;
-			_moveDistance = 64.0f;
+			if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_RIGHT_JUMP)
+			{
+				aniSetStart("move_left");
+				_state = PS_JUMP_RIGHT;
+				_moveDistance = 128.0f;
+				_jumpPower = JUMP_POWER;
+			}
+			else
+			{
+				aniSetStart("move_left");
+				_state = PS_MOVE_RIGHT;
+				_moveDistance = 64.0f;
+			}			
 		}
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
-			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_down");
-			_playerAni->start();
-			_state = PS_MOVE_DOWN;
-			_moveDistance = 64.0f;
+			if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_DOWN_JUMP)
+			{
+				aniSetStart("move_down");
+				_state = PS_JUMP_DOWN;
+				_moveDistance = 128.0f;
+				_jumpPower = JUMP_POWER;
+			}
+			else
+			{
+				aniSetStart("move_down");
+				_state = PS_MOVE_DOWN;
+				_moveDistance = 64.0f;
+			}			
 		}
 		if (KEYMANAGER->isStayKeyDown(VK_UP))
 		{
-			_playerAni = KEYANIMANAGER->findAnimation(_key, "move_up");
-			_playerAni->start();
+			aniSetStart("move_up");
 			_state = PS_MOVE_UP;
 			_moveDistance = 64.0f;
 		}
@@ -348,6 +378,60 @@ void player::stateUpdate()
 		case player::PS_BICYCLE_DOWN:
 			_isRight = false;
 		break;
+
+		case player::PS_JUMP_LEFT:
+			_isRight = false;
+			_posX -= speed;
+			_moveDistance -= speed;
+			_posZ -= _jumpPower * TIMEMANAGER->getElapsedTime();
+			_jumpPower -= _gravity * TIMEMANAGER->getElapsedTime();
+			if (_posZ > 0) _posZ = 0;
+			if (_moveDistance < speed)
+			{
+				horizonSet();
+				aniSetStart("idle_left");
+				_state = PS_IDLE_LEFT;
+				appearTileCheck();
+				_jumpPower = 0;
+				_posZ = 0;
+			}
+		break;
+		case player::PS_JUMP_RIGHT:
+			_isRight = true;
+			_posX += speed;
+			_moveDistance -= speed;
+			_posZ -= _jumpPower * TIMEMANAGER->getElapsedTime();
+			_jumpPower -= _gravity * TIMEMANAGER->getElapsedTime();
+			if (_posZ > 0) _posZ = 0;
+			if (_moveDistance < speed)
+			{
+				horizonSet();
+				aniSetStart("idle_left");
+				_state = PS_IDLE_RIGHT;
+				appearTileCheck();
+				_jumpPower = 0;
+				_posZ = 0;
+			}
+		break;
+		case player::PS_JUMP_DOWN:
+			_isRight = false;
+			_posY += speed;
+			_moveDistance -= speed;
+			_posZ -= _jumpPower * TIMEMANAGER->getElapsedTime();
+			_jumpPower -= _gravity * TIMEMANAGER->getElapsedTime();
+			if (_posZ > 0) _posZ = 0;
+			if (_moveDistance < speed)
+			{
+				verticalSet();
+				aniSetStart("idle_down");
+				_state = PS_IDLE_DOWN;
+				appearTileCheck();
+				_jumpPower = 0;
+				_posZ = 0;
+			}
+		break;
+
+
 		default:
 		break;
 	}
