@@ -8,7 +8,9 @@
 #define	CAMERA_SHOW_RANGE	16 * TILE_SIZE
 
 #define OBJ_IMG_NUM			16
+#define MAX_POTAL_NUM	6
 
+class objectTool;
 
 enum MAP_NAME
 {
@@ -22,6 +24,7 @@ enum MAP_NAME
 	MAP_FIELD,		//필드
 	MAP_CAVE,		//동굴
 
+	MAP_POTAL_TEST,
 	MAP_NONE,		//
 	MAP_COUNT = MAP_NONE,
 
@@ -45,6 +48,10 @@ struct tagCurrentTile
 class mapTool
 {
 private:
+	objectTool* _objectTool;
+
+
+
 	//샘플타일의 이미지
 	image*	_sampleImg[TILE_IMAGE_NUM];
 	//샘플타일 이미지를 string으로(이미지매니저에서 findeImg 할때 쓰려고)
@@ -72,8 +79,8 @@ private:
 	D2D1_RECT_F		_sizeUpHeight;
 	D2D1_RECT_F		_sizeDownHeight;
 
-	unsigned int TILEX;
-	unsigned int TILEY;
+	UINT			TILEX;
+	UINT			TILEY;
 
 	//선택한 샘플 타일
 	tagCurrentTile	_pickSampleTile;
@@ -88,10 +95,12 @@ private:
 	//세이브 파일의 스트링 벡터
 	map<MAP_NAME, string> _mSizeNames;
 	map<MAP_NAME, string> _mDataNames;
+	//map<int, int>
 	//포탈 자표를 저장할 스트링 벡터
 	map<MAP_NAME, string> _mPotalPos;
 
-	map<int, string> _potalMap;
+
+
 
 	int _mapCase;
 
@@ -103,6 +112,12 @@ private:
 	int _showCount;
 
 	bool _isPotal;
+	//포탈좌표를 저장해줄 변수
+	UINT _potalPosX[MAX_POTAL_NUM];
+	UINT _potalPosY[MAX_POTAL_NUM];
+	//현재 포탈 개수를 저장할 변수
+	UINT _potalNum;
+
 
 public:
 	mapTool();
@@ -129,9 +144,8 @@ public:
 
 	void nameInit();
 
-	//void getSizeFile(string sizeFile){ _vSizeFile[]
-	//void getDataFile(){}
-
+	void renderSampleTile();
+	void renderMapTile();
 
 
 private:
