@@ -15,7 +15,7 @@ HRESULT mapData::init(const char * mapSizeFileName, const char * mapFileName)
 {
 	ii = iiMax = jj = jjMax = 0;
 	load(mapSizeFileName, mapFileName);
-	
+	setPokemon();
 	return S_OK;
 }
 
@@ -160,4 +160,8 @@ void mapData::load(const char * mapSizeFileName, const char * mapFileName)
 
 
 
+}
+
+void mapData::setPokemon()
+{
 }

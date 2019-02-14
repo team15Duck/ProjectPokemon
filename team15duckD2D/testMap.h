@@ -9,5 +9,7 @@ public:
 	testMap();
 	~testMap();
 
+
+	virtual void setPokemon() override;
 };
 

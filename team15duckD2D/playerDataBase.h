@@ -1,6 +1,8 @@
 #pragma once
 #include "singletonBase.h"
 #include "player.h"
+#include "pokemon.h"
+//#include 엔피씨
 
 class playerDataBase : public singletonBase<playerDataBase>
 {
@@ -20,6 +22,15 @@ public:
 private:
 
 	player* _currentPlayer;								//얘가 활동할거임
+
+	
+	//배틀씬에서 얘 통해서 정보 받아오기
+	pokemon* _pokemon;									//다음상대 : default = nullptr;
+	//enemyNpc* _npc;									//얘도 nullptr
+
+
+
+
 
 public:
 	playerDataBase();
@@ -47,6 +58,14 @@ public:
 	void npcDataSave(DATA data);
 	void objectDataSave(DATA data);
 	void playerDataSave(DATA data);
+
+
+
+
+
+public:
+	pokemon* getPokemon() { return _pokemon; }
+	void setPokemon(pokemon* pokemon) { _pokemon = pokemon; }
 
 };
 

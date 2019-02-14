@@ -3,25 +3,40 @@
 
 enum POKEMON_SKILL_CATEGORY
 {
-	PMSC_ATTACK,
-	PMSC_SPECAIL,
-	PMSC_BUFF,
+	PMSC_ATTACK,	// 공격
+	PMSC_SPECAIL,	// 특수
+	PMSC_BUFF,		// 상태 이상
 
 	PMSC_NONE,
 	PMSC_COUNT = PMSC_NONE,
+};
+
+enum SKILL_INDEX
+{
+	TACLE,			// 몸통박치기
+	LEECH_SEEd,		// 씨뿌리기
+	VINE_WHIP,		// 덩쿨채찍
+	POISON_POWDER,	// 독가루
+	SLEEP_POWDER,	// 수면가루
+	RAZOR_LEAF,		// 잎날 가르기
+
+	SKILL_INDEX_NONE,
+	SKILL_INDEX_COUNT = SKILL_INDEX_NONE,
 };
 
 
 class pokemonSkillInfo
 {
 private:
-	int						_skillId;		// 스킬 번호
+	SKILL_INDEX				_skillId;		// 스킬 번호
 	POKEMON_TYPE			_type;			// 타입
 	POKEMON_SKILL_CATEGORY	_category;		// 분류
 	string					_description;	// 설명
 	string					_name;
 
 	POKEMON_UPSET_CONDITION _upsetConditionType;	// 상태변화 효과
+	POKEMON_BUFF			_buffType;				// 버프
+
 
 	int _power;			// 위력
 	int _accuracyRate;	// 명중률
@@ -34,7 +49,7 @@ public:
 	pokemonSkillInfo();
 	~pokemonSkillInfo();
 
-	HRESULT init(int id, POKEMON_TYPE type, POKEMON_SKILL_CATEGORY category, string text, string name, POKEMON_UPSET_CONDITION conditionType, int power, int rate, int maXpp);
+	HRESULT init(SKILL_INDEX id, POKEMON_TYPE type, POKEMON_SKILL_CATEGORY category, string text, string name, POKEMON_UPSET_CONDITION conditionType, POKEMON_BUFF buff, int power, int rate, int maXpp);
 	void release();
 
 	// 스킬 번호
@@ -52,6 +67,8 @@ public:
 	int getAccuracyRate() { return _accuracyRate; }
 	// pp
 	int getDefaultPP() { return _defaultPP; }
+	// 버프 효과
+	POKEMON_BUFF getBuffType() { return _buffType; }
 	// 상태이상 효과
 	POKEMON_UPSET_CONDITION getUpsetConditionType() { return _upsetConditionType; }
 };

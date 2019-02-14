@@ -84,8 +84,9 @@ private:
 	bool _isIdle;								// 행동 대기중인가
 	PROGRESSING_TYPE	_progressingType;
 
-	pokemonUC	  _upsetCondition;				// 상태 이상
-	pokemonSkill _skills[POKEMON_SKILL_MAX_COUNT]; // 스킬
+	pokemonUC		_upsetCondition;				// 상태 이상
+	POKEMON_BUFF	_buff;							// 버프
+	pokemonSkill	_skills[POKEMON_SKILL_MAX_COUNT]; // 스킬
 	
 	image*		_img;	// 이미지
 	pokemon* _target;	// 적이당
@@ -98,7 +99,7 @@ public:
 	pokemon();
 	~pokemon();
 
-	// 고유번호, 포켓몬 번호, 레벨, 플레이어 포켓몬?, 렌더 letf, 렌더 top
+	// 고유번호, 포켓몬 번호, 레벨, 플레이어 포켓몬?
 	HRESULT init(int idNo, POKEMON index, int level, bool isMyPokemon);
 	void release();
 	void update();
@@ -110,6 +111,8 @@ public:
 	void loadSavePack(pmPack* pack);
 	
 
+	// 0. 버프 적용
+	void applyBuff();
 	// 1. 소지하고 있는 아이템 사용 : 사용했으면 return true
 	bool useOwnerItem();
 	// 2. 상태 이상 적용
@@ -135,6 +138,8 @@ public:
 	ITEM_TYPE withdrawItem();
 	// 상태이상 해제
 	void clearUpsetCondtion();
+	// 버프 해제
+	void clearBuff();
 	// 스킬 교체
 	void changeSkill(int idx, int skillId);
 	// 체력감소 연출 시작 : 상대방의 스킬 연출이 끝나고나면 데미지를 입는 것 처럼 보이도록.
@@ -191,7 +196,7 @@ public:
 	// 현재 체력
 	int getHp()			{ return _nowStatus.hp; }
 	// 풀 체력
-	int getMaxHp()		{ return _nowStatus.hp;}
+	int getMaxHp()		{ return _currentLvStatus.hp;}
 	// 현재 공격력
 	int getAttk()		{ return _nowStatus.attk;}
 	// 현재 방어력
@@ -215,7 +220,7 @@ public:
 private:
 	// 경험치로 인한 레벨업
 	void levelUp();
-	// 능령치 세팅
+	// 능력치 세팅
 	void settingStatus();
 	// 진화
 	void evolution();

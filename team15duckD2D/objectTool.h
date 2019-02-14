@@ -1,9 +1,11 @@
 #pragma once
 #include "gameNode.h"
 #include "tileNode.h"
+#include "mapTool.h"
 #include <vector>
+#include <assert.h>
 
-#define OBJECT_IMG_NUM			17
+#define OBJECT_IMG_NUM			18
 #define SAMPLE_TOTAL_SIZE	TILE_SIZE * SAMPLETILE
 #define SAMPLETILE_STARTX  ( WINSIZEX - SAMPLE_TOTAL_SIZE)
 #define	CAMERA_SHOW_RANGE	16 * TILE_SIZE
@@ -26,8 +28,13 @@ struct tagCurrentTile_Object
 class objectTool : public gameNode
 {
 private:
-	image* _sampleImg[OBJECT_IMG_NUM];
-	tagSampleTile_Object _sampleTile[SAMPLETILE][SAMPLETILE];
+	//샘플타일이미지
+	image* _sampleImg_Obj[OBJECT_IMG_NUM];
+
+	//샘플타일배열
+	tagSampleTile_Object _sampleTile_Obj[SAMPLETILE][SAMPLETILE];
+
+	//맵 이중벡터
 	vector<vector<tagTile*>> _vvTile;
 	vector<vector<D2D1_RECT_F>> _vvRect;
 
@@ -35,6 +42,7 @@ private:
 	D2D1_RECT_F		_preButton;
 	D2D1_RECT_F		_nextButton;
 
+	//맵크기
 	unsigned int TILEX;
 	unsigned int TILEY;
 
@@ -44,10 +52,17 @@ private:
 	//선택한 오브젝트 타일
 	tagCurrentTile_Object _tempObjTile;
 	
+	//현재 타일 클릭했니
 	bool _isTileClick;
-	bool _isObj;
+
+	//맵에서 드래그할거니
 	bool _isShift;
+
+	//맵에서 다른타일로 덮어쓸거니
 	bool _isCtrl;
+
+	//맵정보 불러올거니
+	bool _isLoad;
 
 	UINT _savePointX;
 	UINT _savePointY;
@@ -58,7 +73,24 @@ private:
 
 	tagTile _saveTile;
 
+	//현재 오브젝트 이미지
 	int _curImgNum;
+	//맵종류
+	int _mapCase;
+
+	//테스트맵용
+    //==================================
+	UINT						ii;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
+	UINT						iiMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
+	UINT						jj;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
+	UINT						jjMax;
+	//==================================
+
+	//세이브파일 스트링벡터
+	map<MAP_NAME, string> _mSizeNames;
+	map<MAP_NAME, string> _mDataNames;
+
+
 
 public:
 	objectTool();
@@ -69,12 +101,16 @@ public:
 	void update();
 	void render();
 	
+	void setSampleTile();
 	void setTile();
 	void turnObject();
 	void pickSampleObject();
 	void drawObject();
-	//void load(const char * mapSizeFileName, const char * mapFileName);
-
+	
+	void save(int mapCase);
+	void load();
+	void nextSaveName();
+	void nameInit();
 
 
 private:

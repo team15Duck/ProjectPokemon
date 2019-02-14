@@ -21,8 +21,8 @@ pokemonInfo::~pokemonInfo()
 }
 
 
-HRESULT pokemonInfo::init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus * status, string text
-						  , float weight, float height, int captureRate)
+HRESULT pokemonInfo::init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status
+						  , string text, float weight, float height, int captureRate, map<int, vector<int>> skillMap)
 {
 	_index = index;
 	_type = type;
@@ -32,6 +32,7 @@ HRESULT pokemonInfo::init(POKEMON index, POKEMON_TYPE type, string name, pokemon
 	_weight = weight;
 	_height = height;
 	_captureRate = captureRate;
+	_skillMap = skillMap;
 
 	return S_OK;
 }
@@ -44,11 +45,12 @@ HRESULT pokemonInfo::init(	POKEMON index
 						  , float weight
 						  , float height
 						  , int captureRate
+						  , map<int, vector<int>> skillMap
 						  , int evolutionLv
 						  , POKEMON evolutionIndex)
 {
 
-	init(index, type, name, status, text, weight, height, captureRate);
+	init(index, type, name, status, text, weight, height, captureRate, skillMap);
 	_evolutionLv = evolutionLv;
 	_evolutionIndex = evolutionIndex;
 

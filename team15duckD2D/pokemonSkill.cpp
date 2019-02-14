@@ -2,19 +2,30 @@
 #include "pokemonSkill.h"
 
 pokemonSkillInfo::pokemonSkillInfo()
+: _skillId(SKILL_INDEX_NONE)
+, _type(PM_TYPE_NONE)
+, _category(PMSC_NONE)
+, _upsetConditionType(PMUC_NONE)
+, _buffType(PMB_NONE)
+, _power(0)
+, _accuracyRate(0)
+, _defaultPP(0)
 {
+	_description.clear();
+	_name.clear();
 }
 
 pokemonSkillInfo::~pokemonSkillInfo()
 {
 }
 
-HRESULT pokemonSkillInfo::init(	 int id
+HRESULT pokemonSkillInfo::init(	 SKILL_INDEX id
 							   , POKEMON_TYPE type
 							   , POKEMON_SKILL_CATEGORY category
 							   , string text
 							   , string name
 							   , POKEMON_UPSET_CONDITION conditionType
+							   , POKEMON_BUFF buff
 							   , int power
 							   , int rate
 							   , int maXpp)
@@ -25,6 +36,7 @@ HRESULT pokemonSkillInfo::init(	 int id
 	_description = text;
 	_name = name;
 	_upsetConditionType = conditionType;
+	_buffType = buff;
 	_power = power;
 	_accuracyRate = rate;
 	_defaultPP = maXpp;
@@ -53,7 +65,8 @@ HRESULT pokemonSkill::init(int skillid)
 {
 	_skillId = skillid;
 	_info = *SKILLDATA->getPokemonSkillinfo(skillid);
-	_currentPP = _info.getDefaultPP();
+	if(_info.getSkillID() != SKILL_INDEX_NONE)
+		_currentPP = _info.getDefaultPP();
 
 	return S_OK;
 }

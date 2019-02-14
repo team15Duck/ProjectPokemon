@@ -13,6 +13,7 @@ battleScene2::~battleScene2()
 
 HRESULT battleScene2::init()
 {
+
 	return S_OK;
 }
 
