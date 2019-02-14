@@ -144,7 +144,27 @@ HRESULT playGround::init()
 
 	// 포켓몬 이미지 
 	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon/pokemon.png", 5120, 4696, 20, 16);
-	
+
+	//=============================================================================================== UI 이미지 
+
+	// 1. 도감
+	IMAGEMANAGER->addFrameImage("도감", L"image/common_menu/pokemonbook/cm_pokemon_book.png", 1920, 640, 2, 1);
+	IMAGEMANAGER->addFrameImage("포켓몬속성", L"image/Summary Menu/summary_pokemon_tage.png", 1152, 96, 9, 2);
+	// 2. 포켓몬
+	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 336, 456, 1, 2);
+	IMAGEMANAGER->addImage("보유중포켓몬", L"image/common_menu/pokemon/pokemonMenu_background.png", 960, 640);
+	IMAGEMANAGER->addImage("서브포켓몬1", L"image/common_menu/pokemon/pokemon_subpokemon_list.png", 500, 80);
+	IMAGEMANAGER->addFrameImage("서브포켓몬2", L"image/common_menu/pokemon/pokemonMenu_slot.png", 1000, 80, 2, 1);
+	IMAGEMANAGER->addFrameImage("포켓몬메뉴_취소", L"image/common_menu/pokemon/pokemonMenu_btn_cancle.png", 216, 192, 1, 2);
+	// 3. 가방
+	IMAGEMANAGER->addFrameImage("가방메뉴배경", L"image/common_menu/bag/bag_background.png", 1920, 640, 2, 1);
+	// 4. 플레이어
+	IMAGEMANAGER->addFrameImage("트레이너카드", L"image/common_menu/player/trainerCard.png", 1920, 640, 2, 1);
+	// 5. 저장
+
+	// 6. 설정 
+]
+	// ========================================================================================================
 	SCENEMANAGER->addScene("치영씬", new chiyeongTestScene);
 	SCENEMANAGER->addScene("하영씬", new hayoungTestScene);
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
@@ -153,7 +173,7 @@ HRESULT playGround::init()
 
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("objectToolScene");
+		//SCENEMANAGER->changeScene("objectToolScene");
 	}
 	else
 	{

@@ -88,6 +88,11 @@ private:
 	//세이브 파일의 스트링 벡터
 	map<MAP_NAME, string> _mSizeNames;
 	map<MAP_NAME, string> _mDataNames;
+	//포탈 자표를 저장할 스트링 벡터
+	map<MAP_NAME, string> _mPotalPos;
+
+	map<int, string> _potalMap;
+
 	int _mapCase;
 
 	bool _isShift;
@@ -96,6 +101,8 @@ private:
 
 	bool _isShowAttr;
 	int _showCount;
+
+	bool _isPotal;
 
 public:
 	mapTool();
