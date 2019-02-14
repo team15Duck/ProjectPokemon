@@ -48,7 +48,7 @@ public:
 
 	inline POKEMON getPokemon()
 	{
-		return _pokemon[RND->getInt(_pokemon.size())];
+		return _pokemon[RND->getInt((int)_pokemon.size())];
 	}
 	inline UINT getLevel()
 	{

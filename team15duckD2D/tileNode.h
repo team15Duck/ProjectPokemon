@@ -185,5 +185,5 @@ public:
 //}TILE;
 
 //타일의 포인터를 LPTILE이라고 하겠다
-typedef struct tagTile *LPTILE;
+typedef class tagTile *LPTILE;
 
