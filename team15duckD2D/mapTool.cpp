@@ -61,8 +61,9 @@ HRESULT mapTool::init()
 
 	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_CAVE;
+	_mapCase = MAP_TOWN;
 
+	_isPotal = false;
 	setTile();
 	nameInit();
 
@@ -354,6 +355,7 @@ void mapTool::turnMap()
 		{
 			_isObj = false;
 		}
+		SCENEMANAGER->changeScene("objectToolScene");
 	}
 }
 
@@ -624,6 +626,31 @@ void mapTool::mapSizeChange()
 
 void mapTool::drawMap()
 {
+	//if (포탈찍는중)
+	//{
+	//	string scenName = 현재 선택중인 씬네임;
+	//
+	//	int idxX;
+	//	int idxY;
+	//
+	//	idx = idxX + idxY * TILEX;
+	//
+	//	_potalMap.insert(make_pair(idx, sceneName));
+	//	
+	//}
+	//
+	//if (포탈 지우기 선택중)
+	//{
+	//	int idxX;
+	//	int idxY;
+	//
+	//	idx = idxX + idxY * TILEX;
+	//
+	//	_potalMap.erase(idx);
+	//}
+
+
+
 	if (_isRND)
 	{
 		_pickSampleTile.curX = RND->getInt(4);
@@ -789,6 +816,13 @@ void mapTool::save(int mapCase)
 
 	CloseHandle(file2);
 
+	HANDLE file3;
+	DWORD write3;
+	file3 = CreateFile(_mPotalPos[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+	WriteFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+
+
 	delete[] tile;
 }
 
@@ -917,6 +951,10 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	DWORD result = ATTR_NONE;
 	//타일
 	//동굴은 어딜가든 다 만남
+	if (_isPotal)
+	{
+		
+	}
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME5])
 	{
 		if ((frameX >= 0 && frameX < SAMPLETILE - 1) && (frameY == 0 || frameY == 1) ||
