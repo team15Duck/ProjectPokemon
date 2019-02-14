@@ -47,7 +47,7 @@ HRESULT pokemon::init( int idNo
 	assert(nullptr != info);
 
 	_idNo = idNo;
-	_index = info->getPokemonIndex();
+	_index = index;
 	_nickName = *info->getPokemonName();
 	_level = level;
 	_isMyPokemon = isMyPokemon;
@@ -72,13 +72,13 @@ HRESULT pokemon::init( int idNo
 	if (_isMyPokemon)
 	{
 		idx += 1;
-		//_destX = destX;
-		//_destY = destY;
+		_destX = 160.f;
+		_destY = 200.f;
 	}
 	else
 	{
-		//_destX = destX;
-		//_destY = destY;
+		_destX = 576.f;
+		_destY = 32.f;
 	}
 	
 	_frameX = idx % _img->GetMaxFrameX();
@@ -127,7 +127,7 @@ void pokemon::update()
 
 void pokemon::render()
 {
-	_img->frameRender(_destX, _destY, _frameX, _frameY);
+	_img->frameRender(CAMERA->getPosX() + _destX, CAMERA->getPosY() + _destY, _frameX, _frameY);
 }
 
 pmPack* pokemon::makeSavePack()
