@@ -95,6 +95,11 @@ private:
 	float _destX, _destY;						// 렌더 위치
 	int _frameX, _frameY;						// 렌더 프레임 좌표
 
+
+	////////////////////////테스트
+	int _damage;
+	wstring _state;
+
 public:
 	pokemon();
 	~pokemon();
@@ -151,7 +156,7 @@ public:
 	void setTargetPokemon(pokemon* pm) { _target = pm; }
 
 	// 상태이상 세팅
-	void setUpsetCondition(pokemonUC upsetCondition){ _upsetCondition = upsetCondition; }
+	void setUpsetCondition(pokemonUC upsetCondition){ _upsetCondition = upsetCondition; _state = L"상태 이상 효과 받음"; }
 	// 소지 아이템 세팅
 	void setOwnerItem(ITEM_TYPE itemType)	{ _ownerItemType = itemType; }
 	// 닉네임

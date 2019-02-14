@@ -86,6 +86,9 @@ HRESULT pokemon::init( int idNo
 	_frameY = idx / _img->GetMaxFrameX();
 
 
+	// 테스트
+	_damage = 0;
+	
 	return S_OK;
 }
 
@@ -129,6 +132,21 @@ void pokemon::update()
 void pokemon::render()
 {
 	_img->frameRender(CAMERA->getPosX() + _destX, CAMERA->getPosY() + _destY, _frameX, _frameY);
+
+	WCHAR str[128];
+	swprintf_s(str, L"Hp : %d / %d", getDisplayHp(), getMaxHp());
+	D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 100);
+	swprintf_s(str, L"Get Damage : %d", _damage);
+	D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 120);
+	
+	if (_isIdle)
+	{
+		swprintf_s(str, L" IDLE ");
+		D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 140);
+	}
+
+	D2DMANAGER->drawText(_state.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 160);
+
 }
 
 pmPack* pokemon::makeSavePack()
@@ -205,8 +223,12 @@ void pokemon::loadSavePack(pmPack* pack)
 
 void pokemon::applyBuff()
 {
-	if(PMB_NONE == _buff)
+	_state = L"버프 적용";
+	if (PMB_NONE == _buff)
+	{
+		_state = L"적용 할 버프 없음";
 		return;
+	}
 
 	switch (_buff)
 	{
@@ -217,6 +239,8 @@ void pokemon::applyBuff()
 
 			hillHp(value);
 			_target->takeDamage(value);
+
+			_state = L"피 흡흡";
 			break;
 		}
 		default:
@@ -226,10 +250,12 @@ void pokemon::applyBuff()
 
 bool pokemon::useOwnerItem()
 {
+	_state = L"소지 아이템 사용";
 	// todo 아이템 타입별로 조건 체크 후 아이템 사용하긔
 	switch (_ownerItemType)
 	{
 		default:
+			_state = L"소지 아이템 없음";
 			break;
 	}
 
@@ -239,30 +265,38 @@ bool pokemon::useOwnerItem()
 
 void pokemon::applyUpsetCondition()
 {
+	_state = L"상태 이상 적용";
 	_isIdle = false;
+
+	bool check = false;
 	switch (_upsetCondition.type)
 	{
 		case PMUC_POISON:
 		{
+			_state = L"PMUC_POISON";
 			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
 			takeDamage(damage);
 			break;
 		}
 		case PMUC_FROZEN:
 		{
+			_state = L"PMUC_POISON";
 			int percent = RND->getInt(100);
 			if (percent < 20) // 1/5 확률로 상태 해제
 			{
 				clearUpsetCondtion();
+				check = true;
 			}
 			break;
 		}
 		case PMUC_PALALYSIS:
 		case PMUC_SLEEP:
 		{
+			_state = L"PMUC_PALALYSIS | PMUC_SLEEP";
 			if (_upsetCondition.releaseValue <= 0)
 			{
 				clearUpsetCondtion();
+				check = true;
 			}
 			else
 				--_upsetCondition.releaseValue;
@@ -272,21 +306,26 @@ void pokemon::applyUpsetCondition()
 
 		case PMUC_BURN:
 		{
+			_state = L"PMUC_BURN";
 			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
 			takeDamage(damage);
 			break;
 		}
 
 		default:
+			_state = L"상태 이상 없음";
 			break;
 	}
 
 	if (PMUC_NONE != _upsetCondition.type) // 상태 이상효과가 해제가 안되었다면 
 	{
+		_state = L"상태 이상 효과 적용";
 		startProgessing(bind(&pokemon::progressingApplyUpsetCondition, this), PROGRESSING_SKILL);
 	}
 	else
 	{
+		if(check)
+			_state = L"상태이상 해제";
 		// 다음 행동 대기
 		_isIdle = true;
 	}
@@ -294,13 +333,13 @@ void pokemon::applyUpsetCondition()
 
 void pokemon::useSkill(int idx)
 {
+	_state = L"스킬 사용";
+	_isIdle = true;
 	if(idx < 0 || POKEMON_SKILL_MAX_COUNT < idx)
 		return;
 	
 	if(!_skills[idx].isUsableSkill())
 		return;
-
-	_isIdle = false;
 
 	pokemonSkill skill = _skills[idx];
 	pokemonSkillInfo skillInfo = *skill.getSkillInfomation();
@@ -314,8 +353,14 @@ void pokemon::useSkill(int idx)
 	int value = RND->getFromIntTo(1, 100);
 
 	// 빗맞음
-	if(rate < value)
+	if (rate < value)
+	{
+		_state = L"공격 실패";
 		return;
+	}
+
+	_isIdle = false;
+	_state = L"공격 성공";
 
 	// 디버프, 버프 
 	pokemonUC* upsetCondition = skill.getUpsetCondition();
@@ -345,6 +390,8 @@ bool pokemon::levelUpForce()
 
 void pokemon::takeDamage(int value)
 {
+	_state = L"데미지 입음";
+	_damage = value;
 	_displayHp = _nowStatus.hp;
 	_nowStatus.hp -= value;
 	if (_nowStatus.hp < 0 )
@@ -657,7 +704,7 @@ int pokemon::calculateAttkValue(int skillIdx)
 		return 0;
 
 	//_skills[idx]._skillId
-	pokemonSkill skill;
+	pokemonSkill skill = _skills[skillIdx];
 	pokemonSkillInfo info = *skill.getSkillInfomation();
 
 	int value = 0;

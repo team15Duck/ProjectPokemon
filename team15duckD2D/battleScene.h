@@ -16,6 +16,9 @@ private:
 
 	pokemon* _pokemon;
 
+	pokemon* _pms[TURN_MAX + 1];	// 테스트용임 삭제 될 것
+	int cnt;						// 테스트용임 삭제 될 것
+	float termTime;
 
 
 public:

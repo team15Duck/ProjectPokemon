@@ -125,8 +125,8 @@ HRESULT pokemonDataBase::init()
 		map<int, vector<int>> skillMap;
 		{
 			vector<int> ids;
+			ids.push_back(POISON_POWDER);
 			ids.push_back(TACLE);
-			ids.push_back(LEECH_SEEd);
 			ids.push_back(VINE_WHIP);
 			skillMap.insert(make_pair(1, ids));
 		}
