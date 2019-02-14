@@ -15,8 +15,9 @@ pokemon::pokemon()
 , _displayHp(0)
 , _displayExp(0)
 , _displayTime(0.f)
-, _target(nullptr)
+, _buff(PMB_NONE)
 , _img(nullptr)
+, _target(nullptr)
 , _destX(0.f), _destY(0.f)
 , _frameX(0), _frameY(0)
 {
@@ -43,6 +44,7 @@ HRESULT pokemon::init( int idNo
 					  )
 {
 	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(index);
+	assert(nullptr != info);
 
 	_idNo = idNo;
 	_index = info->getPokemonIndex();
@@ -54,6 +56,14 @@ HRESULT pokemon::init( int idNo
 
 	settingStatus();
 	_currentExp = _currentLvExp;
+
+	// 최초 스킬 세팅
+	map<int, vector<int>> skillMap = *info->getSkillMap();
+	vector<int> skills = skillMap[1];
+	for (int ii = 0; ii < skills.size() && ii < POKEMON_SKILL_MAX_COUNT; ++ii)
+	{
+		_skills[ii].init(skills[ii]);
+	}
 
 	_img = IMAGEMANAGER->findImage("pokemon_ingame");
 
@@ -74,8 +84,6 @@ HRESULT pokemon::init( int idNo
 	_frameX = idx % _img->GetMaxFrameX();
 	_frameY = idx / _img->GetMaxFrameX();
 
-	// todo 일단 스킬 1개만 만들어서 넣어봅니다
-	_skills[0].init(33);
 
 	return S_OK;
 }
@@ -119,7 +127,7 @@ void pokemon::update()
 
 void pokemon::render()
 {
-
+	_img->frameRender(_destX, _destY, _frameX, _frameY);
 }
 
 pmPack* pokemon::makeSavePack()
@@ -191,6 +199,27 @@ void pokemon::loadSavePack(pmPack* pack)
 	{
 		_skills[ii].init(pack->skillIds[ii]);
 		_skills[ii].setCurrentPP(pack->currentPPs[ii]);
+	}
+}
+
+void pokemon::applyBuff()
+{
+	if(PMB_NONE == _buff)
+		return;
+
+	switch (_buff)
+	{
+		case PMB_ABSORB_HP:
+		{
+			int targetHp = _target->getHp();
+			int value = static_cast<int>(targetHp / 8.f);
+
+			hillHp(value);
+			_target->takeDamage(value);
+			break;
+		}
+		default:
+			break;
 	}
 }
 
@@ -272,7 +301,25 @@ void pokemon::useSkill(int idx)
 	_isIdle = false;
 
 	pokemonSkill skill = _skills[idx];
+	pokemonSkillInfo skillInfo = *skill.getSkillInfomation();
+
+	// pp 소모
+	int pp = skill.getCurrentPP();
+	skill.setCurrentPP(pp - 1);
+
+	// 명중했는지
+	int rate = skillInfo.getAccuracyRate();
+	int value = RND->getFromIntTo(1, 100);
+
+	// 빗맞음
+	if(rate < value)
+		return;
+
+	// 디버프, 버프 
 	pokemonUC* upsetCondition = skill.getUpsetCondition();
+	POKEMON_BUFF buff = skillInfo.getBuffType();
+	if(PMB_NONE != buff)
+		_buff = buff;
 
 	int damage = calculateAttkValue(idx);
 	attack(damage, upsetCondition);
@@ -352,6 +399,11 @@ void pokemon::clearUpsetCondtion()
 	_upsetCondition.clear();
 }
 
+void pokemon::clearBuff()
+{
+	_buff = PMB_NONE;
+}
+
 void pokemon::changeSkill(int idx, int skillId)
 {
 	if(idx < 0 || POKEMON_SKILL_MAX_COUNT <= idx)
@@ -419,6 +471,41 @@ void pokemon::evolution()
 
 void pokemon::gainSkill()
 {
+	if(!_isMyPokemon)
+		return;
+
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
+	if(!info)
+		return;
+
+	map<int, vector<int>> skillMap = *info->getSkillMap();
+
+	// 레벨업에 따른 스킬 획득
+	if (skillMap.find(_level) != skillMap.end())
+	{
+		vector<int> skills = skillMap[_level];
+		int skillCnt = 0;
+		for (; skillCnt < POKEMON_SKILL_MAX_COUNT; ++skillCnt)
+		{
+			if(_skills[skillCnt].getSkillID() == SKILL_INDEX_NONE)
+				break;
+		}
+
+		int size = skills.size();
+		for (int ii = 0; ii < size; ++ii)
+		{
+			
+			if (skillCnt < POKEMON_SKILL_MAX_COUNT) // 스킬이 맥시멈이 아니면 그냥 획득
+			{
+				skillCnt += 1;
+				_skills[skillCnt].init(skills[ii]);
+			}
+			else // 스킬이 맥시멈이라면 처음 스킬을 새 스킬로 교체 // todo 선택 교체 할 수 있도록 바꿔야함
+			{
+				_skills[0].init(skills[ii]);
+			}
+		}
+	}
 }
 
 void pokemon::attack(int value, pokemonUC* upsetCondition)
@@ -464,7 +551,7 @@ void pokemon::progressingDecreaseHp()
 
 	// 피를 뻈으면 콜백함수 해제
 	if ( _displayHp == _nowStatus.hp )
-	{
+	{ 
 		endProgressing();
 	}
 }

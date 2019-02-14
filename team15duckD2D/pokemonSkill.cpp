@@ -9,12 +9,13 @@ pokemonSkillInfo::~pokemonSkillInfo()
 {
 }
 
-HRESULT pokemonSkillInfo::init(	 int id
+HRESULT pokemonSkillInfo::init(	 SKILL_INDEX id
 							   , POKEMON_TYPE type
 							   , POKEMON_SKILL_CATEGORY category
 							   , string text
 							   , string name
 							   , POKEMON_UPSET_CONDITION conditionType
+							   , POKEMON_BUFF buff
 							   , int power
 							   , int rate
 							   , int maXpp)
@@ -25,6 +26,7 @@ HRESULT pokemonSkillInfo::init(	 int id
 	_description = text;
 	_name = name;
 	_upsetConditionType = conditionType;
+	_buffType = buff;
 	_power = power;
 	_accuracyRate = rate;
 	_defaultPP = maXpp;
@@ -53,7 +55,8 @@ HRESULT pokemonSkill::init(int skillid)
 {
 	_skillId = skillid;
 	_info = *SKILLDATA->getPokemonSkillinfo(skillid);
-	_currentPP = _info.getDefaultPP();
+	if(_info.getSkillID() != -1)
+		_currentPP = _info.getDefaultPP();
 
 	return S_OK;
 }

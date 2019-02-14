@@ -46,11 +46,12 @@ enum POKEMON
 // 타입, 속성
 enum POKEMON_TYPE
 {
-	PM_TYPE_NORMAL,
-	PM_TYPE_FIRE,
-	PM_TYPE_WATER,
-	PM_TYPE_ELECTRONIC,
-	PM_TYPE_GRASS,
+	PM_TYPE_NORMAL,		// 노말
+	PM_TYPE_FIRE,		// 불
+	PM_TYPE_WATER,		// 물
+	PM_TYPE_ELECTRONIC,	// 전기
+	PM_TYPE_GRASS,		// 풀
+	PB_TYPE_POISION,	// 독
 
 	PM_TYPE_NONE,
 	PM_TYPE_COUNT = PM_TYPE_NONE,
@@ -67,6 +68,15 @@ enum POKEMON_UPSET_CONDITION
 	  
 	PMUC_NONE,
 	PMUC_COUNT = PMUC_NONE,
+};
+
+// 버프
+enum POKEMON_BUFF
+{
+	PMB_ABSORB_HP,	// 체력 흡수
+
+	PMB_NONE,
+	PMB_COUNT = PMB_NONE,
 };
 
 enum POKEMON_UPSET_RELEASE_CONDITION
@@ -164,6 +174,8 @@ private:
 
 	int				_evolutionLv;		// 진화를 위한 레벨
 	POKEMON			_evolutionIndex;	// 진화 넘버
+
+	map<int, vector<int>>  _skillMap;	// 레벨 별 얻는 스킬 : 레벨, 스킬id vector map
 	
 public:
 	pokemonInfo();
@@ -171,12 +183,13 @@ public:
 
 	// 초기화 : 진화 없음
 	HRESULT init(	POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status
-				 ,	string text, float weight, float height, int captureRate);
+				 ,	string text, float weight, float height, int captureRate, map<int, vector<int>> skillMap);
 	// 초기화 : 진화 있음
 	HRESULT init(POKEMON index, POKEMON_TYPE type, string name, pokemonStatus* status
-				 , string text, float weight, float height, int captureRate
+				 , string text, float weight, float height, int captureRate, map<int, vector<int>> skillMap
 				 , int evolutionLv, POKEMON evolutionIndex);
 	void clear();
+	
 
 	POKEMON getPokemonIndex()					{ return _index;			}
 	POKEMON_TYPE getPokemonType()				{ return _type;				}
@@ -188,6 +201,7 @@ public:
 	int getCaptureRate()						{ return _captureRate;		}
 	int getEvolutionLevel()						{ return _evolutionLv;		}
 	POKEMON getEvolutionIndex()					{ return _evolutionIndex;	}	
+	map<int, vector<int>>* getSkillMap()		{ return &_skillMap;		}
 
 };
 
