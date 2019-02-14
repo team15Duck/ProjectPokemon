@@ -726,7 +726,8 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 		else if ((frameX == 1 || frameX == 2) && (frameY >= 0 && frameY < 6)) //나무
 		{
-			result |= ATTR_UNMOVE;
+			if(frameY !=3)
+				result |= ATTR_UNMOVE;
 		}
 		else if (frameX == 0 && (frameY >= 2 && frameY < 6)) //오박사집 기계
 		{
@@ -757,10 +758,6 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_LEFT_JUMP;
-
-
-
-
 		}
 		else if (frameX == 2 && frameY == 0)
 		{

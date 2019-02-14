@@ -53,15 +53,11 @@ void mapData::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
-			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
+			
+			if(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
-				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0 , 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY,1);
+				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
 			}
-			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none" && _vvTile[ii][jj]->attr & ATTR_APPEAR)
-			{
-				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
-			}
-
 
 
 			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)
