@@ -252,9 +252,6 @@
     <ClInclude Include="item.h">
       <Filter>PlayGround\item</Filter>
     </ClInclude>
-    <ClInclude Include="mapTool.h">
-      <Filter>PlayGround\mapTool</Filter>
-    </ClInclude>
     <ClInclude Include="pokemonInfo.h">
       <Filter>PlayGround\pokemon</Filter>
     </ClInclude>
@@ -293,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="objectTool.h">
       <Filter>PlayGround\object</Filter>
+    </ClInclude>
+    <ClInclude Include="mapTool.h">
+      <Filter>PlayGround\mapTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -410,9 +410,6 @@
     <ClCompile Include="item.cpp">
       <Filter>PlayGround\item</Filter>
     </ClCompile>
-    <ClCompile Include="mapTool.cpp">
-      <Filter>PlayGround\mapTool</Filter>
-    </ClCompile>
     <ClCompile Include="pokemonInfo.cpp">
       <Filter>PlayGround\pokemon</Filter>
     </ClCompile>
@@ -451,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="objectTool.cpp">
       <Filter>PlayGround\object</Filter>
+    </ClCompile>
+    <ClCompile Include="mapTool.cpp">
+      <Filter>PlayGround\mapTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

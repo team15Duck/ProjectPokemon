@@ -8,14 +8,15 @@
 #define SAMPLETILE_STARTX  ( WINSIZEX - SAMPLE_TOTAL_SIZE)
 #define	CAMERA_SHOW_RANGE	16 * TILE_SIZE
 
-struct tagSampleTile1
+
+struct tagSampleTile_Object
 {
 	D2D1_RECT_F sampleRC;
 	int frameX;
 	int frameY;
 };
 
-struct tagCurrentTile1
+struct tagCurrentTile_Object
 {
 	bool isObj = true;
 	int curX = 0;
@@ -26,7 +27,7 @@ class objectTool : public gameNode
 {
 private:
 	image* _sampleImg[OBJECT_IMG_NUM];
-	tagSampleTile1 _sampleTile[SAMPLETILE][SAMPLETILE];
+	tagSampleTile_Object _sampleTile[SAMPLETILE][SAMPLETILE];
 	vector<vector<tagTile*>> _vvTile;
 	vector<vector<D2D1_RECT_F>> _vvRect;
 
@@ -38,34 +39,23 @@ private:
 	unsigned int TILEY;
 
 	//선택한 샘플 타일
-	tagCurrentTile1	_pickSampleTile;
+	tagCurrentTile_Object	_pickSampleTile;
 
+	//선택한 오브젝트 타일
+	tagCurrentTile_Object _tempObjTile;
+	
+	bool _isTileClick;
+	bool _isObj;
+	bool _isShift;
+	bool _isCtrl;
+
+	UINT _savePointX;
+	UINT _savePointY;
 	UINT _sampleSaveX;
 	UINT _sampleSaveY;
 	UINT _sampleDrawX;
 	UINT _sampleDrawY;
 
-
-
-	//선택한 오브젝트 타일
-	tagCurrentTile1 _tempObjTile;
-	
-	bool _isTileClick;
-	bool _isObj;
-
-	bool _isDraw;
-	bool _isDrag;
-	UINT _saveX;
-	UINT _saveY;
-	UINT _drawX;
-	UINT _drawY;
-	tagTile _saveTiles[SAMPLETILE][SAMPLETILE];
-
-
-	bool _isShift;
-	bool _isCtrl;
-	UINT _savePointX;
-	UINT _savePointY;
 	tagTile _saveTile;
 
 	int _curImgNum;
@@ -83,7 +73,7 @@ public:
 	void turnObject();
 	void pickSampleObject();
 	void drawObject();
-	void dragSample();
+	//void load(const char * mapSizeFileName, const char * mapFileName);
 
 
 

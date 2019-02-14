@@ -41,10 +41,8 @@ HRESULT objectTool::init()
 	_isTileClick = false;
 	_isShift = false;
 	_isCtrl = false;
-	_isDraw = false;
-	_isDrag = false;
 
-	CAMERA->init(0, 0, 3000, 3000);
+	CAMERA->init(0, 0, 10000, 10000);
 
 	_savePointX = 0;
 	_savePointY = 0;
@@ -54,6 +52,9 @@ HRESULT objectTool::init()
 	_sampleSaveY = 0;
 	_sampleDrawX = 1;
 	_sampleDrawY = 1;
+
+
+	//load("data/testMapSize.map", "data/testMapData.map");
 
 	return S_OK;
 }
@@ -68,8 +69,7 @@ void objectTool::update()
 	turnObject();
 	pickSampleObject();
 	drawObject();
-	dragSample();
-
+	
 	_preButton = { CAMERA->getPosX() + WINSIZEX / 2 + 400, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 450, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
 	_nextButton = { CAMERA->getPosX() + WINSIZEX / 2 + 550, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 600, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
 
@@ -100,15 +100,6 @@ void objectTool::render()
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
 			D2D1_RECT_F dragRc = { _savePointX * TILE_SIZE + 5, _savePointY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
-			D2DMANAGER->drawRectangle(RGB(135, 12, 255), dragRc);
-		}
-	}
-
-	if (_isDrag)
-	{
-		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-		{
-			D2D1_RECT_F dragRc = { _saveX * TILE_SIZE + 5, _saveY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
 			D2DMANAGER->drawRectangle(RGB(135, 12, 255), dragRc);
 		}
 	}
@@ -231,8 +222,6 @@ void objectTool::pickSampleObject()
 
 		_sampleSaveX = idxX;
 		_sampleSaveY = idxY;
-	
-	
 
 		if ((idxX >= 0 && idxX < SAMPLETILE) && (idxY >= 0 && idxY < SAMPLETILE))
 		{
@@ -393,17 +382,11 @@ void objectTool::drawObject()
 							}
 							drawAreaX = 0;
 						}
-	
 					}
 				}
 			}
 		}
 	}
-}
-
-void objectTool::dragSample()
-{
-
 }
 
 DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
@@ -414,7 +397,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		if ((frameX >= 0 && frameX < 5) && frameY == 0)
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_WALL;
+			//산지
 		}
 		else if (frameX == 5 && frameY == 0)
 		{
@@ -429,7 +412,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX == 0 || frameX == 1 || frameX == 3 || frameX == 4) && frameY == 1)
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_WALL;
+			//산지
 		}
 		else if ((frameX == 2 && frameY == 1) || (frameX == 5 && frameY == 2))
 		{
@@ -449,7 +432,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX >= 1 && frameX < 4) && (frameY == 2 || frameY == 3))
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_ROCK;
+			//산지
 		}
 		else if (frameX == 4 && frameY == 2)
 		{
@@ -534,7 +517,25 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			//테이블
 		}
-
+		else if ((frameX >= 2 && frameX < 6) && frameY == 2)
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_CUT;
+		}
+		else if ((frameX == 0 || frameX == 1) && frameY == 3)
+		{
+			result |= ATTR_NONE;
+			//포탈
+		}
+		else if (frameX == 2 && (frameY == 3 || frameY == 4))
+		{
+			result |= ATTR_NONE;
+			//카페트
+		}
+		else if ((frameX == 4 || frameX == 5) && frameY == 3)
+		{
+			result |= ATTR_NONE;
+		}
 	}
 	return result;
 }

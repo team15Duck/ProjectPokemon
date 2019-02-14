@@ -139,21 +139,21 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addFrameImage(OBJECT_NAME[OBJECT_NAME16], L"image/object/openTheDoor.png", 320, 256, 5, 4);
 	IMAGEMANAGER->addFrameImage(OBJECT_NAME[OBJECT_NAME17], L"image/object/etc.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 
+	// 아이템이미지
+	IMAGEMANAGER->addFrameImage("items", L"image/items.png", 3900, 100, 39, 1);
 
 	// 포켓몬 이미지 
 	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon/pokemon.png", 5120, 4696, 20, 16);
-
-
-
+	
 	SCENEMANAGER->addScene("치영씬", new chiyeongTestScene);
 	SCENEMANAGER->addScene("하영씬", new hayoungTestScene);
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
-	//SCENEMANAGER->addScene("옵젝", new objectTool);
+	SCENEMANAGER->addScene("objectToolScene", new objectToolScene);
 
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("mapToolScene");
+		SCENEMANAGER->changeScene("objectToolScene");
 	}
 	else
 	{
