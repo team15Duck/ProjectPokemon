@@ -67,12 +67,15 @@ void player::render()
 	}
 
 
+	if (_state != PS_JUMP_DOWN || _state != PS_JUMP_RIGHT || _state != PS_JUMP_LEFT)
+	{
+		if (_isRight)
+			IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 + _posZ, _playerAni);
+		else
+			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 + _posZ, _playerAni);
+	}
 
-
-	if (_isRight)
-		IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 + _posZ, _playerAni);
-	else
-		IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 + _posZ, _playerAni);
+	
 
 	WCHAR str[128];
 	int min =  ((int)_playTime * 10) % 3600 / 60;
@@ -140,6 +143,18 @@ void player::render()
 	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 75 + CAMERA->getPosY());
 	swprintf_s(str, L"Z : %.1f", _posZ);
 	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 90 + CAMERA->getPosY());
+}
+
+void player::shadowRender()
+{
+	if (_state == PS_JUMP_DOWN || _state == PS_JUMP_RIGHT || _state == PS_JUMP_LEFT)
+	{
+		IMAGEMANAGER->findImage("shadow")->render(_posX - 32, _posY);
+		if (_isRight)
+			IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 + _posZ, _playerAni);
+		else
+			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 + _posZ, _playerAni);
+	}
 }
 
 void player::aniSetUp()

@@ -77,6 +77,11 @@ void mapData::render()
 				}
 			}
 
+			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)
+			{
+				_player->shadowRender();
+			}
+
 			//=====================================속성확인용이에요================================
 			if (KEYMANAGER->isToggleKey(VK_CONTROL))
 			{

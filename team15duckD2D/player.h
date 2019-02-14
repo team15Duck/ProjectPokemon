@@ -67,6 +67,7 @@ public:
 	void update();
 	//¾ê´Â ¸Ê¿¡ ³¢¿ö³Ö¾î¼­ ±×·Á¾ßÇÔ
 	void render();	
+	void shadowRender();
 
 	void dataLoad();
 private:

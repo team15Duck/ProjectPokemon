@@ -107,6 +107,7 @@ HRESULT playGround::init()
 
 	IMAGEMANAGER->addFrameImage("playerM", L"image/player/playerM.png", 1500, 1500, 10, 10);
 	IMAGEMANAGER->addFrameImage("playerF", L"image/player/playerF.png", 1500, 1500, 10, 10);
+	IMAGEMANAGER->addImage("shadow", L"image/player/shadow.png", 64, 32);
 
 	IMAGEMANAGER->addFrameImage(TERRAIN_NAME[TERRAIN_NAME1 ], L"image/tile/tile_01.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
 	IMAGEMANAGER->addFrameImage(TERRAIN_NAME[TERRAIN_NAME2 ], L"image/tile/tile_02.png", SAMPLE_TOTAL_SIZE, SAMPLE_TOTAL_SIZE, 6, 6);
