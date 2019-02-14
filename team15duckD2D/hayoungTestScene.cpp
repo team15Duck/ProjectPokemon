@@ -26,8 +26,8 @@ HRESULT hayoungTestScene::init()
 	_issubpkm4exist = false;
 	_issubpkm5exist = false;
 
-	_isFemale = false;
-	_isMale = true;
+	_isFemale = true;
+	_isMale = false;
 
 	//메인메뉴 초기화 
 
@@ -56,8 +56,6 @@ HRESULT hayoungTestScene::init()
 	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
 	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
 
-	// IMAGEMANAGER->addImage("남자가방", L"image/common_menu/bag/bag1.png", 236, 257);
-	// IMAGEMANAGER->addImage("여자가방", L"image/common_menu/bag/bag2.png", 236, 244);
 	IMAGEMANAGER->addFrameImage("남여가방", L"image/common_menu/bag/item_bag.png", 472, 257, 2, 1);
 
 	return S_OK;
@@ -418,12 +416,13 @@ void hayoungTestScene::render()
 	// =================================================================================================
 
 	//1. 포켓몬 도감 렌더
-	//하위메뉴인 도감이 열리는 조건은 <메인메뉴가 열려있고, 커서가 포켓몬을 가르키고 , 하위메뉴를 선택> 했을때이다.
+	//하위메뉴인 도감이 열리는 조건은 <메인메뉴가 열려있고, 커서가 포켓몬도감을 가르키고 , 하위메뉴를 선택> 했을때이다.
 	if (_mmselect == MMS_YES && _cselect == POKEMON_BOOK && _smselect == SMS_YES)
 	{
 		_book->render();
 	}
 	//2. 보유중인 포켓몬 렌더
+	//하위메뉴인 포켓몬이 열리는 조건은 <메인메뉴가 열려있고, 커서가 포켓몬을 가르키고, 하위메뉴를 선택> 했을때이다.
 	if (_mmselect == MMS_YES && _cselect == POKEMON && _smselect == SMS_YES)
 	{
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
@@ -431,16 +430,18 @@ void hayoungTestScene::render()
 		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
 	}
 	//3. 가방 렌더
+	//하위메뉴인 포켓몬이 열리는 조건은 <메인메뉴가 열려있고, 커서가 가방을 가르키고, 하위메뉴를 선택> 했을때이다.
 	if (_mmselect == MMS_YES && _cselect == BAG && _smselect == SMS_YES)
 	{
 		if (_isMale)
 		{
 			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
-			IMAGEMANAGER->findImage("남여가방")->frameRender(100 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 0, 0);
+			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 160 + CAMERA->getPosY(), 0, 0);
 		}
 		else if (_isFemale)
 		{
 			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
+			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 172 + CAMERA->getPosY(), 1, 0);
 		}
 
 		WCHAR bag[1024];
@@ -587,6 +588,57 @@ void hayoungTestScene::frameImageinit()
 	IMAGEMANAGER->addImage("화살표", L"image/common_menu/pokemonMenu_cursor.png", 24, 40);
 	IMAGEMANAGER->addImage("테스트", L"image/test/aaa.png", 960, 640);
 	IMAGEMANAGER->addImage("테스트2", L"image/test/bbb.png", 960, 640);
+}
+
+void hayoungTestScene::setiteminit()
+{
+	ITEMDATA->settingItemInfo(MONSTER_BALL);
+	ITEMDATA->settingItemInfo(SUPER_BALL);
+	ITEMDATA->settingItemInfo(HYPER_BALL);
+	ITEMDATA->settingItemInfo(MASTER_BALL);
+
+	ITEMDATA->settingItemInfo(NORMAL_POTION);
+	ITEMDATA->settingItemInfo(SUPER_POTION);
+	ITEMDATA->settingItemInfo(HYPER_POTION);
+	ITEMDATA->settingItemInfo(MAX_POTION);
+	ITEMDATA->settingItemInfo(FULL_RESTORE);
+
+	ITEMDATA->settingItemInfo(NORMAL_ETHER);
+	ITEMDATA->settingItemInfo(MAX_ETHER);
+	ITEMDATA->settingItemInfo(NORMAL_ELIXIR);
+	ITEMDATA->settingItemInfo(MAX_ELIXIR);
+
+	ITEMDATA->settingItemInfo(ANTIDOTE);
+	ITEMDATA->settingItemInfo(PARLYZE_HEAL);
+	ITEMDATA->settingItemInfo(BURN_HEAL);
+	ITEMDATA->settingItemInfo(ICE_HEAL);
+	ITEMDATA->settingItemInfo(AWAKENING);
+	ITEMDATA->settingItemInfo(FULL_HEAL);
+
+	ITEMDATA->settingItemInfo(RARE_CANDY);
+	ITEMDATA->settingItemInfo(ESCAPE_ROPE);
+	ITEMDATA->settingItemInfo(REVIVE);
+
+	ITEMDATA->settingItemInfo(BICYCLE);
+	ITEMDATA->settingItemInfo(FISHING_ROD);
+	ITEMDATA->settingItemInfo(TOWN_MAP);
+
+	ITEMDATA->settingItemInfo(HM_CUT);
+	ITEMDATA->settingItemInfo(HM_FLASH);
+
+	ITEMDATA->settingItemInfo(HM_FLASH);
+	ITEMDATA->settingItemInfo(HM_FLASH);
+	ITEMDATA->settingItemInfo(HM_FLASH);
+
+	ITEMDATA->settingItemInfo(CHERI_BERRY);
+	ITEMDATA->settingItemInfo(CHESTO_BERRY);
+	ITEMDATA->settingItemInfo(PECHA_BERRY);
+	ITEMDATA->settingItemInfo(RAWST_BERRY);
+	ITEMDATA->settingItemInfo(ASPEAR_BERRY);
+	ITEMDATA->settingItemInfo(LEPPA_BERRY);
+	ITEMDATA->settingItemInfo(ORAN_BERRY);
+	ITEMDATA->settingItemInfo(LUM_BERRY);
+	ITEMDATA->settingItemInfo(SITRUS_BERRY);
 }
 
 void hayoungTestScene::commonMenurender()

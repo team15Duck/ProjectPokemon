@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="action.h" />
     <ClInclude Include="animation.h" />
+    <ClInclude Include="bag.h" />
     <ClInclude Include="battle.h" />
     <ClInclude Include="battleScene.h" />
     <ClInclude Include="battleScene2.h" />
@@ -209,6 +210,7 @@
   <ItemGroup>
     <ClCompile Include="action.cpp" />
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="bag.cpp" />
     <ClCompile Include="battleScene.cpp" />
     <ClCompile Include="battleScene2.cpp" />
     <ClCompile Include="button.cpp" />

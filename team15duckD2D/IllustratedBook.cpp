@@ -124,6 +124,7 @@ void IllustratedBook::update()
 void IllustratedBook::render()
 {
 	IMAGEMANAGER->findImage("도감")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+
 	WCHAR pokemon_book[1024];
 	swprintf_s(pokemon_book, L"포켓몬 도감 목록");
 	D2DMANAGER->drawText(pokemon_book, 285 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(160, 160, 160));

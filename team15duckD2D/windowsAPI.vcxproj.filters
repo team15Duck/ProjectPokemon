@@ -118,6 +118,9 @@
     <Filter Include="PlayGround\pokemon\data">
       <UniqueIdentifier>{64963311-2d9d-4467-902d-cb2f74f1eb64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\bag">
+      <UniqueIdentifier>{3294593f-41d2-4929-b2e0-0796e13147ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="mapTool.h">
       <Filter>PlayGround\mapTool</Filter>
     </ClInclude>
+    <ClInclude Include="bag.h">
+      <Filter>PlayGround\bag</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -451,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="mapTool.cpp">
       <Filter>PlayGround\mapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="bag.cpp">
+      <Filter>PlayGround\bag</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

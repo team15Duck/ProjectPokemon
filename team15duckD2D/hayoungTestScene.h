@@ -104,6 +104,7 @@ public:
 	void render();
 
 	void frameImageinit();
+	void setiteminit();
 	void commonMenurender();			//기본메뉴
 
 	//================================ GET && SET ===================================//
