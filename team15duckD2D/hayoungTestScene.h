@@ -1,6 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "IllustratedBook.h"
+#include "bag.h"
 
 enum MAIN_MENU_SELECT
 {
@@ -16,7 +17,7 @@ enum CUSSOR_SELECT
 {
 	POKEMON_BOOK = 1,
 	POKEMON,
-	BAG,
+	BAG_ITEM,
 	PLAYER,
 	SAVE_REPORT,
 	SETTING,
@@ -78,6 +79,7 @@ private:
 	tagCMClose			_cmc;		//기본메뉴 - 닫기
 
 	IllustratedBook* _book;
+	bag* _bag;
 
 	MAIN_MENU_SELECT	_mmselect;	//메인메뉴 선택
 	SUB_MENU_SELECT		_smselect;	//서브메뉴 선택

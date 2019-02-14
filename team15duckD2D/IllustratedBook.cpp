@@ -43,8 +43,8 @@ HRESULT IllustratedBook::init()
 		_book[i].attrframeX = 0;
 		_book[i].attrframeY = 0;
 
-		_book[i].weight = L"???";
-		_book[i].height = L"???";
+		_book[i].weight = L"몸무게 :";
+		_book[i].height = L"키 :";
 
 
 		_book[i].isDataSet = false;
@@ -125,14 +125,6 @@ void IllustratedBook::render()
 {
 	IMAGEMANAGER->findImage("도감")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
 
-	WCHAR pokemon_book[1024];
-	swprintf_s(pokemon_book, L"포켓몬 도감 목록");
-	D2DMANAGER->drawText(pokemon_book, 285 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(160, 160, 160));
-	swprintf_s(pokemon_book, L"포켓몬 도감 목록");
-	D2DMANAGER->drawText(pokemon_book, 280 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
-	swprintf_s(pokemon_book, L"도감뭐하니?:%d", _pbstate);
-	D2DMANAGER->drawText(pokemon_book, 750 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 20, RGB(255, 255, 255));
-
 	if (_pbstate == BOOK_LIST)
 	{
 		// 보여주는 목록은 현재 선택한 번호 - 5
@@ -160,7 +152,6 @@ void IllustratedBook::render()
 			i = 141;		// 보여주는 목록 시작은 141
 		}
 
-
 		int height = 70;
 		for (; i < iMax; i++, height += 48)
 		{
@@ -184,7 +175,6 @@ void IllustratedBook::render()
 			//만약에 i가 선택한 번호라면 
 			if (i == _currentSelectNum)
 			{
-
 				IMAGEMANAGER->findImage("화살표")->render(76 + CAMERA->getPosX(), height + 9 + CAMERA->getPosY());
 			}
 		}
@@ -192,7 +182,25 @@ void IllustratedBook::render()
 	else if (_pbstate == BOOK_INFO)
 	{
 		IMAGEMANAGER->findImage("도감")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
+	
+		int i = _currentSelectNum;
+
+		D2DMANAGER->drawText(_book[i].number.c_str(), 50, 100, 38); 
+		D2DMANAGER->drawText(_book[i].name.c_str(), 200, 100, 38);
+
+		D2DMANAGER->drawText(_book[i].height.c_str(), 50, 200, 38);
+		D2DMANAGER->drawText(_book[i].weight.c_str(), 50, 250, 38);
+
 	}
+
+
+	WCHAR pokemon_book[1024];
+	swprintf_s(pokemon_book, L"포켓몬 도감 목록");
+	D2DMANAGER->drawText(pokemon_book, 285 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(160, 160, 160));
+	swprintf_s(pokemon_book, L"포켓몬 도감 목록");
+	D2DMANAGER->drawText(pokemon_book, 280 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
+	swprintf_s(pokemon_book, L"도감뭐하니?:%d", _pbstate);
+	D2DMANAGER->drawText(pokemon_book, 750 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 20, RGB(255, 255, 255));
 
 }
 

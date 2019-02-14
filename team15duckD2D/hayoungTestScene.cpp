@@ -17,6 +17,11 @@ HRESULT hayoungTestScene::init()
 	_book->init();
 	_book->pokemonDataSet();
 
+
+	_bag = new bag;
+	_bag->init();
+	_bag->itemDataSet();
+
 	frameImageinit();
 	//commonMenuinit();
 
@@ -89,9 +94,9 @@ void hayoungTestScene::update()
 				_cselect = POKEMON;
 				break;
 			case POKEMON:
-				_cselect = BAG;
+				_cselect = BAG_ITEM;
 				break;
-			case BAG:
+			case BAG_ITEM:
 				_cselect = PLAYER;
 				break;
 			case PLAYER:
@@ -125,11 +130,11 @@ void hayoungTestScene::update()
 			case POKEMON:
 				_cselect = POKEMON_BOOK;
 				break;
-			case BAG:
+			case BAG_ITEM:
 				_cselect = POKEMON;
 				break;
 			case PLAYER:
-				_cselect = BAG;
+				_cselect = BAG_ITEM;
 				break;
 			case SAVE_REPORT:
 				_cselect = PLAYER;
@@ -180,6 +185,8 @@ void hayoungTestScene::update()
 
 	//=================== 특별케이스 도감
 	_book->update();
+	_bag->update();
+
 	//=================================
 
 
@@ -431,17 +438,19 @@ void hayoungTestScene::render()
 	}
 	//3. 가방 렌더
 	//하위메뉴인 포켓몬이 열리는 조건은 <메인메뉴가 열려있고, 커서가 가방을 가르키고, 하위메뉴를 선택> 했을때이다.
-	if (_mmselect == MMS_YES && _cselect == BAG && _smselect == SMS_YES)
+	if (_mmselect == MMS_YES && _cselect == BAG_ITEM && _smselect == SMS_YES)
 	{
 		if (_isMale)
 		{
 			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
 			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 160 + CAMERA->getPosY(), 0, 0);
+			_bag->render();
 		}
 		else if (_isFemale)
 		{
 			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
 			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 172 + CAMERA->getPosY(), 1, 0);
+			_bag->render();
 		}
 
 		WCHAR bag[1024];
@@ -687,7 +696,7 @@ void hayoungTestScene::commonMenurender()
 			swprintf_s(str, L"같이 있는 포켓몬의 상태를 확인하고 관리합니다.");
 			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
-		case BAG:
+		case BAG_ITEM:
 			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 153 + CAMERA->getPosY());
 			swprintf_s(str, L"도구를 확인하고 사용할 수 있습니다.");
 			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));

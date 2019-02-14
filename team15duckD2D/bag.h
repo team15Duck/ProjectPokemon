@@ -4,6 +4,8 @@ typedef struct tagBagInfo
 {
 	wstring name;		//아이템 명
 	wstring amount;		//아이템 수량
+
+	bool _isDataset;
 }BAG;
 
 class bag
