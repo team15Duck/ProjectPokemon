@@ -163,7 +163,7 @@ HRESULT playGround::init()
 	// 5. ÀúÀå
 
 	// 6. ¼³Á¤ 
-]
+
 	// ========================================================================================================
 	SCENEMANAGER->addScene("Ä¡¿µ¾À", new chiyeongTestScene);
 	SCENEMANAGER->addScene("ÇÏ¿µ¾À", new hayoungTestScene);
@@ -171,13 +171,17 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
 	SCENEMANAGER->addScene("objectToolScene", new objectToolScene);
 
+	SCENEMANAGER->addScene("battleScene", new battleScene);
+	SCENEMANAGER->addScene("battleScene2", new battleScene2);
+
+
 	if (MAPTOOLSCENE)
 	{
 		//SCENEMANAGER->changeScene("objectToolScene");
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("ÇÏ¿µ¾À");
+		SCENEMANAGER->changeScene("mapTestScene");
 	}
 	
 	return S_OK;

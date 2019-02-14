@@ -382,9 +382,10 @@ void player::appearTileCheck()
 		bool meet = RND->getInt(10) < 3 ? true : false;
 		if (meet)
 		{
-			//이거두개를 데이터베이스로 넘겨주고 씬체인지
-			_map->getPokemon();
-			_map->getLevel();
+			pokemon* enemy = new pokemon;
+			enemy->init(NULL, _map->getPokemon(), _map->getLevel(), false);
+			PLAYERDATA->setPokemon(enemy);
+			SCENEMANAGER->changeScene("battleScene");
 		}
 	}
 }

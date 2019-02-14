@@ -15,6 +15,7 @@ HRESULT playerDataBase::init()
 {
 	_currentPlayer = new player;
 	_currentPlayer->init();
+	_pokemon = nullptr;
 	return S_OK;
 }
 

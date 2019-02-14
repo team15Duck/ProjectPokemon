@@ -2,6 +2,8 @@
 #include "battle.h"
 #include <set>
 #include "gameNode.h"
+#include "pokemon.h"
+
 //포켓몬과배틀
 class battleScene : public gameNode
 {
@@ -11,6 +13,10 @@ private:
 	BattleTurn _turn;			//턴
 	set<UINT> _expList;			//경험치 받을 포켓몬 리스트 
 								//적이 죽을때마다 클리어되고 현재 포켓몬이 추가됨.
+
+	pokemon* _pokemon;
+
+
 
 public:
 	battleScene();

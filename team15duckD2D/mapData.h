@@ -38,7 +38,7 @@ public:
 
 	virtual void setPlayerMemoryAdressLink(player* p) { _player = p; }
 
-	virtual void setPokemon() = 0;
+	virtual void setPokemon();
 
 
 

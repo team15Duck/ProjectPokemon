@@ -5,6 +5,8 @@
 #include "mapToolScene.h"
 #include "mapTestScene.h"
 #include "objectToolScene.h"
+#include "battleScene.h"
+#include "battleScene2.h"
 
 class playGround : public gameNode
 {

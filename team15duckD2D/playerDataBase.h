@@ -59,5 +59,13 @@ public:
 	void objectDataSave(DATA data);
 	void playerDataSave(DATA data);
 
+
+
+
+
+public:
+	pokemon* getPokemon() { return _pokemon; }
+	void setPokemon(pokemon* pokemon) { _pokemon = pokemon; }
+
 };
 
