@@ -30,6 +30,13 @@
 #define ATTR_STORE_DISPLAY  0X01000000UL					//진열대2(상점)
 #define ATTR_MAP			0X02000000UL					//지도
 
+//===================포탈을 위해서 넣은 속성들이에요=====================
+#define ATTR_POTAL			0x04000000UL					//포탈
+#define ATTR_HOME			0x08000000UL					//집
+#define ATTR_O_LAB			0x10000000UL					//오박사 연구실
+#define ATTR_CENTER			0x20000000UL					//포켓몬 센터
+#define ATTR_SHOP			0x40000000UL					//상점
+#define ATTR_GYM			0x80000000UL					//체육관
 
 
 
