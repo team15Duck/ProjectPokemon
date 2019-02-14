@@ -753,12 +753,16 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_DOWN_JUMP;
 		}
-		else if (frameX == 0 && frameY == 1)
+		else if (frameX == 0 && frameY == 0)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_LEFT_JUMP;
+
+
+
+
 		}
-		else if (frameX == 2 && frameY == 1)
+		else if (frameX == 2 && frameY == 0)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_RIGHT_JUMP;
@@ -770,12 +774,10 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX >= 3 && frameX < 6) && frameY == 0) //오박사집 테이블
 		{
 			result |= ATTR_NONE;
-			//테이블
 		}
 		else if ((frameX >= 3 && frameX < 6) && frameY == 1)
 		{
 			result |= ATTR_UNMOVE;
-			//테이블
 		}
 		else if ((frameX >= 2 && frameX < 6) && frameY == 2) //풀베기(프레임)
 		{
@@ -785,12 +787,11 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX == 0 || frameX == 1) && frameY == 3) //카페트(포탈)
 		{
 			result |= ATTR_NONE;
-			//포탈
+			result |= ATTR_POTAL;
 		}
 		else if (frameX == 2 && (frameY == 3 || frameY == 4)) //카페트(포탈X)
 		{
 			result |= ATTR_NONE;
-			//카페트
 		}
 		else if ((frameX == 4 || frameX == 5) && frameY == 3) //실내 구석용
 		{
@@ -799,17 +800,16 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if ((frameX == 3 && frameY == 3))
 		{
 			result |= ATTR_UNMOVE;
-			//포탈
+			result |= ATTR_POTAL;
 		}
 		else if ((frameX == 3 && frameY == 4) || (frameX == 4 && frameY == 5))
 		{
 			result |= ATTR_UNMOVE;
-			//계단
 		}
 		else if (frameX == 5 && frameY == 5)
 		{
 			result |= ATTR_NONE;
-			//포탈
+			result |= ATTR_POTAL;
 		}
 		else if (frameX == 5 && frameY == 4)
 		{
