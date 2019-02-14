@@ -147,6 +147,247 @@ HRESULT skillDataBase::init()
 	}
 
 
+	// 할퀴기
+	{
+		id = SCRATCH;
+		type = PM_TYPE_NORMAL;
+		category = PMSC_ATTACK;
+		txt = "단단하고 뾰족한 날카로운 손톱으로 상대를 할퀴어서 공격한다.";
+		name = "할퀴기";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 40;
+		rate = 100;
+		pp = 35;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 불꽃세례
+	{
+		id = EMBER;
+		type = PM_TYPE_FIRE;
+		category = PMSC_SPECAIL;
+		txt = "작은 불꽃을 상대에게 발사하여 공격한다. 화상 상태로 만들 때가 있다.";
+		name = "불꽃세례";
+		condition = PMUC_BURN;
+		buff = PMB_NONE;
+
+		power = 40;
+		rate = 100;
+		pp = 25;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 화염방사
+	{
+		id = FLAMETHROWER;
+		type = PM_TYPE_FIRE;
+		category = PMSC_SPECAIL;
+		txt = "세찬 불꽃을 상대에게 발사하여 공격한다. 화상 상태로 만들 때가 있다.";
+		name = "화염방사";
+		condition = PMUC_BURN;
+		buff = PMB_NONE;
+
+		power = 90;
+		rate = 100;
+		pp = 15;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 용의 분노
+	{
+		id = DRAGON_RAGE;
+		type = PB_TYPE_DRAGON;
+		category = PMSC_SPECAIL;
+		txt = "충격파를 상대에게 부딪쳐서 공격한다. 언제나 40의 데미지를 준다.";
+		name = "용의분노";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 0;
+		rate = 100;
+		pp = 10;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 거품
+	{
+		id = BUBBLE;
+		type = PM_TYPE_WATER;
+		category = PMSC_SPECAIL;
+		txt = "매우 많은 거품을 상대에게 내뿜어 공격한다. 상대의 스피드를 떨어뜨릴 때가 있다.";
+		name = "거품";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 20;
+		rate = 100;
+		pp = 30;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 물대포
+	{
+		id = WATER_GUN;
+		type = PM_TYPE_WATER;
+		category = PMSC_SPECAIL;
+		txt = "물을 기세 좋게 상대에게 발사하여 공격한다.";
+		name = "물대포";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 40;
+		rate = 100;
+		pp = 25;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 하이드로펌프
+	{
+		id = HYDRO_PUMP;
+		type = PM_TYPE_WATER;
+		category = PMSC_SPECAIL;
+		txt = "대량의 물을 세찬 기세로 상대에게 발사하여 공격한다.";
+		name = "하이드로펌프";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 120;
+		rate = 80;
+		pp = 5;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+
+	// 전광석화
+	{
+		id = QUICK_ATTACK;
+		type = PM_TYPE_NORMAL;
+		category = PMSC_ATTACK;
+		txt = "눈에 보이지 않는 굉장한 속도로 상대에게 돌진한다. 반드시 선제 공격할 수 있다.";
+		name = "전광석화";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 40;
+		rate = 100;
+		pp = 30;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 전기쇼크
+	{
+		id = THUNDERSHOCK;
+		type = PM_TYPE_ELECTRONIC;
+		category = PMSC_SPECAIL;
+		txt = "전기 자극을 상대에게 날려서 공격한다. 마비 상태로 만들 때가 있다.";
+		name = "전기쇼크";
+		condition = PMUC_PALALYSIS;
+		buff = PMB_NONE;
+
+		power = 40;
+		rate = 100;
+		pp = 30;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 10만볼트
+	{
+		id = THUNDERBOLT;
+		type = PM_TYPE_ELECTRONIC;
+		category = PMSC_SPECAIL;
+		txt = "강한 전격을 상대에게 날려서 공격한다. 마비 상태로 만들 때가 있다.";
+		name = "10만볼트";
+		condition = PMUC_PALALYSIS;
+		buff = PMB_NONE;
+
+		power = 90;
+		rate = 100;
+		pp = 15;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 번개
+	{
+		id = THUNDER;
+		type = PM_TYPE_ELECTRONIC;
+		category = PMSC_SPECAIL;
+		txt = "강한 번개를 상대에게 떨어뜨려 공격한다. 마비 상태로 만들 때가 있다.";
+		name = "번개";
+		condition = PMUC_PALALYSIS;
+		buff = PMB_NONE;
+
+		power = 110;
+		rate = 70;
+		pp = 10;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
+	// 전기자석파
+	{
+		id = THNDER_WAVE;
+		type = PM_TYPE_ELECTRONIC;
+		category = PMSC_SPECAIL;
+		txt = "약한 전격을 날려서 상대를 마비 상태로 만든다.";
+		name = "전기자석파";
+		condition = PMUC_PALALYSIS;
+		buff = PMB_NONE;
+
+		power = 0;
+		rate = 90;
+		pp = 20;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
 	return S_OK;
 }
 

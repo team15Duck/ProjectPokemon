@@ -94,7 +94,7 @@ void pokemonSkill::render()
 
 void pokemonSkill::clear()
 {
-	_skillId = -1;
+	_skillId = SKILL_INDEX_NONE;
 	_currentPP = 0;
 	_isPlayingEffect = false;
 }
@@ -139,30 +139,45 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 	pokemonUC* uc = new pokemonUC;
 	uc->clear();
 
-	uc->type = _info.getUpsetConditionType();
+	POKEMON_UPSET_CONDITION type = _info.getUpsetConditionType();
 	
 	switch (uc->type)
 	{
 		case PMUC_POISON:
 		{
+			uc->type = type;
 			uc->releseType = PMURC_CURE;
 			uc->applyValue = 8;				// hp의 1/8 감소
 			break;
 		}
 		case PMUC_FROZEN:
 		{
-			uc->releseType = PMURC_PERCENT;
-			uc->releaseValue = 5;			// 1/5 확률로 상태 해제
+			// 10퍼센트 확률로 걸린다
+			int value = RND->getFromIntTo(1, 10);
+			if (value <= 10)
+			{
+				uc->releseType = PMURC_PERCENT;
+				uc->releaseValue = 5;			// 1/5 확률로 상태 해제
+				uc->type = type;
+			}
+
 			break;
 		}
 		case PMUC_PALALYSIS:
 		{
-			uc->releseType = PMURC_TURN;
-			uc->releaseValue = RND->getFromIntTo(1, 3);	// 1 ~ 3 턴후에 해제
+			// 10퍼센트 확률로 걸린다
+			int value = RND->getFromIntTo(1, 10);
+			if (value <= 10)
+			{
+				uc->type = type;
+				uc->releseType = PMURC_TURN;
+				uc->releaseValue = RND->getFromIntTo(1, 3);	// 1 ~ 3 턴후에 해제
+			}
 			break;
 		}
 		case PMUC_SLEEP:
 		{
+			uc->type = type;
 			uc->releseType = PMURC_TURN;
 			uc->releaseValue = RND->getFromIntTo(1, 2); // 1 ~ 2 턴후에 해제
 			break;
@@ -170,15 +185,21 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 
 		case PMUC_BURN:
 		{
-			uc->releseType = PMURC_CURE;
-			uc->applyValue = 16;				// hp의 1/16 감소
+			// 10퍼센트 확률로 걸린다
+			int value = RND->getFromIntTo(1, 10);
+			if (value <= 10)
+			{
+				uc->type = type;
+				uc->releseType = PMURC_CURE;
+				uc->applyValue = 16;				// hp의 1/16 감소
+			}
+
 			break;
 		}
 
 		default:
 			break;
 	}
-
 
 	return uc;
 }

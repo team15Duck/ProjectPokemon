@@ -133,7 +133,7 @@ void pokemon::render()
 {
 	_img->frameRender(CAMERA->getPosX() + _destX, CAMERA->getPosY() + _destY, _frameX, _frameY);
 
-	WCHAR str[128];
+	WCHAR str[256];
 	swprintf_s(str, L"Hp : %d / %d", getDisplayHp(), getMaxHp());
 	D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 100);
 	swprintf_s(str, L"Get Damage : %d", _damage);
@@ -146,6 +146,18 @@ void pokemon::render()
 	}
 
 	D2DMANAGER->drawText(_state.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 160);
+
+
+	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
+	{
+		pokemonSkillInfo info = *_skills[ii].getSkillInfomation();
+		wstring s;
+		s = string2wstring(info.getSkillName());
+		s.append(to_wstring(_skills[ii].getCurrentPP()));
+		s.append(L" / ");
+		s.append(to_wstring(_skills[ii].getMaxPP()));
+		D2DMANAGER->drawText(s.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 200 + ii * 20);
+	}
 
 }
 
@@ -234,11 +246,9 @@ void pokemon::applyBuff()
 	{
 		case PMB_ABSORB_HP:
 		{
-			int targetHp = _target->getHp();
-			int value = static_cast<int>(targetHp / 8.f);
-
-			hillHp(value);
-			_target->takeDamage(value);
+			hillHp(10);
+			_target->takeDamage(10);
+			_target->startTakeDamageDisplay();
 
 			_state = L"피 흡흡";
 			break;
@@ -335,18 +345,24 @@ void pokemon::useSkill(int idx)
 {
 	_state = L"스킬 사용";
 	_isIdle = true;
-	if(idx < 0 || POKEMON_SKILL_MAX_COUNT < idx)
+	if (idx < 0 || POKEMON_SKILL_MAX_COUNT < idx)
+	{
+		_state = L"없는 스킬";
 		return;
+	}
 	
-	if(!_skills[idx].isUsableSkill())
+	if (!_skills[idx].isUsableSkill())
+	{
+		_state = L"PP 부족";
 		return;
+	}
 
-	pokemonSkill skill = _skills[idx];
-	pokemonSkillInfo skillInfo = *skill.getSkillInfomation();
+	pokemonSkill* skill = &_skills[idx];
+	pokemonSkillInfo skillInfo = *skill->getSkillInfomation();
 
 	// pp 소모
-	int pp = skill.getCurrentPP();
-	skill.setCurrentPP(pp - 1);
+	int pp = skill->getCurrentPP();
+	skill->setCurrentPP(pp - 1);
 
 	// 명중했는지
 	int rate = skillInfo.getAccuracyRate();
@@ -360,10 +376,11 @@ void pokemon::useSkill(int idx)
 	}
 
 	_isIdle = false;
-	_state = L"공격 성공";
+	
+	_state = L" 공격 성공 스킬 id : " + string2wstring(skillInfo.getSkillName());
 
 	// 디버프, 버프 
-	pokemonUC* upsetCondition = skill.getUpsetCondition();
+	pokemonUC* upsetCondition = skill->getUpsetCondition();
 	POKEMON_BUFF buff = skillInfo.getBuffType();
 	if(PMB_NONE != buff)
 		_buff = buff;
@@ -467,6 +484,19 @@ void pokemon::changeSkill(int idx, int skillId)
 void pokemon::startTakeDamageDisplay()
 {
 	startProgessing(bind(&pokemon::progressingDecreaseHp, this), PROGRESSING_VALUE);
+}
+
+void pokemon::setUpsetCondition(pokemonUC upsetCondition)
+{
+	if (upsetCondition.type != _upsetCondition.type)
+	{
+		_upsetCondition = upsetCondition;
+		_state = L"상태 이상 효과 받음";
+	}
+	else
+	{
+		_state = L"동일한 상태 이상 효과";
+	}
 }
 
 void pokemon::levelUp()
@@ -585,35 +615,35 @@ void pokemon::endProgressing()
 
 void pokemon::progressingIncreaseHp()
 {
-	++_displayHp;
-
 	// 피 채웠으면 콜백함수 해제
 	if (_displayHp == _nowStatus.hp)
 	{
 		endProgressing();
 	}
+
+	++_displayHp;
 }
 
 void pokemon::progressingDecreaseHp()
 {
-	--_displayHp;
-
 	// 피를 뻈으면 콜백함수 해제
 	if ( _displayHp == _nowStatus.hp )
 	{ 
 		endProgressing();
 	}
+
+	--_displayHp;
 }
 
 void pokemon::progressingIncreseExp(void)
 {
-	++_displayExp;
-
 	// 경험치 다 올렸으면 콜백함수 해제
 	if (_displayExp == _currentExp)
 	{
 		endProgressing();
 	}
+
+	++_displayExp;
 }
 
 void pokemon::progressintSkillEffect(int idx)
@@ -715,6 +745,12 @@ int pokemon::calculateAttkValue(int skillIdx)
 	float randValue = 1.f;						// 랜덤값
 	float conflictValue = 1.f;					// 타입 상성
 	
+	// 위력이 0인 스킬은 데미지 없음
+	if (info.getPower() == 0)
+	{
+		return 0.f;
+	}
+
 	// 공격력, 방어력
 	switch (info.getSkillCategory())
 	{

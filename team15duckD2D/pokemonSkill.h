@@ -14,11 +14,27 @@ enum POKEMON_SKILL_CATEGORY
 enum SKILL_INDEX
 {
 	TACLE,			// 몸통박치기
+	
 	LEECH_SEEd,		// 씨뿌리기
 	VINE_WHIP,		// 덩쿨채찍
 	POISON_POWDER,	// 독가루
 	SLEEP_POWDER,	// 수면가루
 	RAZOR_LEAF,		// 잎날 가르기
+
+	SCRATCH,		// 할퀴기
+	EMBER,			// 불꽃세례
+	FLAMETHROWER,	// 화염방사
+	DRAGON_RAGE,	// 용의 분노
+
+	BUBBLE,			// 거품
+	WATER_GUN,		// 물대포
+	HYDRO_PUMP,		// 하이드로 펌프
+
+	QUICK_ATTACK,	// 전광석화
+	THUNDERSHOCK,	// 전기쇼크
+	THUNDERBOLT,	// 10만볼트
+	THUNDER,		// 번개
+	THNDER_WAVE,	// 전기자석파
 
 	SKILL_INDEX_NONE,
 	SKILL_INDEX_COUNT = SKILL_INDEX_NONE,
@@ -60,6 +76,8 @@ public:
 	POKEMON_SKILL_CATEGORY	getSkillCategory() { return _category; }
 	// 설명
 	string					getDescription() { return _description; }
+	// 이름
+	string					getSkillName() { return _name; }
 
 	// 위력
 	int getPower() { return _power; }

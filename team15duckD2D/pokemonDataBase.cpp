@@ -82,11 +82,6 @@ HRESULT pokemonDataBase::init()
 		}
 		{
 			vector<int> ids;
-			ids.push_back(LEECH_SEEd);
-			skillMap.insert(make_pair(7, ids));
-		}
-		{
-			vector<int> ids;
 			ids.push_back(VINE_WHIP);
 			skillMap.insert(make_pair(10, ids));
 		}
@@ -125,20 +120,10 @@ HRESULT pokemonDataBase::init()
 		map<int, vector<int>> skillMap;
 		{
 			vector<int> ids;
-			ids.push_back(POISON_POWDER);
 			ids.push_back(TACLE);
+			ids.push_back(LEECH_SEEd);
 			ids.push_back(VINE_WHIP);
 			skillMap.insert(make_pair(1, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(LEECH_SEEd);
-			skillMap.insert(make_pair(7, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
 		}
 		{
 			vector<int> ids;
@@ -176,34 +161,25 @@ HRESULT pokemonDataBase::init()
 		map<int, vector<int>> skillMap;
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
+			ids.push_back(SCRATCH);
 			skillMap.insert(make_pair(1, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
+			ids.push_back(EMBER);
 			skillMap.insert(make_pair(7, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
+			ids.push_back(FLAMETHROWER);
+			skillMap.insert(make_pair(31, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(POISON_POWDER);
-			skillMap.insert(make_pair(15, ids));
+			ids.push_back(DRAGON_RAGE);
+			skillMap.insert(make_pair(43, ids));
 		}
-		{
-			vector<int> ids;
-			ids.push_back(SLEEP_POWDER);
-			skillMap.insert(make_pair(16, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(RAZOR_LEAF);
-			skillMap.insert(make_pair(20, ids));
-		}
+
 
 		string text = "태어날 때부터 꼬리의 불꽃이 타오르고 있다. 불꽃이 꺼지면 그 생명이 다하고 만다.";
 		pokemonInfo* info = new pokemonInfo;
@@ -228,33 +204,23 @@ HRESULT pokemonDataBase::init()
 		map<int, vector<int>> skillMap;
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
+			ids.push_back(SCRATCH);
 			skillMap.insert(make_pair(1, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
+			ids.push_back(EMBER);
 			skillMap.insert(make_pair(7, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
+			ids.push_back(FLAMETHROWER);
+			skillMap.insert(make_pair(34, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(POISON_POWDER);
-			skillMap.insert(make_pair(15, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(SLEEP_POWDER);
-			skillMap.insert(make_pair(16, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(RAZOR_LEAF);
-			skillMap.insert(make_pair(20, ids));
+			ids.push_back(DRAGON_RAGE);
+			skillMap.insert(make_pair(48, ids));
 		}
 
 		string text = "꼬리를 휘둘러 상대를 쓰러트리고 날카로운 발톱으로 갈기갈기 찢어버린다.";
@@ -280,33 +246,19 @@ HRESULT pokemonDataBase::init()
 		map<int, vector<int>> skillMap;
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
+			ids.push_back(SCRATCH);
+			ids.push_back(EMBER);
 			skillMap.insert(make_pair(1, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
-			skillMap.insert(make_pair(7, ids));
+			ids.push_back(FLAMETHROWER);
+			skillMap.insert(make_pair(34, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(POISON_POWDER);
-			skillMap.insert(make_pair(15, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(SLEEP_POWDER);
-			skillMap.insert(make_pair(16, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(RAZOR_LEAF);
-			skillMap.insert(make_pair(20, ids));
+			ids.push_back(DRAGON_RAGE);
+			skillMap.insert(make_pair(54, ids));
 		}
 
 		string text = "지상 1400미터까지 날개를 사용해 나는 것이 가능하다. 고열의 불꽃을 내뿜는다.";
@@ -338,29 +290,20 @@ HRESULT pokemonDataBase::init()
 		}
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
+			ids.push_back(BUBBLE);
 			skillMap.insert(make_pair(7, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
+			ids.push_back(WATER_GUN);
+			skillMap.insert(make_pair(13, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(POISON_POWDER);
-			skillMap.insert(make_pair(15, ids));
+			ids.push_back(HYDRO_PUMP);
+			skillMap.insert(make_pair(47, ids));
 		}
-		{
-			vector<int> ids;
-			ids.push_back(SLEEP_POWDER);
-			skillMap.insert(make_pair(16, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(RAZOR_LEAF);
-			skillMap.insert(make_pair(20, ids));
-		}
+
 
 		string text = "긴 목을 등껍질 안에 움추릴 때 강한 물대포를 발사한다.";
 		pokemonInfo* info = new pokemonInfo;
@@ -386,32 +329,18 @@ HRESULT pokemonDataBase::init()
 		{
 			vector<int> ids;
 			ids.push_back(TACLE);
+			ids.push_back(BUBBLE);
 			skillMap.insert(make_pair(1, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
-			skillMap.insert(make_pair(7, ids));
+			ids.push_back(WATER_GUN);
+			skillMap.insert(make_pair(13, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(POISON_POWDER);
-			skillMap.insert(make_pair(15, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(SLEEP_POWDER);
-			skillMap.insert(make_pair(16, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(RAZOR_LEAF);
-			skillMap.insert(make_pair(20, ids));
+			ids.push_back(HYDRO_PUMP);
+			skillMap.insert(make_pair(53, ids));
 		}
 
 		string text = "애완동물으로서 인기가 높다. 또 털로 감싸진 꼬리는 장수의 상징이다.";
@@ -438,37 +367,99 @@ HRESULT pokemonDataBase::init()
 		{
 			vector<int> ids;
 			ids.push_back(TACLE);
+			ids.push_back(BUBBLE);
 			skillMap.insert(make_pair(1, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(TACLE);
-			skillMap.insert(make_pair(7, ids));
+			ids.push_back(WATER_GUN);
+			skillMap.insert(make_pair(13, ids));
 		}
 		{
 			vector<int> ids;
-			ids.push_back(VINE_WHIP);
-			skillMap.insert(make_pair(10, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(POISON_POWDER);
-			skillMap.insert(make_pair(15, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(SLEEP_POWDER);
-			skillMap.insert(make_pair(16, ids));
-		}
-		{
-			vector<int> ids;
-			ids.push_back(RAZOR_LEAF);
-			skillMap.insert(make_pair(20, ids));
+			ids.push_back(HYDRO_PUMP);
+			skillMap.insert(make_pair(68, ids));
 		}
 
 		string text = "무거운 몸으로 상대를 덮쳐서 기절시킨다. 위기에 처하면 등껍질에 숨는다.";
 		pokemonInfo* info = new pokemonInfo;
 		info->init(index, PM_TYPE_WATER, "거북왕", kindStatus, text, 85.5, 1.6f, 45, skillMap);
+
+		_pokemonMap.insert(make_pair(index, info));
+
+		SAFE_DELETE(kindStatus);
+	}
+
+	// 피카츄
+	{
+		POKEMON index = PM_PIKACHU;
+		pokemonStatus* kindStatus = new pokemonStatus;
+		kindStatus->hp = 35;
+		kindStatus->attk = 55;
+		kindStatus->dex = 30;
+		kindStatus->spAttk = 50;
+		kindStatus->spDex = 40;
+		kindStatus->spAttk = 90;
+
+		map<int, vector<int>> skillMap;
+		{
+			vector<int> ids;
+			ids.push_back(THUNDERSHOCK);
+			skillMap.insert(make_pair(1, ids));
+		}
+		{
+			vector<int> ids;
+			ids.push_back(THNDER_WAVE);
+			skillMap.insert(make_pair(8, ids));
+		}
+		{
+			vector<int> ids;
+			ids.push_back(QUICK_ATTACK);
+			skillMap.insert(make_pair(11, ids));
+		}
+		{
+			vector<int> ids;
+			ids.push_back(THUNDERBOLT);
+			skillMap.insert(make_pair(26, ids));
+		}
+		{
+			vector<int> ids;
+			ids.push_back(THUNDER);
+			skillMap.insert(make_pair(41, ids));
+		}
+
+		string text = "뺨의 양쪽에 작은 전기 주머니가 있다. 위기 상황일 때 방전한다.";
+		pokemonInfo* info = new pokemonInfo;
+		info->init(index, PM_TYPE_ELECTRONIC, "피카츄", kindStatus, text, 6.0f, 0.4f, 190, skillMap);
+
+		_pokemonMap.insert(make_pair(index, info));
+
+		SAFE_DELETE(kindStatus);
+	}
+
+	// 라이츄
+	{
+		POKEMON index = PM_RAICHU;
+		pokemonStatus* kindStatus = new pokemonStatus;
+		kindStatus->hp = 60;
+		kindStatus->attk = 90;
+		kindStatus->dex = 55;
+		kindStatus->spAttk = 90;
+		kindStatus->spDex = 80;
+		kindStatus->spAttk = 100;
+
+		map<int, vector<int>> skillMap;
+		{
+			vector<int> ids;
+			ids.push_back(THUNDERSHOCK);
+			ids.push_back(QUICK_ATTACK);
+			ids.push_back(THUNDERBOLT);
+			skillMap.insert(make_pair(1, ids));
+		}
+
+		string text = "전기는 10만 볼트로 도달하는 때도 있어 무심결에 만졌다가는 인도코끼리라도 기절한다.";
+		pokemonInfo* info = new pokemonInfo;
+		info->init(index, PM_TYPE_ELECTRONIC, "라이츄", kindStatus, text, 30.0f, 0.8f, 75, skillMap);
 
 		_pokemonMap.insert(make_pair(index, info));
 

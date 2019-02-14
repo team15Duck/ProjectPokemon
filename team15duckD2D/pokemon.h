@@ -152,11 +152,11 @@ public:
 	
 	//============================================== set
 	
+	// 상태이상 세팅
+	void setUpsetCondition(pokemonUC upsetCondition);
+	
 	// 적 포켓몬 세팅
 	void setTargetPokemon(pokemon* pm) { _target = pm; }
-
-	// 상태이상 세팅
-	void setUpsetCondition(pokemonUC upsetCondition){ _upsetCondition = upsetCondition; _state = L"상태 이상 효과 받음"; }
 	// 소지 아이템 세팅
 	void setOwnerItem(ITEM_TYPE itemType)	{ _ownerItemType = itemType; }
 	// 닉네임
@@ -215,7 +215,7 @@ public:
 	// 상태이상 
 	POKEMON_UPSET_CONDITION getUpsetCondition() { return _upsetCondition.type; }
 	// 스킬
-	const pokemonSkill* getPokemonSkills() { return _skills; }
+	pokemonSkill* getPokemonSkills() { return _skills; }
 
 	// 연출용 hp
 	int getDisplayHp()	{ return _displayHp; }

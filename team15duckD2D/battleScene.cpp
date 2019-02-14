@@ -44,6 +44,9 @@ void battleScene::update()
 {
 	// Å×½ºÆ®
 	{
+		_pms[TURN_ENEMY]->update();
+		_pms[TURN_PLAYER]->update();
+
 		if (_pms[_turn]->isIdle())
 		{
 			termTime -= TIMEMANAGER->getElapsedTime();
@@ -74,7 +77,14 @@ void battleScene::update()
 
 					case 4:
 					{
-						_pms[_turn]->useSkill(0);
+						int cnt = 0;
+						for (; cnt < POKEMON_SKILL_MAX_COUNT; ++cnt)
+						{
+							if (_pms[_turn]->getPokemonSkills()[cnt].getSkillID() == SKILL_INDEX_NONE)
+								break;
+						}
+
+						_pms[_turn]->useSkill(RND->getInt(cnt));
 						break;
 					}
 
@@ -85,10 +95,6 @@ void battleScene::update()
 						break;
 				}
 			}
-		}
-		else
-		{
-			_pms[_turn]->update();
 		}
 	}
 }
