@@ -2,7 +2,17 @@
 #include "pokemonSkill.h"
 
 pokemonSkillInfo::pokemonSkillInfo()
+: _skillId(SKILL_INDEX_NONE)
+, _type(PM_TYPE_NONE)
+, _category(PMSC_NONE)
+, _upsetConditionType(PMUC_NONE)
+, _buffType(PMB_NONE)
+, _power(0)
+, _accuracyRate(0)
+, _defaultPP(0)
 {
+	_description.clear();
+	_name.clear();
 }
 
 pokemonSkillInfo::~pokemonSkillInfo()
@@ -55,7 +65,7 @@ HRESULT pokemonSkill::init(int skillid)
 {
 	_skillId = skillid;
 	_info = *SKILLDATA->getPokemonSkillinfo(skillid);
-	if(_info.getSkillID() != -1)
+	if(_info.getSkillID() != SKILL_INDEX_NONE)
 		_currentPP = _info.getDefaultPP();
 
 	return S_OK;

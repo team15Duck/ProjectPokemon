@@ -99,7 +99,7 @@ public:
 	pokemon();
 	~pokemon();
 
-	// 고유번호, 포켓몬 번호, 레벨, 플레이어 포켓몬?, 렌더 letf, 렌더 top
+	// 고유번호, 포켓몬 번호, 레벨, 플레이어 포켓몬?
 	HRESULT init(int idNo, POKEMON index, int level, bool isMyPokemon);
 	void release();
 	void update();
@@ -196,7 +196,7 @@ public:
 	// 현재 체력
 	int getHp()			{ return _nowStatus.hp; }
 	// 풀 체력
-	int getMaxHp()		{ return _nowStatus.hp;}
+	int getMaxHp()		{ return _currentLvStatus.hp;}
 	// 현재 공격력
 	int getAttk()		{ return _nowStatus.attk;}
 	// 현재 방어력
@@ -220,7 +220,7 @@ public:
 private:
 	// 경험치로 인한 레벨업
 	void levelUp();
-	// 능령치 세팅
+	// 능력치 세팅
 	void settingStatus();
 	// 진화
 	void evolution();

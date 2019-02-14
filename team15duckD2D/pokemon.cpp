@@ -15,6 +15,7 @@ pokemon::pokemon()
 , _displayHp(0)
 , _displayExp(0)
 , _displayTime(0.f)
+, _isIdle(true)
 , _buff(PMB_NONE)
 , _img(nullptr)
 , _target(nullptr)
@@ -73,12 +74,12 @@ HRESULT pokemon::init( int idNo
 	{
 		idx += 1;
 		_destX = 160.f;
-		_destY = 200.f;
+		_destY = 210.f;
 	}
 	else
 	{
 		_destX = 576.f;
-		_destY = 32.f;
+		_destY = 42.f;
 	}
 	
 	_frameX = idx % _img->GetMaxFrameX();
@@ -232,6 +233,7 @@ bool pokemon::useOwnerItem()
 			break;
 	}
 
+	_isIdle = true;
 	return false;
 }
 
