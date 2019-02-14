@@ -17,10 +17,11 @@ public:
 		PS_FASTMOVE_LEFT,		PS_FASTMOVE_UP,			PS_FASTMOVE_RIGHT,			PS_FASTMOVE_DOWN,		//빨리이동
 		PS_BICYCLE_IDLE_LEFT,	PS_BICYCLE_IDLE_UP,		PS_BICYCLE_IDLE_RIGHT,		PS_BICYCLE_IDLE_DOWN,	//자전거가만히
 		PS_BICYCLE_LEFT,		PS_BICYCLE_UP,			PS_BICYCLE_RIGHT,			PS_BICYCLE_DOWN,		//자전거
+		PS_JUMP_LEFT,			PS_JUMP_RIGHT,			PS_JUMP_DOWN										//점프
 	};
 
-	typedef unordered_map<string,item*>					mapItemList;
-	typedef unordered_map<string,item*>::iterator		mapItemIter;
+	typedef unordered_map<ITEM_TYPE,UINT>				mapItemList;
+	typedef unordered_map<ITEM_TYPE,UINT>::iterator		mapItemIter;
 
 private:
 	string				_name;									//이름

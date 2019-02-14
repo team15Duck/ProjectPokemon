@@ -254,7 +254,10 @@ void player::stateUpdate()
 
 		case player::PS_MOVE_LEFT:
 			_isRight = false;
-			_posX -= speed;
+			if (!(_map->getTile(_tileX - 1, _tileY)->attr & ATTR_UNMOVE))
+			{
+				_posX -= speed;
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -268,7 +271,10 @@ void player::stateUpdate()
 		break;
 		case player::PS_MOVE_UP:
 			_isRight = false;
-			_posY -= speed;
+			if (!(_map->getTile(_tileX, _tileY - 1)->attr & ATTR_UNMOVE))
+			{
+				_posY -= speed;
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -282,7 +288,10 @@ void player::stateUpdate()
 		break;
 		case player::PS_MOVE_RIGHT:
 			_isRight = true;
-			_posX += speed;
+			if (!(_map->getTile(_tileX + 1, _tileY)->attr & ATTR_UNMOVE))
+			{
+				_posX += speed;
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
@@ -296,7 +305,10 @@ void player::stateUpdate()
 		break;
 		case player::PS_MOVE_DOWN:
 			_isRight = false;
-			_posY += speed;
+			if (!(_map->getTile(_tileX, _tileY + 1)->attr & ATTR_UNMOVE))
+			{
+				_posY += speed;	
+			}
 			_moveDistance -= speed;
 			if (_moveDistance < speed)
 			{
