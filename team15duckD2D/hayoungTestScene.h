@@ -2,11 +2,17 @@
 #include "gameNode.h"
 #include "IllustratedBook.h"
 
-enum MENU_DIRECTION
+enum MAIN_MENU_SELECT
 {
-	MD_LT, MD_RT, MD_LB, MD_RB, MD_L, MD_R, MD_T, MD_B, MD_NONE
+	MMS_YES = 1,
+	MMS_NO
 };
-enum CUSSOR_STATE
+enum SUB_MENU_SELECT
+{
+	SMS_YES = 1,
+	SMS_NO,
+};
+enum CUSSOR_SELECT
 {
 	POKEMON_BOOK = 1,
 	POKEMON,
@@ -28,20 +34,7 @@ enum POKEMON_CURRENT_SELECT
 	CANCEL,
 };
 
-enum MENU_SELECT
-{
-	YES = 1,
-	NO,
-};
 
-struct tagCommonMenu
-{
-	D2D1_RECT_F _bottom;
-	D2D1_RECT_F _menu[7];
-	D2D1_RECT_F _cursor[7];
-	CUSSOR_STATE _cstate;
-	MENU_SELECT _ms;
-};
 struct tagCMPokemonBook
 {
 
@@ -75,9 +68,7 @@ struct tagCMClose
 class hayoungTestScene : public gameNode
 {
 private:
-	D2D1_RECT_F _rc;
 
-	tagCommonMenu		_cm;		//기본메뉴
 	tagCMPokemonBook	_cmpb;		//기본메뉴 - 도감
 	tagCMPokemon		_cmpm;		//기본메뉴 - 포켓몬
 	tagCMBag			_cmb;		//기본메뉴 - 가방
@@ -87,6 +78,10 @@ private:
 	tagCMClose			_cmc;		//기본메뉴 - 닫기
 
 	IllustratedBook* _book;
+
+	MAIN_MENU_SELECT	_mmselect;	//메인메뉴 선택
+	SUB_MENU_SELECT		_smselect;	//서브메뉴 선택
+	CUSSOR_SELECT		_cselect;	//커서 선택
 
 	bool _isCommonMenu;		//기본메뉴
 
@@ -109,11 +104,10 @@ public:
 	void render();
 
 	void frameImageinit();
-	void commonMenuinit();				//기본메뉴
 	void commonMenurender();			//기본메뉴
 
 	//================================ GET && SET ===================================//
 
-	   
+
 };
 

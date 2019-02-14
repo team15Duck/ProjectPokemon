@@ -9,6 +9,7 @@ item::item()
 
 item::~item()
 {
+	
 }
 
 HRESULT item::init()

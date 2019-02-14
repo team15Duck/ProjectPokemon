@@ -13,22 +13,32 @@ hayoungTestScene::~hayoungTestScene()
 
 HRESULT hayoungTestScene::init()
 {
-
 	_book = new IllustratedBook;
 	_book->init();
 	_book->pokemonDataSet();
 
 	frameImageinit();
-	commonMenuinit();
+	//commonMenuinit();
 
 	_issubpkm1exist = true;
-	_issubpkm2exist	= false;
-	_issubpkm3exist	= false;
-	_issubpkm4exist	= false;
-	_issubpkm5exist	= false;
+	_issubpkm2exist = false;
+	_issubpkm3exist = false;
+	_issubpkm4exist = false;
+	_issubpkm5exist = false;
 
 	_isFemale = false;
 	_isMale = true;
+
+	//메인메뉴 초기화 
+
+	MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
+
+	//메인메뉴 선택했나요? 아니요
+	_mmselect = MMS_NO;
+	//서브메뉴 선택했나요? 아니오
+	_smselect = SMS_NO;
+	//커서는 처음에는 도감을 가르킵니다
+	_cselect = POKEMON_BOOK;
 
 	_cmpm._pcs = MAIN_POKEMON;
 
@@ -45,7 +55,11 @@ HRESULT hayoungTestScene::init()
 	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
 	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
 	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
-	
+
+	// IMAGEMANAGER->addImage("남자가방", L"image/common_menu/bag/bag1.png", 236, 257);
+	// IMAGEMANAGER->addImage("여자가방", L"image/common_menu/bag/bag2.png", 236, 244);
+	IMAGEMANAGER->addFrameImage("남여가방", L"image/common_menu/bag/item_bag.png", 472, 257, 2, 1);
+
 	return S_OK;
 }
 
@@ -55,16 +69,127 @@ void hayoungTestScene::release()
 
 void hayoungTestScene::update()
 {
-	
-	//만약에 엔터키를 누르면 
+
+	//메인메뉴 활성화하기
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
-		_isCommonMenu = true;
+		_mmselect = MMS_YES;
+
 	}
+	//메인메뉴 이동하기
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		//=========================== 설정
+		//메뉴간의 이동은 메인메뉴에서만 가능하다
+		//===============================
+
+		if (_mmselect == MMS_YES && _smselect == SMS_NO)
+		{
+			switch (_cselect)
+			{
+			case POKEMON_BOOK:
+				_cselect = POKEMON;
+				break;
+			case POKEMON:
+				_cselect = BAG;
+				break;
+			case BAG:
+				_cselect = PLAYER;
+				break;
+			case PLAYER:
+				_cselect = SAVE_REPORT;
+				break;
+			case SAVE_REPORT:
+				_cselect = SETTING;
+				break;
+			case SETTING:
+				_cselect = CLOSE;
+				break;
+			case CLOSE:
+				_cselect = POKEMON_BOOK;
+				break;
+			}
+		}
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_UP))
+	{
+		//=========================== 설정
+		//메뉴간의 이동은 메인메뉴에서만 가능하다
+		//===============================
+
+		if (_mmselect == MMS_YES && _smselect == SMS_NO)
+		{
+			switch (_cselect)
+			{
+			case POKEMON_BOOK:
+				_cselect = CLOSE;
+				break;
+			case POKEMON:
+				_cselect = POKEMON_BOOK;
+				break;
+			case BAG:
+				_cselect = POKEMON;
+				break;
+			case PLAYER:
+				_cselect = BAG;
+				break;
+			case SAVE_REPORT:
+				_cselect = PLAYER;
+				break;
+			case SETTING:
+				_cselect = SAVE_REPORT;
+				break;
+			case CLOSE:
+				_cselect = SETTING;
+				break;
+			}
+		}
+	}
+	//하위메뉴 활성화하기
+	if (_mmselect == MMS_YES && _smselect != SMS_YES)
+	{
+		//============================= 조건
+		//하위메뉴 활성화 조건
+		// ** 메인메뉴가 선택되고 하위메뉴는 선택이 안되어 있을때만 **
+		//1. 상위(메인)메뉴가 YES상태여야한다.
+		//2. 커서가 가르키는 값을 출력해야한다.
+		//=============================
+
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			_smselect = SMS_YES;
+		}
+	}
+	//하위메뉴 비활성화 하기
+	if (_mmselect == MMS_YES && _smselect == SMS_YES)
+	{
+		if (_book->getState() == 0)
+		{
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_smselect = SMS_NO;
+			}
+		}
+	}
+	//메인메뉴 비활성화하기
+	if (_mmselect == MMS_YES && _smselect == SMS_NO)
+	{
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			_mmselect = MMS_NO;
+		}
+	}
+
+	//=================== 특별케이스 도감
+	_book->update();
+	//=================================
+
+
+	/*
 	//하위메뉴가 열려있는 상태에서
 	if (_cm._ms == YES)
 	{
-		//만약에 x키를 누르면 
+		//만약에 x키를 누르면
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			switch (_cm._cstate)
@@ -148,7 +273,7 @@ void hayoungTestScene::update()
 				{
 					_cmpm._pcs = SUB_POKEMON2;
 				}
-				else 
+				else
 				{
 					_cmpm._pcs = CANCEL;
 				}
@@ -199,7 +324,7 @@ void hayoungTestScene::update()
 			_isCommonMenu = false;
 		}
 	}
-	//만약에 기본메뉴가 켜진상태에서의 키세팅 
+	//만약에 기본메뉴가 켜진상태에서의 키세팅
 	if (_isCommonMenu && _cm._ms != YES)
 	{
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
@@ -277,13 +402,67 @@ void hayoungTestScene::update()
 			}
 		}
 	}
-	
+
 	_book->update();
+	*/
 }
 
 void hayoungTestScene::render()
 {
 	commonMenurender();
+
+	// ============================================================= 테스트 및 체크용 텍스트 출력 추후 삭제
+	WCHAR test[1024];
+	swprintf_s(test, L"메인메뉴상태: %d", _mmselect);
+	D2DMANAGER->drawText(test, 0 + CAMERA->getPosX(), 400 + CAMERA->getPosY(), 40);
+	// =================================================================================================
+
+	//1. 포켓몬 도감 렌더
+	//하위메뉴인 도감이 열리는 조건은 <메인메뉴가 열려있고, 커서가 포켓몬을 가르키고 , 하위메뉴를 선택> 했을때이다.
+	if (_mmselect == MMS_YES && _cselect == POKEMON_BOOK && _smselect == SMS_YES)
+	{
+		_book->render();
+	}
+	//2. 보유중인 포켓몬 렌더
+	if (_mmselect == MMS_YES && _cselect == POKEMON && _smselect == SMS_YES)
+	{
+		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render("타입1");
+		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
+	}
+	//3. 가방 렌더
+	if (_mmselect == MMS_YES && _cselect == BAG && _smselect == SMS_YES)
+	{
+		if (_isMale)
+		{
+			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+			IMAGEMANAGER->findImage("남여가방")->frameRender(100 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 0, 0);
+		}
+		else if (_isFemale)
+		{
+			IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
+		}
+
+		WCHAR bag[1024];
+		swprintf_s(bag, L"아이템");
+		D2DMANAGER->drawText(bag, 110 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 40);
+	}
+	//4. 플레이어 정보 출력
+	if (_mmselect == MMS_YES && _cselect == PLAYER && _smselect == SMS_YES)
+	{
+		IMAGEMANAGER->findImage("트레이너카드")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 1, 0);
+	}
+	//5. 리포트 < 세이브 > 출력
+	if (_mmselect == MMS_YES && _cselect == SAVE_REPORT && _smselect == SMS_YES)
+	{
+
+	}
+	//6. 설정 출력
+	if (_mmselect == MMS_YES && _cselect == SETTING && _smselect == SMS_YES)
+	{
+
+	}
+	/*
 	if (_cm._cstate == POKEMON_BOOK && _cm._ms == YES)
 	{
 		_book->render();
@@ -293,7 +472,7 @@ void hayoungTestScene::render()
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render("타입1");
 		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
-	
+
 		if (_issubpkm1exist)
 		{
 			IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(_cmpm._subPokemon[0].left + CAMERA->getPosX(), _cmpm._subPokemon[0].top + CAMERA->getPosY(), 0, 0);
@@ -334,9 +513,9 @@ void hayoungTestScene::render()
 		{
 			IMAGEMANAGER->findImage("서브포켓몬1")->render(_cmpm._subPokemon[4].left + CAMERA->getPosX(), _cmpm._subPokemon[4].top + CAMERA->getPosY());
 		}
-		
+
 		IMAGEMANAGER->findImage("메인포켓몬")->frameRender(65 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 0, 0);
-		
+
 		switch (_cmpm._pcs)
 		{
 		case MAIN_POKEMON:
@@ -393,12 +572,12 @@ void hayoungTestScene::render()
 		IMAGEMANAGER->findImage("기본상단")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		MENUMANAGER->findMenuFrame("설정프레임1")->render("타입1");
 		MENUMANAGER->findMenuFrame("설정프레임2")->render("타입1");
-		
+
 		WCHAR settingtext[1024];
 		swprintf_s(settingtext, L"포켓몬스터 파이어레드 환경설정");
 		D2DMANAGER->drawText(settingtext, 120 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 48);
 	}
-	
+	*/
 }
 
 void hayoungTestScene::frameImageinit()
@@ -408,100 +587,79 @@ void hayoungTestScene::frameImageinit()
 	IMAGEMANAGER->addImage("화살표", L"image/common_menu/pokemonMenu_cursor.png", 24, 40);
 	IMAGEMANAGER->addImage("테스트", L"image/test/aaa.png", 960, 640);
 	IMAGEMANAGER->addImage("테스트2", L"image/test/bbb.png", 960, 640);
-
-}
-
-void hayoungTestScene::commonMenuinit()
-{
-	_cm._bottom = { 0, 490, 960, 640 };
-
-	for (int i = 0; i < 7; ++i)
-	{
-		float menutop = 33 + (i * 60);
-		float menubottom = 93 + (i * 60);
-
-		float cursortop = 43 + (i * 60);
-		float cursorbottom = 83 + (i * 60);
-
-		_cm._menu[i] = { 726, menutop, 926, menubottom };
-		_cm._cursor[i] = { 702 ,cursortop, 726,cursorbottom };
-	}
-
-	_rc = { 0 , 480, 960, 640 };
-	MENUMANAGER->addFrame("기본메뉴", 670, 1, 9, 15);
-
-	_cm._cstate = POKEMON_BOOK;
-	_cm._ms = NO;
-
-	_isCommonMenu = false;
 }
 
 void hayoungTestScene::commonMenurender()
 {
-
-	if (_isCommonMenu)
+	//만약에 메인메뉴가 선택된 상태라면 그림을 그리세요
+	if (_mmselect == MMS_YES)
 	{
+		//=================================================================나중에 삭제해야할 테스트용 배경
 		IMAGEMANAGER->findImage("테스트")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		MENUMANAGER->findMenuFrame("기본메뉴")->render("타입1");
+		//=============================================================================================
 
-		IMAGEMANAGER->findImage("기본하단")->render(_rc.left + CAMERA->getPosX(), _rc.top + CAMERA->getPosY());
+		//프레임 깔아주기
+		MENUMANAGER->findMenuFrame("메인메뉴")->render("타입1");
+		//하단텍스트 출력용 bg출력 
+		IMAGEMANAGER->findImage("기본하단")->render(0 + CAMERA->getPosX(), 480 + CAMERA->getPosY());
 
+		//텍스트 출력-
 		WCHAR str[1024];
-		swprintf_s(str, L"메뉴선택상태: %d", _cm._cstate);
+		swprintf_s(str, L"메뉴선택상태: %d", _cselect);
 		D2DMANAGER->drawText(str, 100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"도감");
-		D2DMANAGER->drawText(str, _cm._menu[0].left + CAMERA->getPosX(), _cm._menu[0].top + 15 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"포켓몬");
-		D2DMANAGER->drawText(str, _cm._menu[1].left + CAMERA->getPosX(), _cm._menu[1].top + 15 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"가방");
-		D2DMANAGER->drawText(str, _cm._menu[2].left + CAMERA->getPosX(), _cm._menu[2].top + 15 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"닉네임출력");
-		D2DMANAGER->drawText(str, _cm._menu[3].left + CAMERA->getPosX(), _cm._menu[3].top + 15 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"리포트");
-		D2DMANAGER->drawText(str, _cm._menu[4].left + CAMERA->getPosX(), _cm._menu[4].top + 15 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"설정");
-		D2DMANAGER->drawText(str, _cm._menu[5].left + CAMERA->getPosX(), _cm._menu[5].top + 15 + CAMERA->getPosY(), 40);
-		swprintf_s(str, L"닫기");
-		D2DMANAGER->drawText(str, _cm._menu[6].left + CAMERA->getPosX(), _cm._menu[6].top + 15 + CAMERA->getPosY(), 40);
 
-		switch (_cm._cstate)
+		swprintf_s(str, L"도감");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 33 + CAMERA->getPosY(), 40);
+		swprintf_s(str, L"포켓몬");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 93 + CAMERA->getPosY(), 40);
+		swprintf_s(str, L"가방");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 153 + CAMERA->getPosY(), 40);
+		swprintf_s(str, L"닉네임출력");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), 40);
+		swprintf_s(str, L"리포트");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 273 + CAMERA->getPosY(), 40);
+		swprintf_s(str, L"설정");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 333 + CAMERA->getPosY(), 40);
+		swprintf_s(str, L"닫기");
+		D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 393 + CAMERA->getPosY(), 40);
+
+		switch (_cselect)
 		{
 		case POKEMON_BOOK:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[0].left + CAMERA->getPosX(), _cm._cursor[0].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 33 + CAMERA->getPosY());
 			swprintf_s(str, L"도감에 기록된 포켓몬의 상세 정보를 확인합니다. ");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		case POKEMON:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[1].left + CAMERA->getPosX(), _cm._cursor[1].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 93 + CAMERA->getPosY());
 			swprintf_s(str, L"같이 있는 포켓몬의 상태를 확인하고 관리합니다.");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		case BAG:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[2].left + CAMERA->getPosX(), _cm._cursor[2].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 153 + CAMERA->getPosY());
 			swprintf_s(str, L"도구를 확인하고 사용할 수 있습니다.");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		case PLAYER:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[3].left + CAMERA->getPosX(), _cm._cursor[3].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 213 + CAMERA->getPosY());
 			swprintf_s(str, L"당신의 트레이너 카드를 확인합니다. ");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		case SAVE_REPORT:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[4].left + CAMERA->getPosX(), _cm._cursor[4].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 273 + CAMERA->getPosY());
 			swprintf_s(str, L"지금까지의 모험을 리포트로 기록합니다. ");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		case SETTING:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[5].left + CAMERA->getPosX(), _cm._cursor[5].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 333 + CAMERA->getPosY());
 			swprintf_s(str, L"사운드, 속도등의 설정을 변경합니다. ");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		case CLOSE:
-			IMAGEMANAGER->findImage("화살표")->render(_cm._cursor[6].left + CAMERA->getPosX(), _cm._cursor[6].top + CAMERA->getPosY());
+			IMAGEMANAGER->findImage("화살표")->render(702 + CAMERA->getPosX(), 393 + CAMERA->getPosY());
 			swprintf_s(str, L"이 메뉴를 닫고 게임을 계속합니다. ");
-			D2DMANAGER->drawText(str, _cm._bottom.left + 10 + CAMERA->getPosX(), _cm._bottom.top + 15 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+			D2DMANAGER->drawText(str, 10 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 			break;
 		}
-
 	}
 }

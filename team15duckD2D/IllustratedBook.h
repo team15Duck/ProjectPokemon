@@ -3,6 +3,11 @@
 #include <codecvt>
 #include <string>
 
+enum POKEMON_BOOK_STATE
+{
+	BOOK_LIST,
+	BOOK_INFO,
+};
 typedef struct tagPokemonBookInfo
 {
 	wstring number; //¹øÈ£
@@ -24,6 +29,8 @@ typedef struct tagPokemonBookInfo
 class IllustratedBook
 {
 private:
+
+	POKEMON_BOOK_STATE _pbstate;
 
 	POKEMONBOOK _book[151];
 
@@ -48,5 +55,6 @@ public:
 
 	void pokemonDataSet();
 
+	POKEMON_BOOK_STATE getState() { return _pbstate; }
 };
 
