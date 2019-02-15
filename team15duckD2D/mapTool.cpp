@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "mapTool.h"
-#include "objectTool.h"
+//#include "objectTool.h"
 
 
 mapTool::mapTool()
@@ -17,8 +17,9 @@ mapTool::~mapTool()
 
 HRESULT mapTool::init()
 {
-	_objectTool = new objectTool;
-	_objectTool->init();
+	//_objectTool = new objectTool;
+	//_objectTool->init();
+
 	//이미지 설정은 플레이그라운드에 있어영
 	_sampleImg[0] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME1 ]);
 	_sampleImg[1] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME2 ]);
@@ -63,7 +64,7 @@ HRESULT mapTool::init()
 
 	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_STORE;
+	_mapCase = MAP_TOWN;
 
 	_isPotal = false;
 	for (int i = 0; i < MAX_POTAL_NUM; ++i)
@@ -76,12 +77,12 @@ HRESULT mapTool::init()
 	setTile();
 	nameInit();
 
-
 	return S_OK;
 }
 
 void mapTool::release()
 {
+
 }
 
 void mapTool::update()
@@ -119,11 +120,11 @@ void mapTool::update()
 		}
 
 	}
-	if (KEYMANAGER->isOnceKeyDown('L'))
-	{
-		_objectTool->update();
-		_isObj = true;
-	}
+	//if (KEYMANAGER->isOnceKeyDown('L'))
+	//{
+	//	_objectTool->update();
+	//	_isObj = true;
+	//}
 
 	_preButton = { CAMERA->getPosX() + WINSIZEX / 2 + 400, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 450, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
 	_nextButton = { CAMERA->getPosX() + WINSIZEX / 2 + 550, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 600, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
@@ -216,7 +217,7 @@ void mapTool::render()
 	}
 	
 	
-	
+	//===================================확인용 텍스트========================================
 	WCHAR str[128];
 	swprintf_s(str, L"TILEX : %d, TILEY : %d", TILEX, TILEY);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 200);
@@ -336,10 +337,10 @@ void mapTool::turnMap()
 				if (_curImgNum > TERRAIN_NAME11)
 					_curImgNum = TERRAIN_NAME1;
 			}
-			else
-			{
-				_objectTool->turnObject();
-			}
+			//else
+			//{
+			//	_objectTool->turnObject();
+			//}
 		}
 	}
 
@@ -932,11 +933,9 @@ void mapTool::nameInit()
 	_mSizeNames.insert(make_pair(MAP_TOWN, "data/townMapSize.map"));
 	_mPotalPos.insert(make_pair(MAP_TOWN, "data/townMapPotal.map"));
 
-
 	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
 	_mPotalPos.insert(make_pair(MAP_HOME, "data/homeMapPotal.map"));
-
 
 	_mSizeNames.insert(make_pair(MAP_O_LAB, "data/oLabMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_O_LAB, "data/oLabMapData.map"));
@@ -961,13 +960,8 @@ void mapTool::nameInit()
 	_mSizeNames.insert(make_pair(MAP_GYM, "data/gymMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_GYM, "data/gymMapData.map"));
 	_mPotalPos.insert(make_pair(MAP_GYM, "data/gymMapPotal.map"));
-
-	_mSizeNames.insert(make_pair(MAP_POTAL_TEST, "data/potalTestMapSize.map"));
-	_mDataNames.insert(make_pair(MAP_POTAL_TEST, "data/potalTestMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_POTAL_TEST, "data/potalTestMapPotal.map"));
-
 }
-
+/*
 void mapTool::renderSampleTile()
 {
 
@@ -977,7 +971,7 @@ void mapTool::renderMapTile()
 {
 
 }
-
+*/
 DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 {
 	DWORD result = ATTR_NONE;

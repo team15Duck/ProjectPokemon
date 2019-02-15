@@ -4,13 +4,13 @@
 #include <assert.h>
 #define	TILE_IMAGE_NUM		11
 #define SAMPLE_TOTAL_SIZE	TILE_SIZE * SAMPLETILE
-#define SAMPLETILE_STARTX  ( WINSIZEX - SAMPLE_TOTAL_SIZE)
+#define SAMPLETILE_STARTX	(WINSIZEX - SAMPLE_TOTAL_SIZE)
 #define	CAMERA_SHOW_RANGE	16 * TILE_SIZE
 
 #define OBJ_IMG_NUM			16
-#define MAX_POTAL_NUM	6
+#define MAX_POTAL_NUM		6
 
-class objectTool;
+//class objectTool;
 
 enum MAP_NAME
 {
@@ -24,8 +24,7 @@ enum MAP_NAME
 	MAP_FIELD,		//필드
 	MAP_CAVE,		//동굴
 
-	MAP_POTAL_TEST,
-	MAP_NONE,		//
+	MAP_NONE,		
 	MAP_COUNT = MAP_NONE,
 
 };
@@ -48,12 +47,9 @@ struct tagCurrentTile
 class mapTool
 {
 private:
-	objectTool* _objectTool;
+	//objectTool* _objectTool;
 
-
-
-	//샘플타일의 이미지
-	image*	_sampleImg[TILE_IMAGE_NUM];
+	image*						_sampleImg[TILE_IMAGE_NUM];			//샘플타일의 이미지
 	//샘플타일 이미지를 string으로(이미지매니저에서 findeImg 할때 쓰려고)
 	//string _sampleImgStr[TILE_IMAGE_NUM];
 
@@ -144,8 +140,8 @@ public:
 
 	void nameInit();
 
-	void renderSampleTile();
-	void renderMapTile();
+	/*void renderSampleTile();
+	void renderMapTile();*/
 
 
 private:
