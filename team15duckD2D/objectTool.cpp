@@ -117,8 +117,9 @@ void objectTool::update()
 
 void objectTool::render()
 {
-	//테스트맵출력용
-	//==========================================================================
+
+	//=================================================================================================
+
 	for (; ii < iiMax; ++ii)
 	{
 		for (; jj < jjMax; ++jj)
@@ -135,9 +136,10 @@ void objectTool::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
-			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none" && _vvTile[ii][jj]->attr & ATTR_APPEAR)
+
+			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
-				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
 			}
 
 			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
@@ -152,10 +154,9 @@ void objectTool::render()
 				}
 			}
 		}
-		jj = CAMERA->getPosX() / TILE_SIZE;
-		if (jj < 0) jj = 0;
 	}
-	//==========================================================================
+
+	//=================================================================================================
 	//맵 출력
 	for (int i = 0; i < TILEY; ++i)
 	{
@@ -170,6 +171,7 @@ void objectTool::render()
 				D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
 			if (_vvTile[i][j]->objectImageIndex == OBJECT_NAME_NONE) continue;
 			IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+
 		}
 	}
 
@@ -985,14 +987,14 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			else if (frameX == 4 && frameY == 5)
 				result |= ATTR_UNMOVE;
 		}
+		else if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 3)) //카페트
+		{
+			result |= ATTR_NONE;
+		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME9])
 	{
 		if ((frameX >= 0 && frameX < 6) && frameY == 0)	 //포켓몬센터 모니터
-		{
-			result |= ATTR_UNMOVE;
-		}
-		else if ((frameX == 0 || frameX == 1) && frameY == 1) //포켓몬센터 모니터
 		{
 			result |= ATTR_UNMOVE;
 		}
@@ -1004,9 +1006,9 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_NONE;
 		}
-		else if ((frameX == 0 || frameX == 1) && (frameY == 2 || frameY == 3)) //책장
+		else if ((frameX == 0 || frameX == 1) && (frameY >= 1 || frameY < 4)) //책장
 		{
-			if (frameY != 2)
+			if (frameY != 3)
 			{
 				result |= ATTR_UNMOVE;
 				result |= ATTR_BOOKCASE;
