@@ -70,9 +70,9 @@ void player::render()
 	if (_state != PS_JUMP_DOWN || _state != PS_JUMP_RIGHT || _state != PS_JUMP_LEFT)
 	{
 		if (_isRight)
-			IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 + _posZ, _playerAni);
+			IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 68 + _posZ, _playerAni);
 		else
-			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 + _posZ, _playerAni);
+			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 68 + _posZ, _playerAni);
 	}
 
 	
@@ -151,9 +151,9 @@ void player::shadowRender()
 	{
 		IMAGEMANAGER->findImage("shadow")->render(_posX - 32, _posY);
 		if (_isRight)
-			IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 118 + _posZ, _playerAni);
+			IMAGEMANAGER->findImage(_key)->aniRenderReverseX(_posX - 75, _posY - 68 + _posZ, _playerAni);
 		else
-			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 118 + _posZ, _playerAni);
+			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 68 + _posZ, _playerAni);
 	}
 }
 
