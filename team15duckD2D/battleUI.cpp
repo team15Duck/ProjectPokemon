@@ -17,7 +17,9 @@ HRESULT battleUI::init()
 	_scriptCount = 0;
 	_scriptDelay = 0.05f;
 
-	MENUMANAGER->addFrame("battleScript", 0, 448, 30, 6);
+	IMAGEMANAGER->addImage("battleScript", L"image/battle_UI/battle_UI_Main_chat_board.png", 960, 192);
+
+	
 	MENUMANAGER->addFrame("battleMenu", 480, 448, 15, 6);
 	
 	IMAGEMANAGER->addImage("playerUI", L"image/battle_UI/battle_UI_Player.png", 416, 148);
@@ -81,12 +83,12 @@ void battleUI::render()
 {
 	if (_script.size() > 0)
 	{
-		MENUMANAGER->findMenuFrame("battleScript")->render("타입1");
+		IMAGEMANAGER->findImage("battleScript")->render(0,640 - 192);
 		D2DMANAGER->drawText(_viewScript.c_str(), 50, 500, 30);
 	}
 	else
 	{
-		MENUMANAGER->findMenuFrame("battleScript")->render("타입1");
+		IMAGEMANAGER->findImage("battleScript")->render(0, 640 - 192);
 		wstring str = _pokemonName + L"은(는)";
 		D2DMANAGER->drawText(str.c_str(), 50, 500, 30);
 		str = L"무엇을할까?";
