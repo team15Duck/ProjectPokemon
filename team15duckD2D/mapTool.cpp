@@ -37,8 +37,7 @@ HRESULT mapTool::init()
 		_tempImg[i] = nullptr;
 	}
 	_curImgNum = TERRAIN_NAME1;
-	//_sampleImgStr[0] = TERRAIN_NAME1;
-	//_tempImgStr[0] = OBJECT_NAME1;
+
 	setSampleTile();
 	
 	_preButton = { WINSIZEX / 2 + 400, WINSIZEY / 2 + 50, WINSIZEX / 2 + 450, WINSIZEY / 2 + 80 };
@@ -64,7 +63,7 @@ HRESULT mapTool::init()
 
 	CAMERA->init(0, 0, 10000, 10000);
 	
-	_mapCase = MAP_POTAL_TEST;
+	_mapCase = MAP_STORE;
 
 	_isPotal = false;
 	for (int i = 0; i < MAX_POTAL_NUM; ++i)
@@ -72,7 +71,7 @@ HRESULT mapTool::init()
 		_potalPosX[i] = 0;
 		_potalPosY[i] = 0;
 	}
-	_potalNum = 1;
+	_potalNum = 0;
 
 	setTile();
 	nameInit();
@@ -93,7 +92,7 @@ void mapTool::update()
 	pickSampleMap();
 	drawMap();
 	mapSizeChange();
-	if (KEYMANAGER->isOnceKeyDown(VK_F5))
+	if (KEYMANAGER->isOnceKeyDown(VK_F8))
 	{
 		nextSaveName();
 		setTile();
@@ -191,15 +190,12 @@ void mapTool::render()
 				continue;
 			
 			D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
-			//if ((_vvTile[i][j]->attr & ATTR_POTAL) != ATTR_POTAL)
-			//{
-				if (_vvTile[i][j]->terrainImageIndex == TERRAIN_NAME_NONE) continue;
-				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-			//}
-			/*else if ((_vvTile[i][j]->attr & ATTR_POTAL) == ATTR_POTAL)
-			{
+			
+			if (_vvTile[i][j]->terrainImageIndex == TERRAIN_NAME_NONE) 
 				continue;
-			}*/
+			IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+			
+		
 		}
 	}
 	
@@ -229,8 +225,8 @@ void mapTool::render()
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 250);
 	swprintf_s(str, L"_curImgNum : %d", _curImgNum);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 280);
-
-	swprintf_s(str, L"_potalPosX : %d\n _potalPosY : %d", _potalPosX[0], _potalPosY[0]);
+	
+	swprintf_s(str, L"_potalPosX : %d\n _potalPosY : %d", _potalPosX[_potalNum], _potalPosY[_potalNum]);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 310);
 
 
@@ -368,7 +364,6 @@ void mapTool::pickSampleMap()
 		_isTileClick = true;
 		if (_curImgNum == TERRAIN_NAME1 || _curImgNum == TERRAIN_NAME2 || _curImgNum == TERRAIN_NAME3 || _curImgNum == TERRAIN_NAME4)
 		{
-			
 			if (_curImgNum == TERRAIN_NAME2)
 			{
 				_isRND = false;
@@ -621,6 +616,27 @@ void mapTool::drawMap()
 	//	_potalMap.erase(idx);
 	//}
 
+	
+	if (_potalNum == MAX_POTAL_NUM)
+		return;
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		//포탈좌표를 계산해서 저장함.
+		_potalPosX[_potalNum] = (_ptMouse.x) / TILE_SIZE;
+		_potalPosY[_potalNum] = (_ptMouse.y) / TILE_SIZE;
+		for (int i = 0; i < TILEY; ++i)
+		{
+			for (int j = 0; j < TILEX; ++j)
+			{
+				if (i == _potalPosY[_potalNum] && j == _potalPosX[_potalNum])
+				{
+					_vvTile[i][j]->attr |= ATTR_POTAL;
+				}
+			}
+		}
+		_potalNum++;
+	}
+
 	if (_isRND)
 	{
 		_pickSampleTile.curX = RND->getInt(4);
@@ -699,43 +715,6 @@ void mapTool::drawMap()
 	}
 	else
 	{
-		
-		if (_potalNum == MAX_POTAL_NUM)
-			return;
-		//포탈좌표를 계산해서 저장함.
-		for (int k = 0; k < MAX_POTAL_NUM; ++k)
-		{
-			if (KEYMANAGER->isStayKeyDown('M'))
-			{
-				if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-				{
-					_potalPosX[k] = (_ptMouse.x - CAMERA->getPosX()) / TILE_SIZE;
-					_potalPosY[k] = (_ptMouse.y - CAMERA->getPosY()) / TILE_SIZE;
-					_potalNum++;
-					for (int i = 0; i < TILEY; ++i)
-					{
-						for (int j = 0; j < TILEX; ++j)
-						{
-							if (i == _potalPosY[k] && j == _potalPosX[k])
-							{
-								_vvTile[i][j]->attr |= ATTR_POTAL;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		//포탈을 다 찍고나서 배열에 남은 자리들은 모두 nullptr로 값을 넣어줌.
-		//if (_potalNum != MAX_POTAL_NUM)
-		//{
-		//	for (int i = _potalNum; i < MAX_POTAL_NUM + 1; ++i)
-		//	{
-		//		_potalPosX[i] = NULL;
-		//		_potalPosY[i] = NULL;
-		//	}
-		//}
-
 		if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 		{
 			for (int i = 0; i < TILEY; ++i)
@@ -744,22 +723,14 @@ void mapTool::drawMap()
 				{
 					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 					{
-						if (!_isObj)
-						{
-							_vvTile[i][j]->terrainImageIndex = _curImgNum;
-							_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
-							_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
-							_vvTile[i][j]->attr = setAttribute(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex], _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
-						}
+						
+						_vvTile[i][j]->terrainImageIndex = _curImgNum;
+						_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
+						_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
+						_vvTile[i][j]->attr = setAttribute(TERRAIN_NAME[_vvTile[i][j]->terrainImageIndex], _vvTile[i][j]->terrainFrameX, _vvTile[i][j]->terrainFrameY);
+						
 						//타일맵에 오브젝트 정보 추가
-						else
-						{
-							//_objectTool->drawObject();
-							/*_vvTile[i][j]->objectImageIndex = _curImgNum;
-							_vvTile[i][j]->objectFrameX = _tempObjTile.curX;
-							_vvTile[i][j]->objectFrameY = _tempObjTile.curY;
-							_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_vvTile[i][j]->objectImageIndex], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);*/
-						}
+						
 					}
 				}
 			}
@@ -794,53 +765,67 @@ void mapTool::drawMap()
 			}
 		}
 	}
+	//todo
+	if (_mapCase == 0)
+	{
+		_vvTile[36][29]->attr |= ATTR_POTAL;	
+	}
 }
 
 void mapTool::save(int mapCase)
 {
-	HANDLE file;
-	DWORD write;
-
-	char mapSize[128];
-	sprintf_s(mapSize, "%d, %d", TILEX, TILEY);
-	file = CreateFile(_mSizeNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	
-	WriteFile(file, mapSize, strlen(mapSize), &write, NULL);
-
-	CloseHandle(file);
-
-	tagTile* tile = new tagTile[TILEX * TILEY];
-	for (int i = 0; i < TILEY; ++i)
 	{
-		for (int j = 0; j < TILEX; ++j)
+		HANDLE file;
+		DWORD write;
+
+		char mapSize[128];
+		sprintf_s(mapSize, "%d, %d", TILEX, TILEY);
+		file = CreateFile(_mSizeNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+		WriteFile(file, mapSize, strlen(mapSize), &write, NULL);
+
+		CloseHandle(file);
+
+		tagTile* tile = new tagTile[TILEX * TILEY];
+		for (int i = 0; i < TILEY; ++i)
 		{
-			tile[j + i * TILEX] = *_vvTile[i][j];
+			for (int j = 0; j < TILEX; ++j)
+			{
+				tile[j + i * TILEX] = *_vvTile[i][j];
+			}
 		}
+
+		HANDLE file2;
+		DWORD write2;
+		file2 = CreateFile(_mDataNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+		WriteFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
+
+		CloseHandle(file2);
+
+		delete[] tile;
 	}
 
-	HANDLE file2;
-	DWORD write2;
-	file2 = CreateFile(_mDataNames[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	WriteFile(file2, tile, sizeof(tagTile) * TILEX * TILEY, &write, NULL);
-
-	CloseHandle(file2);
 
 	HANDLE file3;
 	DWORD write3;
 
-	//char* potalPos[MAX_POTAL_NUM];
-	//for (int i = 0; i < MAX_POTAL_NUM; ++i)
+	string data;
+	data.clear();
+
+	char potalPos[128] = "";
+	for (int i = 0; i < MAX_POTAL_NUM; ++i)
 	{
-		//sprintf_s(potalPos[i], "%d, %d", _potalPosX[i], _potalPosY[i]);
-
-		//file3 = CreateFile(_mPotalPos[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		sprintf_s(potalPos, "%d,%d,", _potalPosX[i], _potalPosY[i]);
+		data.append(potalPos);
 	}
-	//WriteFile(file3, potalPos, strlen(potalPos), &write3, NULL);
+	sprintf_s(potalPos, "%s", data.c_str());
 
-	//CloseHandle(file);
+	file3 = CreateFile(_mPotalPos[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	WriteFile(file3, potalPos, strlen(potalPos), &write3, NULL);
 
-	delete[] tile;
+	CloseHandle(file3);
+
 }
 
 void mapTool::load()
@@ -998,7 +983,6 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	DWORD result = ATTR_NONE;
 	//타일
 	//동굴은 어딜가든 다 만남
-	
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME5])
 	{
 		if ((frameX >= 0 && frameX < SAMPLETILE - 1) && (frameY == 0 || frameY == 1) ||
@@ -1007,10 +991,6 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_NONE;
 			result |= ATTR_APPEAR;		//몬스터 출몰 속성
-			if (_isPotal)
-			{
-				result |= ATTR_POTAL;
-			}
 		}
 	}
 	//물

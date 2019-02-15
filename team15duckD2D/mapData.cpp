@@ -86,9 +86,14 @@ void mapData::render()
 			if (KEYMANAGER->isToggleKey(VK_CONTROL))
 			{
 				WCHAR str[128];
-				swprintf_s(str, L"UnMove_ATTR");
 				if ((_vvTile[ii][jj]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
 				{
+					swprintf_s(str, L"UnMove");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5);
+				}
+				if ((_vvTile[ii][jj]->attr & ATTR_POTAL) == ATTR_POTAL)
+				{
+					swprintf_s(str, L"POTAL");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5);
 				}
 			}
