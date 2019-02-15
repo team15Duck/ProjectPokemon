@@ -33,7 +33,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = MONSTER_BALL_VALUE;
 			_buyPrice = MONSTER_BALL_BUY_PRICE;
 			_sellPrice = MONSTER_BALL_SELL_PRICE;
-			_itemInfo = "야생 포켓몬에게 던져서 잡기 위한 볼. 캡슐식으로 되어 있다.";
+			_itemInfo = "야생 포켓몬에게 던져서 잡기 위한 볼.\n캡슐식으로 되어 있다.";
 			_imgSize = { 72, 72 };
 			break;
 		}
@@ -43,7 +43,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = SUPER_BALL_VALUE;
 			_buyPrice = SUPER_BALL_BUY_PRICE;
 			_sellPrice = SUPER_BALL_SELL_PRICE;
-			_itemInfo = "몬스터볼보다도 더욱 포켓몬을 잡기 쉬워진 약간 성능이 좋은 볼.";
+			_itemInfo = "몬스터볼보다도 더욱 포켓몬을\n잡기 쉬워진 약간 성능이 좋은 볼.";
 			_imgSize = { 72, 72 };
 			break;
 		}
@@ -53,7 +53,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = HYPER_BALL_VALUE;
 			_buyPrice = HYPER_BALL_BUY_PRICE;
 			_sellPrice = HYPER_BALL_SELL_PRICE;
-			_itemInfo = "슈퍼볼보다도 더욱 포켓몬을 잡기 쉬워진 매우 성능이 좋은 볼.";
+			_itemInfo = "슈퍼볼보다도 더욱 포켓몬을\n잡기 쉬워진 매우 성능이 좋은 볼.";
 			_imgSize = { 72, 72 };
 			break;
 		}
@@ -63,7 +63,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = MASTER_BALL_VALUE;
 			_buyPrice = MASTER_BALL_BUY_PRICE;
 			_sellPrice = MASTER_BALL_SELL_PRICE;
-			_itemInfo = "야생 포켓몬을 반드시 잡을 수 있는 최고 성능의 볼";
+			_itemInfo = "야생 포켓몬을 반드시\n잡을 수 있는 최고 성능의 볼";
 			_imgSize = { 72, 72 };
 			break;
 		}
@@ -73,7 +73,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = NORMAL_POTION_VALUE;
 			_buyPrice = NORMAL_POTION_BUY_PRICE;
 			_sellPrice = NORMAL_POTION_SELL_PRICE;
-			_itemInfo = "스프레이식의 상처약. 포켓몬 1마리의 HP를 20만큼 회복한다.";
+			_itemInfo = "스프레이식의 상처약.\n포켓몬 1마리의 HP를 20만큼 회복한다.";
 			_imgSize = { 60, 84 };
 			break;
 		}
@@ -83,7 +83,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = SUPER_POTION_VALUE;
 			_buyPrice = SUPER_POTION_BUY_PRICE;
 			_sellPrice = SUPER_POTION_SELL_PRICE;
-			_itemInfo = "스프레이식의 상처약. 포켓몬 1마리의 HP를 50만큼 회복한다.";
+			_itemInfo = "스프레이식의 상처약.\n포켓몬 1마리의 HP를 50만큼 회복한다.";
 			_imgSize = { 60, 84 };
 			break;
 		}
@@ -93,7 +93,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = HYPER_POTION_VALUE;
 			_buyPrice = HYPER_POTION_BUY_PRICE;
 			_sellPrice = HYPER_POTION_SELL_PRICE;
-			_itemInfo = "스프레이식의 상처약. 포켓몬 1마리의 HP를 200만큼 회복한다.";
+			_itemInfo = "스프레이식의 상처약.\n포켓몬 1마리의 HP를 200만큼 회복한다.";
 			_imgSize = { 60, 84 };
 			break;
 		}
@@ -103,7 +103,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = MAX_POTION_VALUE;
 			_buyPrice = MAX_POTION_BUY_PRICE;
 			_sellPrice = MAX_POTION_SELL_PRICE;
-			_itemInfo = "스프레이식의 상처약. 포켓몬 1마리의 HP를 모두 회복한다.";
+			_itemInfo = "스프레이식의 상처약.\n포켓몬 1마리의 HP를 모두 회복한다.";
 			_imgSize = { 64, 88 };
 			break;
 		}
