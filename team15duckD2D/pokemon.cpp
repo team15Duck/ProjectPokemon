@@ -15,6 +15,7 @@ pokemon::pokemon()
 , _displayHp(0)
 , _displayExp(0)
 , _displayTime(0.f)
+, _displayTimeCnt(0.f)
 , _isIdle(true)
 , _buff(PMB_NONE)
 , _img(nullptr)
@@ -105,11 +106,11 @@ void pokemon::update()
 		{
 			case PROGRESSING_VALUE:
 			{
-				_displayTime -= TIMEMANAGER->getElapsedTime();
-				if (_displayTime < 0)
+				_displayTimeCnt -= TIMEMANAGER->getElapsedTime();
+				if (_displayTimeCnt < 0)
 				{
 					_function();
-					_displayTime = static_cast<float>(PROGRESSING_TERM);
+					_displayTimeCnt = _displayTime;
 				}
 				break;
 			}
@@ -233,15 +234,25 @@ void pokemon::loadSavePack(pmPack* pack)
 	}
 }
 
-void pokemon::applyBuff()
+void pokemon::battelStart()
 {
-	_state = L"버프 적용";
-	if (PMB_NONE == _buff)
-	{
-		_state = L"적용 할 버프 없음";
-		return;
-	}
+}
 
+void pokemon::battleEnd()
+{
+}
+
+bool pokemon::applyBuff()
+{
+	bool isApply = false;
+	wstring script = L"";
+
+	if (!_isMyPokemon)
+		script = L"적의 ";
+	script.append(string2wstring(_nickName));
+	script.append(L"가");
+	
+	_state = L"버프 적용";
 	switch (_buff)
 	{
 		case PMB_ABSORB_HP:
@@ -251,15 +262,33 @@ void pokemon::applyBuff()
 			_target->startTakeDamageDisplay();
 
 			_state = L"피 흡흡";
+			script = L" hp를 흡수했다.!";
+
+			isApply = true;
 			break;
 		}
 		default:
+		{
+			isApply = false;
+			_state = L"적용 할 버프 없음";
+		}
 			break;
 	}
+
+	if(isApply)
+		sendScriptToUI(script);
+
+	_isIdle = !isApply;
+
+	return isApply;
 }
 
 bool pokemon::useOwnerItem()
 {
+	bool isUseOwnerItem = false;
+	wstring script;
+	_isIdle = false;
+
 	_state = L"소지 아이템 사용";
 	// todo 아이템 타입별로 조건 체크 후 아이템 사용하긔
 	switch (_ownerItemType)
@@ -269,42 +298,51 @@ bool pokemon::useOwnerItem()
 			break;
 	}
 
-	_isIdle = true;
-	return false;
+	// 소지 아이템을 사용하지 않았다면 행동 대기로 전환
+	if (isUseOwnerItem)
+		sendScriptToUI(script);
+	else
+		_isIdle = true;
+
+
+	return isUseOwnerItem;
 }
 
-void pokemon::applyUpsetCondition()
+bool pokemon::applyUpsetCondition()
 {
+	bool isApplyUpsetCondition = false;
 	wstring script = L"";
+	
+	_isIdle = false;
+
 	if (!_isMyPokemon)
 		script = L"적의 ";
 	script.append(string2wstring(_nickName));
 	script.append(L"는(은)");
 
 	_state = L"상태 이상 적용";
-	_isIdle = false;
 
-	bool check = false;
+	bool releaseCheck = false;
 	switch (_upsetCondition.type)
 	{
 		case PMUC_POISON:
 		{
 			script = L"";
 			_state = L"PMUC_POISON";
-			script.append(L"독");
 			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
 			takeDamage(damage);
+
+			isApplyUpsetCondition = true;
 			break;
 		}
 		case PMUC_FROZEN:
 		{
 			_state = L"PMUC_POISON";
-			script.append(L"얼음");
 			int percent = RND->getInt(100);
 			if (percent < 20) // 1/5 확률로 상태 해제
 			{
 				clearUpsetCondtion();
-				check = true;
+				releaseCheck = true;
 			}
 			break;
 		}
@@ -315,7 +353,7 @@ void pokemon::applyUpsetCondition()
 			if (_upsetCondition.releaseValue <= 0)
 			{
 				clearUpsetCondtion();
-				check = true;
+				releaseCheck = true;
 			}
 			else
 				--_upsetCondition.releaseValue;
@@ -339,20 +377,33 @@ void pokemon::applyUpsetCondition()
 	if (PMUC_NONE != _upsetCondition.type) // 상태 이상효과가 해제가 안되었다면 
 	{
 		_state = L"상태 이상 효과 적용";
+		script = _upsetCondition.name;
+		script.append(L"에 걸렸다.");
+		sendScriptToUI(script);
+
 		startProgessing(bind(&pokemon::progressingApplyUpsetCondition, this), PROGRESSING_SKILL);
 	}
 	else
 	{
-		if(check)
+		if (releaseCheck)
+		{
 			_state = L"상태이상 해제";
+			script = _upsetCondition.name;
+			script.append(L"이(가) 풀렸다.");
+
+			sendScriptToUI(script);
+		}
 		// 다음 행동 대기
 		_isIdle = true;
 	}
+
+	return isApplyUpsetCondition;
 }
 
-wstring pokemon::useSkill(int idx)
+bool pokemon::useSkill(int idx)
 {
 	wstring script = L"";
+	bool isUseSkill = false;
 	if(!_isMyPokemon)
 		script = L"적의 ";
 
@@ -363,52 +414,61 @@ wstring pokemon::useSkill(int idx)
 	if (idx < 0 || POKEMON_SKILL_MAX_COUNT < idx)
 	{
 		_state = L"없는 스킬";
-		return _state;
+		script = L"ERROR : 없는 스킬";
 	}
-	
-	if (!_skills[idx].isUsableSkill())
+	else if (!_skills[idx].isUsableSkill())
 	{
 		_state = L"PP 부족";
-		return _state;
+		script = L"PP 가 부족합니다.";
 	}
-
-	pokemonSkill* skill = &_skills[idx];
-	pokemonSkillInfo skillInfo = *skill->getSkillInfomation();
-
-	// pp 소모
-	int pp = skill->getCurrentPP();
-	skill->setCurrentPP(pp - 1);
-
-	// 명중했는지
-	int rate = skillInfo.getAccuracyRate();
-	int value = RND->getFromIntTo(1, 100);
-
-	// 빗맞음
-	if (rate < value)
+	else
 	{
-		_state = L"공격 실패";
-		return _state;
+		pokemonSkill* skill = &_skills[idx];
+		pokemonSkillInfo skillInfo = *skill->getSkillInfomation();
+
+		// pp 소모
+		int pp = skill->getCurrentPP();
+		skill->setCurrentPP(pp - 1);
+
+		// 명중했는지
+		int rate = skillInfo.getAccuracyRate();
+		int value = RND->getFromIntTo(1, 100);
+
+		// 빗맞음
+		if (rate < value)
+		{
+			_state = L"공격 실패";
+			script.append(L"의\n\n");
+			script.append(string2wstring(skillInfo.getSkillName()));
+			script = L"은(는) 빗맞았다.";
+		}
+		else
+		{
+			_isIdle = false;
+			_state = L" 공격 성공 스킬 id : " + string2wstring(skillInfo.getSkillName());
+
+			// 디버프, 버프 
+			pokemonUC* upsetCondition = skill->getUpsetCondition();
+			POKEMON_BUFF buff = skillInfo.getBuffType();
+			if (PMB_NONE != buff)
+				_buff = buff;
+
+			int damage = calculateAttkValue(idx);
+			attack(damage, upsetCondition);
+			
+			startProgessing(bind(&pokemon::progressintSkillEffect, this, idx), PROGRESSING_SKILL);
+
+			script.append(L"의\n\n");
+			script.append(string2wstring(skillInfo.getSkillName()));
+			script.append(L"!");
+
+			isUseSkill = true;
+		}
 	}
 
-	_isIdle = false;
-	
-	script.append(L"의\n\n");
-	script.append(string2wstring(skillInfo.getSkillName()));
-	script.append(L"!");
+	sendScriptToUI(script);
 
-	_state = L" 공격 성공 스킬 id : " + string2wstring(skillInfo.getSkillName());
-
-	// 디버프, 버프 
-	pokemonUC* upsetCondition = skill->getUpsetCondition();
-	POKEMON_BUFF buff = skillInfo.getBuffType();
-	if(PMB_NONE != buff)
-		_buff = buff;
-
-	int damage = calculateAttkValue(idx);
-	attack(damage, upsetCondition);
-	startProgessing(bind(&pokemon::progressintSkillEffect, this, idx), PROGRESSING_SKILL);
-
-	return script;
+	return isUseSkill;
 }
 
 bool pokemon::levelUpForce()
@@ -431,15 +491,21 @@ void pokemon::takeDamage(int value)
 	_state = L"데미지 입음";
 	_damage = value;
 	_displayHp = _nowStatus.hp;
-	_nowStatus.hp -= value;
-	if (_nowStatus.hp < 0 )
+	
+	if (_nowStatus.hp < value )
 	{
 		_nowStatus.hp = 0;
+		_isAwake = false;
 	}
+	else
+		_nowStatus.hp -= value;
+	
+	_displayValue = _displayHp - _nowStatus.hp;
 }
 
 void pokemon::fillHp()
 {
+	_displayValue = _currentLvStatus.hp - _nowStatus.hp;
 	_displayHp = _nowStatus.hp;
 	_nowStatus.hp = _currentLvStatus.hp;
 	startProgessing(bind(&pokemon::progressingIncreaseHp, this), PROGRESSING_VALUE);
@@ -447,6 +513,7 @@ void pokemon::fillHp()
 
 void pokemon::hillHp(int value)
 {
+	_displayValue = value;
 	_displayHp = _nowStatus.hp;
 	_nowStatus.hp += value;
 	if (_currentLvStatus.hp < _nowStatus.hp )
@@ -461,6 +528,7 @@ void pokemon::hillHp(int value)
 
 void pokemon::gainExp(int exp)
 {
+	_displayValue = exp;
 	_displayExp = _currentExp;
 	_currentExp += exp;
 	
@@ -509,13 +577,24 @@ void pokemon::startTakeDamageDisplay()
 
 void pokemon::setUpsetCondition(pokemonUC upsetCondition)
 {
+	wstring script = L"";
+
+	if (!_isMyPokemon)
+		script = L"적의 ";
+	script.append(string2wstring(_nickName));
+	script.append(L"는(은)");
+
 	if (upsetCondition.type != _upsetCondition.type)
 	{
 		_upsetCondition = upsetCondition;
+		script.append(_upsetCondition.name);
+		script.append(L"에 걸렸다.");
+		
 		_state = L"상태 이상 효과 받음";
 	}
 	else
 	{
+		script = L"소용이 없었다.";
 		_state = L"동일한 상태 이상 효과";
 	}
 }
@@ -620,9 +699,16 @@ void pokemon::attack(int value, pokemonUC* upsetCondition)
 
 void pokemon::startProgessing(function<void(void)> func, PROGRESSING_TYPE type)
 {
+	if (0 == _displayValue)
+	{
+		endProgressing();
+		return;
+	}
+
 	_isIdle = false;
 	_progressingType = type;
-	_displayTime = static_cast<float>(PROGRESSING_TERM);
+	_displayTime = static_cast<float>(PROGRESSING_TERM) / _displayValue;
+	_displayTimeCnt = _displayTime;
 	_function = std::move(func);
 }
 
@@ -631,40 +717,33 @@ void pokemon::endProgressing()
 	_isIdle = true;
 	_progressingType = PROGRESSING_NONE;
 	_function = NULL;
-	_isIdle = true;
 }
 
 void pokemon::progressingIncreaseHp()
 {
 	// 피 채웠으면 콜백함수 해제
 	if (_displayHp == _nowStatus.hp)
-	{
 		endProgressing();
-	}
-
-	++_displayHp;
+	else
+		++_displayHp;
 }
 
 void pokemon::progressingDecreaseHp()
 {
 	// 피를 뻈으면 콜백함수 해제
 	if ( _displayHp == _nowStatus.hp )
-	{ 
 		endProgressing();
-	}
-
-	--_displayHp;
+	else
+		--_displayHp;
 }
 
 void pokemon::progressingIncreseExp(void)
 {
 	// 경험치 다 올렸으면 콜백함수 해제
 	if (_displayExp == _currentExp)
-	{
 		endProgressing();
-	}
-
-	++_displayExp;
+	else
+		++_displayExp;
 }
 
 void pokemon::progressintSkillEffect(int idx)
@@ -686,13 +765,13 @@ void pokemon::progressingApplyUpsetCondition()
 	{
 		case PMUC_POISON:
 		{
-			--_displayHp;
 
 			// 피를 뺏으면 콜백함수 해제
 			if (_displayHp == _nowStatus.hp)
-			{
 				endProgressing();
-			}
+			else
+				--_displayHp;
+
 			break;
 		}
 		case PMUC_FROZEN:
@@ -729,13 +808,12 @@ void pokemon::progressingApplyUpsetCondition()
 
 		case PMUC_BURN:
 		{
-			--_displayHp;
 
 			// 피를 뻈으면 콜백함수 해제
 			if (_displayHp == _nowStatus.hp)
-			{
 				endProgressing();
-			}
+			else
+				--_displayHp;
 
 			break;
 		}
@@ -809,5 +887,11 @@ int pokemon::calculateAttkValue(int skillIdx)
 	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2) * (vitalPoint * 2) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
+}
+
+void pokemon::sendScriptToUI(wstring script)
+{
+	if(_battleUI)
+		_battleUI->pushScript(script);
 }
 

@@ -148,6 +148,7 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 			uc->type = type;
 			uc->releseType = PMURC_CURE;
 			uc->applyValue = 8;				// hp의 1/8 감소
+			uc->name = L"독";
 			break;
 		}
 		case PMUC_FROZEN:
@@ -159,6 +160,7 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 				uc->releseType = PMURC_PERCENT;
 				uc->releaseValue = 5;			// 1/5 확률로 상태 해제
 				uc->type = type;
+				uc->name = L"얼음";
 			}
 
 			break;
@@ -172,6 +174,7 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 				uc->type = type;
 				uc->releseType = PMURC_TURN;
 				uc->releaseValue = RND->getFromIntTo(1, 3);	// 1 ~ 3 턴후에 해제
+				uc->name = L"마비";
 			}
 			break;
 		}
@@ -180,6 +183,7 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 			uc->type = type;
 			uc->releseType = PMURC_TURN;
 			uc->releaseValue = RND->getFromIntTo(1, 2); // 1 ~ 2 턴후에 해제
+			uc->name = L"잠듦";
 			break;
 		}
 
@@ -192,6 +196,7 @@ pokemonUC* pokemonSkill::getUpsetCondition()
 				uc->type = type;
 				uc->releseType = PMURC_CURE;
 				uc->applyValue = 16;				// hp의 1/16 감소
+				uc->name = L"화상";
 			}
 
 			break;

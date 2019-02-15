@@ -1,6 +1,7 @@
 #pragma once
 #include "pokemonSkill.h"
 #include "item.h"
+#include "battleUI.h"
 #include <functional>
 
 
@@ -81,6 +82,8 @@ private:
 	int _displayExp;							// 연출용 경험치
 
 	float _displayTime;							// 연출 용 시간
+	float _displayTimeCnt;						// 연출 용 시간
+	float _displayValue;						// 연출 용 변수
 	bool _isIdle;								// 행동 대기중인가
 	PROGRESSING_TYPE	_progressingType;
 
@@ -95,6 +98,7 @@ private:
 	float _destX, _destY;						// 렌더 위치
 	int _frameX, _frameY;						// 렌더 프레임 좌표
 
+	battleUI*	_battleUI;						// 배틀 ui
 
 	////////////////////////테스트
 	int _damage;
@@ -115,17 +119,22 @@ public:
 	// 로드된 데이터 적용
 	void loadSavePack(pmPack* pack);
 	
+	// 배틀 시작
+	void battelStart();
+	// 배틀 끝
+	void battleEnd();
+
 
 	// 0. 버프 적용
-	void applyBuff();
+	bool applyBuff();
 	// 1. 소지하고 있는 아이템 사용 : 사용했으면 return true
 	bool useOwnerItem();
 	// 2. 상태 이상 적용
-	void applyUpsetCondition();
+	bool applyUpsetCondition();
 	// 3. 아이템 사용
 	// 3. 몇 번째(idx) 스킬 사용
 	// 스킬 사용 결과를 텍스트로 반환
-	wstring useSkill(int idx);
+	bool useSkill(int idx);
 
 	
 	// 레벨 업 : 경험치 레벨업 외에 강제 레벨업 하는 경우 사용 ex. 이상한 사탕 사용
@@ -156,6 +165,8 @@ public:
 	// 상태이상 세팅
 	void setUpsetCondition(pokemonUC upsetCondition);
 	
+	void setBattleUILink(battleUI* ui) {_battleUI = ui;}
+
 	// 적 포켓몬 세팅
 	void setTargetPokemon(pokemon* pm) { _target = pm; }
 	// 소지 아이템 세팅
@@ -254,6 +265,14 @@ private:
 	
 	// 데미지 계산
 	int calculateAttkValue(int skillIdx);
+
+
+
+
+	//======================== ui 관련
+private:
+	// ui에 스크립트 전송
+	void sendScriptToUI(wstring script);
 
 };
 
