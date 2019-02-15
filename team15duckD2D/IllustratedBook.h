@@ -15,6 +15,13 @@ typedef struct tagPokemonBookInfo
 	wstring attr;	//속성
 	wstring weight;	//무게
 	wstring height;	//키
+	wstring info;	//설명
+
+
+	wstring tagweight;	//무게 명칭
+	wstring tagheight;	//키 명칭
+	wstring tagcm;
+	wstring tagkg;
 
 	int attrframeX;
 	int attrframeY;

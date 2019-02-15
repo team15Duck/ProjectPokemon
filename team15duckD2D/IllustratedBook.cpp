@@ -21,6 +21,8 @@ HRESULT IllustratedBook::init()
 
 	for (int i = 0; i < 151; i++)
 	{
+		_book[i].isCatch = false;
+
 		if (i < 9)
 		{
 			_book[i].number = L"No.00" + to_wstring(i + 1);
@@ -33,18 +35,25 @@ HRESULT IllustratedBook::init()
 		{
 			_book[i].number = L"No." + to_wstring(i + 1);
 		}
-		//if (!_isdataexist)
+
+		if (_book[i].isCatch == false)
 		{
-			_book[i].name = L" _ _ _ _ _";
+			_book[i].weight = L"?????";
+			_book[i].height = L"?????";
+			_book[i].info = L" ";
 		}
+
 
 		_book[i].attr = L"???";
 
+		_book[i].tagweight = L"무게 : ";
+		_book[i].tagheight = L"키 :";
+		_book[i].tagkg = L"kg";
+		_book[i].tagcm = L"cm";
+
+
 		_book[i].attrframeX = 0;
 		_book[i].attrframeY = 0;
-
-		_book[i].weight = L"몸무게 :";
-		_book[i].height = L"키 :";
 
 
 		_book[i].isDataSet = false;
@@ -53,8 +62,6 @@ HRESULT IllustratedBook::init()
 	_currentSelectNum = 0;
 	_selectNumMoveCount = 0;
 	_selectNumMoveDelay = 0.1f;
-
-
 
 	_isdataexist = true;
 	_isdetaileinfo = false;
@@ -107,13 +114,10 @@ void IllustratedBook::update()
 		{
 			_pbstate = BOOK_INFO;
 		}
-
-
 	}
 	//하위 상세정보 비활성화
 	if (_pbstate == BOOK_INFO)
 	{
-
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			_pbstate = BOOK_LIST;
@@ -185,11 +189,27 @@ void IllustratedBook::render()
 	
 		int i = _currentSelectNum;
 
+		int index;
+		int frameX;
+		int frameY;
+
+		index = _currentSelectNum * 2;
+		frameX = index % IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX();
+		frameY = index / IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX();
+
+		IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(650 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), frameX, frameY);
+
 		D2DMANAGER->drawText(_book[i].number.c_str(), 50, 100, 38); 
 		D2DMANAGER->drawText(_book[i].name.c_str(), 200, 100, 38);
 
-		D2DMANAGER->drawText(_book[i].height.c_str(), 50, 200, 38);
-		D2DMANAGER->drawText(_book[i].weight.c_str(), 50, 250, 38);
+		D2DMANAGER->drawText(_book[i].tagheight.c_str(), 50, 200, 38);
+		D2DMANAGER->drawText(_book[i].height.c_str(), 150, 200, 38);
+		D2DMANAGER->drawText(_book[i].tagcm.c_str(), 300, 200, 38);
+		D2DMANAGER->drawText(_book[i].tagweight.c_str(), 50, 250, 38);
+		D2DMANAGER->drawText(_book[i].weight.c_str(), 200, 250, 38);
+		D2DMANAGER->drawText(_book[i].tagkg.c_str(), 400, 250, 38);
+
+		D2DMANAGER->drawText(_book[i].info.c_str(), 50, 400, 22);
 
 	}
 
@@ -217,7 +237,9 @@ void IllustratedBook::pokemonDataSet()
 		_book[i].name.clear();
 
 		_book[i].name = string2wstring(*info->getPokemonName());
-
+		_book[i].height = to_wstring(info->getHeight());
+		_book[i].weight = to_wstring( info->getWeight());
+		_book[i].info = string2wstring(*info->getPokemonDescription());
 		switch (info->getPokemonType())
 		{
 		case PM_TYPE_NORMAL:
