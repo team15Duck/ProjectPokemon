@@ -17,6 +17,8 @@ HRESULT battleUI::init()
 	_scriptCount = 0;
 	_scriptDelay = 0.05f;
 
+	MENUMANAGER->addFrame("battleScript", 0, 448, 30, 6);
+	MENUMANAGER->addFrame("battleMenu", 512, 448, 14, 6);
 	_script.push(L"이건 테스트용 텍스트이다 1");
 	_script.push(L"이건 테스트용 텍스트이다 2");
 	_script.push(L"이건 테스트용 텍스트이다 3");
@@ -65,7 +67,15 @@ void battleUI::render()
 {
 	if (_script.size() > 0)
 	{
-		D2DMANAGER->drawText(_viewScript.c_str(), 30, 500, 20);
+		MENUMANAGER->findMenuFrame("battleScript")->render("타입1");
+		D2DMANAGER->drawText(_viewScript.c_str(), 30, 520, 25);
+	}
+	else
+	{
+		MENUMANAGER->findMenuFrame("battleScript")->render("타입1");
+		wstring str = L"무엇을할까?";
+		D2DMANAGER->drawText(str.c_str(), 30, 520, 25);
+		MENUMANAGER->findMenuFrame("battleMenu")->render("타입1");
 	}
 }
 

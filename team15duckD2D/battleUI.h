@@ -5,19 +5,14 @@ class battleUI
 {
 private:
 	queue<wstring> _script;
-
 	UINT _scriptLength;
-
-
 	wstring _viewScript;
-
 	float _scriptCount;
 	float _scriptDelay;
 
 public:
 	battleUI();
 	~battleUI();
-
 
 	HRESULT init();
 	void release();
