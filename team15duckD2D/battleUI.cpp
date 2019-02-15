@@ -19,14 +19,8 @@ HRESULT battleUI::init()
 
 	MENUMANAGER->addFrame("battleScript", 0, 448, 30, 6);
 	MENUMANAGER->addFrame("battleMenu", 512, 448, 14, 6);
-	_script.push(L"이건 테스트용 텍스트이다 1");
-	_script.push(L"이건 테스트용 텍스트이다 2");
-	_script.push(L"이건 테스트용 텍스트이다 3");
-	_script.push(L"이건 테스트용 텍스트이다 4");
-	_script.push(L"이건 테스트용 텍스트이다 5");
-	_script.push(L"이건 테스트용 텍스트이다 6");
-	_script.push(L"이건 테스트용 텍스트이다 7");
-	_script.push(L"이건 테스트용 텍스트이다 8");
+
+	_isSkip = false;
 	return S_OK;
 }
 
@@ -51,15 +45,24 @@ void battleUI::update()
 				{
 					_viewScript += _script.front()[i];
 				}
+				if (_scriptLength == _script.front().size())
+				{
+					_isSkip = true;
+				}
 			}
-			
 		}
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+
+		if (_isSkip)
 		{
-			_script.pop();
-			_scriptLength = 0;
-			_viewScript.clear();
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_script.pop();
+				_scriptLength = 0;
+				_viewScript.clear();
+				_isSkip = false;
+			}
 		}
+		
 	}
 }
 
