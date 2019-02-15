@@ -15,7 +15,8 @@ HRESULT battleScene::init()
 {
 	_pokemon = PLAYERDATA->getPokemon();
 	PLAYERDATA->setPokemon(nullptr);
-
+	_battleUI = new battleUI;
+	_battleUI->init();
 	// 테스트용 삭제 될 것
 	{
 		_pms[TURN_ENEMY] = new pokemon;
@@ -38,10 +39,14 @@ HRESULT battleScene::init()
 void battleScene::release()
 {
 	SAFE_DELETE(_pokemon);
+	SAFE_RELEASE(_battleUI);
+	SAFE_DELETE(_battleUI);
 }
 
 void battleScene::update()
 {
+
+	if (!_battleUI->battleSceneUpdate())return;
 	// 테스트
 	{
 		_pms[TURN_ENEMY]->update();

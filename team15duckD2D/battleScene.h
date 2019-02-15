@@ -3,6 +3,7 @@
 #include <set>
 #include "gameNode.h"
 #include "pokemon.h"
+#include "battleUI.h"
 
 //포켓몬과배틀
 class battleScene : public gameNode
@@ -20,7 +21,7 @@ private:
 	int cnt;						// 테스트용임 삭제 될 것
 	float termTime;
 
-
+	battleUI* _battleUI;
 public:
 	battleScene();
 	~battleScene();
