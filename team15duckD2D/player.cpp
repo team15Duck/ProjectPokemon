@@ -478,7 +478,7 @@ void player::appearTileCheck()
 {
 	if (_map->getTile(_tileX, _tileY)->attr & ATTR_APPEAR)
 	{
-		bool meet = RND->getInt(10) < 3 ? true : false;
+		bool meet = RND->getInt(10) < 1 ? true : false;
 		if (meet)
 		{
 			pokemon* enemy = new pokemon;

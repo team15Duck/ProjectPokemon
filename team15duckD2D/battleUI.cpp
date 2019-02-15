@@ -18,7 +18,10 @@ HRESULT battleUI::init()
 	_scriptDelay = 0.05f;
 
 	MENUMANAGER->addFrame("battleScript", 0, 448, 30, 6);
-	MENUMANAGER->addFrame("battleMenu", 512, 448, 14, 6);
+	MENUMANAGER->addFrame("battleMenu", 480, 448, 15, 6);
+	
+	IMAGEMANAGER->addImage("playerUI", L"image/battle_UI/battle_UI_Player.png", 416, 148);
+	IMAGEMANAGER->addImage("enemyUI", L"image/battle_UI/battle_UI_enemy.png", 400, 116);
 
 	_isSkip = false;
 	return S_OK;
@@ -99,6 +102,8 @@ void battleUI::render()
 		str = L"µµ¸Á°£´Ù";
 		D2DMANAGER->drawText(str.c_str(), 800, 550, 30);
 	}
+	IMAGEMANAGER->findImage("playerUI")->render(960 - 416, 448 - 148);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
+	IMAGEMANAGER->findImage("enemyUI")->render(0, 0);// , L"image/battle_UI/battle_UI_enemy.png", 400, 116);
 }
 
 void battleUI::pushScript(wstring script)
