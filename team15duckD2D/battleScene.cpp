@@ -112,4 +112,6 @@ void battleScene::render()
 	WCHAR str[128];
 	swprintf_s(str, L" [%d] : time : %.2f", cnt, termTime);
 	D2DMANAGER->drawText(str, CAMERA->getPosX() + WINSIZEX / 2, CAMERA->getPosY() + WINSIZEY / 2);
+
+	_battleUI->render();
 }

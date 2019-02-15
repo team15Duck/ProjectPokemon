@@ -15,7 +15,16 @@ HRESULT battleUI::init()
 {
 	_scriptLength = 0;
 	_scriptCount = 0;
-	_scriptDelay = 0.3f;
+	_scriptDelay = 0.05f;
+
+	_script.push(L"이건 테스트용 텍스트이다 1");
+	_script.push(L"이건 테스트용 텍스트이다 2");
+	_script.push(L"이건 테스트용 텍스트이다 3");
+	_script.push(L"이건 테스트용 텍스트이다 4");
+	_script.push(L"이건 테스트용 텍스트이다 5");
+	_script.push(L"이건 테스트용 텍스트이다 6");
+	_script.push(L"이건 테스트용 텍스트이다 7");
+	_script.push(L"이건 테스트용 텍스트이다 8");
 	return S_OK;
 }
 
@@ -32,18 +41,16 @@ void battleUI::update()
 		if (_scriptCount >= _scriptDelay)
 		{
 			_scriptCount = 0;
-			_scriptLength++;
-			_viewScript.clear();
-			for (int i = 0; i < _scriptLength; i++)
+			if (_script.front().size() > _scriptLength)
 			{
-				_viewScript += _script.front()[i];
+				_scriptLength++;
+				_viewScript.clear();
+				for (int i = 0; i < _scriptLength; i++)
+				{
+					_viewScript += _script.front()[i];
+				}
 			}
-
-			if (_script.front().size() <= _scriptLength)
-			{
-				_script.pop();
-				_scriptLength = 0;
-			}
+			
 		}
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
