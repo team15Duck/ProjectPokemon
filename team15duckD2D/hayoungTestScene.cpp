@@ -185,7 +185,12 @@ void hayoungTestScene::update()
 	//======================= 특별케이스
 	_book->update();
 	_bag->update();
-	_setting->update();
+
+	// 프레임 세팅 
+	if (_mmselect == MMS_YES && _smselect == SMS_YES && _cselect == SETTING)
+	{
+		_setting->update();
+	}
 	//=================================
 
 }
@@ -438,9 +443,7 @@ void hayoungTestScene::commonMenurender()
 		//=============================================================================================
 
 		//프레임 깔아주기
-		//int type = 1;
 		MENUMANAGER->findMenuFrame("메인메뉴")->render();
-		//MENUMANAGER->findMenuFrame("")
 		//하단텍스트 출력용 bg출력 
 		IMAGEMANAGER->findImage("기본하단")->render(0 + CAMERA->getPosX(), 480 + CAMERA->getPosY());
 
