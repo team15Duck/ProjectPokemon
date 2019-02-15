@@ -93,7 +93,7 @@ void battleUI::render()
 		D2DMANAGER->drawText(str.c_str(), 50, 500, 30);
 		str = L"무엇을할까?";
 		D2DMANAGER->drawText(str.c_str(), 50, 550, 30);
-		MENUMANAGER->findMenuFrame("battleMenu")->render("타입1");
+		MENUMANAGER->findMenuFrame("battleMenu")->render();
 
 		str = L"싸운다";
 		D2DMANAGER->drawText(str.c_str(), 600, 500, 30);

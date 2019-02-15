@@ -27,18 +27,14 @@ HRESULT hayoungTestScene::init()
 	frameImageinit();
 	//commonMenuinit();
 
-	_issubpkm1exist = true;
-	_issubpkm2exist = false;
-	_issubpkm3exist = false;
-	_issubpkm4exist = false;
-	_issubpkm5exist = false;
-
 	_isFemale = true;
 	_isMale = false;
 
 	//메인메뉴 초기화 
 
+	//MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
 	MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
+
 
 	//메인메뉴 선택했나요? 아니요
 	_mmselect = MMS_NO;
@@ -215,7 +211,7 @@ void hayoungTestScene::render()
 	if (_mmselect == MMS_YES && _cselect == POKEMON && _smselect == SMS_YES)
 	{
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render("타입1");
+		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
 		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
 	}
 	//3. 가방 렌더
@@ -442,7 +438,9 @@ void hayoungTestScene::commonMenurender()
 		//=============================================================================================
 
 		//프레임 깔아주기
-		MENUMANAGER->findMenuFrame("메인메뉴")->render("타입1");
+		//int type = 1;
+		MENUMANAGER->findMenuFrame("메인메뉴")->render();
+		//MENUMANAGER->findMenuFrame("")
 		//하단텍스트 출력용 bg출력 
 		IMAGEMANAGER->findImage("기본하단")->render(0 + CAMERA->getPosX(), 480 + CAMERA->getPosY());
 
