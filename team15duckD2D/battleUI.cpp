@@ -79,14 +79,25 @@ void battleUI::render()
 	if (_script.size() > 0)
 	{
 		MENUMANAGER->findMenuFrame("battleScript")->render("타입1");
-		D2DMANAGER->drawText(_viewScript.c_str(), 30, 520, 25);
+		D2DMANAGER->drawText(_viewScript.c_str(), 50, 500, 30);
 	}
 	else
 	{
 		MENUMANAGER->findMenuFrame("battleScript")->render("타입1");
-		wstring str = L"무엇을할까?";
-		D2DMANAGER->drawText(str.c_str(), 30, 520, 25);
+		wstring str = _pokemonName + L"은(는)";
+		D2DMANAGER->drawText(str.c_str(), 50, 500, 30);
+		str = L"무엇을할까?";
+		D2DMANAGER->drawText(str.c_str(), 50, 550, 30);
 		MENUMANAGER->findMenuFrame("battleMenu")->render("타입1");
+
+		str = L"싸운다";
+		D2DMANAGER->drawText(str.c_str(), 600, 500, 30);
+		str = L"포켓몬";
+		D2DMANAGER->drawText(str.c_str(), 600, 550, 30);
+		str = L"가방";
+		D2DMANAGER->drawText(str.c_str(), 800, 500, 30);
+		str = L"도망간다";
+		D2DMANAGER->drawText(str.c_str(), 800, 550, 30);
 	}
 }
 
