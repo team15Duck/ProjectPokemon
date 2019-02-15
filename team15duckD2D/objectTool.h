@@ -62,6 +62,7 @@ private:
 	bool _isCtrl;
 
 	//맵정보 불러올거니
+	bool _isSave;
 	bool _isLoad;
 
 	UINT _savePointX;

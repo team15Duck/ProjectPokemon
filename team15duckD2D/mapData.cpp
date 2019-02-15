@@ -53,18 +53,25 @@ void mapData::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
-			
-			if(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
+			//아래에 그릴거
+			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
-				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				if (_vvTile[ii][jj]->attr & ATTR_APPEAR)
+				{
+					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				}
 			}
+		}
+		jj = CAMERA->getPosX() / TILE_SIZE;
+		if (jj < 0) jj = 0;
 
-
-			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)
-			{
-				_player->render();
-			}
-
+		if ((int)_player->getPosY() / 64 == ii)
+		{
+			_player->render();
+		}
+		for (; jj < jjMax; ++jj)
+		{
+			//위에 그릴거
 			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
 				if (_vvTile[ii][jj]->attr & ATTR_APPEAR)
@@ -73,8 +80,9 @@ void mapData::render()
 				}
 				else
 				{
-
+					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
 				}
+
 			}
 
 			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)

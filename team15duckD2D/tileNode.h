@@ -26,6 +26,10 @@
 #define ATTR_STORE_STAND  	0X00010000UL					//진열대(상점)
 #define ATTR_STORE_DISPLAY	0X00020000UL					//진열대2(상점)
 #define ATTR_POTAL			0X00040000UL					//포탈
+#define ATTR_SIGN			0X00080000UL					//표지판(일반)
+#define ATTR_SIGN_GYM		0X00100000UL					//표지판(체육관)
+#define ATTR_ITEM			0X00200000UL					//필드아이템
+
 
 
 

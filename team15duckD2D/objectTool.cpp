@@ -81,8 +81,12 @@ void objectTool::update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
+		_isSave = true;
 		save(_mapCase);
 	}
+	if (KEYMANAGER->isOnceKeyUp(VK_F1))
+		_isSave = false;
+
 	if (KEYMANAGER->isOnceKeyDown(VK_F3))
 	{
 		load();
@@ -132,29 +136,6 @@ void objectTool::render()
 	}
 	ii = CAMERA->getPosY() / TILE_SIZE;
 	if (ii < 0) ii = 0;
-	for (; ii < iiMax; ++ii)
-	{
-		for (; jj < jjMax; ++jj)
-		{
-
-			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
-			{
-				IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
-			}
-
-			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
-			{
-				if (_vvTile[ii][jj]->attr & ATTR_APPEAR)
-				{
-					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE + 40, 0, 40, 64, 24, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
-				}
-				else
-				{
-
-				}
-			}
-		}
-	}
 
 	//=================================================================================================
 	//맵 출력
@@ -212,6 +193,11 @@ void objectTool::render()
 	WCHAR str[128];
 	swprintf_s(str, L"mapcase : %d", _mapCase);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 250);
+	if (_isSave)
+	{
+		swprintf_s(str, L"세이브되었숩니다~~~~~~~~");
+		D2DMANAGER->drawText(str, CAMERA->getPosX() + WINSIZEX / 2, CAMERA->getPosY() + WINSIZEY / 2);
+	}
 	//swprintf_s(str, L"현재 : %d", _curImgNum);
 	//D2DMANAGER->drawText(str, 100, 400);
 }
@@ -663,33 +649,30 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		if ((frameX == 0 || frameX == 4) && frameY == 0) //산지형
 		{
 			result |= ATTR_UNMOVE;
-			//산지
 		}
-		else if ((frameX == 0 || frameX == 1 || frameX == 3 || frameX == 4) && frameY == 1)
+		else if ((frameX >= 0 && frameX < 5) && frameY == 1) //산지형 + 돌
 		{
 			result |= ATTR_UNMOVE;
-			//산지
 		}
-		else if ((frameX >= 1 && frameX < 4) && (frameY == 2 || frameY == 3))
+		else if ((frameX >= 1 && frameX < 4) && (frameY == 2 || frameY == 3)) //산지형
 		{
 			result |= ATTR_UNMOVE;
-			//산지
 		}
-		else if (frameX == 5 && frameY == 0) //석상
-		{
-			result |= ATTR_NONE;
-			result |= ATTR_STONE_STATUE;
-		}
-		else if (frameX == 5 && frameY == 1)
+		//else if (frameX == 5 && frameY == 0) //석상(윗부분)
+		//{
+		//	result |= ATTR_NONE;
+		//	result |= ATTR_STONE_STATUE;
+		//}
+		else if (frameX == 5 && frameY == 1) //석상(아랫부분)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_STONE_STATUE;
 		}
-		else if ((frameX == 2 && frameY == 1) || (frameX == 5 && frameY == 2)) //돌
+		else if (frameX == 5 && frameY == 2) //돌
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if (frameX == 0 && frameY == 3)
+		else if (frameX == 0 && frameY == 3) //작은나무(풀베기 X)
 		{
 			result |= ATTR_UNMOVE;
 		}
@@ -701,22 +684,24 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if (frameX == 5 && frameY == 4) //표지판
 		{
 			result |= ATTR_UNMOVE;
-			//표지판
+			result |= ATTR_SIGN;
 		}
 		else if (frameX == 5 && frameY == 5) //동그란 풀
 		{
 			result |= ATTR_UNMOVE;
-			//풀
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME2])
 	{
-		if ((frameX == 0 && (frameY == 0 && frameY == 1)) ||
-			((frameX >= 3 && frameX < 6) && (frameY == 2 || frameY == 3 || frameY == 6)) ||
-			((frameX == 3 || frameX == 6) && (frameY == 1 || frameY == 4))) //울타리
+		if (frameX == 0 && (frameY == 0 || frameY == 1)) //울타리
 		{
 			result |= ATTR_UNMOVE;
-			//울타리
+		}
+		else if ((frameX >= 3 && frameX < 6) && (frameY >= 0 && frameY < 6)) //울타리
+		{
+			result |= ATTR_UNMOVE;
+			if (frameX == 4 && frameY == 1) //표지판
+				result |= ATTR_SIGN;
 		}
 		else if ((frameX == 1 || frameX == 2) && (frameY >= 0 && frameY < 6)) //나무
 		{
@@ -725,13 +710,10 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 		else if (frameX == 0 && (frameY >= 2 && frameY < 6)) //오박사집 기계
 		{
-			result |= ATTR_UNMOVE;
+			result |= ATTR_NONE;
 			result |= ATTR_OAK_MACHINE;
-		}
-		else if (frameX == 4 && frameY == 1) //표지판
-		{
-			result |= ATTR_UNMOVE;
-			result |= ATTR_TIP;
+			if (frameY == 3 || frameY == 5)
+				result |= ATTR_UNMOVE;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME3])
@@ -744,25 +726,20 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if (frameX == 4 && (frameY == 4 || frameY == 5)) //실내하단좌우
-		{
-			result |= ATTR_NONE;
-		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME4])
 	{
-		if ((frameX == 1 && frameY == 1) ||
-			((frameX == 0 || frameX == 1) && frameY == 2)) //점프할 수 있는 언덕
+		if ((frameX == 1 && frameY == 1) || ((frameX == 0 || frameX == 1) && frameY == 2)) //점프할 수 있는 언덕
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_DOWN_JUMP;
 		}
-		else if (frameX == 0 && frameY == 0)
+		else if (frameX == 0 && frameY == 0) //왼쪽점프
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_LEFT_JUMP;
 		}
-		else if (frameX == 2 && frameY == 0)
+		else if (frameX == 2 && frameY == 0) //오른쪽점프
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_RIGHT_JUMP;
@@ -771,7 +748,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX >= 3 && frameX < 6) && frameY == 1)
+		else if ((frameX >= 3 && frameX < 6) && (frameY == 1 || frameY == 0)) //오박사 테이블
 		{
 			result |= ATTR_UNMOVE;
 		}
@@ -780,15 +757,13 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_CUT;
 		}
-		else if (frameX == 1 && frameY == 3) //카페트(포탈)
-		{
-			result |= ATTR_NONE;
-			result |= ATTR_POTAL;
-		}
 		else if ((frameX >= 0 && frameX < 3) && (frameY == 3 || frameY == 4)) //카페트(포탈X)
 		{
-			if (frameX != 1 && frameY != 3)
+			if (frameX == 1 && frameY == 3) //카페트(포탈)
+			{
 				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
 		}
 		else if ((frameX == 4 || frameX == 5) && frameY == 3) //지도
 		{
@@ -806,64 +781,60 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX == 4 && frameY == 4)) //계단(포탈)
+		else if (frameX == 4 && frameY == 4) //계단(포탈)
 		{
 			result |= ATTR_NONE;
 			result |= ATTR_POTAL;
 		}
-
-		else if (frameX == 5 && frameY == 4)
-		{
-			result |= ATTR_NONE;
-			//표지판(체육관)
-		}
 		else if (frameX == 5 && frameY == 5)
 		{
 			result |= ATTR_UNMOVE;
-			//표지판(체육관)
+			result |= ATTR_SIGN_GYM;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME5])
 	{
-		if ((frameX >= 0 && frameX < 3) || (frameY >= 0 && frameY < 3)) //물(낚시가능)
+
+		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 3)) //물(낚시가능)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WATER;
 		}
-		else if ((frameX >= 3 && frameX < 6) && frameY >= 0 && frameY < 4) // 동굴
+		else if (frameX == 4 && frameY == 2) //동굴입구
 		{
-			if (frameX != 4 && frameY != 2)
-				result |= ATTR_UNMOVE;
-			else   //동굴입구라면
-			{
-				result |= ATTR_NONE;
-				result |= ATTR_POTAL;
-			}
-
+			result |= ATTR_NONE;
+			result |= ATTR_POTAL;
+		}
+		else if ((frameX == 3 || frameX == 5) && frameY == 2)
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 3 && frameX < 6) && (frameY == 0 || frameY == 1 || frameY == 3)) // 동굴
+		{
+			result |= ATTR_UNMOVE;
 		}
 		else if (frameX == 3 && (frameY == 4 || frameY == 5)) //동굴벽
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX >= 0 && frameX < 3) && (frameY == 5)) //다리(못감)
+		else if ((frameX >= 0 && frameX < 3) && frameY == 5) //다리(못감)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX == 4 && frameY == 4))
+		else if ((frameX == 4 && frameY == 4)) //필드아이템
 		{
 			result |= ATTR_UNMOVE;
-			//필드아이템
+			result |= ATTR_ITEM;
 		}
 		else if (frameX == 5 && frameY == 4) //미니맵아이템
 		{
 			result |= ATTR_UNMOVE;
+			result |= ATTR_ITEM;
 		}
 		else if (frameX == 4 && frameY == 5) //포스터
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else
-			result |= ATTR_NONE;
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME6])
 	{
@@ -895,9 +866,14 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if (frameX == 3 && (frameY >= 0 && frameY < 3)) //장식물(액자, 포켓몬도감, 창문)
+		else if (frameX == 3 && (frameY >= 0 && frameY < 4)) //액자나 창문
 		{
 			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 5 && frameY == 2) //포켓몬도감
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_ITEM;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME7])
@@ -921,14 +897,11 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX >= 3 && frameX < 5) && frameY == 2) //싱크대 위
+		else if ((frameX >= 3 && frameX < 5) && (frameY == 2 || frameY == 3)) //싱크대 위
 		{
 			result |= ATTR_UNMOVE;
-		}
-		else if ((frameX >= 3 && frameX < 5) && frameY == 3) //싱크대
-		{
-			result |= ATTR_UNMOVE;
-			result |= ATTR_SINK;
+			if (frameY == 3)
+				result |= ATTR_SINK;
 		}
 		else if (frameX == 5 && (frameY == 2 || frameY == 3)) //화분
 		{
@@ -949,24 +922,13 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME8])
 	{
-		if ((frameX == 3 && frameY == 0) || (frameX == 4 && frameY == 1)) //컴퓨터 윗부분이랑 컴퓨터 책상
+		if ((frameX >= 3 && frameX < 6) && (frameY == 0 || frameY == 1)) //컴퓨터, 책상, 창문
 		{
 			result |= ATTR_UNMOVE;
+			if (frameX == 3 && frameY == 1)
+				result |= ATTR_COMPUTER;
 		}
-		else if (frameX == 3 && frameY == 1) //컴퓨터(집)
-		{
-			result |= ATTR_UNMOVE;
-			result |= ATTR_COMPUTER;
-		}
-		else if ((frameX == 4 || frameX == 5) && frameY == 0) //창문
-		{
-			result |= ATTR_UNMOVE;
-		}
-		else if (frameX == 5 && frameY == 1) //책상옆 서랍장
-		{
-			result |= ATTR_UNMOVE;
-		}
-		else if ((frameX == 0 || frameX == 1) && (frameY == 3 || frameY == 4))
+		else if ((frameX == 0 || frameX == 1) && frameY == 3) //책장
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_BOOKCASE;
@@ -980,16 +942,10 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_GAME;
 		}
-		else if ((frameX >= 3 && frameX < 6) && (frameY >= 3 && frameY < 6))
+		else if ((frameX >= 3 && frameX < 6) && (frameX == 4 || frameY == 5)) //침대(헤드X)
 		{
-			if (frameX == 4 && frameY == 3)
+			if (frameX == 4 && frameY == 5)
 				result |= ATTR_UNMOVE;
-			else if (frameX == 4 && frameY == 5)
-				result |= ATTR_UNMOVE;
-		}
-		else if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 3)) //카페트
-		{
-			result |= ATTR_NONE;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME9])
@@ -1002,19 +958,12 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX == 2 || frameX == 3) && frameY == 1) //오박사기계위쪽
+		else if ((frameX == 0 || frameX == 1) && (frameY >= 1 || frameY < 3)) //책장
 		{
-			result |= ATTR_NONE;
+			result |= ATTR_UNMOVE;
+			result |= ATTR_BOOKCASE;
 		}
-		else if ((frameX == 0 || frameX == 1) && (frameY >= 1 || frameY < 4)) //책장
-		{
-			if (frameY != 3)
-			{
-				result |= ATTR_UNMOVE;
-				result |= ATTR_BOOKCASE;
-			}
-		}
-		else if ((frameX == 4 || frameX == 5) && (frameY == 4 || frameY == 5)) //테이블
+		else if ((frameX == 4 || frameX == 5) && (frameY == 3 || frameY == 4)) //테이블
 		{
 			result |= ATTR_UNMOVE;
 		}
@@ -1033,6 +982,11 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			{
 				result |= ATTR_UNMOVE;
 			}
+		}
+		else if (frameX == 5 && frameY == 2) 
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_TIP;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME10])
@@ -1058,7 +1012,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_POTAL;
 		}
-		else if ((frameX >= 0 && frameX < 3) && (frameY == 4 || frameY == 5)) //비주기가 여기 서있는다.
+		else if ((frameX >= 0 && frameX < 3) && frameY == 5) //비주기가 여기 서있는다.
 		{
 			result |= ATTR_UNMOVE;
 		}
