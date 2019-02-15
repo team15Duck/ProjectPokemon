@@ -699,16 +699,20 @@ void pokemon::attack(int value, pokemonUC* upsetCondition)
 
 void pokemon::startProgessing(function<void(void)> func, PROGRESSING_TYPE type)
 {
-	if (0 == _displayValue)
+	if (PROGRESSING_VALUE == type)
 	{
-		endProgressing();
-		return;
+		if (0 == _displayValue)
+		{
+			endProgressing();
+			return;
+		}
+
+		_displayTime = static_cast<float>(PROGRESSING_TERM) / _displayValue;
+		_displayTimeCnt = _displayTime;
 	}
 
 	_isIdle = false;
 	_progressingType = type;
-	_displayTime = static_cast<float>(PROGRESSING_TERM) / _displayValue;
-	_displayTimeCnt = _displayTime;
 	_function = std::move(func);
 }
 

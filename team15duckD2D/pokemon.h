@@ -6,7 +6,7 @@
 
 
 #define POKEMON_SKILL_MAX_COUNT 4			// 최대 보유할 수 있는 스킬의 수
-#define PROGRESSING_TERM 0.1
+#define PROGRESSING_TERM 1
 
 // 세이브용 데이터
 typedef struct tagPokemonPackage
@@ -197,6 +197,8 @@ public:
 
 	// 레벨
 	unsigned int getLevel()		{ return _level;}
+
+	string getName()			{ return _nickName; }
 	
 	// 현재 경험치
 	unsigned int getCurrentExp()		{ return _currentExp - _currentLvExp; }

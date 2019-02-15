@@ -55,6 +55,12 @@ void battleScene::update()
 	_pms[TURN_ENEMY]->update();
 	_pms[TURN_PLAYER]->update();
 
+	// 행동 대기중이 아니라면 
+	if (!_pms[TURN_ENEMY]->isIdle() || !_pms[TURN_PLAYER]->isIdle())
+	{
+		return;
+	}
+
 	// 테스트
 	switch (_phase)
 	{
@@ -62,78 +68,103 @@ void battleScene::update()
 			break;
 		case PHASE_BATTLE:
 		{
-			// 행동 대기중이 아니라면 
-			if (!_pms[_turn]->isIdle())
+			if (!_pms[TURN_ENEMY]->isAwake())				// 적 포켓몬 쓰러짐
 			{
-				break;
+				wstring script = string2wstring(_pms[TURN_ENEMY]->getName());
+				script.append(L"이(가) 쓰러졌다!");
+
+				_battleUI->pushScript(script);
+
+				// 현재 배틀 종료
+				_phase = PHASE_END;
 			}
-
-			++cnt;
-			switch (cnt)
+			else if (!_pms[TURN_PLAYER]->isAwake())			// 플레이어 포켓몬 쓰러짐
 			{
-				case 1:
-				{
-					_pms[_turn]->applyBuff();
-					break;
-				}
+				wstring script = string2wstring(_pms[TURN_ENEMY]->getName());
+				script.append(L"이(가) 쓰러졌다!");
 
-				case 2:
-				{
-					_pms[_turn]->useOwnerItem();
-					break;
-				}
+				_battleUI->pushScript(script);
 
-				case 3:
+				// 현재 배틀 종료
+				_phase = PHASE_END;
+			}
+			else // 배틀 진행
+			{
+				++cnt;
+				switch (cnt)
 				{
-					_pms[_turn]->applyUpsetCondition();
-					break;
-				}
-
-				case 4:
-				{
-					if (TURN_ENEMY == _turn)
+					case 1:	{ _pms[_turn]->applyBuff();	break;			 }
+					case 2:	{ _pms[_turn]->useOwnerItem(); break;		 }
+					case 3:	{ _pms[_turn]->applyUpsetCondition(); break; }
+					case 4:
 					{
-						int cnt = 0;
-						for (; cnt < POKEMON_SKILL_MAX_COUNT; ++cnt)
+						if (TURN_ENEMY == _turn)
 						{
-							if (_pms[_turn]->getPokemonSkills()[cnt].getSkillID() == SKILL_INDEX_NONE)
-								break;
-						}
+							int cnt = 0;
+							for (; cnt < POKEMON_SKILL_MAX_COUNT; ++cnt)
+							{
+								if (_pms[_turn]->getPokemonSkills()[cnt].getSkillID() == SKILL_INDEX_NONE)
+									break;
+							}
 
-						_pms[_turn]->useSkill(RND->getInt(cnt));
+							_pms[_turn]->useSkill(RND->getInt(cnt));
+						}
+						else
+						{
+							int cnt = 0;
+							for (; cnt < POKEMON_SKILL_MAX_COUNT; ++cnt)
+							{
+								if (_pms[_turn]->getPokemonSkills()[cnt].getSkillID() == SKILL_INDEX_NONE)
+									break;
+							}
+
+							_pms[_turn]->useSkill(RND->getInt(cnt));
+						}
+						break;
 					}
-					else
+
+					default:
 					{
-						int cnt = 0;
-						for (; cnt < POKEMON_SKILL_MAX_COUNT; ++cnt)
-						{
-							if (_pms[_turn]->getPokemonSkills()[cnt].getSkillID() == SKILL_INDEX_NONE)
-								break;
-						}
-						
-						_pms[_turn]->useSkill(RND->getInt(cnt));
+						cnt = 0;
+						_turn = (BattleTurn)(TURN_MAX - _turn);
+
+						break;
 					}
-
-					break;
 				}
-
-				default:
-					cnt = 0;
-					_turn = (BattleTurn)(TURN_MAX - _turn);
-
-					break;
 			}
 
-			if (!_pms[TURN_ENEMY]->isAwake() || !_pms[TURN_PLAYER]->isAwake())
-			{
-				_phase = PHASE_CHANGE;
-			}
 			break;
 		}
 		case PHASE_END:
+		{
+			if (_pms[TURN_PLAYER]->isAwake())
+			{
+				// todo 플레이어 포켓몬 전투 경험치 계산
+				int value = 10;
+				_pms[TURN_PLAYER]->gainExp(value);
+				
+				wstring script = string2wstring(_pms[TURN_PLAYER]->getName());
+				script.append(L"은(는)");
+				script.append(to_wstring(value));
+				script.append(L"의 경험치를 획득하였다!");
+
+				_battleUI->pushScript(script);
+				
+				// 적 포켓몬 변경 먼저 할 것이기 때문에.
+				_turn = TURN_ENEMY;
+			}
+
+			// 포켓몬 변경
+			_phase = PHASE_CHANGE;
 			break;
+		}
 		case PHASE_CHANGE:
+		{
+			wstring script = L"포켓몬을 교체해보자";
+			_battleUI->pushScript(script);
+
 			break;
+		}
 		case PHASE_EVOLUTION:
 			break;
 		default:
