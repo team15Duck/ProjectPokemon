@@ -13,8 +13,8 @@ jaewonTestScene::~jaewonTestScene()
 
 HRESULT jaewonTestScene::init()
 {
-	_bgmKey = nullptr;
-	_effectKey = nullptr;
+	_bgmKey.clear();
+	_effectKey.clear();
 
 
 	return S_OK;

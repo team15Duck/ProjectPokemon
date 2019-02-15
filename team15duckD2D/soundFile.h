@@ -23,7 +23,7 @@ enum SOUND_FILE_NAME
 
 };
 
-string _vBgmString[BGM_END] = 
+static string _vBgmString[BGM_END] = 
 {
 	"sound/none",
 	"sound/bgm_01_Game_Freak_Logo",
