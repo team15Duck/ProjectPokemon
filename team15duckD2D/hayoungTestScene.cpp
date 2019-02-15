@@ -183,10 +183,9 @@ void hayoungTestScene::update()
 		}
 	}
 
-	//=================== 특별케이스 도감
+	//======================= 특별케이스
 	_book->update();
 	_bag->update();
-
 	//=================================
 
 
@@ -470,6 +469,29 @@ void hayoungTestScene::render()
 	//6. 설정 출력
 	if (_mmselect == MMS_YES && _cselect == SETTING && _smselect == SMS_YES)
 	{
+
+		IMAGEMANAGER->findImage("테스트2")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+		IMAGEMANAGER->findImage("기본상단")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+		MENUMANAGER->findMenuFrame("설정프레임1")->render("타입1");
+		MENUMANAGER->findMenuFrame("설정프레임2")->render("타입1");
+
+		WCHAR settingtext[1024];
+		swprintf_s(settingtext, L"포켓몬스터 파이어레드 환경설정");
+		D2DMANAGER->drawText(settingtext, 120 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 48);
+		swprintf_s(settingtext, L"이야기의 속도");
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 230 + CAMERA->getPosY(), 40);
+		swprintf_s(settingtext, L"전투 애니메이션");									
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 280 + CAMERA->getPosY(), 40);
+		swprintf_s(settingtext, L"시합의 룰");										
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 330 + CAMERA->getPosY(), 40);
+		swprintf_s(settingtext, L"사운드");												
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 380 + CAMERA->getPosY(), 40);
+		swprintf_s(settingtext, L"버튼모드");											
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 440 + CAMERA->getPosY(), 40);
+		swprintf_s(settingtext, L"윈도우");												
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
+		swprintf_s(settingtext, L"결정");												
+		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 560 + CAMERA->getPosY(), 40);
 
 	}
 	/*

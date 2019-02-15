@@ -315,6 +315,9 @@
     <ClInclude Include="jaewonTestScene.h">
       <Filter>PlayGround\jaewonTestScene</Filter>
     </ClInclude>
+    <ClInclude Include="setting.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -481,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="jaewonTestScene.cpp">
       <Filter>PlayGround\jaewonTestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="setting.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

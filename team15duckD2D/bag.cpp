@@ -89,12 +89,18 @@ void bag::render()
 	for (;  i < iMax; ++i, height += 63)
 	{
 		D2DMANAGER->drawText(_bag[i].name.c_str(), 400, height, 40);
-
+		D2DMANAGER->drawText(_bag[i].amount.c_str(), 870, height, 40);
 		//만약에 i가 선택한 번호라면 
 		if (i == _currentSelectNum)
 		{
+
+			int frameX;
+			frameX = _currentSelectNum % IMAGEMANAGER->findImage("items")->GetMaxFrameX();
+
 			IMAGEMANAGER->findImage("화살표")->render(370 + CAMERA->getPosX(), height+ CAMERA->getPosY());
-			IMAGEMANAGER->findImage("items")->frameRender(30 + CAMERA->getPosX(), 495 + CAMERA->getPosY(), i, 0);
+			IMAGEMANAGER->findImage("items")->frameRender(30 + CAMERA->getPosX(), 495 + CAMERA->getPosY(), frameX, 0);
+
+
 
 			D2DMANAGER->drawText(_bag[i].info.c_str(), 100, 495, 38);
 		}
@@ -140,9 +146,9 @@ void bag::itemDataSet()
 		bagItem.init(iter->first);
 
 		_bag[i].name = string2wstring(bagItem.getItemName());
+		_bag[i].type = to_wstring(bagItem.getItemType());
 		_bag[i].info = string2wstring(bagItem.getItemInfo());
-
-		//_bag[i].amount = string2wstring(bagItem.getItemNum());
+		_bag[i].amount = to_wstring(bagItem.getItemNum());
 	}
 
 }
