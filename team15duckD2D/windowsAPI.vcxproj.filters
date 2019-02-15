@@ -121,6 +121,12 @@
     <Filter Include="PlayGround\bag">
       <UniqueIdentifier>{3294593f-41d2-4929-b2e0-0796e13147ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\sound">
+      <UniqueIdentifier>{a6c783fd-51cd-4c44-a494-83681b7ace7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\jaewonTestScene">
+      <UniqueIdentifier>{35ac8f59-90b3-45c0-85dc-bf65376357ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -303,6 +309,12 @@
     <ClInclude Include="battleUI.h">
       <Filter>PlayGround\battleScene</Filter>
     </ClInclude>
+    <ClInclude Include="soundFile.h">
+      <Filter>PlayGround\sound</Filter>
+    </ClInclude>
+    <ClInclude Include="jaewonTestScene.h">
+      <Filter>PlayGround\jaewonTestScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -466,6 +478,9 @@
     </ClCompile>
     <ClCompile Include="battleUI.cpp">
       <Filter>PlayGround\battleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="jaewonTestScene.cpp">
+      <Filter>PlayGround\jaewonTestScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -171,6 +171,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
 	SCENEMANAGER->addScene("objectToolScene", new objectToolScene);
+	SCENEMANAGER->addScene("재원테스트씬", new jaewonTestScene);
 
 	SCENEMANAGER->addScene("battleScene", new battleScene);
 	SCENEMANAGER->addScene("battleScene2", new battleScene2);
@@ -178,7 +179,7 @@ HRESULT playGround::init()
 
 	if (MAPTOOLSCENE)
 	{
-		//SCENEMANAGER->changeScene("objectToolScene");
+		SCENEMANAGER->changeScene("objectToolScene");
 	}
 	else
 	{
