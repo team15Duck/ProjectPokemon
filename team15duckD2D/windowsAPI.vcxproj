@@ -23,7 +23,7 @@
     <ProjectGuid>{BE5C2545-DA5C-402F-8068-3E1EDF185C1C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>windowsAPI</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -153,6 +153,7 @@
     <ClInclude Include="battle.h" />
     <ClInclude Include="battleScene.h" />
     <ClInclude Include="battleScene2.h" />
+    <ClInclude Include="battleUI.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="chiyeongTestScene.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="bag.cpp" />
     <ClCompile Include="battleScene.cpp" />
     <ClCompile Include="battleScene2.cpp" />
+    <ClCompile Include="battleUI.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="chiyeongTestScene.cpp" />
