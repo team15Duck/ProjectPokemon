@@ -300,6 +300,9 @@
     <ClInclude Include="bag.h">
       <Filter>PlayGround\bag</Filter>
     </ClInclude>
+    <ClInclude Include="battleUI.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -460,6 +463,9 @@
     </ClCompile>
     <ClCompile Include="bag.cpp">
       <Filter>PlayGround\bag</Filter>
+    </ClCompile>
+    <ClCompile Include="battleUI.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
