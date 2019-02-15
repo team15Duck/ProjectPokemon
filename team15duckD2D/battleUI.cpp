@@ -52,6 +52,13 @@ void battleUI::update()
 			}
 		}
 
+		//if (_isSkip)
+		//{
+		//	_script.pop();
+		//	_scriptLength = 0;
+		//	_viewScript.clear();
+		//	_isSkip = false;
+		//}
 		if (_isSkip)
 		{
 			if (KEYMANAGER->isOnceKeyDown('Z'))
@@ -62,6 +69,7 @@ void battleUI::update()
 				_isSkip = false;
 			}
 		}
+		
 		
 	}
 }
