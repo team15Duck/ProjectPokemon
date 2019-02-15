@@ -45,7 +45,7 @@ void battleScene::release()
 
 void battleScene::update()
 {
-
+	_battleUI->update();
 	if (!_battleUI->battleSceneUpdate())return;
 	// Å×½ºÆ®
 	{
