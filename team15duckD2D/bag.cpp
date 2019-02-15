@@ -94,11 +94,8 @@ void bag::render()
 		if (i == _currentSelectNum)
 		{
 
-			int frameX;
-			frameX = _currentSelectNum % IMAGEMANAGER->findImage("items")->GetMaxFrameX();
-
 			IMAGEMANAGER->findImage("È­»ìÇ¥")->render(370 + CAMERA->getPosX(), height+ CAMERA->getPosY());
-			IMAGEMANAGER->findImage("items")->frameRender(30 + CAMERA->getPosX(), 495 + CAMERA->getPosY(), frameX, 0);
+			IMAGEMANAGER->findImage("items")->frameRender(30 + CAMERA->getPosX(), 495 + CAMERA->getPosY(), _bag[i].type, 0);
 
 
 
@@ -146,7 +143,7 @@ void bag::itemDataSet()
 		bagItem.init(iter->first);
 
 		_bag[i].name = string2wstring(bagItem.getItemName());
-		_bag[i].type = to_wstring(bagItem.getItemType());
+		_bag[i].type = bagItem.getItemType();
 		_bag[i].info = string2wstring(bagItem.getItemInfo());
 		_bag[i].amount = to_wstring(bagItem.getItemNum());
 	}

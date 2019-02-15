@@ -17,10 +17,12 @@ HRESULT hayoungTestScene::init()
 	_book->init();
 	_book->pokemonDataSet();
 
-
 	_bag = new bag;
 	_bag->init();
 	_bag->itemDataSet();
+
+	_setting = new setting;
+	_setting->init();
 
 	frameImageinit();
 	//commonMenuinit();
@@ -80,14 +82,14 @@ void hayoungTestScene::update()
 
 	}
 	//메인메뉴 이동하기
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		//=========================== 설정
-		//메뉴간의 이동은 메인메뉴에서만 가능하다
-		//===============================
 
-		if (_mmselect == MMS_YES && _smselect == SMS_NO)
+	if (_mmselect == MMS_YES && _smselect == SMS_NO)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
+			//=========================== 설정
+			//메뉴간의 이동은 메인메뉴에서만 가능하다
+			//===============================
 			switch (_cselect)
 			{
 			case POKEMON_BOOK:
@@ -112,6 +114,7 @@ void hayoungTestScene::update()
 				_cselect = POKEMON_BOOK;
 				break;
 			}
+
 		}
 	}
 	if (KEYMANAGER->isOnceKeyUp(VK_UP))
@@ -186,229 +189,9 @@ void hayoungTestScene::update()
 	//======================= 특별케이스
 	_book->update();
 	_bag->update();
+	_setting->update();
 	//=================================
 
-
-	/*
-	//하위메뉴가 열려있는 상태에서
-	if (_cm._ms == YES)
-	{
-		//만약에 x키를 누르면
-		if (KEYMANAGER->isOnceKeyDown('X'))
-		{
-			switch (_cm._cstate)
-			{
-			case POKEMON_BOOK:
-			case POKEMON:
-			case BAG:
-			case PLAYER:
-			case SAVE_REPORT:
-			case SETTING:
-			case CLOSE:
-				_cm._ms = NO;			//선택중이 아니다로 바꿔준다
-				break;
-			}
-		}
-
-		//만약에 포켓몬 메뉴에서 위로키를 누르면
-		if (KEYMANAGER->isOnceKeyDown(VK_UP))
-		{
-			switch (_cmpm._pcs)
-			{
-			case MAIN_POKEMON:
-				_cmpm._pcs = CANCEL;
-				break;
-			case SUB_POKEMON1:
-				_cmpm._pcs = MAIN_POKEMON;
-				break;
-			case SUB_POKEMON2:
-				_cmpm._pcs = SUB_POKEMON1;
-				break;
-			case SUB_POKEMON3:
-				_cmpm._pcs = SUB_POKEMON2;
-				break;
-			case SUB_POKEMON4:
-				_cmpm._pcs = SUB_POKEMON3;
-				break;
-			case SUB_POKEMON5:
-				_cmpm._pcs = SUB_POKEMON4;
-				break;
-			case CANCEL:
-				if (_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
-					_cmpm._pcs = SUB_POKEMON1;
-				}
-				else if (_issubpkm1exist && _issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
-					_cmpm._pcs = SUB_POKEMON2;
-				}
-				else if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
-					_cmpm._pcs = SUB_POKEMON3;
-				}
-				else if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && _issubpkm4exist && !_issubpkm5exist)
-				{
-					_cmpm._pcs = SUB_POKEMON4;
-				}
-				else if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && _issubpkm4exist && _issubpkm5exist)
-				{
-					_cmpm._pcs = SUB_POKEMON5;
-				}
-				break;
-			}
-		}
-		//만약에 포켓몬 메뉴에서 아래키를 누르면
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-		{
-			switch (_cmpm._pcs)
-			{
-			case MAIN_POKEMON:
-				if (!_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
-					_cmpm._pcs = CANCEL;
-				}
-				else if (_issubpkm1exist)
-				{
-					_cmpm._pcs = SUB_POKEMON1;
-				}
-				break;
-			case SUB_POKEMON1:
-				if (_issubpkm2exist)
-				{
-					_cmpm._pcs = SUB_POKEMON2;
-				}
-				else
-				{
-					_cmpm._pcs = CANCEL;
-				}
-				break;
-			case SUB_POKEMON2:
-				if (_issubpkm3exist)
-				{
-					_cmpm._pcs = SUB_POKEMON3;
-				}
-				else
-				{
-					_cmpm._pcs = CANCEL;
-				}
-				break;
-			case SUB_POKEMON3:
-				if (_issubpkm4exist)
-				{
-					_cmpm._pcs = SUB_POKEMON4;
-				}
-				else
-				{
-					_cmpm._pcs = CANCEL;
-				}
-				break;
-			case SUB_POKEMON4:
-				if (_issubpkm5exist)
-				{
-					_cmpm._pcs = SUB_POKEMON5;
-				}
-				else
-				{
-					_cmpm._pcs = CANCEL;
-				}
-				break;
-			case SUB_POKEMON5:
-				_cmpm._pcs = CANCEL;
-				break;
-			case CANCEL:
-				_cmpm._pcs = MAIN_POKEMON;
-				break;
-			}
-		}
-	}
-	if (_cm._ms == NO && _isCommonMenu)
-	{
-		if (KEYMANAGER->isOnceKeyDown('X'))
-		{
-			_isCommonMenu = false;
-		}
-	}
-	//만약에 기본메뉴가 켜진상태에서의 키세팅
-	if (_isCommonMenu && _cm._ms != YES)
-	{
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-		{
-			switch (_cm._cstate)
-			{
-			case POKEMON_BOOK:
-				_cm._cstate = POKEMON;
-				break;
-			case POKEMON:
-				_cm._cstate = BAG;
-				break;
-			case BAG:
-				_cm._cstate = PLAYER;
-				break;
-			case PLAYER:
-				_cm._cstate = SAVE_REPORT;
-				break;
-			case SAVE_REPORT:
-				_cm._cstate = SETTING;
-				break;
-			case SETTING:
-				_cm._cstate = CLOSE;
-				break;
-			case CLOSE:
-				_cm._cstate = POKEMON_BOOK;
-				break;
-			}
-
-		}
-		else if (KEYMANAGER->isOnceKeyDown(VK_UP))
-		{
-			switch (_cm._cstate)
-			{
-				case POKEMON_BOOK:
-					_cm._cstate = CLOSE;
-					break;
-				case POKEMON:
-					_cm._cstate = POKEMON_BOOK;
-					break;
-				case BAG:
-					_cm._cstate = POKEMON;
-					break;
-				case PLAYER:
-					_cm._cstate = BAG;
-					break;
-				case SAVE_REPORT:
-					_cm._cstate = PLAYER;
-					break;
-				case SETTING:
-					_cm._cstate = SAVE_REPORT;
-					break;
-				case CLOSE:
-					_cm._cstate = SETTING;
-					break;
-			}
-		}
-		//다른화면으로 진입해보자
-		if (KEYMANAGER->isOnceKeyDown('Z'))
-		{
-			switch (_cm._cstate)
-			{
-			case POKEMON_BOOK:
-			case POKEMON:
-			case BAG:
-			case PLAYER:
-			case SAVE_REPORT:
-			case SETTING:
-				_cm._ms = YES;
-				break;
-			}
-			if (_cm._cstate == CLOSE)
-			{
-				_isCommonMenu = false;
-			}
-		}
-	}
-
-	_book->update();
-	*/
 }
 
 void hayoungTestScene::render()
@@ -469,30 +252,7 @@ void hayoungTestScene::render()
 	//6. 설정 출력
 	if (_mmselect == MMS_YES && _cselect == SETTING && _smselect == SMS_YES)
 	{
-
-		IMAGEMANAGER->findImage("테스트2")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		IMAGEMANAGER->findImage("기본상단")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		MENUMANAGER->findMenuFrame("설정프레임1")->render("타입1");
-		MENUMANAGER->findMenuFrame("설정프레임2")->render("타입1");
-
-		WCHAR settingtext[1024];
-		swprintf_s(settingtext, L"포켓몬스터 파이어레드 환경설정");
-		D2DMANAGER->drawText(settingtext, 120 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 48);
-		swprintf_s(settingtext, L"이야기의 속도");
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 230 + CAMERA->getPosY(), 40);
-		swprintf_s(settingtext, L"전투 애니메이션");									
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 280 + CAMERA->getPosY(), 40);
-		swprintf_s(settingtext, L"시합의 룰");										
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 330 + CAMERA->getPosY(), 40);
-		swprintf_s(settingtext, L"사운드");												
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 380 + CAMERA->getPosY(), 40);
-		swprintf_s(settingtext, L"버튼모드");											
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 440 + CAMERA->getPosY(), 40);
-		swprintf_s(settingtext, L"윈도우");												
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
-		swprintf_s(settingtext, L"결정");												
-		D2DMANAGER->drawText(settingtext, 80 + CAMERA->getPosX(), 560 + CAMERA->getPosY(), 40);
-
+		_setting->render();
 	}
 	/*
 	if (_cm._cstate == POKEMON_BOOK && _cm._ms == YES)

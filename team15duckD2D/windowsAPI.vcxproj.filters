@@ -127,6 +127,9 @@
     <Filter Include="PlayGround\jaewonTestScene">
       <UniqueIdentifier>{35ac8f59-90b3-45c0-85dc-bf65376357ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\setting">
+      <UniqueIdentifier>{347a256f-5686-42d4-afcb-1da6ffcfd24b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -316,7 +319,7 @@
       <Filter>PlayGround\jaewonTestScene</Filter>
     </ClInclude>
     <ClInclude Include="setting.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>PlayGround\setting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -486,7 +489,7 @@
       <Filter>PlayGround\jaewonTestScene</Filter>
     </ClCompile>
     <ClCompile Include="setting.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>PlayGround\setting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

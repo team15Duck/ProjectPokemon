@@ -6,7 +6,7 @@ typedef struct tagBagInfo
 	wstring name;		//아이템 명
 	wstring amount;		//아이템 수량
 	wstring info;		//아이템 정보
-	wstring type;
+	int type;
 
 	bool _isDataset;
 }BAG;
