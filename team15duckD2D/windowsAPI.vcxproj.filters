@@ -301,7 +301,7 @@
       <Filter>PlayGround\bag</Filter>
     </ClInclude>
     <ClInclude Include="battleUI.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>PlayGround\battleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -465,7 +465,7 @@
       <Filter>PlayGround\bag</Filter>
     </ClCompile>
     <ClCompile Include="battleUI.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>PlayGround\battleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
