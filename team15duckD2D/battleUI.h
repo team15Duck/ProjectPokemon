@@ -12,6 +12,9 @@ private:
 
 	bool _isSkip;
 
+	wstring _pokemonName;
+	wstring _enemyName;
+
 
 public:
 	battleUI();
@@ -29,5 +32,7 @@ public:
 
 	void setScriptSkip(bool skip) { _isSkip = skip; }
 
+	void setPokemonName(wstring name) { _pokemonName = name; }
+	void setEnemyName(wstring name) { _enemyName = name; }
 };
 
