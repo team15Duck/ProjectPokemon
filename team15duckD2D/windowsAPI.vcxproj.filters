@@ -130,6 +130,9 @@
     <Filter Include="PlayGround\setting">
       <UniqueIdentifier>{347a256f-5686-42d4-afcb-1da6ffcfd24b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\shop">
+      <UniqueIdentifier>{b807beb6-3e87-4f28-a78d-ac662bb29f4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -321,6 +324,9 @@
     <ClInclude Include="setting.h">
       <Filter>PlayGround\setting</Filter>
     </ClInclude>
+    <ClInclude Include="shop.h">
+      <Filter>PlayGround\shop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -490,6 +496,9 @@
     </ClCompile>
     <ClCompile Include="setting.cpp">
       <Filter>PlayGround\setting</Filter>
+    </ClCompile>
+    <ClCompile Include="shop.cpp">
+      <Filter>PlayGround\shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
