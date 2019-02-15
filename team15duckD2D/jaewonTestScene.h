@@ -10,6 +10,11 @@ private:
 	string				_bgmKey;
 	string				_effectKey;
 
+	string				_soundKeys[3];
+	int						_idx;
+	
+	string _imgKeys[3];
+
 
 public:
 	jaewonTestScene();

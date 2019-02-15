@@ -26,14 +26,14 @@ enum SOUND_FILE_NAME
 static string _vBgmString[BGM_END] = 
 {
 	"sound/none",
-	"sound/bgm_01_Game_Freak_Logo",
-	"sound/bgm_02_Opening_Movie",
-	"sound/bgm_03_Title_Screen",
-	"sound/bgm_05_Welcome_to_the_World_of_Pokemon",
-	"sound/bgm_07_Professor_Oaks_Laboratory",
-	"sound/bgm_11_City_Theme_Pallet_Town",
-	"sound/effect_51_Enter_building",
-	"sound/effect_53_Exit_building"
+	"sound/bgm_01_Game_Freak_Logo.mp3",
+	"sound/bgm_02_Opening_Movie.mp3",
+	"sound/bgm_03_Title_Screen.mp3",
+	"sound/bgm_05_Welcome_to_the_World_of_Pokemon.mp3",
+	"sound/bgm_07_Professor_Oaks_Laboratory.mp3",
+	"sound/bgm_11_City_Theme_Pallet_Town.mp3",
+	"sound/effect_51_Enter_building.mp3",
+	"sound/effect_53_Exit_building.mp3"
 
 
 
