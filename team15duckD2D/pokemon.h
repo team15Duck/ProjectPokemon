@@ -124,7 +124,8 @@ public:
 	void applyUpsetCondition();
 	// 3. 아이템 사용
 	// 3. 몇 번째(idx) 스킬 사용
-	void useSkill(int idx);
+	// 스킬 사용 결과를 텍스트로 반환
+	wstring useSkill(int idx);
 
 	
 	// 레벨 업 : 경험치 레벨업 외에 강제 레벨업 하는 경우 사용 ex. 이상한 사탕 사용

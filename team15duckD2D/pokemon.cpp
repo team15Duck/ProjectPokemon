@@ -275,6 +275,12 @@ bool pokemon::useOwnerItem()
 
 void pokemon::applyUpsetCondition()
 {
+	wstring script = L"";
+	if (!_isMyPokemon)
+		script = L"적의 ";
+	script.append(string2wstring(_nickName));
+	script.append(L"는(은)");
+
 	_state = L"상태 이상 적용";
 	_isIdle = false;
 
@@ -283,7 +289,9 @@ void pokemon::applyUpsetCondition()
 	{
 		case PMUC_POISON:
 		{
+			script = L"";
 			_state = L"PMUC_POISON";
+			script.append(L"독");
 			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
 			takeDamage(damage);
 			break;
@@ -291,6 +299,7 @@ void pokemon::applyUpsetCondition()
 		case PMUC_FROZEN:
 		{
 			_state = L"PMUC_POISON";
+			script.append(L"얼음");
 			int percent = RND->getInt(100);
 			if (percent < 20) // 1/5 확률로 상태 해제
 			{
@@ -341,20 +350,26 @@ void pokemon::applyUpsetCondition()
 	}
 }
 
-void pokemon::useSkill(int idx)
+wstring pokemon::useSkill(int idx)
 {
+	wstring script = L"";
+	if(!_isMyPokemon)
+		script = L"적의 ";
+
+	script.append(string2wstring(_nickName));
+
 	_state = L"스킬 사용";
 	_isIdle = true;
 	if (idx < 0 || POKEMON_SKILL_MAX_COUNT < idx)
 	{
 		_state = L"없는 스킬";
-		return;
+		return _state;
 	}
 	
 	if (!_skills[idx].isUsableSkill())
 	{
 		_state = L"PP 부족";
-		return;
+		return _state;
 	}
 
 	pokemonSkill* skill = &_skills[idx];
@@ -372,11 +387,15 @@ void pokemon::useSkill(int idx)
 	if (rate < value)
 	{
 		_state = L"공격 실패";
-		return;
+		return _state;
 	}
 
 	_isIdle = false;
 	
+	script.append(L"의\n\n");
+	script.append(string2wstring(skillInfo.getSkillName()));
+	script.append(L"!");
+
 	_state = L" 공격 성공 스킬 id : " + string2wstring(skillInfo.getSkillName());
 
 	// 디버프, 버프 
@@ -388,6 +407,8 @@ void pokemon::useSkill(int idx)
 	int damage = calculateAttkValue(idx);
 	attack(damage, upsetCondition);
 	startProgessing(bind(&pokemon::progressintSkillEffect, this, idx), PROGRESSING_SKILL);
+
+	return script;
 }
 
 bool pokemon::levelUpForce()

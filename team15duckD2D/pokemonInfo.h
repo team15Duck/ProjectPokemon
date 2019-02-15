@@ -133,7 +133,7 @@ typedef struct tagPokemonUpsetCondition
 	POKEMON_UPSET_RELEASE_CONDITION releseType;	// 상태이상 해제 조건
 	int applyValue;								// 상태 적용 시 사용 ex) 확률 등
 	int releaseValue;							// 상태 해제 조건 ex) 턴 수, 확률 등
-
+	wstring name;
 
 	// 값 복사
 	void operator= (tagPokemonUpsetCondition condition)
@@ -142,6 +142,7 @@ typedef struct tagPokemonUpsetCondition
 		releseType = condition.releseType;
 		applyValue = condition.applyValue;
 		releaseValue = condition.releaseValue;
+		name = condition.name;
 	}
 
 	// 초기화
@@ -151,6 +152,7 @@ typedef struct tagPokemonUpsetCondition
 		releseType = PMURC_NONE;
 		applyValue = 0;
 		releaseValue = 0;
+		name.clear();
 	}
 
 }pokemonUC;

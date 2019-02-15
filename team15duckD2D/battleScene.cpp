@@ -89,7 +89,7 @@ void battleScene::update()
 								break;
 						}
 
-						_pms[_turn]->useSkill(RND->getInt(cnt));
+						_battleUI->pushScript(_pms[_turn]->useSkill(RND->getInt(cnt)));
 						break;
 					}
 
