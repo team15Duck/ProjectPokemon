@@ -56,6 +56,7 @@ void battleUI::update()
 		{
 			_script.pop();
 			_scriptLength = 0;
+			_viewScript.clear();
 		}
 	}
 }
