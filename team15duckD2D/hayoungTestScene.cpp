@@ -218,6 +218,8 @@ void hayoungTestScene::render()
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
 		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
+	
+	
 	}
 	//3. 가방 렌더
 	//하위메뉴인 포켓몬이 열리는 조건은 <메인메뉴가 열려있고, 커서가 가방을 가르키고, 하위메뉴를 선택> 했을때이다.

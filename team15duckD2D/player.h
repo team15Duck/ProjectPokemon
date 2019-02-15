@@ -99,6 +99,7 @@ public:
 	bool getIsMan() { return _isMan; }
 
 	mapItemList getItem() { return _mItemList; }
+	mapItemList getItemAmount() { return _mItemList.size; }
 	pokemon** getPokemon() { return _pokemon; }
 
 	void setMapDataMemoryAdressLink(mapData* map) { _map = map; }

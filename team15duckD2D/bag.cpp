@@ -66,8 +66,13 @@ void bag::update()
 
 void bag::render()
 {
+	//실제 게임으로 들어가면 이걸로바꿔야뎀
+	//unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayet()->getItem();
+	//imax 비교연산 녀석 size로 변경해야됨 
+
 	int i = _currentSelectNum - 3;
 	int iMax = _currentSelectNum + 3;
+
 	if (i < 0)
 	{
 		i = 0;
