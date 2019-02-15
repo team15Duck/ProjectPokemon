@@ -474,6 +474,23 @@ void objectTool::drawObject()
 			}
 		}
 	}
+	//지우긔
+	if (KEYMANAGER->isStayKeyDown(VK_RBUTTON))
+	{
+		for (int i = 0; i < TILEY; ++i)
+		{
+			for (int j = 0; j < TILEX; ++j)
+			{
+				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+				{
+					_vvTile[i][j]->objectImageIndex = OBJECT_NAME_NONE;
+					_vvTile[i][j]->objectFrameX = 0;
+					_vvTile[i][j]->objectFrameY = 0;
+					_vvTile[i][j]->attr = setAttribute(OBJECT_NAME[_vvTile[i][j]->objectImageIndex], _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+				}
+			}
+		}
+	}
 }
 
 void objectTool::save(int mapCase)
@@ -646,11 +663,6 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			//산지
 		}
-		else if ((frameX >= 1 && frameX < 4) && frameY == 0)
-		{
-			result |= ATTR_NONE;
-			//산지
-		}
 		else if ((frameX == 0 || frameX == 1 || frameX == 3 || frameX == 4) && frameY == 1)
 		{
 			result |= ATTR_UNMOVE;
@@ -675,29 +687,9 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if (frameX == 0 && frameY == 2) //나무
-		{
-			result |= ATTR_NONE;
-		}
 		else if (frameX == 0 && frameY == 3)
 		{
 			result |= ATTR_UNMOVE;
-		}
-
-		else if (frameX == 4 && frameY == 2) //꽃밭
-		{
-			result |= ATTR_NONE;
-			//꽃밭
-		}
-		else if ((frameX == 4 || frameX == 5) && frameY == 3) //계단
-		{
-			result |= ATTR_NONE;
-			//계단
-		}
-		else if ((frameX >= 0 && frameX < 5) && frameY == 4) //꽃(프레임)
-		{
-			result |= ATTR_NONE;
-			//꽃
 		}
 		else if ((frameX >= 0 && frameX < 5) && frameY == 5) //풀(프레임, 몬스터등장)
 		{
@@ -726,7 +718,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		}
 		else if ((frameX == 1 || frameX == 2) && (frameY >= 0 && frameY < 6)) //나무
 		{
-			if(frameY !=3)
+			if (frameY != 3)
 				result |= ATTR_UNMOVE;
 		}
 		else if (frameX == 0 && (frameY >= 2 && frameY < 6)) //오박사집 기계
@@ -734,16 +726,25 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_OAK_MACHINE;
 		}
+		else if (frameX == 4 && frameY == 1) //표지판
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_TIP;
+		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME3])
 	{
-		if ((frameX >= 0 && frameX < 6) && (frameY >= 0 && frameY < 4)) //큰나무
+		if ((frameX >= 0 && frameX < 6) && (frameY >= 0 && frameY < 3)) //큰나무
 		{
 			result |= ATTR_UNMOVE;
 		}
 		else if ((frameX >= 0 && frameX < 4) && (frameY == 4 || frameY == 5)) //돌
 		{
 			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && (frameY == 4 || frameY == 5)) //실내하단좌우
+		{
+			result |= ATTR_NONE;
 		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME4])
@@ -768,10 +769,6 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX >= 3 && frameX < 6) && frameY == 0) //오박사집 테이블
-		{
-			result |= ATTR_NONE;
-		}
 		else if ((frameX >= 3 && frameX < 6) && frameY == 1)
 		{
 			result |= ATTR_UNMOVE;
@@ -781,33 +778,38 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_CUT;
 		}
-		else if ((frameX == 0 || frameX == 1) && frameY == 3) //카페트(포탈)
+		else if (frameX == 1 && frameY == 3) //카페트(포탈)
 		{
 			result |= ATTR_NONE;
 			result |= ATTR_POTAL;
 		}
-		else if (frameX == 2 && (frameY == 3 || frameY == 4)) //카페트(포탈X)
+		else if ((frameX >= 0 && frameX < 3) && (frameY == 3 || frameY == 4)) //카페트(포탈X)
 		{
-			result |= ATTR_NONE;
+			if (frameX != 1 && frameY != 3)
+				result |= ATTR_NONE;
 		}
-		else if ((frameX == 4 || frameX == 5) && frameY == 3) //실내 구석용
-		{
-			result |= ATTR_NONE;
-		}
-		else if ((frameX == 3 && frameY == 3))
-		{
-			result |= ATTR_UNMOVE;
-			result |= ATTR_POTAL;
-		}
-		else if ((frameX == 3 && frameY == 4) || (frameX == 4 && frameY == 5))
+		else if ((frameX == 4 || frameX == 5) && frameY == 3) //지도
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if (frameX == 5 && frameY == 5)
+		else if ((frameX >= 0 && frameX < 3) && frameY == 5) //장식용
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 3 && (frameY == 3 || frameY == 4 || frameY == 5)) //계단
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && frameY == 5)
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 4 && frameY == 4)) //계단(포탈)
 		{
 			result |= ATTR_NONE;
 			result |= ATTR_POTAL;
 		}
+
 		else if (frameX == 5 && frameY == 4)
 		{
 			result |= ATTR_NONE;
@@ -821,40 +823,331 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME5])
 	{
-		if ((frameX >= 0 && frameX < 3) || (frameY >= 0 && frameY < 3))
+		if ((frameX >= 0 && frameX < 3) || (frameY >= 0 && frameY < 3)) //물(낚시가능)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WATER;
 		}
-		else if ((frameX >= 3 && frameX < 6) && (frameY == 0 || frameY == 1 || frameY == 3))
+		else if ((frameX >= 3 && frameX < 6) && frameY >= 0 && frameY < 4) // 동굴
+		{
+			if (frameX != 4 && frameY != 2)
+				result |= ATTR_UNMOVE;
+			else   //동굴입구라면
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+
+		}
+		else if (frameX == 3 && (frameY == 4 || frameY == 5)) //동굴벽
 		{
 			result |= ATTR_UNMOVE;
-			//동굴벽
 		}
-		else if (frameX == 4 && (frameY == 4 || frameY == 5))
+		else if ((frameX >= 0 && frameX < 3) && (frameY == 5)) //다리(못감)
 		{
 			result |= ATTR_UNMOVE;
-			//동굴벽
 		}
-		else if (frameX == 4 && frameY == 2)
+		else if ((frameX == 4 && frameY == 4))
 		{
+			result |= ATTR_UNMOVE;
+			//필드아이템
+		}
+		else if (frameX == 5 && frameY == 4) //미니맵아이템
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && frameY == 5) //포스터
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else
 			result |= ATTR_NONE;
-			//동굴(포탈)
-		}
-		else if ((frameX >= 0 && frameX < 3) && (frameY == 3 || frameY == 4))
-		{
-			result |= ATTR_NONE;
-			//다리
-		}
-		else if ((frameX >= 0 && frameX < 3) && (frameY == 5))
-		{
-			result |= ATTR_UNMOVE;
-			//다리? 물?
-		}
 	}
 	else if (imgName == OBJECT_NAME[OBJECT_NAME6])
 	{
-		//if()
+		if (frameX == 0 && (frameY >= 0 && frameY < 3)) //센터카운터
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 0 && frameX < 6) && (frameY >= 3 && frameY < 6)) //센터카운터
+		{
+			if (frameX == 4 && frameY == 3) //우체통
+				result |= ATTR_UNMOVE;
+			else if ((frameX >= 0 && frameX < 3) && (frameY == 3 || frameY == 4))
+				result |= ATTR_UNMOVE;
+			else if (frameY == 5)
+				result |= ATTR_UNMOVE;
+			else if (frameX == 5)
+				result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 1 || frameX == 2) && (frameY == 0 || frameY == 1)) //컴퓨터 윗부분
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 1 || frameX == 2) && frameY == 2) //컴퓨터
+		{
+			result |= ATTR_NONE;
+			result |= ATTR_COMPUTER;
+		}
+		else if ((frameX == 4 || frameX == 5) && (frameY == 0 || frameY == 1)) //테이블
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 3 && (frameY >= 0 && frameY < 3)) //장식물(액자, 포켓몬도감, 창문)
+		{
+			result |= ATTR_UNMOVE;
+		}
 	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME7])
+	{
+
+		if ((frameX == 0 || frameX == 1) && (frameY >= 0 && frameY < 4)) //진열대
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_STORE_STAND;
+		}
+		else if ((frameX >= 1 && frameX < 4) && (frameY == 4 || frameY == 5))
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_STORE_STAND;
+		}
+		else if (frameX == 2 && (frameY >= 0 && frameY < 4)) //상점주인 있는 곳
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 3 && frameX < 6) && (frameY == 0 || frameY == 1)) //상점주인 있는 곳
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 3 && frameX < 5) && frameY == 2) //싱크대 위
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 3 && frameX < 5) && frameY == 3) //싱크대
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_SINK;
+		}
+		else if (frameX == 5 && (frameY == 2 || frameY == 3)) //화분
+		{
+			if (frameY != 2)
+				result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 0 && (frameY == 4 || frameY == 5)) //상점 냉장고
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_STORE_DISPLAY;
+		}
+		else if ((frameX == 4 || frameX == 5) && (frameY == 4 || frameY == 5)) //식기장
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_PANTRY;
+		}
+
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME8])
+	{
+		if ((frameX == 3 && frameY == 0) || (frameX == 4 && frameY == 1)) //컴퓨터 윗부분이랑 컴퓨터 책상
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 3 && frameY == 1) //컴퓨터(집)
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_COMPUTER;
+		}
+		else if ((frameX == 4 || frameX == 5) && frameY == 0) //창문
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 5 && frameY == 1) //책상옆 서랍장
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 0 || frameX == 1) && (frameY == 3 || frameY == 4))
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_BOOKCASE;
+		}
+		else if (frameX == 2 && (frameY == 3 || frameY == 4)) //TV
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 2 && frameY == 5) //게임기
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_GAME;
+		}
+		else if ((frameX >= 3 && frameX < 6) && (frameY >= 3 && frameY < 6))
+		{
+			if (frameX == 4 && frameY == 3)
+				result |= ATTR_UNMOVE;
+			else if (frameX == 4 && frameY == 5)
+				result |= ATTR_UNMOVE;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME9])
+	{
+		if ((frameX >= 0 && frameX < 6) && frameY == 0)	 //포켓몬센터 모니터
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 0 || frameX == 1) && frameY == 1) //포켓몬센터 모니터
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 2 || frameX == 3) && (frameY >= 2 && frameY < 4)) //오박사기계
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX == 2 || frameX == 3) && frameY == 1) //오박사기계위쪽
+		{
+			result |= ATTR_NONE;
+		}
+		else if ((frameX == 0 || frameX == 1) && (frameY == 2 || frameY == 3)) //책장
+		{
+			if (frameY != 2)
+			{
+				result |= ATTR_UNMOVE;
+				result |= ATTR_BOOKCASE;
+			}
+		}
+		else if ((frameX == 4 || frameX == 5) && (frameY == 4 || frameY == 5)) //테이블
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 0 && frameX < 4) && (frameY == 4 || frameY == 5)) //오박사컴퓨터
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && (frameY == 1 || frameY == 2)) //계단
+		{
+			if (frameY == 1)
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+			else
+			{
+				result |= ATTR_UNMOVE;
+			}
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME10])
+	{
+		if (frameX == 0 && (frameY >= 0 && frameY < 4)) //동굴
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && (frameY >= 0 && frameY < 3)) //동굴
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 5 && (frameY >= 0 && frameY < 4)) //동굴
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 2 && (frameY == 1 || frameY == 3)) //동굴
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 1 && frameY == 3) //동굴출구
+		{
+			result |= ATTR_UNMOVE;
+			result |= ATTR_POTAL;
+		}
+		else if ((frameX >= 0 && frameX < 3) && (frameY == 4 || frameY == 5)) //비주기가 여기 서있는다.
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && frameY == 4) //발매트, 실내->실외 포탈
+		{
+			result |= ATTR_NONE;
+			result |= ATTR_POTAL;
+		}
+
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME11])
+	{
+		if ((frameX >= 0 && frameX < 5) && (frameY >= 1 && frameY < 5))
+		{
+			if (frameX == 1 && frameY == 4) //문
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+			else
+				result |= ATTR_UNMOVE;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME12])
+	{
+		if ((frameX >= 0 && frameX < 6) && (frameY >= 1 && frameY < 5))
+		{
+			if (frameX == 3 && frameY == 4) //문
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+			else
+				result |= ATTR_UNMOVE;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME13])
+	{
+		if ((frameX >= 0 && frameX < 5) && (frameY >= 1 && frameY < 5))
+		{
+			if (frameX == 2 && frameY == 4) //문
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+			else
+				result |= ATTR_UNMOVE;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME14])
+	{
+		if ((frameX >= 0 && frameX < 4) && (frameY >= 1 && frameY < 4))
+		{
+			if (frameX == 2 && frameY == 3) //문
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+			else
+				result |= ATTR_UNMOVE;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME15])
+	{
+		if ((frameX >= 0 && frameX < 6) && (frameY >= 1 && frameY < 5))
+		{
+			if (frameX == 3 && frameY == 4) //문
+			{
+				result |= ATTR_NONE;
+				result |= ATTR_POTAL;
+			}
+			else
+				result |= ATTR_UNMOVE;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME16])
+	{
+		if ((frameX >= 0 && frameX < 5) && (frameY >= 0 && frameY < 4))
+		{
+			result |= ATTR_NONE;
+			result |= ATTR_POTAL;
+		}
+	}
+	else if (imgName == OBJECT_NAME[OBJECT_NAME17])
+	{
+		if ((frameX >= 0 && frameX < 3) && (frameY >= 1 && frameY < 5))
+		{
+			result |= ATTR_UNMOVE;
+		}
+	}
+
+
 	return result;
 }
