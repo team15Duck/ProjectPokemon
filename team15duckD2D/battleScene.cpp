@@ -49,19 +49,39 @@ void battleScene::release()
 
 void battleScene::update()
 {
+	//유아이는 실시간업뎃해야됨
 	_battleUI->update();
+
+
+	//스크립트가 실행중이다? 그럼 아무것도못해
 	if (!_battleUI->battleSceneUpdate()) return;
 	
-	keyControl();
+
 
 	_pms[TURN_ENEMY]->update();
 	_pms[TURN_PLAYER]->update();
+
+
+	//그냥 적이던뭐던 여기서 전투
+	//그냥 적이던뭐던 여기서 전투
+	//그냥 적이던뭐던 여기서 전투
+	//그냥 적이던뭐던 여기서 전투
+
 
 	// 행동 대기중이 아니라면 
 	if (!_pms[TURN_ENEMY]->isIdle() || !_pms[TURN_PLAYER]->isIdle())
 	{
 		return;
 	}
+	keyControl();
+
+	//플레이어 선택
+	//플레이어 선택
+	//플레이어 선택
+	//플레이어 선택
+
+
+	
 
 	// 테스트
 	switch (_phase)
