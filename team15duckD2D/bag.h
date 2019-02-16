@@ -25,6 +25,7 @@ private:
 	float _selectNumMoveCount;
 	float _selectNumMoveDelay;
 
+	bool _isitemUse;			//아이템 사용할꺼니?
 
 public:
 	bag();
