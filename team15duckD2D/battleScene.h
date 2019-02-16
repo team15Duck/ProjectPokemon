@@ -17,9 +17,10 @@ private:
 
 	pokemon* _pokemon;
 
+	BattleStep _battleStep;			// 배틀 스텝
+	PlayerActive _active;			// 플레이어 행동
+
 	pokemon* _pms[TURN_MAX + 1];	// 테스트용임 삭제 될 것
-	int cnt;						// 테스트용임 삭제 될 것
-	float termTime;
 
 	battleUI* _battleUI;
 public:
@@ -35,5 +36,17 @@ public:
 
 	void keyControl();
 
-};
 
+private:
+
+	// 배틀 시작
+	void battleStart();
+	// 배틀
+	void battle();
+	// 배틀 종료
+	void battleEnd();
+	// 교체
+	void battleChange();
+	// 진화
+	void battleEvolution();
+};
