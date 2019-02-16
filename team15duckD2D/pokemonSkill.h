@@ -40,6 +40,16 @@ enum SKILL_INDEX
 	SKILL_INDEX_COUNT = SKILL_INDEX_NONE,
 };
 
+// 스킬 효과
+enum SKILL_INFLUENCE
+{
+	SI_NORMAL,		// 평타
+	SI_SLIGHT,		// 미미
+	SI_EXCELLENT,	// 좋음
+
+	SI_NONE,
+	SI_COUNT = SI_NONE,
+};
 
 class pokemonSkillInfo
 {

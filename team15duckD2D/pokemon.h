@@ -142,7 +142,10 @@ public:
 	bool levelUpForce();
 	
 	// 데미지 입음
-	void takeDamage(int value);
+	void takeDamage(int value, SKILL_INFLUENCE influence = SI_NORMAL);
+	// 진화
+	bool evolution();
+
 	// hp full 회복
 	void fillHp();
 	// hp 회복
@@ -241,8 +244,7 @@ private:
 	void levelUp();
 	// 능력치 세팅
 	void settingStatus();
-	// 진화
-	void evolution();
+	
 	// 레벨업에 따른 스킬 획득
 	void gainSkill();
 	// 공격
@@ -258,6 +260,7 @@ private:
 	// hp 변화
 	void progressingIncreaseHp();
 	void progressingDecreaseHp();
+	//void progressingDecreaseHp(int value);
 	// exp 변화
 	void progressingIncreseExp(void);
 	// 스킬 이펙트

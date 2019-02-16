@@ -486,7 +486,7 @@ bool pokemon::levelUpForce()
 	return true;
 }
 
-void pokemon::takeDamage(int value)
+void pokemon::takeDamage(int value, SKILL_INFLUENCE influence)
 {
 	_state = L"데미지 입음";
 	_damage = value;
@@ -502,6 +502,25 @@ void pokemon::takeDamage(int value)
 	
 	_displayValue = _displayHp - _nowStatus.hp;
 }
+
+bool pokemon::evolution()
+{
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
+	int evolutionLv = info->getEvolutionLevel();
+	if (0 != evolutionLv && evolutionLv <= _level)
+	{
+		//포켓몬 진화아아ㅏㅏ
+		POKEMON evolutionIndex = info->getEvolutionIndex();
+		if (POKEMON_NONE != evolutionIndex)
+		{
+			_index = evolutionIndex;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 void pokemon::fillHp()
 {
@@ -634,19 +653,7 @@ void pokemon::settingStatus()
 	_displayExp = _currentExp;
 }
 
-void pokemon::evolution()
-{
-	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
-	int evolutionLv = info->getEvolutionLevel();
-	if( 0 != evolutionLv && evolutionLv == _level )
-	{
-		int evolutionIndex = info->getEvolutionIndex();
-		if (POKEMON_NONE != evolutionIndex)
-		{
-			_level = evolutionIndex;
-		}
-	}
-}
+
 
 void pokemon::gainSkill()
 {
@@ -851,7 +858,7 @@ int pokemon::calculateAttkValue(int skillIdx)
 	// 위력이 0인 스킬은 데미지 없음
 	if (info.getPower() == 0)
 	{
-		return 0.f;
+		return 0;
 	}
 
 	// 공격력, 방어력
