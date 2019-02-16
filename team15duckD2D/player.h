@@ -23,7 +23,8 @@ public:
 		PS_FASTMOVE_LEFT,		PS_FASTMOVE_UP,			PS_FASTMOVE_RIGHT,			PS_FASTMOVE_DOWN,		//빨리이동
 		PS_BICYCLE_IDLE_LEFT,	PS_BICYCLE_IDLE_UP,		PS_BICYCLE_IDLE_RIGHT,		PS_BICYCLE_IDLE_DOWN,	//자전거가만히
 		PS_BICYCLE_LEFT,		PS_BICYCLE_UP,			PS_BICYCLE_RIGHT,			PS_BICYCLE_DOWN,		//자전거
-		PS_JUMP_LEFT,			PS_JUMP_RIGHT,			PS_JUMP_DOWN										//점프
+		PS_JUMP_LEFT,			PS_JUMP_RIGHT,			PS_JUMP_DOWN,										//점프
+		PS_FISHING_LEFT,		PS_FISHING_UP,			PS_FISHING_RIGHT,			PS_FISHING_DOWN			//낚씨
 	};
 
 	typedef unordered_map<ITEM_TYPE,UINT>				mapItemList;
@@ -103,5 +104,10 @@ public:
 	pokemon** getPokemon() { return _pokemon; }
 
 	void setMapDataMemoryAdressLink(mapData* map) { _map = map; }
+
+
+	void fishingStart();
+
+
 };
 

@@ -205,6 +205,18 @@ void player::aniSetUp()
 	KEYANIMANAGER->addArrayFrameAnimation(_key, "bicycle_move_down", _key.c_str(), bicycleMoveDown, 4, ANI_SPEED, true);
 
 
+	//낚시이동
+	int fishingDown[4] = { 33,34,35,36 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "fishing_down", _key.c_str(), fishingDown, 4, ANI_SPEED, false);
+	int fishingUp[4] = { 43,44,45,46 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "fishing_up", _key.c_str(), fishingUp, 4, ANI_SPEED, false);
+	int fishingLeft[4] = { 53,54,55,56 };
+	KEYANIMANAGER->addArrayFrameAnimation(_key, "fishing_left", _key.c_str(), fishingLeft, 4, ANI_SPEED, false);
+
+
+
+
+
 	aniSetStart("idle_down");
 }
 
@@ -445,8 +457,18 @@ void player::stateUpdate()
 				_posZ = 0;
 			}
 		break;
-
-
+		case player::PS_FISHING_LEFT:
+			_isRight = false;
+		break;
+		case player::PS_FISHING_UP:
+			_isRight = false;
+		break;
+		case player::PS_FISHING_RIGHT:
+			_isRight = true;
+		break;
+		case player::PS_FISHING_DOWN:
+			_isRight = false;
+		break;
 		default:
 		break;
 	}
@@ -486,5 +508,41 @@ void player::appearTileCheck()
 			PLAYERDATA->setPokemon(enemy);
 			SCENEMANAGER->changeScene("battleScene");
 		}
+	}
+}
+
+void player::fishingStart()
+{
+	switch (_state)
+	{
+		//IDLE 상태에서만 낚시 가능하겠져?
+		case player::PS_IDLE_LEFT:
+			if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_WATER)
+			{
+				aniSetStart("fishing_left");
+				_state = PS_FISHING_LEFT;
+			}
+		break;
+		case player::PS_IDLE_UP:
+			if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_WATER)
+			{
+				aniSetStart("fishing_up");
+				_state = PS_FISHING_UP;
+			}
+		break;
+		case player::PS_IDLE_RIGHT:
+			if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_WATER)
+			{
+				aniSetStart("fishing_left");
+				_state = PS_FISHING_RIGHT;
+			}
+		break;
+		case player::PS_IDLE_DOWN:
+			if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_WATER)
+			{
+				aniSetStart("fishing_down");
+				_state = PS_FISHING_DOWN;
+			}
+		break;
 	}
 }

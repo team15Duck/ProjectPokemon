@@ -13,6 +13,14 @@ chiyeongTestScene::~chiyeongTestScene()
 
 HRESULT chiyeongTestScene::init()
 {
+	IMAGEMANAGER->addFrameImage("loadingBackGround", L"image/loadingBackGround.png", WINSIZEX * 4, WINSIZEY, 4, 1);
+	KEYANIMANAGER->addAnimationType("loading");
+	//가만히서있기
+	int loading[4] = { 0,1,2,3 };
+	KEYANIMANAGER->addArrayFrameAnimation("loading", "loadingBackGround","loadingBackGround", loading, 4, 14, true);
+	_ani = KEYANIMANAGER->findAnimation("loading", "loadingBackGround");
+	_ani->start();
+
 	_map = new mapData;
 	_rc[0] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
 	_rc[1] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
@@ -42,8 +50,10 @@ void chiyeongTestScene::release()
 
 void chiyeongTestScene::update()
 {
-	_player->update();
-	CAMERA->move(_player->getPosX(), _player->getPosY());
+	KEYANIMANAGER->update("loading");
+
+	//_player->update();
+	//CAMERA->move(_player->getPosX(), _player->getPosY());
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
 		_start = true;
@@ -72,7 +82,7 @@ void chiyeongTestScene::update()
 
 void chiyeongTestScene::render()
 {
-	_player->render();
+	//_player->render();
 	for (int i = 0; i < 9; i++)
 	{
 		if (_count > i * 10 + 10)
@@ -82,7 +92,7 @@ void chiyeongTestScene::render()
 			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 	}
-
+	IMAGEMANAGER->findImage("loadingBackGround")->aniRender(0, 0, _ani);
 
 
 	//if (_start)

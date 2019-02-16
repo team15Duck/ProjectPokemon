@@ -3,6 +3,7 @@
 
 
 loadingScene::loadingScene()
+	:_backGround(nullptr), _currentCount(0)
 {
 }
 
@@ -37,6 +38,16 @@ void loadingScene::release()
 
 void loadingScene::update()
 {
+	//게이지업뎃여기
+
+
+
+	//다로딩하면 씬바꿔
+	if (_currentCount == LOADINGMAX) 
+	{
+		//SCENEMANAGER->changeScene("");
+	}
+
 }
 
 void loadingScene::render()
@@ -51,14 +62,7 @@ DWORD CALLBACK ThreadFunction(LPVOID lpParameter)
 {
 	loadingScene* loadHelper = (loadingScene*)lpParameter;
 
-	//로딩맥스가 1000이기 때문에 이미지는 임의로 1000개만 돌려봅시다
-	while (loadHelper->_currentCount != LOADINGMAX)
-	{
-		IMAGEMANAGER->addImage("인게임", "캐릭터.bmp", 580, 565, false, RGB(0, 0, 0));
-		Sleep(1); //이거 없으면 천장이고 뭐고 후다다닥 해버림
-
-		loadHelper->_currentCount++;
-	}
+	//여기 리소스 추가해버리고 loadHelper->_currentCount++; 이거해줘야됨 그러면 게이지 찰거임
 
 	return 0;
 }

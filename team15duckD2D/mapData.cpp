@@ -180,6 +180,10 @@ void mapData::load(const char * mapSizeFileName, const char * mapFileName)
 
 }
 
+void mapData::potalLoad()
+{
+}
+
 void mapData::setPokemon()
 {
 }

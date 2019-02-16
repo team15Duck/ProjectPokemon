@@ -7,9 +7,24 @@
 
 
 
+
+
 //맵들은 이거 상속받아서 사용함.
 class mapData
 {
+public:
+	struct potalInfo
+	{
+		UINT x;
+		UINT y;
+		string nextScene;
+		UINT nextX;
+		UINT nextY;
+		int nextDirection;
+		// left = 0; top = 1; right = 2; down = 3;
+	};
+
+
 protected:
 	UINT						TILEX;							//타일가로갯수
 	UINT						TILEY;							//타일세로갯수
@@ -20,7 +35,7 @@ protected:
 	UINT						_maxLevel;						//출현하는 포켓몬의 레벨 범위
 	UINT						_minLevel;						//출현하는 포켓몬의 레벨 범위
 
-
+	vector<potalInfo>			_potal;
 
 	UINT						ii;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 	UINT						iiMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
@@ -35,6 +50,9 @@ public:
 	virtual void update();
 	virtual void render();
 	virtual void load(const char* mapSizeFileName, const char* mapFileName);
+
+	virtual void potalLoad();
+
 
 	virtual void setPlayerMemoryAdressLink(player* p) { _player = p; }
 
