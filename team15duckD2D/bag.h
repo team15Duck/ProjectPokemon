@@ -1,6 +1,11 @@
 #pragma once
 #include "playerDataBase.h"
 
+enum BAG_STATE
+{
+	ITEM_UNUSE,
+	ITEM_USE  
+};
 typedef struct tagBagInfo
 {
 	wstring name;		//아이템 명
