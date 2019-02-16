@@ -37,22 +37,33 @@ void mapData::update()
 
 void mapData::render()
 {
+	//맵
 	for (; ii < iiMax; ++ii)
 	{
 		for (; jj < jjMax; ++jj)
 		{
 			if (TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex] != "none")
-				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex])->frameRender(jj * TILE_SIZE, ii * TILE_SIZE , _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
+				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex])->frameRender(jj * TILE_SIZE, ii * TILE_SIZE, _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 	}
 	ii = CAMERA->getPosY() / TILE_SIZE;
 	if (ii < 0) ii = 0;
+
+	//오브젝트
 	for (; ii < iiMax; ++ii)
 	{
 		for (; jj < jjMax; ++jj)
 		{
+			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_17")
+			{
+				if (_vvTile[ii][jj]->objectFrameX >= 3 && _vvTile[ii][jj]->objectFrameX < 6)
+				{
+					if (_vvTile[ii][jj]->objectFrameY == 1)
+						IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 28, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				}
+			}
 			//아래에 그릴거
 			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
@@ -60,18 +71,30 @@ void mapData::render()
 				{
 					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
 				}
+				else
+				{
+					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				}
 			}
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 
-		if ((int)_player->getPosY() / 64 == ii)
+		if (((int)_player->getPosY() + 31) / 64 == ii)
 		{
 			_player->render();
 		}
 		for (; jj < jjMax; ++jj)
 		{
 			//위에 그릴거
+			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_17")
+			{
+				if (_vvTile[ii][jj]->objectFrameX >= 3 && _vvTile[ii][jj]->objectFrameX < 6)
+				{
+					if (_vvTile[ii][jj]->objectFrameY == 1)
+						IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE + 28, 0, 28, 64, 36, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				}
+			}
 			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
 			{
 				if (_vvTile[ii][jj]->attr & ATTR_APPEAR)
@@ -110,7 +133,6 @@ void mapData::render()
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 	}
-
 }
 
 void mapData::load(const char * mapSizeFileName, const char * mapFileName)

@@ -97,10 +97,6 @@ void objectTool::update()
 		nextSaveName();
 		setTile();
 	}
-	if (KEYMANAGER->isOnceKeyDown('L'))
-	{
-		SCENEMANAGER->changeScene("mapToolScene");
-	}
 
 	//Å×½ºÆ®¸Ê¿ë
 	//===============================
@@ -135,7 +131,6 @@ void objectTool::render()
 		if (jj < 0) jj = 0;
 	}
 	ii = CAMERA->getPosY() / TILE_SIZE;
-	if (ii < 0) ii = 0;
 
 	//=================================================================================================
 	//¸Ê Ãâ·Â
@@ -152,7 +147,6 @@ void objectTool::render()
 				D2DMANAGER->drawRectangle(_vvRect[i][j].left, _vvRect[i][j].top, _vvRect[i][j].right, _vvRect[i][j].bottom);
 			if (_vvTile[i][j]->objectImageIndex == OBJECT_NAME_NONE) continue;
 			IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
-
 		}
 	}
 
@@ -166,6 +160,28 @@ void objectTool::render()
 			D2D1_RECT_F dragRc = { _savePointX * TILE_SIZE + 5, _savePointY * TILE_SIZE + 5, _ptMouse.x, _ptMouse.y };
 			D2DMANAGER->drawRectangle(RGB(135, 12, 255), dragRc);
 		}
+	}
+
+	for (int i = 0; i < TILEY; ++i)
+	{
+		for (int j = 0; j < TILEX; ++j)
+		{
+			if (OBJECT_NAME[_vvTile[i][j]->objectImageIndex] != "none")
+			{
+				if (_vvTile[i][j]->objectImageIndex == OBJECT_NAME17)
+				{
+					if (_vvTile[i][j]->objectFrameX == 3)
+					{
+						if(_vvTile[i][j]->objectFrameY == 4)
+							IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top + 44, 0, 44, 64, 20, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+						if(_vvTile[i][j]->objectFrameY == 5)
+							IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, 0, 0, 64, 20, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
+					}
+				}
+
+			}
+		}
+
 	}
 
 	for (int i = 0; i < SAMPLETILE; ++i)
@@ -897,11 +913,13 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		else if ((frameX >= 3 && frameX < 5) && (frameY == 2 || frameY == 3)) //½ÌÅ©´ë À§
+		else if ((frameX >= 3 && frameX < 5) && frameY == 2) //½ÌÅ©´ë À§
 		{
 			result |= ATTR_UNMOVE;
-			if (frameY == 3)
-				result |= ATTR_SINK;
+		}
+		else if ((frameX >= 3 && frameX < 5) && frameY == 3) //½ÌÅ©´ë
+		{
+			result |= ATTR_SINK;
 		}
 		else if (frameX == 5 && (frameY == 2 || frameY == 3)) //È­ºÐ
 		{
@@ -983,7 +1001,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 				result |= ATTR_UNMOVE;
 			}
 		}
-		else if (frameX == 5 && frameY == 2) 
+		else if (frameX == 5 && frameY == 2)
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_TIP;
@@ -1099,6 +1117,15 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	else if (imgName == OBJECT_NAME[OBJECT_NAME17])
 	{
 		if ((frameX >= 0 && frameX < 3) && (frameY >= 1 && frameY < 5))
+		{
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 3 && (frameY == 4 || frameY == 5))
+		{
+			result |= ATTR_ITEM;
+			result |= ATTR_UNMOVE;
+		}
+		else if (frameX == 4 && (frameY == 0 || frameY == 2))
 		{
 			result |= ATTR_UNMOVE;
 		}
