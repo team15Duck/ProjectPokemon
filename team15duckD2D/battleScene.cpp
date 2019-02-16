@@ -52,6 +52,8 @@ void battleScene::update()
 	_battleUI->update();
 	if (!_battleUI->battleSceneUpdate()) return;
 	
+	keyControl();
+
 	_pms[TURN_ENEMY]->update();
 	_pms[TURN_PLAYER]->update();
 
@@ -184,4 +186,59 @@ void battleScene::render()
 	D2DMANAGER->drawText(str, CAMERA->getPosX() + WINSIZEX / 2, CAMERA->getPosY() + WINSIZEY / 2);
 
 	_battleUI->render();
+}
+
+void battleScene::keyControl()
+{
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		if (_battleUI->getCurrentSelectMenuNum() == 2 || _battleUI->getCurrentSelectMenuNum() == 3)
+		{
+			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 2);
+		}
+		else if (_battleUI->getCurrentSelectMenuNum() == 1)
+		{
+			_battleUI->setCurrentSelctMenuNum(2);
+		}
+		else if (_battleUI->getCurrentSelectMenuNum() == 0)
+		{
+			_battleUI->setCurrentSelctMenuNum(3);
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		if (_battleUI->getCurrentSelectMenuNum() == 0 || _battleUI->getCurrentSelectMenuNum() == 1)
+		{
+			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 2);
+		}
+		else if (_battleUI->getCurrentSelectMenuNum() == 2)
+		{
+			_battleUI->setCurrentSelctMenuNum(1);
+		}
+		else if (_battleUI->getCurrentSelectMenuNum() == 3)
+		{
+			_battleUI->setCurrentSelctMenuNum(0);
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		if (_battleUI->getCurrentSelectMenuNum() > 0)
+		{
+			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 1);
+		}
+		else
+		{
+			_battleUI->setCurrentSelctMenuNum(3);
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 1);
+		if (_battleUI->getCurrentSelectMenuNum() == 4)
+		{
+			_battleUI->setCurrentSelctMenuNum(0);
+		}
+	}
+
+
 }

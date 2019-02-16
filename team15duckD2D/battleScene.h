@@ -32,5 +32,8 @@ public:
 	void update();
 	void render();
 
+
+	void keyControl();
+
 };
 

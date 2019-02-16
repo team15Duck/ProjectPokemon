@@ -16,6 +16,10 @@ private:
 	wstring _enemyName;
 
 
+	UINT _currentSelectMenu;
+
+
+
 public:
 	battleUI();
 	~battleUI();
@@ -34,5 +38,12 @@ public:
 
 	void setPokemonName(wstring name) { _pokemonName = name; }
 	void setEnemyName(wstring name) { _enemyName = name; }
+
+
+	UINT getCurrentSelectMenuNum() { return _currentSelectMenu; }
+	void setCurrentSelctMenuNum(UINT num) { _currentSelectMenu = num; }
+
+
+
 };
 

@@ -24,8 +24,12 @@ HRESULT battleUI::init()
 	
 	IMAGEMANAGER->addImage("playerUI", L"image/battle_UI/battle_UI_Player.png", 416, 148);
 	IMAGEMANAGER->addImage("enemyUI", L"image/battle_UI/battle_UI_enemy.png", 400, 116);
-
+	IMAGEMANAGER->addImage("battleCheckPoint", L"image/battle_UI/battle_UI_chk_point.png", 24, 40);
 	_isSkip = false;
+
+
+	_currentSelectMenu = 0;
+
 	return S_OK;
 }
 
@@ -103,6 +107,10 @@ void battleUI::render()
 		D2DMANAGER->drawText(str.c_str(), 800, 500, 30);
 		str = L"µµ¸Á°£´Ù";
 		D2DMANAGER->drawText(str.c_str(), 800, 550, 30);
+
+
+		IMAGEMANAGER->findImage("battleCheckPoint")->render(560 + _currentSelectMenu / 2 * 200, 498 + _currentSelectMenu % 2 * 50);
+
 	}
 	IMAGEMANAGER->findImage("playerUI")->render(960 - 416, 448 - 148);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
 	IMAGEMANAGER->findImage("enemyUI")->render(0, 0);// , L"image/battle_UI/battle_UI_enemy.png", 400, 116);
