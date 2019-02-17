@@ -514,6 +514,7 @@ bool pokemon::evolution()
 		if (POKEMON_NONE != evolutionIndex)
 		{
 			_index = evolutionIndex;
+			settingStatus();
 			return true;
 		}
 	}
@@ -669,7 +670,7 @@ void pokemon::gainSkill()
 	// 레벨업에 따른 스킬 획득
 	if (skillMap.find(_level) != skillMap.end())
 	{
-		vector<int> skills = skillMap[_level];
+		vector<int> newSkills = skillMap[_level];
 		int skillCnt = 0;
 		for (; skillCnt < POKEMON_SKILL_MAX_COUNT; ++skillCnt)
 		{
@@ -677,18 +678,17 @@ void pokemon::gainSkill()
 				break;
 		}
 
-		int size = skills.size();
+		int size = newSkills.size();
 		for (int ii = 0; ii < size; ++ii)
 		{
-			
-			if (skillCnt < POKEMON_SKILL_MAX_COUNT) // 스킬이 맥시멈이 아니면 그냥 획득
+			if (skillCnt < POKEMON_SKILL_MAX_COUNT - 1) // 스킬이 맥시멈이 아니면 그냥 획득
 			{
+				_skills[skillCnt].init(newSkills[ii]);
 				skillCnt += 1;
-				_skills[skillCnt].init(skills[ii]);
 			}
 			else // 스킬이 맥시멈이라면 처음 스킬을 새 스킬로 교체 // todo 선택 교체 할 수 있도록 바꿔야함
 			{
-				_skills[0].init(skills[ii]);
+				_skills[0].init(newSkills[ii]);
 			}
 		}
 	}
@@ -892,8 +892,31 @@ int pokemon::calculateAttkValue(int skillIdx)
 	randValue = floorf(value * 100.f / 255.f);
 	
 	// 타입상성
-	conflictValue = POKEMONDATA->calculateConflictValue(_index, _target->getPokeminIndex());
-
+	SKILL_INFLUENCE influence = POKEMONDATA->checkConflict(info.getSkillType(), _target->getPokeminIndex());
+	wstring script;
+	switch ( influence )
+	{
+		case SI_NORMAL:
+		{
+			script = L"보통효과";
+			conflictValue = 1.f;
+			break;
+		}
+		case SI_SLIGHT:
+		{
+			script = L"효과가 별로인것 같다.";
+			conflictValue = 0.5f;
+			break;
+		}
+		case SI_EXCELLENT:
+		{
+			script = L"효과가 굉장했다.";
+			conflictValue = 2.f;
+			break;
+		}
+	}
+	sendScriptToUI(script);
+	
 	float damage = 0.f;
 	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2) * (vitalPoint * 2) * conflictValue * randValue / 100.f;
 
