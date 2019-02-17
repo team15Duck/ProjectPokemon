@@ -3,6 +3,7 @@
 #include "IllustratedBook.h"
 #include "bag.h"
 #include "setting.h"
+#include "possessionPokemon.h"
 
 enum MAIN_MENU_SELECT
 {
@@ -82,6 +83,7 @@ private:
 	IllustratedBook* _book;
 	bag* _bag;
 	setting* _setting;
+	possessionPokemon* _ppokemon;
 
 	MAIN_MENU_SELECT	_mmselect;	//메인메뉴 선택
 	SUB_MENU_SELECT		_smselect;	//서브메뉴 선택

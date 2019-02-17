@@ -158,8 +158,10 @@ HRESULT playGround::init()
 	// 2. 포켓몬
 	IMAGEMANAGER->addFrameImage("메인포켓몬", L"image/common_menu/pokemon/pokemonMenu_slot_first.png", 336, 456, 1, 2);
 	IMAGEMANAGER->addImage("보유중포켓몬", L"image/common_menu/pokemon/pokemonMenu_background.png", 960, 640);
+	
 	IMAGEMANAGER->addImage("서브포켓몬1", L"image/common_menu/pokemon/pokemon_subpokemon_list.png", 500, 80);
 	IMAGEMANAGER->addFrameImage("서브포켓몬2", L"image/common_menu/pokemon/pokemonMenu_slot.png", 1000, 80, 2, 1);
+	
 	IMAGEMANAGER->addFrameImage("포켓몬메뉴_취소", L"image/common_menu/pokemon/pokemonMenu_btn_cancle.png", 216, 192, 1, 2);
 	// 3. 가방
 	IMAGEMANAGER->addFrameImage("가방메뉴배경", L"image/common_menu/bag/bag_background.png", 1920, 640, 2, 1);

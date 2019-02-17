@@ -24,6 +24,9 @@ HRESULT hayoungTestScene::init()
 	_setting = new setting;
 	_setting->init();
 
+	_ppokemon = new possessionPokemon;
+	_ppokemon->init();
+
 	frameImageinit();
 
 	_isFemale = true;
@@ -183,6 +186,7 @@ void hayoungTestScene::update()
 	//======================= 특별케이스
 	_book->update();
 	_bag->update();
+	_ppokemon->update();
 
 	// 프레임 세팅 
 	if (_mmselect == MMS_YES && _smselect == SMS_YES && _cselect == SETTING)
@@ -213,11 +217,7 @@ void hayoungTestScene::render()
 	//하위메뉴인 포켓몬이 열리는 조건은 <메인메뉴가 열려있고, 커서가 포켓몬을 가르키고, 하위메뉴를 선택> 했을때이다.
 	if (_mmselect == MMS_YES && _cselect == POKEMON && _smselect == SMS_YES)
 	{
-		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
-		IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
-	
-	
+		_ppokemon->render();
 	}
 	//3. 가방 렌더
 	//하위메뉴인 포켓몬이 열리는 조건은 <메인메뉴가 열려있고, 커서가 가방을 가르키고, 하위메뉴를 선택> 했을때이다.

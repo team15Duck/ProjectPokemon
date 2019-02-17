@@ -133,6 +133,9 @@
     <Filter Include="PlayGround\shop">
       <UniqueIdentifier>{b807beb6-3e87-4f28-a78d-ac662bb29f4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\possessionPokemon">
+      <UniqueIdentifier>{10f9fc4f-a2d3-44ec-9a93-84cf7be70e50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -327,6 +330,9 @@
     <ClInclude Include="shop.h">
       <Filter>PlayGround\shop</Filter>
     </ClInclude>
+    <ClInclude Include="possessionPokemon.h">
+      <Filter>PlayGround\possessionPokemon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -499,6 +505,9 @@
     </ClCompile>
     <ClCompile Include="shop.cpp">
       <Filter>PlayGround\shop</Filter>
+    </ClCompile>
+    <ClCompile Include="possessionPokemon.cpp">
+      <Filter>PlayGround\possessionPokemon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

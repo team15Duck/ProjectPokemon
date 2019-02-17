@@ -192,6 +192,7 @@
     <ClInclude Include="pokemonDataBase.h" />
     <ClInclude Include="pokemonInfo.h" />
     <ClInclude Include="pokemonSkill.h" />
+    <ClInclude Include="possessionPokemon.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="pokemonDataBase.cpp" />
     <ClCompile Include="pokemonInfo.cpp" />
     <ClCompile Include="pokemonSkill.cpp" />
+    <ClCompile Include="possessionPokemon.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="setting.cpp" />
     <ClCompile Include="shop.cpp" />
