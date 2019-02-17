@@ -14,6 +14,10 @@ HRESULT playGround::init()
 {
 	gameNode::init(true);
 	
+	//테스트용 음악추가
+
+	SOUNDMANAGER->addSound("테스트용", "sound/bgm_01_Game_Freak_Logo.mp3", true, true);
+
 	IMAGEMANAGER->addImage("프레임기본", L"image/Menu_Frames/Menu_Frames_common.png", 32, 32);
 	IMAGEMANAGER->addImage("타입1_01", L"image/Menu_Frames/Menu_Frames_Type1_01.png", 32, 32);
 	IMAGEMANAGER->addImage("타입1_02", L"image/Menu_Frames/Menu_Frames_Type1_02.png", 32, 32);

@@ -5,7 +5,6 @@ enum SETTING_MENU
 	BACKGROUND_MUSIC = 1,
 	EFFECT_SOUND,
 	FRAMETYPE,
-	SM_SELECT,
 };
 
 enum SETTING_FRAME_TYPE
@@ -22,13 +21,48 @@ enum SETTING_FRAME_TYPE
 	SETTING_FRAME_TYPE10
 
 };
+
+enum SETTING_BACKGROOUND_MUSIC
+{
+	BG_SOUND_0,
+	BG_SOUND_1,
+	BG_SOUND_2,
+	BG_SOUND_3,
+	BG_SOUND_4,
+	BG_SOUND_5,
+	BG_SOUND_6,
+	BG_SOUND_7,
+	BG_SOUND_8,
+	BG_SOUND_9,
+	BG_SOUND_10
+};
+
+enum SETTING_EFFECT_SOUND
+{
+	E_SOUND_0,
+	E_SOUND_1,
+	E_SOUND_2,
+	E_SOUND_3,
+	E_SOUND_4,
+	E_SOUND_5,
+	E_SOUND_6,
+	E_SOUND_7,
+	E_SOUND_8,
+	E_SOUND_9,
+	E_SOUND_10,
+};
 class setting
 {
 private:
 
-	UINT _currentSelectNum;
-	SETTING_MENU _smenu;
-	SETTING_FRAME_TYPE _sframeType;
+	UINT						_currentSelectNum;
+
+	SETTING_MENU				_smenu;				//∏ﬁ¥∫
+	SETTING_FRAME_TYPE			_sframeType;		//«¡∑π¿”≈∏¿‘
+	SETTING_BACKGROOUND_MUSIC	_sbgMusic;			//πË∞Ê ¿Ωæ«
+	SETTING_EFFECT_SOUND		_seffSound;			//¿Ã∆Â∆Æ ¿Ωæ«
+
+
 public:
 	setting();
 	~setting();
@@ -40,5 +74,7 @@ public:
 
 	SETTING_FRAME_TYPE getframeType() { return _sframeType; }
 	void setframeType(SETTING_FRAME_TYPE sframeType);
+
+
 };
 

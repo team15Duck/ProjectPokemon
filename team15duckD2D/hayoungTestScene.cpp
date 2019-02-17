@@ -25,14 +25,11 @@ HRESULT hayoungTestScene::init()
 	_setting->init();
 
 	frameImageinit();
-	//commonMenuinit();
 
 	_isFemale = true;
 	_isMale = false;
 
 	//메인메뉴 초기화 
-
-	//MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
 	MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
 
 
@@ -70,6 +67,7 @@ void hayoungTestScene::release()
 
 void hayoungTestScene::update()
 {
+	
 
 	//메인메뉴 활성화하기
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
