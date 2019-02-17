@@ -26,6 +26,7 @@ pokemon::pokemon()
 	_beforeLvStatus.clear();
 	_currentLvStatus.clear();
 	_nowStatus.clear();
+	_displayDamageText.clear();
 	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
 	{
 		_skills[ii].clear();
@@ -743,7 +744,14 @@ void pokemon::progressingDecreaseHp()
 {
 	// 피를 뻈으면 콜백함수 해제
 	if ( _displayHp == _nowStatus.hp )
+	{
+		if ( _displayDamageText.size() != 0 )
+		{
+			sendScriptToUI(_displayDamageText);
+			_displayDamageText.clear();
+		}
 		endProgressing();
+	}
 	else
 		--_displayHp;
 }
@@ -880,12 +888,7 @@ int pokemon::calculateAttkValue(int skillIdx)
 		}
 	}
 
-	// 급소
-	value = RND->getFromIntTo(1, 100);
-	if (value < 6) // 급소맞을 확률은 6% : 사실 6.25%인데 소수점은 버려버림
-	{
-		vitalPoint = 2.f;
-	}
+
 
 	// 랜덤값
 	value = RND->getFromIntTo(217, 255);
@@ -898,7 +901,6 @@ int pokemon::calculateAttkValue(int skillIdx)
 	{
 		case SI_NORMAL:
 		{
-			script = L"보통효과";
 			conflictValue = 1.f;
 			break;
 		}
@@ -915,10 +917,18 @@ int pokemon::calculateAttkValue(int skillIdx)
 			break;
 		}
 	}
-	sendScriptToUI(script);
+
+	// 급소
+	value = RND->getFromIntTo(1, 100);
+	if (value < 6) // 급소맞을 확률은 6% : 사실 6.25%인데 소수점은 버려버림
+	{
+		vitalPoint = 2.f;
+		script = L"급소에 맞았다!";
+	}
+	_target->setDisplayDamageText(script);
 	
 	float damage = 0.f;
-	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2) * (vitalPoint * 2) * conflictValue * randValue / 100.f;
+	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 2.f) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
 }
