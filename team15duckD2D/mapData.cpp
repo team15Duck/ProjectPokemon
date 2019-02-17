@@ -46,8 +46,14 @@ void mapData::render()
 	{
 		for (; jj < jjMax; ++jj)
 		{
+			if (TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex] == "tile_07")
+			{
+				if ((_vvTile[ii][jj]->terrainFrameX >= 0 && _vvTile[ii][jj]->terrainFrameX < 3) && _vvTile[ii][jj]->terrainFrameY == 2)
+					IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex])->frameRender(jj * TILE_SIZE, ii * TILE_SIZE, 0, 0, 64, 36, _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
+			}
 			if (TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex] != "none")
 				IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex])->frameRender(jj * TILE_SIZE, ii * TILE_SIZE, _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
+
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
@@ -55,6 +61,8 @@ void mapData::render()
 	ii = CAMERA->getPosY() / TILE_SIZE;
 	if (ii < 0) ii = 0;
 
+	//우선 간호사
+	//IMAGEMANAGER->findImage("nurse")->frameRender(17 * TILE_SIZE, 8.7 * TILE_SIZE, 0, 0);
 	//오브젝트 + 주인공
 	drawObject();
 }
@@ -156,11 +164,11 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
-				else if ((_vvTile[ii][jj]->objectFrameX >=0 && _vvTile[ii][jj]->objectFrameX < 5) && _vvTile[ii][jj]->objectFrameY == 4)
+				else if ((_vvTile[ii][jj]->objectFrameX >= 0 && _vvTile[ii][jj]->objectFrameX < 5) && _vvTile[ii][jj]->objectFrameY == 4)
 				{
 					imgObject();
 				}
-				
+
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_03")
 			{
@@ -289,11 +297,13 @@ void mapData::drawObject()
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 
+
 		//오브젝트->타일로 변경완료되면 숫자 지워주기
-		if (((int)_player->getPosY()+31) / 64 == ii)
+		if (((int)_player->getPosY() + 31) / 64 == ii)
 		{
 			_player->render();
 		}
+
 		for (; jj < jjMax; ++jj)
 		{
 			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] != "none")
@@ -423,6 +433,14 @@ void mapData::drawObject()
 				}
 				else if ((_vvTile[ii][jj]->objectFrameX == 2 || _vvTile[ii][jj]->objectFrameX == 4) && _vvTile[ii][jj]->objectFrameY == 4) //문 양옆
 				{
+					imgObject();
+				}
+			}
+			if (TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex] == "tile_07")
+			{
+				if ((_vvTile[ii][jj]->terrainFrameX >= 0 && _vvTile[ii][jj]->terrainFrameX < 3) && _vvTile[ii][jj]->terrainFrameY == 2)
+				{
+					IMAGEMANAGER->findImage(TERRAIN_NAME[_vvTile[ii][jj]->terrainImageIndex])->frameRender(jj * TILE_SIZE, ii * TILE_SIZE + 28, 0, 28, 64, 36, _vvTile[ii][jj]->terrainFrameX, _vvTile[ii][jj]->terrainFrameY);
 					imgObject();
 				}
 			}

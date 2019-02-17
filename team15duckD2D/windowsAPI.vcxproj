@@ -184,6 +184,7 @@
     <ClInclude Include="menuFrameManager.h" />
     <ClInclude Include="moveActive.h" />
     <ClInclude Include="newGameScene.h" />
+    <ClInclude Include="npc.h" />
     <ClInclude Include="objectTool.h" />
     <ClInclude Include="objectToolScene.h" />
     <ClInclude Include="player.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="menuFrameManager.cpp" />
     <ClCompile Include="moveActive.cpp" />
     <ClCompile Include="newGameScene.cpp" />
+    <ClCompile Include="npc.cpp" />
     <ClCompile Include="objectTool.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
     <ClCompile Include="player.cpp" />

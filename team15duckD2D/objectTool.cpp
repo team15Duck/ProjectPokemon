@@ -1088,7 +1088,6 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if (frameX == 1 && frameY == 3) //동굴출구
 		{
 			result |= ATTR_UNMOVE;
-			result |= ATTR_POTAL;
 		}
 		else if ((frameX >= 0 && frameX < 3) && frameY == 5) //비주기가 여기 서있는다.
 		{
