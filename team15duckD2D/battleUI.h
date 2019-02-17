@@ -1,5 +1,23 @@
 #pragma once
 #include <queue>
+#include <vector>
+
+typedef struct tagPokemonSkillUIInfo
+{
+	wstring skillName;
+	UINT currentPP;
+	UINT maxPP;
+}SKILLUI;
+
+enum BATTLEUI_MENU
+{
+	BATTLEUI_MENU_SKILL,
+	BATTLEUI_MENU_BAG,
+	BATTLEUI_MENU_POKEMON,
+	BATTLEUI_MENU_RUN,
+	BATTLEUI_MENU_NONE
+};
+
 
 class battleUI
 {
@@ -15,7 +33,10 @@ private:
 	wstring				_enemyName;						//적포켓몬의 이름
 	UINT				_currentSelectMenu;				//현재 선택한 메뉴의 숫자는?
 
+	vector<SKILLUI>		_skillUI;						//스킬의정보를담고있는 구조체의 벡터  최대사이즈는 4로 제한한다
+	UINT				_currentSelectSkill;			//현재 어떤스킬을 선택하고 있니?
 
+	BATTLEUI_MENU		_currentMenu;					//현재 메뉴 상태
 
 public:
 	battleUI();
@@ -25,6 +46,32 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void skillUIClear() { _skillUI.clear(); }
+	void addSkill(wstring skillName, UINT cPP, UINT mPP)
+	{
+		SKILLUI skill;
+		skill.skillName = skillName;
+		skill.currentPP = cPP;
+		skill.maxPP = mPP;
+	}
+	UINT getCurrentPP(UINT skillNum)
+	{
+		if (skillNum < 0 || skillNum >= _skillUI.size()) return 0;
+
+		_skillUI[skillNum].currentPP;
+	}
+	void setCurrentPP(UINT skillNum)
+	{
+		if (skillNum < 0 || skillNum >= _skillUI.size()) return;
+
+		_skillUI[skillNum].currentPP--;
+		if (_skillUI[skillNum].currentPP < 0) _skillUI[skillNum].currentPP = 0;
+	}
+
+
+
+
 
 	void pushScript(wstring script);
 
@@ -39,8 +86,5 @@ public:
 
 	UINT getCurrentSelectMenuNum() { return _currentSelectMenu; }
 	void setCurrentSelctMenuNum(UINT num) { _currentSelectMenu = num; }
-
-
-
 };
 
