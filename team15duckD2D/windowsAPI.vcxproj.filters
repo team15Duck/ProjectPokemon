@@ -136,6 +136,9 @@
     <Filter Include="PlayGround\possessionPokemon">
       <UniqueIdentifier>{10f9fc4f-a2d3-44ec-9a93-84cf7be70e50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DFramework\move">
+      <UniqueIdentifier>{704f9842-896e-4078-9a5e-cc999f53f401}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -333,6 +336,9 @@
     <ClInclude Include="possessionPokemon.h">
       <Filter>PlayGround\possessionPokemon</Filter>
     </ClInclude>
+    <ClInclude Include="moveActive.h">
+      <Filter>2DFramework\move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -508,6 +514,9 @@
     </ClCompile>
     <ClCompile Include="possessionPokemon.cpp">
       <Filter>PlayGround\possessionPokemon</Filter>
+    </ClCompile>
+    <ClCompile Include="moveActive.cpp">
+      <Filter>2DFramework\move</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

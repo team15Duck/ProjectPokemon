@@ -182,6 +182,7 @@
     <ClInclude Include="mapToolScene.h" />
     <ClInclude Include="menuFrame.h" />
     <ClInclude Include="menuFrameManager.h" />
+    <ClInclude Include="moveActive.h" />
     <ClInclude Include="newGameScene.h" />
     <ClInclude Include="objectTool.h" />
     <ClInclude Include="objectToolScene.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="mapToolScene.cpp" />
     <ClCompile Include="menuFrame.cpp" />
     <ClCompile Include="menuFrameManager.cpp" />
+    <ClCompile Include="moveActive.cpp" />
     <ClCompile Include="newGameScene.cpp" />
     <ClCompile Include="objectTool.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
