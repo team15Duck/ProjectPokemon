@@ -151,7 +151,7 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon/pokemon.png", 5120, 4696, 20, 16);
 
 	// 상점주인 이미지
-	IMAGEMANAGER->addFrameImage("shopOwner", L"image/shopwner.png", 240, 80, 4, 1);
+	IMAGEMANAGER->addFrameImage("shopOwner", L"image/shopOwner.png", 240, 80, 4, 1);
 
 	// 간호사 이미지
 	IMAGEMANAGER->addFrameImage("nurse", L"image/nurse.png", 272, 80, 4, 1);
@@ -196,7 +196,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("하영씬");
+		SCENEMANAGER->changeScene("mapTestScene");
 	}
 	
 	return S_OK;
