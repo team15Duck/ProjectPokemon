@@ -523,6 +523,25 @@ bool pokemon::evolution()
 	return false;
 }
 
+bool pokemon::evolutionForce()
+{
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
+	int evolutionLv = info->getEvolutionLevel();
+	if (0 != evolutionLv)
+	{
+		//포켓몬 진화아아ㅏㅏ
+		POKEMON evolutionIndex = info->getEvolutionIndex();
+		if (POKEMON_NONE != evolutionIndex)
+		{
+			_index = evolutionIndex;
+			settingStatus();
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 void pokemon::fillHp()
 {
@@ -585,7 +604,7 @@ void pokemon::changeSkill(int idx, int skillId)
 	if(idx < 0 || POKEMON_SKILL_MAX_COUNT <= idx)
 		return;
 
-	if(-1 == skillId)
+	if(SKILL_INDEX_NONE == skillId)
 		return;
 
 	_skills[idx].init(skillId);

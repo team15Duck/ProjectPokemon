@@ -147,6 +147,8 @@ public:
 	void takeDamage(int value, SKILL_INFLUENCE influence = SI_NORMAL);
 	// 진화
 	bool evolution();
+	// 강제 진화
+	bool evolutionForce();
 
 	// hp full 회복
 	void fillHp();
