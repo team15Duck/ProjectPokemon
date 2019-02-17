@@ -12,6 +12,7 @@ protected:
 	float _maxY;
 
 	float _speed;
+	bool _isLoop;
 
 	bool _isMove;
 
@@ -19,7 +20,7 @@ public:
 	moveActive();
 	~moveActive();
 
-	virtual HRESULT init(float* x, float* y, float minX, float minY, float maxX, float maxY, float speed);
+	virtual HRESULT init(float* x, float* y, float minX, float minY, float maxX, float maxY, float speed, bool isLoop = false);
 	virtual void release();
 	virtual void update();
 
@@ -34,7 +35,7 @@ public:
 class fallDownMove : public moveActive
 {
 private:
-
+	
 public:
 	fallDownMove();
 	~fallDownMove();
@@ -42,3 +43,26 @@ public:
 	void move();
 };
 
+class waveXMove : public moveActive
+{
+private:
+	bool _isRight;
+
+public:
+	waveXMove(): _isRight(false) { }
+	~waveXMove() {};
+
+	void move();
+};
+
+class waveYMove : public moveActive
+{
+private:
+	bool _isDown;
+
+public:
+	waveYMove():_isDown(false) { }
+	~waveYMove() {};
+
+	void move();
+};

@@ -11,7 +11,7 @@ moveActive::~moveActive()
 {
 }
 
-HRESULT moveActive::init(float * x, float * y, float minX, float minY, float maxX, float maxY, float speed)
+HRESULT moveActive::init(float * x, float * y, float minX, float minY, float maxX, float maxY, float speed, bool isLoop)
 {
 	_x = x;
 	_y = y;
@@ -21,6 +21,7 @@ HRESULT moveActive::init(float * x, float * y, float minX, float minY, float max
 	_maxX = maxX;
 	_maxY = maxY;
 	_speed = speed;
+	_isLoop = isLoop;
 
 	return S_OK;
 }
@@ -65,5 +66,62 @@ void fallDownMove::move()
 	if ( _minY < *_y )
 	{
 		_isMove = false;
+	}
+}
+
+
+
+void waveXMove::move()
+{
+
+	if ( _isRight )
+	{
+		*_x += _speed * TIMEMANAGER->getElapsedTime();
+		if ( _maxX < *_x )
+		{
+			if( _isLoop )
+				_isRight = false;
+			else
+				_isMove = false;
+		}
+	}
+	else
+	{
+		*_x -= _speed * TIMEMANAGER->getElapsedTime();
+		if ( *_x  < _minX)
+		{
+			if( _isLoop )
+				_isRight = true;
+			else
+				_isMove = false;
+		}
+	}
+}
+
+
+
+void waveYMove::move()
+{
+	if ( _isDown )
+	{
+		*_y += _speed * TIMEMANAGER->getElapsedTime();
+		if ( _maxY < *_y )
+		{
+			if( _isLoop )
+				_isDown = false;
+			else
+				_isMove = false;
+		}
+	}
+	else
+	{
+		*_y -= _speed * TIMEMANAGER->getElapsedTime();
+		if ( *_y  < _minY)
+		{
+			if( _isLoop)
+				_isDown = true;
+			else
+				_isMove = false;
+		}
 	}
 }
