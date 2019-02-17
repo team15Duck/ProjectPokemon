@@ -21,13 +21,17 @@ typedef struct tagPpokemonInfo
 	wstring level;
 	wstring hp;
 
+	bool isDataSet;
+
 }PPOKEMON;
 class possessionPokemon
 {
 private : 
 	P_POKEMON_STATE		_ppstate;
 	P_POKEMON_SELECT	_ppselect;
-	PPOKEMON			_pPokemon;
+	PPOKEMON			_pPokemon[6];
+
+	int _pokemonCnt; // 보유하고 있는 포켓몬의 수
 
 	UINT _currentSelecPok;
 
