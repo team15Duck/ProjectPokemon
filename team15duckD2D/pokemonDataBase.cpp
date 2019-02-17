@@ -368,12 +368,12 @@ HRESULT pokemonDataBase::init()
 			vector<int> ids;
 			ids.push_back(TACLE);
 			ids.push_back(BUBBLE);
+			ids.push_back(WATER_GUN);
 			skillMap.insert(make_pair(1, ids));
 		}
 		{
-			vector<int> ids;
-			ids.push_back(WATER_GUN);
-			skillMap.insert(make_pair(13, ids));
+			//vector<int> ids;
+			//skillMap.insert(make_pair(13, ids));
 		}
 		{
 			vector<int> ids;
@@ -524,15 +524,171 @@ int pokemonDataBase::calcuateExp(int level, POKEMON pokemonId)
 		return level * level * level;
 }
 
-float pokemonDataBase::calculateConflictValue(POKEMON myindex, POKEMON targetIndex)
+SKILL_INFLUENCE pokemonDataBase::checkConflict(POKEMON_TYPE skillType, POKEMON targetIndex)
 {
-	pokemonInfo* myinfo = getPokemonInfomation(myindex);
 	pokemonInfo* targetInfo = getPokemonInfomation(targetIndex);
-
-	POKEMON_TYPE myType = myinfo->getPokemonType();
 	POKEMON_TYPE targetType = targetInfo->getPokemonType();
 
-	return 1.0f;
+	SKILL_INFLUENCE influence = SI_NORMAL;
+
+	switch ( skillType )
+	{
+		case PM_TYPE_NORMAL:
+		{
+			influence = SI_NORMAL;
+			break;
+		}
+		case PM_TYPE_FIRE:
+		{	
+			// ==
+			switch ( targetType )
+			{
+				case PM_TYPE_NORMAL: case PM_TYPE_ELECTRONIC: case PB_TYPE_POISION:
+				{
+					influence = SI_NORMAL;
+					break;
+				}
+				// 불 < 불, 물, 드래곤
+				case PM_TYPE_FIRE: case PM_TYPE_WATER: case PB_TYPE_DRAGON:
+				{
+					influence = SI_SLIGHT;
+					break;
+				}
+				// 풀 < 불
+				case PM_TYPE_GRASS:
+				{
+					influence = SI_EXCELLENT;
+					break;
+				}
+			}
+
+			break;
+		}
+		case PM_TYPE_WATER:
+		{
+			// ==
+			switch ( targetType )
+			{
+				case PM_TYPE_NORMAL: case PM_TYPE_ELECTRONIC: case PB_TYPE_POISION:
+				{
+					influence = SI_NORMAL;
+					break;
+				}
+				// 물 < 물, 풀, 드래곤
+				case PM_TYPE_WATER: case PM_TYPE_GRASS: case PB_TYPE_DRAGON:
+				{
+					influence = SI_SLIGHT;
+					break;
+				}
+				// 불 < 물
+				case PM_TYPE_FIRE:
+				{
+					influence = SI_EXCELLENT;
+					break;
+				}
+			}
+			break;
+		}
+		case PM_TYPE_ELECTRONIC:
+		{
+			// ==
+			switch ( targetType )
+			{
+				case PM_TYPE_NORMAL: case PM_TYPE_FIRE: case PB_TYPE_POISION:
+				{
+					influence = SI_NORMAL;
+					break;
+				}
+				// 전기 < 풀, 전기, 드래곤
+				case PM_TYPE_GRASS: case PM_TYPE_ELECTRONIC: case PB_TYPE_DRAGON:
+				{
+					influence = SI_SLIGHT;
+					break;
+				}
+				// 물 < 전기
+				case PM_TYPE_WATER:
+				{
+					influence = SI_EXCELLENT;
+					break;
+				}
+			}
+			break;
+		}
+		case PM_TYPE_GRASS:
+		{
+			// ==
+			switch ( targetType )
+			{
+				case PM_TYPE_NORMAL: case PM_TYPE_ELECTRONIC:
+				{
+					influence = SI_NORMAL;
+					break;
+				}
+				// 풀 < 불, 풀, 독, 드래곤
+				case PM_TYPE_FIRE: case PM_TYPE_GRASS: case PB_TYPE_POISION: case PB_TYPE_DRAGON:
+				{
+					influence = SI_SLIGHT;
+					break;
+				}
+				// 물 < 풀
+				case PM_TYPE_WATER:
+				{
+					influence = SI_EXCELLENT;
+					break;
+				}
+			}
+			break;
+		}
+		case PB_TYPE_POISION:
+		{
+			// ==
+			switch ( targetType )
+			{
+				case PM_TYPE_NORMAL: case PM_TYPE_ELECTRONIC: case PM_TYPE_FIRE: case PM_TYPE_WATER: case PB_TYPE_DRAGON:
+				{
+					influence = SI_NORMAL;
+					break;
+				}
+				// 독 < 독
+				case PB_TYPE_POISION:
+				{
+					influence = SI_SLIGHT;
+					break;
+				}
+				// 풀 < 독
+				case PM_TYPE_GRASS:
+				{
+					influence = SI_EXCELLENT;
+					break;
+				}
+			}
+			break;
+		}
+		case PB_TYPE_DRAGON:
+		{
+			// ==
+			switch ( targetType )
+			{
+				case PM_TYPE_NORMAL: case PM_TYPE_ELECTRONIC: case PM_TYPE_FIRE:
+				case PM_TYPE_WATER: case PB_TYPE_POISION: case PM_TYPE_GRASS: 
+				{
+					influence = SI_NORMAL;
+					break;
+				}
+				// 드래곤 < 드래곤
+				case PB_TYPE_DRAGON:
+				{
+					influence = SI_EXCELLENT;
+					break;
+				}
+			}
+			break;
+		}
+		default:
+			break;
+	}
+
+	return influence;
 }
 
 int pokemonDataBase::calculatorStatusType1(int level, int kindValue)

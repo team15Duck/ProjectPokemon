@@ -52,12 +52,20 @@ public:
 	virtual void load(const char* mapSizeFileName, const char* mapFileName);
 
 	virtual void potalLoad();
-
+	
+	//오브젝트 렌더용 함수
+	virtual void drawObject();
 
 	virtual void setPlayerMemoryAdressLink(player* p) { _player = p; }
 
 	virtual void setPokemon();
 
+	//=======================
+	
+	void imgObject() 
+	{ 
+		IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 64, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1); 
+	}
 
 
 public:
@@ -72,5 +80,6 @@ public:
 	{
 		return (UINT)RND->getFromIntTo(_minLevel, _maxLevel + 1);
 	}
+	
 };
 

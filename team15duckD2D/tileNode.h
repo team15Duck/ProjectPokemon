@@ -29,6 +29,9 @@
 #define ATTR_SIGN			0X00080000UL					//표지판(일반)
 #define ATTR_SIGN_GYM		0X00100000UL					//표지판(체육관)
 #define ATTR_ITEM			0X00200000UL					//필드아이템
+#define ATTR_SHOP			0X00400000UL					//상점
+#define ATTR_CENTER			0X00800000UL					//포켓몬센터
+#define ATTR_FLOWER			0X01000000UL					//꽃
 
 
 

@@ -26,6 +26,7 @@ pokemon::pokemon()
 	_beforeLvStatus.clear();
 	_currentLvStatus.clear();
 	_nowStatus.clear();
+	_displayDamageText.clear();
 	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
 	{
 		_skills[ii].clear();
@@ -330,6 +331,8 @@ bool pokemon::applyUpsetCondition()
 			script = L"";
 			_state = L"PMUC_POISON";
 			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
+			if( 10 < damage )
+				damage = 10;
 			takeDamage(damage);
 
 			isApplyUpsetCondition = true;
@@ -514,6 +517,26 @@ bool pokemon::evolution()
 		if (POKEMON_NONE != evolutionIndex)
 		{
 			_index = evolutionIndex;
+			settingStatus();
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool pokemon::evolutionForce()
+{
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
+	int evolutionLv = info->getEvolutionLevel();
+	if (0 != evolutionLv)
+	{
+		//포켓몬 진화아아ㅏㅏ
+		POKEMON evolutionIndex = info->getEvolutionIndex();
+		if (POKEMON_NONE != evolutionIndex)
+		{
+			_index = evolutionIndex;
+			settingStatus();
 			return true;
 		}
 	}
@@ -583,7 +606,7 @@ void pokemon::changeSkill(int idx, int skillId)
 	if(idx < 0 || POKEMON_SKILL_MAX_COUNT <= idx)
 		return;
 
-	if(-1 == skillId)
+	if(SKILL_INDEX_NONE == skillId)
 		return;
 
 	_skills[idx].init(skillId);
@@ -669,7 +692,7 @@ void pokemon::gainSkill()
 	// 레벨업에 따른 스킬 획득
 	if (skillMap.find(_level) != skillMap.end())
 	{
-		vector<int> skills = skillMap[_level];
+		vector<int> newSkills = skillMap[_level];
 		int skillCnt = 0;
 		for (; skillCnt < POKEMON_SKILL_MAX_COUNT; ++skillCnt)
 		{
@@ -677,18 +700,17 @@ void pokemon::gainSkill()
 				break;
 		}
 
-		int size = skills.size();
+		int size = newSkills.size();
 		for (int ii = 0; ii < size; ++ii)
 		{
-			
-			if (skillCnt < POKEMON_SKILL_MAX_COUNT) // 스킬이 맥시멈이 아니면 그냥 획득
+			if (skillCnt < POKEMON_SKILL_MAX_COUNT - 1) // 스킬이 맥시멈이 아니면 그냥 획득
 			{
+				_skills[skillCnt].init(newSkills[ii]);
 				skillCnt += 1;
-				_skills[skillCnt].init(skills[ii]);
 			}
 			else // 스킬이 맥시멈이라면 처음 스킬을 새 스킬로 교체 // todo 선택 교체 할 수 있도록 바꿔야함
 			{
-				_skills[0].init(skills[ii]);
+				_skills[0].init(newSkills[ii]);
 			}
 		}
 	}
@@ -743,7 +765,14 @@ void pokemon::progressingDecreaseHp()
 {
 	// 피를 뻈으면 콜백함수 해제
 	if ( _displayHp == _nowStatus.hp )
+	{
+		if ( _displayDamageText.size() != 0 )
+		{
+			sendScriptToUI(_displayDamageText);
+			_displayDamageText.clear();
+		}
 		endProgressing();
+	}
 	else
 		--_displayHp;
 }
@@ -880,22 +909,47 @@ int pokemon::calculateAttkValue(int skillIdx)
 		}
 	}
 
-	// 급소
-	value = RND->getFromIntTo(1, 100);
-	if (value < 6) // 급소맞을 확률은 6% : 사실 6.25%인데 소수점은 버려버림
-	{
-		vitalPoint = 2.f;
-	}
+
 
 	// 랜덤값
 	value = RND->getFromIntTo(217, 255);
 	randValue = floorf(value * 100.f / 255.f);
 	
 	// 타입상성
-	conflictValue = POKEMONDATA->calculateConflictValue(_index, _target->getPokeminIndex());
+	SKILL_INFLUENCE influence = POKEMONDATA->checkConflict(info.getSkillType(), _target->getPokeminIndex());
+	wstring script;
+	switch ( influence )
+	{
+		case SI_NORMAL:
+		{
+			conflictValue = 1.f;
+			break;
+		}
+		case SI_SLIGHT:
+		{
+			script = L"효과가 별로인것 같다.";
+			conflictValue = 0.5f;
+			break;
+		}
+		case SI_EXCELLENT:
+		{
+			script = L"효과가 굉장했다.";
+			conflictValue = 2.f;
+			break;
+		}
+	}
 
+	// 급소
+	value = RND->getFromIntTo(1, 100);
+	if (value < 6) // 급소맞을 확률은 6% : 사실 6.25%인데 소수점은 버려버림
+	{
+		vitalPoint = 2.f;
+		script = L"급소에 맞았다!";
+	}
+	_target->setDisplayDamageText(script);
+	
 	float damage = 0.f;
-	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2) * (vitalPoint * 2) * conflictValue * randValue / 100.f;
+	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 1.f) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
 }

@@ -81,6 +81,8 @@ private:
 	int _displayHp;								// 연출용 hp
 	int _displayExp;							// 연출용 경험치
 
+	wstring _displayDamageText;						// 연출 용 텍스트
+
 	float _displayTime;							// 연출 용 시간
 	float _displayTimeCnt;						// 연출 용 시간
 	float _displayValue;						// 연출 용 변수
@@ -145,6 +147,8 @@ public:
 	void takeDamage(int value, SKILL_INFLUENCE influence = SI_NORMAL);
 	// 진화
 	bool evolution();
+	// 강제 진화
+	bool evolutionForce();
 
 	// hp full 회복
 	void fillHp();
@@ -162,6 +166,8 @@ public:
 	void changeSkill(int idx, int skillId);
 	// 체력감소 연출 시작 : 상대방의 스킬 연출이 끝나고나면 데미지를 입는 것 처럼 보이도록.
 	void startTakeDamageDisplay();
+	// 연출용 텍스트 세팅
+	void setDisplayDamageText(wstring txt) { _displayDamageText = txt; }
 	
 	//============================================== set
 	
