@@ -66,6 +66,6 @@ public:
 public:
 	pokemon* getPokemon() { return _pokemon; }
 	void setPokemon(pokemon* pokemon) { _pokemon = pokemon; }
-	player* getPlayet() { return _currentPlayer; }
+	player* getPlayer() { return _currentPlayer; }
 };
 

@@ -35,6 +35,8 @@ void possessionPokemon::release()
 
 void possessionPokemon::update()
 {
+	pPokemonDataSet();
+
 	//포켓몬 리스트 이동관련
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
@@ -173,6 +175,7 @@ void possessionPokemon::render()
 			if (_ppselect == SELECT_MAIN_POKEMON)
 			{
 				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 1);
+		
 			}
 			else
 			{
@@ -263,5 +266,15 @@ void possessionPokemon::render()
 void possessionPokemon::pPokemonDataSet()
 {
 	locale("kor");
-	//pokemonInfo* info = POKEMONDATA->getPokemonInfomation((POKEMON)i);
+	pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
+	
+	for (int i = 0; i < 6; ++i)
+	{
+		if (pokemons[i] == nullptr) continue;
+
+		_pPokemon.level = to_wstring(pokemons[i]->getLevel());
+
+	}
+
+
 }
