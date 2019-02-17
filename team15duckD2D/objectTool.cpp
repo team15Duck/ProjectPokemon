@@ -98,6 +98,7 @@ void objectTool::update()
 		setTile();
 	}
 
+
 	//테스트맵용
 	//===============================
 	ii = CAMERA->getPosY() / TILE_SIZE;
@@ -117,7 +118,7 @@ void objectTool::update()
 
 void objectTool::render()
 {
-
+	WCHAR str[128];
 	//=================================================================================================
 
 	for (; ii < iiMax; ++ii)
@@ -172,9 +173,9 @@ void objectTool::render()
 				{
 					if (_vvTile[i][j]->objectFrameX == 3)
 					{
-						if(_vvTile[i][j]->objectFrameY == 4)
+						if (_vvTile[i][j]->objectFrameY == 4)
 							IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top + 44, 0, 44, 64, 20, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
-						if(_vvTile[i][j]->objectFrameY == 5)
+						if (_vvTile[i][j]->objectFrameY == 5)
 							IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[i][j]->objectImageIndex])->frameRender(_vvRect[i][j].left, _vvRect[i][j].top, 0, 0, 64, 20, _vvTile[i][j]->objectFrameX, _vvTile[i][j]->objectFrameY);
 					}
 				}
@@ -205,14 +206,39 @@ void objectTool::render()
 		, _nextButton.right, _nextButton.bottom);
 
 	//테슷흐
+	for (; ii < iiMax; ++ii)
+	{
+		for (; jj < jjMax; ++jj)
+		{
+			if (KEYMANAGER->isToggleKey(VK_TAB))
+			{
+				if ((_vvTile[ii][jj]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
+				{
+					swprintf_s(str, L"UnMove");
+					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 0, 255));
+				}
+				if ((_vvTile[ii][jj]->attr & ATTR_POTAL) == ATTR_POTAL)
+				{
+					swprintf_s(str, L"POTAL");
+					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5);
+				}
+			}
+		}
+		jj = CAMERA->getPosX() / TILE_SIZE;
+		if (jj < 0) jj = 0;
+	}
+	ii = CAMERA->getPosY() / TILE_SIZE;
 
-	WCHAR str[128];
 	swprintf_s(str, L"mapcase : %d", _mapCase);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 250);
 	if (_isSave)
 	{
 		swprintf_s(str, L"세이브되었숩니다~~~~~~~~");
 		D2DMANAGER->drawText(str, CAMERA->getPosX() + WINSIZEX / 2, CAMERA->getPosY() + WINSIZEY / 2);
+	}
+	if (KEYMANAGER->isToggleKey(VK_TAB))
+	{
+
 	}
 	//swprintf_s(str, L"현재 : %d", _curImgNum);
 	//D2DMANAGER->drawText(str, 100, 400);
@@ -495,6 +521,34 @@ void objectTool::drawObject()
 			}
 		}
 	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F7))
+	{
+		for (int i = 0; i < TILEY; ++i)
+		{
+			for (int j = 0; j < TILEX; ++j)
+			{
+				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+				{
+					_vvTile[i][j]->attr = ATTR_UNMOVE;
+				}
+			}
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F8))
+	{
+		for (int i = 0; i < TILEY; ++i)
+		{
+			for (int j = 0; j < TILEX; ++j)
+			{
+				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+				{
+					_vvTile[i][j]->attr = ATTR_NONE;
+				}
+			}
+		}
+	}
 }
 
 void objectTool::save(int mapCase)
@@ -674,11 +728,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		{
 			result |= ATTR_UNMOVE;
 		}
-		//else if (frameX == 5 && frameY == 0) //석상(윗부분)
-		//{
-		//	result |= ATTR_NONE;
-		//	result |= ATTR_STONE_STATUE;
-		//}
+
 		else if (frameX == 5 && frameY == 1) //석상(아랫부분)
 		{
 			result |= ATTR_UNMOVE;
@@ -691,6 +741,10 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if (frameX == 0 && frameY == 3) //작은나무(풀베기 X)
 		{
 			result |= ATTR_UNMOVE;
+		}
+		else if ((frameX >= 0 && frameX < 5) && frameY == 4)
+		{
+			result |= ATTR_FLOWER;
 		}
 		else if ((frameX >= 0 && frameX < 5) && frameY == 5) //풀(프레임, 몬스터등장)
 		{
@@ -868,6 +922,8 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 				result |= ATTR_UNMOVE;
 			else if (frameX == 5)
 				result |= ATTR_UNMOVE;
+			else if (frameX == 3 && frameY == 5)
+				result |= ATTR_CENTER;
 		}
 		else if ((frameX == 1 || frameX == 2) && (frameY == 0 || frameY == 1)) //컴퓨터 윗부분
 		{
@@ -908,10 +964,14 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		else if (frameX == 2 && (frameY >= 0 && frameY < 4)) //상점주인 있는 곳
 		{
 			result |= ATTR_UNMOVE;
+			if (frameY == 2)
+				result |= ATTR_SHOP; //주인과 상호작용
 		}
 		else if ((frameX >= 3 && frameX < 6) && (frameY == 0 || frameY == 1)) //상점주인 있는 곳
 		{
 			result |= ATTR_UNMOVE;
+			if (frameX == 3 && frameY == 5)
+				result |= ATTR_SHOP; //주인과 상호작용
 		}
 		else if ((frameX >= 3 && frameX < 5) && frameY == 2) //싱크대 위
 		{
@@ -1102,7 +1162,7 @@ DWORD objectTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 				result |= ATTR_NONE;
 				result |= ATTR_POTAL;
 			}
-			else
+			else if (!((frameX >= 0 && frameX < 6) && frameY == 4))
 				result |= ATTR_UNMOVE;
 		}
 	}
