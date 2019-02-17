@@ -14,7 +14,7 @@ mapTestScene::~mapTestScene()
 HRESULT mapTestScene::init()
 {
 	_testMap = new testMap;
-	_testMap->init("data/fieldMapSize.map", "data/fieldMapData.map");
+	_testMap->init("data/caveMapSize.map", "data/caveMapData.map");
 
 	_player = new player;
 	_player->init();

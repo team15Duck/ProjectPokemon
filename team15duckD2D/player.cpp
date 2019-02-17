@@ -17,8 +17,8 @@ HRESULT player::init()
 
 	
 	/////////////이건나중에지울거야/////////
-	_tileX = 26;
-	_tileY = 31;
+	_tileX = 15	;
+	_tileY = 10;
 	_posX = (float)_tileX * 64 + 32;
 	_posY = (float)_tileY * 64 + 32;
 	_isMan = true;

@@ -229,6 +229,26 @@ void mapTool::render()
 	
 	swprintf_s(str, L"_potalPosX : %d\n _potalPosY : %d", _potalPosX[_potalNum], _potalPosY[_potalNum]);
 	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 310);
+	for (int i = 0; i < TILEY; ++i)
+	{
+		for (int j = 0; j < TILEX; ++j)
+		{
+			if (KEYMANAGER->isToggleKey(VK_CONTROL))
+			{
+				WCHAR str[128];
+				if ((_vvTile[i][j]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
+				{
+					swprintf_s(str, L"UnMove");
+					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(255,0,255));
+				}
+				if ((_vvTile[i][j]->attr & ATTR_POTAL) == ATTR_POTAL)
+				{
+					swprintf_s(str, L"POTAL");
+					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(255, 0, 255));
+				}
+			}
+		}
+	}
 
 
 
@@ -368,8 +388,8 @@ void mapTool::pickSampleMap()
 			if (_curImgNum == TERRAIN_NAME2)
 			{
 				_isRND = false;
-				if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3)
-					|| (indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5))
+				if (((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3))
+					|| ((indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5)))
 				{
 					if ((indX >= 0 && indX < 4) && indY == 5)
 						_isRND = true;
@@ -382,11 +402,24 @@ void mapTool::pickSampleMap()
 				else
 					_isTileClick = false;
 			}
+			if (_curImgNum == TERRAIN_NAME3)
+			{
+				_isRND = false;
+				if (((indX >= 0 && indX < SAMPLETILE) && (indY == 0 || indY == 1)) ||
+					((indX >= 0 && indX < SAMPLETILE - 2) && (indY == 2 || indY == 4 || indY == 5)) ||
+					(indX >= 0 && indY == 3))
+				{
+					_pickSampleTile.curX = indX;
+					_pickSampleTile.curY = indY;
+					_pickSampleTile.isObj = false;
+				}
+				else _isTileClick = false;
+			}
 			else
 			{
 				_isRND = false;
-				if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3)
-						 || (indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5))
+				if (((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 3))
+				|| ((indX >= 0 && indX < SAMPLETILE - 2) && (indY == 1 || indY == 2 || indY == 4 || indY == 5)))
 				{
 					_pickSampleTile.curX = indX;
 					_pickSampleTile.curY = indY;
@@ -400,9 +433,9 @@ void mapTool::pickSampleMap()
 		//동굴
 		if (_curImgNum == TERRAIN_NAME5)
 		{
-			if ((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 1) ||
-				(indX >= 0 && indX < SAMPLETILE - 2) && indY == 2 ||
-				(indX >= 0 && indX < SAMPLETILE - 3) && indY == 3)
+			if (((indX >= 0 && indX < SAMPLETILE - 1) && (indY == 0 || indY == 1)) ||
+				((indX >= 0 && indX < SAMPLETILE - 2) && indY == 2) ||
+				((indX >= 0 && indX < SAMPLETILE - 3) && indY == 3))
 			{
 				_pickSampleTile.curX = indX;
 				_pickSampleTile.curY = indY;
@@ -414,8 +447,8 @@ void mapTool::pickSampleMap()
 		//물
 		if (_curImgNum == TERRAIN_NAME6)
 		{
-			if ((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY <= 2) ||
-				(indX >= 0 && indX < 3) && (indY > 2 && indY < SAMPLETILE))
+			if (((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY <= 2)) ||
+				((indX >= 0 && indX < 3) && (indY > 2 && indY < SAMPLETILE)))
 			{
 				_pickSampleTile.curX = indX;
 				_pickSampleTile.curY = indY;
@@ -427,8 +460,10 @@ void mapTool::pickSampleMap()
 		//집, 오박사
 		if (_curImgNum == TERRAIN_NAME7)
 		{
-			if ((indX >= 0 && indX < SAMPLETILE - 1) && indY == 0 ||
-				(indX >= 0 && indX < SAMPLETILE) && indY == 1)
+			if (((indX >= 0 && indX < SAMPLETILE - 1) && indY == 0) ||
+				((indX >= 0 && indX < SAMPLETILE) && indY == 1) ||
+				((indX >= 0  && indX <SAMPLETILE) && (indY == 2 ||indY == 3)) ||
+				((indX >= 3 && indX <SAMPLETILE) && indY == 4))
 			{
 				_pickSampleTile.curX = indX;
 				_pickSampleTile.curY = indY;
@@ -440,10 +475,10 @@ void mapTool::pickSampleMap()
 		//포켓몬센터
 		if (_curImgNum == TERRAIN_NAME8)
 		{
-			if ((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY < 3) ||
-				(indX >= 0 && indX < SAMPLETILE - 1) && indY == 3 ||
-				(indX >= 0 && indX < SAMPLETILE - 1) && indY == 4 ||
-				(indX >= 0 && indX <SAMPLETILE -2 ) && indY == 5)
+			if (((indX >= 0 && indX < SAMPLETILE) && (indY >= 0 && indY < 3)) ||
+				((indX >= 0 && indX < SAMPLETILE - 1) && indY == 3) ||
+				((indX >= 0 && indX < SAMPLETILE - 1) && indY == 4) ||
+				((indX >= 0 && indX <SAMPLETILE -2 ) && indY == 5))
 			{
 				_pickSampleTile.curX = indX;
 				_pickSampleTile.curY = indY;
@@ -455,8 +490,8 @@ void mapTool::pickSampleMap()
 		//상점
 		if (_curImgNum == TERRAIN_NAME9)
 		{
-			if ((indX >= 0 && indX < 3) && (indY == 0 || indY == 1) ||
-				(indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 2 && indY < SAMPLETILE))
+			if (((indX >= 0 && indX < 3) && (indY == 0 || indY == 1)) ||
+				((indX >= 0 && indX < SAMPLETILE - 2) && (indY >= 2 && indY < SAMPLETILE)))
 			{
 				_pickSampleTile.curX = indX;
 				_pickSampleTile.curY = indY;
@@ -976,6 +1011,14 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 {
 	DWORD result = ATTR_NONE;
 	//타일
+	if (imgName == TERRAIN_NAME[TERRAIN_NAME3])
+	{
+		if ((frameX == 5 && frameY == 0) ||
+			((frameX == 4 || frameX == 5) && frameY == 1))
+		{
+			result |= ATTR_UNMOVE;
+		}
+	}
 	//동굴은 어딜가든 다 만남
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME5])
 	{
@@ -983,20 +1026,21 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			(frameX >= 0 && frameX < SAMPLETILE - 2) && frameY == 2 ||
 			(frameX >= 0 && frameX <SAMPLETILE - 3) && frameY == 3)
 		{
-			result |= ATTR_NONE;
+			//result |= ATTR_NONE;
 			result |= ATTR_APPEAR;		//몬스터 출몰 속성
 		}
 	}
 	//물
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME6])
 	{
-		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2) ||
-			(frameX >= 0 && frameX < SAMPLETILE) && (frameY == 2) ||
-			(frameX >= 0 && frameX < 3) && (frameY == 4 || frameY == 5))
-		{
-			result = ATTR_NONE;
-		}
-		else if ((frameX >= 3 && frameX < SAMPLETILE) && (frameY == 0 || frameY == 1))
+		//if (((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2)) ||
+		//	((frameX >= 0 && frameX < SAMPLETILE) && (frameY == 2)) ||
+		//	((frameX >= 0 && frameX < 3) && (frameY == 4 || frameY == 5)))
+		//{
+		//	result = ATTR_NONE;
+		//}
+		if (((frameX == 0 || frameX == 1) && (frameY == 3)) || 
+			((frameX >= 3 && frameX < SAMPLETILE) && (frameY == 0 || frameY == 1)))
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WATER;		//프레임을 돌려야 해서 있어야 함
@@ -1005,29 +1049,35 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	//집, 오박사
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME7])
 	{
-		if ((frameX == 0 || frameX == 1) && (frameY == 0) ||
-			(frameX >= 0 && frameX < SAMPLETILE - 1)  && (frameY == 1))
-		{
-			result |= ATTR_NONE;
-		}
-		else if ((frameX == 2 || frameX == 3||frameX == 4) && frameY == 0 ||
-				 frameX == 5 && frameY == 1)
+		//if (((frameX == 0 || frameX == 1) && (frameY == 0)) ||
+		//	((frameX >= 0 && frameX < SAMPLETILE - 1)  && (frameY == 1)) ||
+		//	((frameX >= 3 && frameX < SAMPLETILE) &&( frameY >= 2 && frameY < SAMPLETILE - 1)) ||
+		//	((frameX >= 0 && frameX < 3) && frameY == 3))
+		//{
+		//	result |= ATTR_NONE;
+		//}
+		if (((frameX == 2 || frameX == 3||frameX == 4) && frameY == 0) ||
+			(frameX == 5 && frameY == 1))
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;		//이건 속성을 빼도 될것 같은 UNMOVE랑 WALL의 차이가 딱히 없어보임
+		}
+		else if ((frameX >= 0 && frameX < 3) && frameY == 2)
+		{
+			result |= ATTR_UNMOVE;
 		}
 	}
 	//포켓몬 센터
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME8])
 	{
-		if ((frameX == 4 || frameX == 5) && (frameY >= 0 && frameY < 3) ||
-			(frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE) ||
-			(frameX == 4 && frameY == 4))
-		{
-			result |= ATTR_NONE;
-		}
-		else if ((frameX >= 0 && frameX < SAMPLETILE - 2) && (frameY >= 0 && frameY < 3) ||
-				 (frameX == 4 && frameY == 3))
+		//if (((frameX == 4 || frameX == 5) && (frameY >= 0 && frameY < 3)) ||
+		//	((frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE)) ||
+		//	(frameX == 4 && frameY == 4))
+		//{
+		//	result |= ATTR_NONE;
+		//}
+		if (((frameX >= 0 && frameX < SAMPLETILE - 2) && (frameY == 0 || frameY == 1)) ||
+			(frameX == 4 && frameY == 3))
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;
@@ -1036,28 +1086,28 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 	//상점
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME9])
 	{
-		if ((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2) ||
-			((frameX == 0 || frameX == 2 || frameX == 3) && frameY == 2))
+		if (((frameX >= 0 && frameX < 3) && (frameY >= 0 && frameY < 2)) ||
+			(frameX == 3 && frameY == 2))
 		{
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;
 		}
-		else if ((frameX == 1 && frameY == 2) ||
-				 (frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE))
-		{
-			result |= ATTR_NONE;
-		}
+		//else if ((frameX == 1 && frameY == 2) ||
+		//		 ((frameX >= 0 && frameX < 4) && (frameY >= 3 && frameY < SAMPLETILE)))
+		//{
+		//	result |= ATTR_NONE;
+		//}
 	}
 	//체육관
 	if (imgName == TERRAIN_NAME[TERRAIN_NAME10])
 	{
-		if ((frameX > 0 && frameX < SAMPLETILE - 1) && (frameY >= 2 && frameY <= 4) ||
-			(frameX >= 0 && frameX < SAMPLETILE - 1) && frameY == 5)
-		{
-			result |= ATTR_NONE;
-		}
-		else if ((frameX >= 0 && frameX < SAMPLETILE) && (frameY == 0 || frameY == 1) ||
-			(frameX == 0 || frameX == 5) && (frameY >= 2 && frameY <= 4) ||
+		//if (((frameX > 0 && frameX < SAMPLETILE - 1) && (frameY >= 2 && frameY <= 4)) ||
+		//	((frameX >= 0 && frameX < SAMPLETILE - 1) && frameY == 5))
+		//{
+		//	result |= ATTR_NONE;
+		//}
+		if (((frameX >= 0 && frameX < SAMPLETILE) && (frameY == 0 || frameY == 1)) ||
+				((frameX == 0 || frameX == 4 || frameX == 5) && (frameY >= 2 && frameY <= 4)) ||
 				 (frameX == 5 && frameY == 5))
 		{
 			result |= ATTR_UNMOVE;
@@ -1072,11 +1122,11 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 			result |= ATTR_UNMOVE;
 			result |= ATTR_WALL;
 		}
-		else if ((frameX >= 0 && frameX < 4) && frameY == 1 ||
-			(( frameX == 2 || frameX == 3 )&& frameY == 0))
-		{
-			result |= ATTR_NONE;
-		}
+		//else if (((frameX >= 0 && frameX < 4) && frameY == 1) ||
+		//	(( frameX == 2 || frameX == 3 )&& frameY == 0))
+		//{
+		//	result |= ATTR_NONE;
+		//}
 	}
 
 	////오브젝트
