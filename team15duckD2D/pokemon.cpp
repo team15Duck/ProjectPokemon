@@ -331,6 +331,8 @@ bool pokemon::applyUpsetCondition()
 			script = L"";
 			_state = L"PMUC_POISON";
 			int damage = static_cast<int>(_currentLvStatus.hp / (float)_upsetCondition.applyValue);
+			if( 10 < damage )
+				damage = 10;
 			takeDamage(damage);
 
 			isApplyUpsetCondition = true;
@@ -947,7 +949,7 @@ int pokemon::calculateAttkValue(int skillIdx)
 	_target->setDisplayDamageText(script);
 	
 	float damage = 0.f;
-	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 2.f) * conflictValue * randValue / 100.f;
+	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 1.f) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
 }
