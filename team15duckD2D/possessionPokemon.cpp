@@ -17,6 +17,12 @@ HRESULT possessionPokemon::init()
 	_ppselect = SELECT_MAIN_POKEMON;
 	_currentSelecPok = 0;
 
+	for (int i = 0; i < 6; ++i)
+	{
+		_pPokemon[i].name.clear();
+
+	}
+
 	_isMainpokemon = true;
 	_isSubpokemon = false;
 
@@ -35,6 +41,8 @@ void possessionPokemon::release()
 
 void possessionPokemon::update()
 {
+	pPokemonDataSet();
+
 	//포켓몬 리스트 이동관련
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
@@ -121,6 +129,7 @@ void possessionPokemon::update()
 			_ppselect = SELECT_SUB_POKEMON4;
 		break;
 		case SELECT_CANCEL:
+			/*
 			//만약에 서브 포켓몬이 한마리도 없다면
 			if (!_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
 			{
@@ -147,6 +156,12 @@ void possessionPokemon::update()
 			{
 				_ppselect = SELECT_SUB_POKEMON5;
 			}
+			*/
+			if (0 < _pokemonCnt)
+			{
+				_ppselect = (P_POKEMON_SELECT)(_pokemonCnt - 1);
+			}
+
 		break;
 		}
 	}
@@ -167,12 +182,50 @@ void possessionPokemon::render()
 		{
 			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
 		}
+
+		for (int ii = 0; ii < 6; ++ii)
+		{
+			// 메인 포켓몬
+			if (ii == 0)
+			{
+				if (_ppselect == SELECT_MAIN_POKEMON)
+				{
+					// 하늘색
+				}
+				else
+				{
+					// 파란색
+				}
+			}
+			else
+			{
+				if(ii < _pokemonCnt)
+				//if (_pPokemon[ii].isDataSet)
+				{
+					if (_ppselect == ii)
+					{
+						// 하늘색
+					}
+					else
+					{
+						// 파란색
+					}
+				}
+				else
+				{
+					// 초록색
+				}
+			}
+		}
+
+		/*
 		//만약에 메인포켓몬이라면 이렇게 출력해라
 		if (_isMainpokemon)
 		{
 			if (_ppselect == SELECT_MAIN_POKEMON)
 			{
 				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 1);
+		
 			}
 			else
 			{
@@ -257,11 +310,26 @@ void possessionPokemon::render()
 				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 410 + CAMERA->getPosY(), 0, 0);
 			}
 		}
+		*/
 	}
 }
 
 void possessionPokemon::pPokemonDataSet()
 {
 	locale("kor");
-	//pokemonInfo* info = POKEMONDATA->getPokemonInfomation((POKEMON)i);
+	pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
+	
+	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+
+	for (int i = 0; i < _pokemonCnt; ++i)
+	{
+		if (pokemons[i] == nullptr) continue;
+
+		_pPokemon[i].isDataSet = false;
+		_pPokemon[i].level = to_wstring(pokemons[i]->getLevel());
+
+
+	}
+
+
 }
