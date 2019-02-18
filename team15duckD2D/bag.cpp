@@ -108,12 +108,34 @@ void bag::update()
 				switch (_item_use)
 				{
 					case ITEM_USE:
+						_item_use = ITEM_PASS;
 					break;
 					case ITEM_PASS:
+						_item_use = ITEM_THROW_AWAY;
 					break;
 					case ITEM_THROW_AWAY:
+						_item_use = ITEM_STATE_NONE;
 					break;
 					case ITEM_STATE_NONE:
+						_item_use = ITEM_USE;
+					break;
+				}
+			}
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				switch (_item_use)
+				{
+				case ITEM_USE:
+					UIMANAGER->selectUI(UI_POKEMON);
+					break;
+				case ITEM_PASS:
+					UIMANAGER->selectUI(UI_POKEMON);
+					break;
+				case ITEM_THROW_AWAY:
+					_item_use = ITEM_STATE_NONE;
+					break;
+				case ITEM_STATE_NONE:
+					_item_use = ITEM_USE;
 					break;
 				}
 			}
@@ -193,12 +215,16 @@ void bag::render()
 				switch (_item_use)
 				{
 				case ITEM_USE:
+					IMAGEMANAGER->findImage("화살표")->render(735 + CAMERA->getPosX(), 330 + CAMERA->getPosY());
 					break;
 				case ITEM_PASS:
+					IMAGEMANAGER->findImage("화살표")->render(735 + CAMERA->getPosX(), 400 + CAMERA->getPosY());
 					break;
 				case ITEM_THROW_AWAY:
+					IMAGEMANAGER->findImage("화살표")->render(735 + CAMERA->getPosX(), 470 + CAMERA->getPosY());
 					break;
 				case ITEM_STATE_NONE:
+					IMAGEMANAGER->findImage("화살표")->render(735 + CAMERA->getPosX(), 540 + CAMERA->getPosY());
 					break;
 				}
 			

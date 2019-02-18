@@ -17,6 +17,13 @@ enum P_POKEMON_SELECT
 	SELECT_SUB_POKEMON5,
 	SELECT_CANCEL
 };
+enum P_SUB_MENU_SELECT
+{
+	SELECT_LOOK_POKEMON,
+	SELECT_CHANGE_ORDER,
+	SELECT_KEEP_ITEM,
+	SELECT_NONE,
+};
 typedef struct tagPpokemonInfo
 {
 	wstring name;
@@ -31,6 +38,7 @@ class possessionPokemon : public baseUI
 private : 
 	P_POKEMON_STATE		_ppstate;
 	P_POKEMON_SELECT	_ppselect;
+	P_SUB_MENU_SELECT	_psmselect;
 	PPOKEMON			_pPokemon[6];
 
 	int _pokemonCnt; // 보유하고 있는 포켓몬의 수
@@ -38,8 +46,8 @@ private :
 	UINT _currentSelecPok;
 
 	bool _isMainpokemon;	//메인포켓몬이냐?
-
 	bool _isSubpokemon;		//서브 포켓몬이 있냐?
+	bool _isSubMenu;
 
 public:
 	possessionPokemon();

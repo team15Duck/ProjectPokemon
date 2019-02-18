@@ -13,8 +13,13 @@ possessionPokemon::~possessionPokemon()
 
 HRESULT possessionPokemon::init()
 {
+	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
+	MENUMANAGER->addFrame("서머리메뉴", 635, 380, 10, 8);
+	MENUMANAGER->addFrame("서머리정보", 0, 512, 20, 4);
+
 	_ppstate = P_POKEMON_LIST;
 	_ppselect = SELECT_MAIN_POKEMON;
+	_psmselect = SELECT_LOOK_POKEMON;
 	_currentSelecPok = 0;
 
 	//초기화해벌이기 
@@ -23,8 +28,11 @@ HRESULT possessionPokemon::init()
 		_pPokemon[i].name.clear();
 	}
 
+	IMAGEMANAGER->addFrameImage("서머리상단", L"image/Summary Menu/summary_top_bar.png", 960, 192, 1, 3);
+
 	_isMainpokemon = true;
 	_isSubpokemon = false;
+	_isSubMenu = false;
 
 	return S_OK;
 }
@@ -40,120 +48,165 @@ void possessionPokemon::update()
 	if (_ppstate == P_POKEMON_LIST)
 	{
 		//포켓몬 리스트 이동관련
-		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		if (!_isSubMenu)
 		{
-			switch (_ppselect)
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
-			case SELECT_MAIN_POKEMON:
-				if (0 < _pokemonCnt)
+				switch (_ppselect)
 				{
-					_ppselect = (P_POKEMON_SELECT)(_pokemonCnt - 1);
+				case SELECT_MAIN_POKEMON:
+					if (0 < _pokemonCnt)
+					{
+						_ppselect = (P_POKEMON_SELECT)(_pokemonCnt - 1);
+					}
+					else
+					{
+						_ppselect = SELECT_CANCEL;
+					}
+					break;
+				case SELECT_SUB_POKEMON1:
+
+					break;
+				case SELECT_SUB_POKEMON2:
+
+					break;
+				case SELECT_SUB_POKEMON3:
+
+					break;
+				case SELECT_SUB_POKEMON4:
+
+					break;
+				case SELECT_SUB_POKEMON5:
+
+					break;
+				case SELECT_CANCEL:
+					_ppselect = SELECT_MAIN_POKEMON;
+					break;
 				}
-				else
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				switch (_ppselect)
 				{
+				case SELECT_MAIN_POKEMON:
 					_ppselect = SELECT_CANCEL;
-				}
-				break;
-			case SELECT_SUB_POKEMON1:
-
-				break;
-			case SELECT_SUB_POKEMON2:
-
-				break;
-			case SELECT_SUB_POKEMON3:
-
-				break;
-			case SELECT_SUB_POKEMON4:
-
-				break;
-			case SELECT_SUB_POKEMON5:
-
-				break;
-			case SELECT_CANCEL:
-				_ppselect = SELECT_MAIN_POKEMON;
-				break;
-			}
-		}
-		if (KEYMANAGER->isOnceKeyDown(VK_UP))
-		{
-			switch (_ppselect)
-			{
-			case SELECT_MAIN_POKEMON:
-				_ppselect = SELECT_CANCEL;
-				break;
-			case SELECT_SUB_POKEMON1:
-				_ppselect = SELECT_MAIN_POKEMON;
-				break;
-			case SELECT_SUB_POKEMON2:
-				_ppselect = SELECT_SUB_POKEMON1;
-				break;
-			case SELECT_SUB_POKEMON3:
-				_ppselect = SELECT_SUB_POKEMON2;
-				break;
-			case SELECT_SUB_POKEMON4:
-				_ppselect = SELECT_SUB_POKEMON3;
-				break;
-			case SELECT_SUB_POKEMON5:
-				_ppselect = SELECT_SUB_POKEMON4;
-				break;
-			case SELECT_CANCEL:
-				/*
-				//만약에 서브 포켓몬이 한마리도 없다면
-				if (!_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
+					break;
+				case SELECT_SUB_POKEMON1:
 					_ppselect = SELECT_MAIN_POKEMON;
-				}
-				//만약에 1마리만있다면
-				if (_issubpkm1exist && !_issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
+					break;
+				case SELECT_SUB_POKEMON2:
 					_ppselect = SELECT_SUB_POKEMON1;
-				}
-				if (_issubpkm1exist && _issubpkm2exist && !_issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
+					break;
+				case SELECT_SUB_POKEMON3:
 					_ppselect = SELECT_SUB_POKEMON2;
-				}
-				if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && !_issubpkm4exist && !_issubpkm5exist)
-				{
+					break;
+				case SELECT_SUB_POKEMON4:
 					_ppselect = SELECT_SUB_POKEMON3;
-				}
-				if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && _issubpkm4exist && !_issubpkm5exist)
-				{
+					break;
+				case SELECT_SUB_POKEMON5:
 					_ppselect = SELECT_SUB_POKEMON4;
-				}
-				if (_issubpkm1exist && _issubpkm2exist && _issubpkm3exist && _issubpkm4exist && _issubpkm5exist)
-				{
-					_ppselect = SELECT_SUB_POKEMON5;
-				}
-				*/
-				if (0 < _pokemonCnt)
-				{
-					_ppselect = (P_POKEMON_SELECT)(_pokemonCnt - 1);
-				}
-				else
-				{
-					_ppselect = SELECT_MAIN_POKEMON;
-				}
+					break;
+				case SELECT_CANCEL:
+					if (0 < _pokemonCnt)
+					{
+						_ppselect = (P_POKEMON_SELECT)(_pokemonCnt - 1);
+					}
+					else
+					{
+						_ppselect = SELECT_MAIN_POKEMON;
+					}
 
-				break;
+					break;
+				}
+			}
+
+			//하위메뉴창 출력
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_isSubMenu = true;
+				//_ppselect = P_POKEMON_INFO;
 			}
 		}
 
-		//하위메뉴창 출력
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+		//하위메뉴창이 열렸을때 키세팅
+		if (_isSubMenu)
 		{
-			_ppstate = P_POKEMON_SUB_MENU;
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_isSubMenu = false;
+			}
+
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				switch (_psmselect)
+				{
+					case SELECT_LOOK_POKEMON:
+						_psmselect = SELECT_CHANGE_ORDER;
+					break;
+					case SELECT_CHANGE_ORDER:
+						_psmselect = SELECT_KEEP_ITEM;
+					break;
+					case SELECT_KEEP_ITEM:
+						_psmselect = SELECT_NONE;
+					break;
+					case SELECT_NONE:
+						_psmselect = SELECT_LOOK_POKEMON;
+					break;
+				}
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				switch (_psmselect)
+				{
+				case SELECT_LOOK_POKEMON:
+					_psmselect = SELECT_NONE;
+				break;
+				case SELECT_CHANGE_ORDER:
+					_psmselect = SELECT_LOOK_POKEMON;
+				break;
+				case SELECT_KEEP_ITEM:
+					_psmselect = SELECT_CHANGE_ORDER;
+				break;
+				case SELECT_NONE:
+					_psmselect = SELECT_KEEP_ITEM;
+				break;
+				}
+			}
+
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				switch (_psmselect)
+				{
+				case SELECT_LOOK_POKEMON:
+					_ppstate = P_POKEMON_INFO;
+				break;
+				case SELECT_CHANGE_ORDER:
+					
+				break;
+				case SELECT_KEEP_ITEM:
+					
+				break;
+				case SELECT_NONE:
+					
+				break;
+				}
+			}
 		}
 	}
+
 
 }
 
 void possessionPokemon::render()
 {
+	WCHAR possessionPokemon[1024];
 	if (_ppstate == P_POKEMON_LIST)
 	{
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
-
+		if (!_isSubMenu)
+		{
+			MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
+		}
 		if (_ppselect == SELECT_CANCEL)
 		{
 			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 1);
@@ -200,116 +253,46 @@ void possessionPokemon::render()
 					IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 50 + ((i-1) * 90) + CAMERA->getPosY());
 				}
 			}
-		}
 
-		/*
-		//만약에 메인포켓몬이라면 이렇게 출력해라
-		if (_isMainpokemon)
-		{
-			if (_ppselect == SELECT_MAIN_POKEMON)
+			if (_isSubMenu)
 			{
-				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 1);
-		
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 0);
-			}
-		}
-		//만약에 서브포켓몬리스트에서 서브포켓몬 데이터가 없다면
-		if (!_issubpkm1exist)
-		{
-			IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 50 + CAMERA->getPosY());
-		}
-		if (!_issubpkm2exist)
-		{
-			IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 140 + CAMERA->getPosY());
-		}
-		if (!_issubpkm3exist)
-		{
-			IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 230 + CAMERA->getPosY());
-		}
-		if (!_issubpkm4exist)
-		{
-			IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 320 + CAMERA->getPosY());
-		}
-		if (!_issubpkm5exist)
-		{
-			IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 410 + CAMERA->getPosY());
-		}
+				MENUMANAGER->findMenuFrame("서머리메뉴")->render();
+				MENUMANAGER->findMenuFrame("서머리정보")->render();
 
-		//만약에 서브포켓몬리스트에서 서브포켓몬 데이터가 있다면
-		if (_issubpkm1exist)
-		{
-			if (_ppselect == SELECT_SUB_POKEMON1)
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 1, 0);
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 0);
-			}
-		}
-		if (_issubpkm2exist)
-		{
-			if (_ppselect == SELECT_SUB_POKEMON2)
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 140 + CAMERA->getPosY(), 1, 0);
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 140 + CAMERA->getPosY(), 0, 0);
-			}
-		}
-		if (_issubpkm3exist)
-		{
-			if (_ppselect == SELECT_SUB_POKEMON3)
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 230 + CAMERA->getPosY(), 1, 0);
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 230 + CAMERA->getPosY(), 0, 0);
-			}
-		}
-		if (_issubpkm4exist)
-		{
-			if (_ppselect == SELECT_SUB_POKEMON4)
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 320 + CAMERA->getPosY(), 1, 0);
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 320 + CAMERA->getPosY(), 0, 0);
-			}
-		}
-		if (_issubpkm5exist)
-		{
-			if (_ppselect == SELECT_SUB_POKEMON5)
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 410 + CAMERA->getPosY(), 1, 0);
-			}
-			else
-			{
-				IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 410 + CAMERA->getPosY(), 0, 0);
-			}
-		}
-		*/
-	}
-	if (_ppstate == P_POKEMON_SUB_MENU)
-	{
-		MENUMANAGER->addFrame("서머리메뉴", 0, 0, 4, 8);
-		MENUMANAGER->findMenuFrame("서머리메뉴")->render();
+				swprintf_s(possessionPokemon, L"상태보기");
+				D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 415 + CAMERA->getPosY(), 40);
+				swprintf_s(possessionPokemon, L"순서변경");
+				D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 465 + CAMERA->getPosY(), 40);
+				swprintf_s(possessionPokemon, L"지닌물건");
+				D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 515 + CAMERA->getPosY(), 40);
+				swprintf_s(possessionPokemon, L"그만두기");
+				D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 565 + CAMERA->getPosY(), 40);
 
+				switch (_psmselect)
+				{
+				case SELECT_LOOK_POKEMON:
+					IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 415 + CAMERA->getPosY());
+					break;
+				case SELECT_CHANGE_ORDER:
+					IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 465 + CAMERA->getPosY());
+					break;
+				case SELECT_KEEP_ITEM:
+					IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 515 + CAMERA->getPosY());
+					break;
+				case SELECT_NONE:
+					IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 565 + CAMERA->getPosY());
+					break;
+				}
+			}
+		}
 	}
 	if (_ppstate == P_POKEMON_INFO)
 	{
-
+		IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
 	}
 
-	WCHAR test[1024];
-	swprintf_s(test, L"서머리상태값: %d", _ppstate);
-	D2DMANAGER->drawText(test, 285 + CAMERA->getPosX(), 10 + CAMERA->getPosY(), 48, RGB(160, 160, 160));
+	//swprintf_s(possessionPokemon, L"서머리상태값: %d", _ppstate);
+	//D2DMANAGER->drawText(possessionPokemon, 285 + CAMERA->getPosX(), 415 + CAMERA->getPosY(), 40);
 }
 
 void possessionPokemon::pPokemonDataSet()
