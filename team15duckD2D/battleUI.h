@@ -41,6 +41,9 @@ private:
 	bool				_isEscape;						//도망?
 	BATTLE_UI			_currentMenu;					//현재 메뉴 상태
 
+	pokemon*			_myPokemon;						//정보를 출력하기 위함
+	pokemon*			_enemyPokemon;					//정보를 출력하기 위함
+
 public:
 	battleUI();
 	~battleUI();
@@ -49,6 +52,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+
 
 	void skillUIClear() { _skillUI.clear(); }
 	void addSkill(wstring skillName, UINT cPP, UINT mPP, wstring type)
@@ -96,6 +101,10 @@ public:
 
 	UINT getCurrentSelectSkill() { return _currentSelectSkill; }
 	void setCurrentSelectSkill(UINT num) { _currentSelectSkill = num; }
+
+
+	void setMyPokemonMemoryAdressLink(pokemon* m) { _myPokemon = m; }
+	void setEnemyPokemonMemoryAdressLink(pokemon* e) { _enemyPokemon = e; }
 
 };
 

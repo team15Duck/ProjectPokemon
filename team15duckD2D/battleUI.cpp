@@ -181,7 +181,34 @@ void battleUI::render()
 
 	}
 	IMAGEMANAGER->findImage("playerUI")->render(960 - 416, 448 - 148);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
+	
+	
+	if (_myPokemon)
+	{
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	IMAGEMANAGER->findImage("enemyUI")->render(0, 0);// , L"image/battle_UI/battle_UI_enemy.png", 400, 116);
+
+
+	if (_enemyPokemon)
+	{
+
+	}
+
+
+
 }
 
 void battleUI::pushScript(wstring script)
