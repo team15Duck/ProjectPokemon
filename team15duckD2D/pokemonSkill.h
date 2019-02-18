@@ -36,6 +36,8 @@ enum SKILL_INDEX
 	THUNDER,		// 번개
 	THNDER_WAVE,	// 전기자석파
 
+	SPLASH,			// 튀어오르기
+
 	SKILL_INDEX_NONE,
 	SKILL_INDEX_COUNT = SKILL_INDEX_NONE,
 };

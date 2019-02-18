@@ -466,6 +466,39 @@ HRESULT pokemonDataBase::init()
 		SAFE_DELETE(kindStatus);
 	}
 
+	// 잉어킹
+	{
+		POKEMON index = PM_MAGIKARP;
+		pokemonStatus* kindStatus = new pokemonStatus;
+		kindStatus->hp = 20;
+		kindStatus->attk = 10;
+		kindStatus->dex = 55;
+		kindStatus->spAttk = 15;
+		kindStatus->spDex = 20;
+		kindStatus->spAttk = 80;
+
+		map<int, vector<int>> skillMap;
+		{
+			vector<int> ids;
+			ids.push_back(TACLE);
+			skillMap.insert(make_pair(1, ids));
+			
+		}
+		{
+			vector<int> ids;
+			ids.push_back(TACLE);
+			skillMap.insert(make_pair(15, ids));
+		}
+
+		string text = "힘도 스피드도 거의 없다. 세상에서 가장 약하고 한심한 포켓몬이다.";
+		pokemonInfo* info = new pokemonInfo;
+		info->init(index, PM_TYPE_WATER, "잉어킹", kindStatus, text, 10.0f, 0.9f, 255, skillMap);
+
+		_pokemonMap.insert(make_pair(index, info));
+
+		SAFE_DELETE(kindStatus);
+	}
+
 	return S_OK;
 }
 
