@@ -38,4 +38,3 @@ void itemManager::render()
 
 	_vItems[_choiceItem]->render();
 }
-

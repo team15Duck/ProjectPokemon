@@ -12,5 +12,7 @@ public:
 
 	virtual void uiOpen();
 	virtual void uiClose();
+
+	virtual void uiInfoSet();
 };
 

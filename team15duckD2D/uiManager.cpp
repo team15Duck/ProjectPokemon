@@ -75,3 +75,15 @@ void uiManager::render()
 	if (_currentUI == UI_NONE) return;
 	_uiMap[_currentUI]->render();
 }
+
+void uiManager::uiDataSetting()
+{
+	map<UI_TYPE, baseUI*>::iterator iter = _uiMap.begin();
+	map<UI_TYPE, baseUI*>::iterator end = _uiMap.end();
+
+	for (; iter != end; ++iter)
+	{
+		iter->second->uiInfoSet();
+	}
+}
+

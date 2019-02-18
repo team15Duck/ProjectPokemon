@@ -4,8 +4,14 @@
 
 enum BAG_STATE
 {
-	ITEM_UNUSE,
-	ITEM_USE  
+	ITEM_LIST,
+};
+enum ITEM_USE_STATE
+{
+	ITEM_USE,
+	ITEM_PASS,
+	ITEM_THROW_AWAY,
+	ITEM_STATE_NONE
 };
 typedef struct tagBagInfo
 {
@@ -20,6 +26,9 @@ typedef struct tagBagInfo
 class bag : public baseUI
 {
 private:
+	
+	BAG_STATE _bag_state;
+	ITEM_USE_STATE _item_use;
 	BAG _bag[39];
 	playerDataBase* _playeritem;
 
@@ -41,6 +50,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void uiInfoSet();
 
 	void itemDataSet();
 

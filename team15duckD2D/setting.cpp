@@ -20,6 +20,9 @@ HRESULT setting::init()
 
 	_sframeType = SETTING_FRAME_TYPE1;
 
+	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
+	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
+
 	return S_OK;
 }
 

@@ -35,3 +35,7 @@ void baseUI::uiOpen()
 void baseUI::uiClose()
 {
 }
+
+void baseUI::uiInfoSet()
+{
+}

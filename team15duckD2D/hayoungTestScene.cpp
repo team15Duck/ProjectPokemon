@@ -56,13 +56,11 @@ HRESULT hayoungTestScene::init()
 		_cmpm._subPokemon[i] = { 450, top, 950 , bottom };
 	}
 
-	MENUMANAGER->addFrame("설정프레임1", 80, 64, 25, 4);
-	MENUMANAGER->addFrame("설정프레임2", 0, 192, 30, 14);
 	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
 
-	IMAGEMANAGER->addFrameImage("남여가방", L"image/common_menu/bag/item_bag.png", 472, 257, 2, 1);
 	*/
-	UIMANAGER->init();
+	//UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 	return S_OK;
 }
 

@@ -36,6 +36,7 @@ public:
 	void update();
 	void render();
 
+	void uiDataSetting();
 
 	void selectUI(UI_TYPE type) { _currentUI = type; }
 	map<UI_TYPE, baseUI*> getUiMap() { return _uiMap; }

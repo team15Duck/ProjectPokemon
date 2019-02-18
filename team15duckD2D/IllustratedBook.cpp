@@ -123,6 +123,14 @@ void IllustratedBook::update()
 			_pbstate = BOOK_LIST;
 		}
 	}
+	//메인화면으로 돌아가기
+	if (_pbstate == BOOK_LIST)
+	{
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			UIMANAGER->selectUI(UI_MAIN);
+		}
+	}
 }
 
 void IllustratedBook::render()

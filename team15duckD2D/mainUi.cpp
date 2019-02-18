@@ -18,11 +18,6 @@ HRESULT mainUi::init()
 
 	//메인메뉴 초기화 
 	MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
-	IMAGEMANAGER->addImage("기본하단", L"image/common_menu/common_menu_bg.png", 960, 160);
-	IMAGEMANAGER->addImage("기본상단", L"image/common_menu/common_menu_top.png", 960, 64);
-	IMAGEMANAGER->addImage("화살표", L"image/common_menu/pokemonMenu_cursor.png", 24, 40);
-	IMAGEMANAGER->addImage("테스트", L"image/test/aaa.png", 960, 640);
-	IMAGEMANAGER->addImage("테스트2", L"image/test/bbb.png", 960, 640);
 
 	return S_OK;
 }
@@ -120,6 +115,10 @@ void mainUi::update()
 			UIMANAGER->selectUI(UI_NONE);
 			break;
 		}
+	}
+	if (KEYMANAGER->isOnceKeyDown('X'))
+	{
+		UIMANAGER->selectUI(UI_NONE);
 	}
 }
 

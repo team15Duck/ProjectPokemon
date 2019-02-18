@@ -16,7 +16,7 @@ public:
 	void release();
 	void update();
 	void render();
-
+	
 	// ========== GET & SET ==========
 	vector<item*> getItems() { return _vItems; }
 
