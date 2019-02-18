@@ -13,7 +13,10 @@ mainUi::~mainUi()
 
 HRESULT mainUi::init()
 {
-	return E_NOTIMPL;
+	//메인메뉴 초기화 
+	MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
+
+	return S_OK;
 }
 
 void mainUi::release()

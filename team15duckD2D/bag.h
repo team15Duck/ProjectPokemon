@@ -1,4 +1,5 @@
 #pragma once
+#include "baseUI.h"
 #include "playerDataBase.h"
 
 enum BAG_STATE
@@ -16,7 +17,7 @@ typedef struct tagBagInfo
 	bool _isDataset;
 }BAG;
 
-class bag
+class bag : public baseUI
 {
 private:
 	BAG _bag[39];

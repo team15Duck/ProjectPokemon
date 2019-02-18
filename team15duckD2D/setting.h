@@ -1,4 +1,5 @@
 #pragma once
+#include "baseUI.h"
 
 enum SETTING_MENU
 {
@@ -51,7 +52,7 @@ enum SETTING_EFFECT_SOUND
 	E_SOUND_9,
 	E_SOUND_10,
 };
-class setting
+class setting : public baseUI
 {
 private:
 

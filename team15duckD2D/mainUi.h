@@ -1,8 +1,9 @@
 #pragma once
 #include "gameNode.h"
+#include "baseUI.h"
 #include "item.h"
 
-class mainUi : public gameNode
+class mainUi : public baseUI
 {
 private:
 

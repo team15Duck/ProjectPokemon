@@ -2,13 +2,19 @@
 #include "singletonBase.h"
 #include "baseUI.h"
 #include "IllustratedBook.h"
-
+#include "possessionPokemon.h"
+#include "bag.h"
+#include "setting.h"
 
 enum UI_TYPE
 {
 	UI_MAIN,
-	UI_BAG,
 	UI_ILLUST,
+	UI_POKEMON,
+	UI_BAG,
+	UI_PLAYER,
+	UI_REPORT,
+	UI_SETTING,
 
 	UI_NONE,
 };
