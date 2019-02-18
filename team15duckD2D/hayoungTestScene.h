@@ -1,9 +1,6 @@
 #pragma once
 #include "gameNode.h"
-#include "IllustratedBook.h"
-#include "bag.h"
-#include "setting.h"
-#include "possessionPokemon.h"
+#include "mainUi.h"
 
 enum MAIN_MENU_SELECT
 {
@@ -14,17 +11,6 @@ enum SUB_MENU_SELECT
 {
 	SMS_YES = 1,
 	SMS_NO,
-};
-enum CUSSOR_SELECT
-{
-	POKEMON_BOOK = 1,
-	POKEMON,
-	BAG_ITEM,
-	PLAYER,
-	SAVE_REPORT,
-	SETTING,
-	CLOSE,
-	NONE
 };
 enum POKEMON_CURRENT_SELECT
 {
@@ -84,6 +70,7 @@ private:
 	bag* _bag;
 	setting* _setting;
 	possessionPokemon* _ppokemon;
+	mainUi* _mainui;
 
 	MAIN_MENU_SELECT	_mmselect;	//메인메뉴 선택
 	SUB_MENU_SELECT		_smselect;	//서브메뉴 선택

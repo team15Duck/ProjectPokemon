@@ -13,6 +13,7 @@ hayoungTestScene::~hayoungTestScene()
 
 HRESULT hayoungTestScene::init()
 {
+	/*
 	_book = new IllustratedBook;
 	_book->init();
 	_book->pokemonDataSet();
@@ -60,7 +61,8 @@ HRESULT hayoungTestScene::init()
 	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
 
 	IMAGEMANAGER->addFrameImage("남여가방", L"image/common_menu/bag/item_bag.png", 472, 257, 2, 1);
-
+	*/
+	UIMANAGER->init();
 	return S_OK;
 }
 
@@ -70,8 +72,13 @@ void hayoungTestScene::release()
 
 void hayoungTestScene::update()
 {
-	
+	UIMANAGER->update();
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	{
+		UIMANAGER->selectUI(UI_MAIN);
+	}
 
+	/*
 	//메인메뉴 활성화하기
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
@@ -205,11 +212,13 @@ void hayoungTestScene::update()
 		_ppokemon->update();
 	}
 	//=================================
-
+	*/
 }
 
 void hayoungTestScene::render()
 {
+	UIMANAGER->render();
+	/*
 	commonMenurender();
 
 	// ============================================================= 테스트 및 체크용 텍스트 출력 추후 삭제
@@ -386,11 +395,7 @@ void hayoungTestScene::render()
 
 void hayoungTestScene::frameImageinit()
 {
-	IMAGEMANAGER->addImage("기본하단", L"image/common_menu/common_menu_bg.png", 960, 160);
-	IMAGEMANAGER->addImage("기본상단", L"image/common_menu/common_menu_top.png", 960, 64);
-	IMAGEMANAGER->addImage("화살표", L"image/common_menu/pokemonMenu_cursor.png", 24, 40);
-	IMAGEMANAGER->addImage("테스트", L"image/test/aaa.png", 960, 640);
-	IMAGEMANAGER->addImage("테스트2", L"image/test/bbb.png", 960, 640);
+
 }
 
 void hayoungTestScene::setiteminit()
@@ -446,6 +451,7 @@ void hayoungTestScene::setiteminit()
 
 void hayoungTestScene::commonMenurender()
 {
+	/*
 	//만약에 메인메뉴가 선택된 상태라면 그림을 그리세요
 	if (_mmselect == MMS_YES)
 	{
@@ -517,4 +523,5 @@ void hayoungTestScene::commonMenurender()
 			break;
 		}
 	}
+	*/
 }

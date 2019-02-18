@@ -40,6 +40,7 @@ HRESULT gameNode::init(bool managerInit)
 		SKILLDATA->init();
 		EFFECTMANAGER->init();
 		SCRIPTMANAGER->init();
+		UIMANAGER->init();
 	}
 
 	return S_OK;
@@ -83,6 +84,8 @@ void gameNode::release()
 		EFFECTMANAGER->releaseSingleton();
 		SCRIPTMANAGER->release();
 		SCRIPTMANAGER->releaseSingleton();
+		UIMANAGER->release();
+		UIMANAGER->releaseSingleton();
 	}
 }
 

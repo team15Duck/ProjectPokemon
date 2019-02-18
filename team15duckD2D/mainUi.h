@@ -3,11 +3,23 @@
 #include "baseUI.h"
 #include "item.h"
 
+enum CUSSOR_SELECT
+{
+	POKEMON_BOOK = 1,
+	MY_POKEMON,
+	BAG_ITEM,
+	PLAYER,
+	SAVE_REPORT,
+	SETTING,
+	CLOSE,
+	NONE
+};
 class mainUi : public baseUI
 {
 private:
 
-
+	CUSSOR_SELECT _menu_Select;
+	UINT _uiType;
 
 public:
 	mainUi();
@@ -18,6 +30,6 @@ public:
 	void update();
 	void render();
 
-	//함수함수  테스트씬에서 정상작동한애들만 올릴거임~
+	UINT getUiType() { return _uiType; }
 };
 

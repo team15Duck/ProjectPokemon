@@ -13,6 +13,12 @@ uiManager::~uiManager()
 
 HRESULT uiManager::init()
 {
+	//0. 메인 초기화
+	{
+		mainUi* main = new mainUi;
+		main->init();
+		_uiMap.insert(make_pair(UI_MAIN, main));
+	}
 	//1. 도감 초기화
 	{
 		IllustratedBook* book = new IllustratedBook;
@@ -58,10 +64,14 @@ void uiManager::release()
 
 void uiManager::update()
 {
+
+	if (_currentUI == UI_NONE) return;
+
 	_uiMap[_currentUI]->update();
 }
 
 void uiManager::render()
 {
+	if (_currentUI == UI_NONE) return;
 	_uiMap[_currentUI]->render();
 }

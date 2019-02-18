@@ -1,6 +1,7 @@
 #pragma once
 #include "singletonBase.h"
 #include "baseUI.h"
+#include "mainUi.h"
 #include "IllustratedBook.h"
 #include "possessionPokemon.h"
 #include "bag.h"
@@ -37,5 +38,6 @@ public:
 
 
 	void selectUI(UI_TYPE type) { _currentUI = type; }
+	map<UI_TYPE, baseUI*> getUiMap() { return _uiMap; }
 };
 
