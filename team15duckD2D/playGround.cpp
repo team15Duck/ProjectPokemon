@@ -196,7 +196,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("mapTestScene");
+		SCENEMANAGER->changeScene("го©╣╬ю");
 	}
 	
 	return S_OK;

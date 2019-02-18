@@ -2,6 +2,7 @@
 #include <locale>
 #include <codecvt>
 #include <string>
+#include "baseUI.h"
 
 enum POKEMON_BOOK_STATE
 {
@@ -33,7 +34,7 @@ typedef struct tagPokemonBookInfo
 }POKEMONBOOK;
 
 
-class IllustratedBook
+class IllustratedBook : public baseUI
 {
 private:
 

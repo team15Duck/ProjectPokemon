@@ -150,6 +150,7 @@
     <ClInclude Include="action.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="bag.h" />
+    <ClInclude Include="baseUI.h" />
     <ClInclude Include="battle.h" />
     <ClInclude Include="battleScene.h" />
     <ClInclude Include="battleScene2.h" />
@@ -230,12 +231,14 @@
     <ClInclude Include="townMap.h" />
     <ClInclude Include="townScene.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="uiManager.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="action.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="bag.cpp" />
+    <ClCompile Include="baseUI.cpp" />
     <ClCompile Include="battleScene.cpp" />
     <ClCompile Include="battleScene2.cpp" />
     <ClCompile Include="battleUI.cpp" />
@@ -313,6 +316,7 @@
     <ClCompile Include="townMap.cpp" />
     <ClCompile Include="townScene.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="uiManager.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
   </ItemGroup>

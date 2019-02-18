@@ -396,6 +396,12 @@
     <ClInclude Include="scriptManager.h">
       <Filter>2DFramework\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="baseUI.h">
+      <Filter>PlayGround\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="uiManager.h">
+      <Filter>PlayGround\ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -628,6 +634,12 @@
     </ClCompile>
     <ClCompile Include="scriptManager.cpp">
       <Filter>2DFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="baseUI.cpp">
+      <Filter>PlayGround\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="uiManager.cpp">
+      <Filter>PlayGround\ui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

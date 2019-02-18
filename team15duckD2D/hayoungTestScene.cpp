@@ -160,7 +160,15 @@ void hayoungTestScene::update()
 
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
+			//uimanager.selectUI(ui_bag);
+
 			_smselect = SMS_YES;
+
+			if (_ppokemon->getstate() == 1)
+			{
+				_smselect = SMS_YES;
+
+			}
 		}
 	}
 	//하위메뉴 비활성화 하기
@@ -186,12 +194,15 @@ void hayoungTestScene::update()
 	//======================= 특별케이스
 	_book->update();
 	_bag->update();
-	_ppokemon->update();
 
 	// 프레임 세팅 
 	if (_mmselect == MMS_YES && _smselect == SMS_YES && _cselect == SETTING)
 	{
 		_setting->update();
+	}
+	if (_mmselect == MMS_YES && _smselect == SMS_YES && _cselect == POKEMON)
+	{
+		_ppokemon->update();
 	}
 	//=================================
 

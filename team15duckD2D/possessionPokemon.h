@@ -1,8 +1,10 @@
 #pragma once
+#include "baseUI.h"
 
 enum P_POKEMON_STATE
 {
 	P_POKEMON_LIST,
+	P_POKEMON_SUB_MENU,
 	P_POKEMON_INFO,
 };
 enum P_POKEMON_SELECT
@@ -24,7 +26,7 @@ typedef struct tagPpokemonInfo
 	bool isDataSet;
 
 }PPOKEMON;
-class possessionPokemon
+class possessionPokemon : public baseUI
 {
 private : 
 	P_POKEMON_STATE		_ppstate;
@@ -39,12 +41,6 @@ private :
 
 	bool _isSubpokemon;		//서브 포켓몬이 있냐?
 
-	bool _issubpkm1exist;	//서브포켓몬 확인용 불값
-	bool _issubpkm2exist;	//서브포켓몬 확인용 불값
-	bool _issubpkm3exist;	//서브포켓몬 확인용 불값
-	bool _issubpkm4exist;	//서브포켓몬 확인용 불값
-	bool _issubpkm5exist;	//서브포켓몬 확인용 불값
-	
 public:
 	possessionPokemon();
 	~possessionPokemon();
@@ -55,5 +51,10 @@ public:
 	void render();
 
 	void pPokemonDataSet();
+
+	void uiOpen();
+	void uiClose();
+
+	P_POKEMON_STATE getstate() { return _ppstate; }
 };
 
