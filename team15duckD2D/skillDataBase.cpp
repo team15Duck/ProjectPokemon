@@ -388,6 +388,26 @@ HRESULT skillDataBase::init()
 		_skillMap.insert(make_pair(id, info));
 	}
 
+	// Æ¢¾î¿À¸£±â
+	{
+		id = SPLASH;
+		type = PM_TYPE_NORMAL;
+		category = PMSC_SPECAIL;
+		txt = "°ø°Ýµµ ÇÏÁö ¾Ê°í ÆÈµüÆÈµü Æ¥ »Ó ¾Æ¹« ÀÏµµ ÀÏ¾î³ªÁö ¾Ê´Â´Ù...";
+		name = "Æ¢¾î¿À¸£±â";
+		condition = PMUC_NONE;
+		buff = PMB_NONE;
+
+		power = 0;
+		rate = 0;
+		pp = 40;
+
+		pokemonSkillInfo* info = new pokemonSkillInfo;
+		info->init(id, type, category, txt, name, condition, buff, power, rate, pp);
+
+		_skillMap.insert(make_pair(id, info));
+	}
+
 	return S_OK;
 }
 
