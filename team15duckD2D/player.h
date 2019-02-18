@@ -124,5 +124,8 @@ public:
 
 	float getPlayTime() { return _playTime; }
 	UINT getMoney() { return _money; }
+
+	PLAYER_STATE getState() { return _state; }
+
 };
 
