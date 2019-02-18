@@ -4,6 +4,7 @@
 #include "pokemon.h"
 #include "npc.h"
 
+
 #define POTAL_NUM 6
 
 
