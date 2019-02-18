@@ -112,6 +112,7 @@ void battleScene::update()
 						case PA_USE_SKILL:
 						{
 							_pms[_turn]->useSkill(_selectSkillIdx);
+							_battleUI->setCurrentPP(_selectSkillIdx);
 							_active = PA_ACTIVE_END;
 							break;
 						}
@@ -242,8 +243,9 @@ void battleScene::keyControl()
 		}
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
-			_active = PA_USE_SKILL;
 			_selectSkillIdx = _battleUI->getCurrentSelectSkill();
+			if (_battleUI->getCurrentPP(_selectSkillIdx) <= 0) return;
+			_active = PA_USE_SKILL;
 
 			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 			_battleUI->setCurrentSelectSkill(0);

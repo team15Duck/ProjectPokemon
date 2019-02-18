@@ -31,6 +31,7 @@ HRESULT player::init()
 	_gravity = GRAVITY;
 	_currentFishingTime = 0.0f;
 	_maxFishingTime = 0.0f;
+	_currentPokemon = 0;
 	//////////////////////////////////////
 
 	//성별따라 키값 셋팅해줌

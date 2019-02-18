@@ -32,6 +32,9 @@ HRESULT battleUI::init()
 	IMAGEMANAGER->addImage("hpBar02", L"image/battle_UI/battle_UI_HP_02.png", 36, 12);
 	IMAGEMANAGER->addImage("hpBar03", L"image/battle_UI/battle_UI_HP_03.png", 36, 12);
 	IMAGEMANAGER->addImage("hpBarBase", L"image/battle_UI/battle_UI_HP_base.png", 36, 12);
+
+	IMAGEMANAGER->addImage("expBar", L"image/battle_UI/battle_UI_experience_02.png", 28, 8);
+
 	_isSkip = false;
 	_currentMenu = BATTLE_UI_NONE;
 
@@ -214,8 +217,15 @@ void battleUI::render()
 		{
 			IMAGEMANAGER->findImage("hpBar03")->render(737, 367, hpPercent * 190, 12);
 		}
-
-		//float expPercent = (float)(_myPokemon->getDisplayExp() - _myPokemon->g) / (float)_myPokemon->getNextExp();
+		float expPercent = (float)_myPokemon->getCurrentDisplayExp() / (float)_myPokemon->getNextExp();
+		if (expPercent < 0) expPercent = 0;
+		IMAGEMANAGER->findImage("expBar")->render(672, 432, expPercent * 256, 8);
+		
+		if (_myPokemon->getCurrentDisplayExp() > 0)
+		{
+			
+		}
+		
 	}
 	
 	
