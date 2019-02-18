@@ -30,7 +30,7 @@ public:
 	void update();
 	void render();
 
-	void addEffect(string effectName, const char* imageName, int imageWidth, int imageHeight,
+	void addEffect(string effectName, string imageName, int imageWidth, int imageHeight,
 		int effectWidth, int effectHeight, int fps, float elapsedTime, int buffer);
 
 	void play(string effectName, int x, int y);

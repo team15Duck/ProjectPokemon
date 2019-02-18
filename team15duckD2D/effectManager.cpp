@@ -84,7 +84,7 @@ void effectManager::render()
 
 }
 
-void effectManager::addEffect(string effectName, const char * imageName, int imageWidth, int imageHeight, int effectWidth, int effectHeight, int fps, float elapsedTime, int buffer)
+void effectManager::addEffect(string effectName, string imageName, int imageWidth, int imageHeight, int effectWidth, int effectHeight, int fps, float elapsedTime, int buffer)
 {
 	image* img;
 	arrEffects vEffectBuffer;
@@ -97,7 +97,7 @@ void effectManager::addEffect(string effectName, const char * imageName, int ima
 	}
 	else
 	{
-		img = IMAGEMANAGER->addImage(imageName, imageName, imageWidth, imageHeight, true, RGB(255, 0, 255));
+		img = IMAGEMANAGER->addImage(imageName, string2wstring(imageName).c_str(), imageWidth, imageHeight);
 	}
 
 	for (int i = 0; i < buffer; ++i)
