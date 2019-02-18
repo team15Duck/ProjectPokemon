@@ -2,9 +2,9 @@
 #include <vector>
 #include "tileNode.h"
 #include "pokemon.h"
+#include "npc.h"
+
 #define POTAL_NUM 6
-
-
 
 
 
@@ -47,6 +47,10 @@ protected:
 	UINT						iiMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 	UINT						jj;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 	UINT						jjMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
+
+	npc*						_npc;
+	int							_count;							//프레임용
+
 public:
 	mapData();
 	~mapData();

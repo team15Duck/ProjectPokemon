@@ -16,6 +16,13 @@ HRESULT mapData::init(const char * mapSizeFileName, const char * mapFileName, co
 	ii = iiMax = jj = jjMax = 0;
 	load(mapSizeFileName, mapFileName, mapPotalName);
 	setPokemon();
+
+	//Å×½ÁÈå
+	//=================================
+	_npc = new npc;
+	_npc->init("mapTestScene");
+	_count = 0;
+	//=================================
 	return S_OK;
 }
 
@@ -33,6 +40,29 @@ void mapData::update()
 	if (jj < 0) jj = 0;
 	jjMax = ((CAMERA->getPosX() + WINSIZEX) / TILE_SIZE) + 1;
 	if (jjMax >= TILEX) jjMax = TILEX - 1;
+
+
+	_count++;
+	for (; ii < iiMax; ++ii)
+	{
+		for (; jj < jjMax; ++jj)
+		{
+			if ((_vvTile[ii][jj]->attr & ATTR_FLOWER) == ATTR_FLOWER)
+			{
+				if (_count % 15 == 0)
+				{
+					_vvTile[ii][jj]->objectFrameX++;
+					if (_vvTile[ii][jj]->objectFrameX >= 4)
+						_vvTile[ii][jj]->objectFrameX = 0;
+					_count = 0;
+				}
+			}
+		}
+		jj = CAMERA->getPosX() / TILE_SIZE;
+		if (jj < 0) jj = 0;
+	}
+	ii = CAMERA->getPosY() / TILE_SIZE;
+	if (ii < 0) ii = 0;
 
 }
 
@@ -265,6 +295,10 @@ void mapData::drawObject()
 				{
 					IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 40, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
 				}
+				else if (_vvTile[ii][jj]->attr & ATTR_FLOWER)
+				{
+					imgObject();
+				}
 				else
 				{
 					imgObject();
@@ -417,6 +451,12 @@ void mapData::drawObject()
 		{
 			_player->render();
 		}
+
+		//Å×½ÁÈå
+		//=================================
+		_npc->render();
+		//=================================
+
 
 		for (; jj < jjMax; ++jj)
 		{

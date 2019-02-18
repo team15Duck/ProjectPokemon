@@ -297,5 +297,7 @@ public:
 	
 	//아이템정보를 쓸때 아이템타입 넣어주쎄요
 	item* settingItemInfo(ITEM_TYPE type);
+
+	void settingFieldItem(string sceneName, UINT tileX, UINT tileY);
 };
 
