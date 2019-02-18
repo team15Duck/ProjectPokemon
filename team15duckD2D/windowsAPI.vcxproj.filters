@@ -342,6 +342,9 @@
     <ClInclude Include="npc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>2DFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -523,6 +526,9 @@
     </ClCompile>
     <ClCompile Include="npc.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>2DFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
