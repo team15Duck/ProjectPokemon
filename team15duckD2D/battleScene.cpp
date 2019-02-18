@@ -263,6 +263,9 @@ void battleScene::battleStart()
 		}
 	} 
 
+	_battleUI->setMyPokemonMemoryAdressLink(_pms[TURN_PLAYER]);
+	_battleUI->setEnemyPokemonMemoryAdressLink(_pms[TURN_ENEMY]);
+
 	_phase = PHASE_BATTLE;
 }
 
