@@ -247,7 +247,7 @@ void battleScene::battleStart()
 		pokemonSkillInfo info = *skills[ii].getSkillInfomation();
 		if (info.getSkillID() != SKILL_INDEX_NONE)
 		{
-			_battleUI->addSkill(string2wstring(info.getSkillName()), skills[ii].getCurrentPP(), skills[ii].getMaxPP());
+			_battleUI->addSkill(string2wstring(info.getSkillName()), skills[ii].getCurrentPP(), skills[ii].getMaxPP(), info.getSkillTypeName());
 		}
 	} 
 

@@ -48,6 +48,30 @@ void pokemonSkillInfo::release()
 {
 }
 
+wstring pokemonSkillInfo::getSkillTypeName()
+{
+	switch (_type)
+	{
+		case PM_TYPE_NORMAL:
+			return L"노말";
+		case PM_TYPE_FIRE:
+			return L"불";
+		case PM_TYPE_WATER:
+			return L"물";
+		case PM_TYPE_ELECTRONIC:
+			return L"전기";
+		case PM_TYPE_GRASS:
+			return L"풀";
+		case PB_TYPE_POISION:
+			return L"독";
+		case PB_TYPE_DRAGON:
+			return L"드래곤";
+	}
+
+
+	return L"";
+}
+
 
 pokemonSkill::pokemonSkill()
 : _skillId(0)

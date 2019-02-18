@@ -70,7 +70,7 @@ private:
 	int _accuracyRate;	// 명중률
 	int _defaultPP;		// pp
 
-	// effect* _effect // 스킬 연출
+	//effect* _effect; // 스킬 연출
 
 
 public:
@@ -101,6 +101,8 @@ public:
 	POKEMON_BUFF getBuffType() { return _buffType; }
 	// 상태이상 효과
 	POKEMON_UPSET_CONDITION getUpsetConditionType() { return _upsetConditionType; }
+
+	wstring getSkillTypeName();
 };
 
 class pokemonSkill
