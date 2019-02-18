@@ -1,5 +1,5 @@
 #pragma once
-#include "oLabScene.h"
+#include "oLabMap.h"
 #include "gameNode.h"
 #include "player.h"
 

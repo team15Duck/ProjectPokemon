@@ -61,9 +61,6 @@
     <Filter Include="PlayGround\battleScene">
       <UniqueIdentifier>{072715c2-fedb-4992-92a8-b73874887d2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayGround\townScene">
-      <UniqueIdentifier>{6ec0e00d-0b3e-41a0-b3bc-0c7ad903133a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayGround\field">
       <UniqueIdentifier>{6017b05f-18f7-4736-bb95-3b11249cc78f}</UniqueIdentifier>
     </Filter>
@@ -258,9 +255,6 @@
     <ClInclude Include="battleScene2.h">
       <Filter>PlayGround\battleScene</Filter>
     </ClInclude>
-    <ClInclude Include="townScene.h">
-      <Filter>PlayGround\townScene</Filter>
-    </ClInclude>
     <ClInclude Include="field1Scnee.h">
       <Filter>PlayGround\field</Filter>
     </ClInclude>
@@ -441,6 +435,9 @@
     <ClInclude Include="townMap.h">
       <Filter>PlayGround\map\town</Filter>
     </ClInclude>
+    <ClInclude Include="townScene.h">
+      <Filter>PlayGround\mapScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -514,9 +511,6 @@
     </ClCompile>
     <ClCompile Include="battleScene2.cpp">
       <Filter>PlayGround\battleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="townScene.cpp">
-      <Filter>PlayGround\townScene</Filter>
     </ClCompile>
     <ClCompile Include="field1Scnee.cpp">
       <Filter>PlayGround\field</Filter>
@@ -688,6 +682,9 @@
     </ClCompile>
     <ClCompile Include="townMap.cpp">
       <Filter>PlayGround\map\town</Filter>
+    </ClCompile>
+    <ClCompile Include="townScene.cpp">
+      <Filter>PlayGround\mapScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
