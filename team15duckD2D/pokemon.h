@@ -149,6 +149,9 @@ public:
 	bool evolution();
 	// 강제 진화
 	bool evolutionForce();
+	
+	// 기절
+	void faint();
 
 	// hp full 회복
 	void fillHp();
@@ -278,6 +281,7 @@ private:
 	
 	// 데미지 계산
 	int calculateAttkValue(int skillIdx);
+
 
 
 

@@ -239,10 +239,14 @@ void pokemon::loadSavePack(pmPack* pack)
 
 void pokemon::battelStart()
 {
+	_buff = PMB_NONE;
 }
 
 void pokemon::battleEnd()
 {
+	_battleUI = nullptr;
+	_target = nullptr;
+	_buff = PMB_NONE;
 }
 
 bool pokemon::applyBuff()
@@ -550,6 +554,7 @@ bool pokemon::evolutionForce()
 void pokemon::fillHp()
 {
 	_displayValue = _currentLvStatus.hp - _nowStatus.hp;
+	
 	_displayHp = _nowStatus.hp;
 	_nowStatus.hp = _currentLvStatus.hp;
 	startProgessing(bind(&pokemon::progressingIncreaseHp, this), PROGRESSING_VALUE);
@@ -557,15 +562,16 @@ void pokemon::fillHp()
 
 void pokemon::hillHp(int value)
 {
-	_displayValue = value;
-	_displayHp = _nowStatus.hp;
-	_nowStatus.hp += value;
-	if (_currentLvStatus.hp < _nowStatus.hp )
+	if (_currentLvStatus.hp < _nowStatus.hp + value )
 	{
 		fillHp();
 	}
 	else
 	{
+		_displayValue = value;
+		_displayHp = _nowStatus.hp;
+		_nowStatus.hp += value;
+
 		startProgessing(bind(&pokemon::progressingIncreaseHp, this), PROGRESSING_VALUE);
 	}
 }
@@ -954,6 +960,12 @@ int pokemon::calculateAttkValue(int skillIdx)
 	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 1.f) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
+}
+
+void pokemon::faint()
+{
+	battleEnd();
+	_upsetCondition.clear();
 }
 
 void pokemon::sendScriptToUI(wstring script)

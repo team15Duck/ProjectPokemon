@@ -13,15 +13,44 @@ battleScene::~battleScene()
 
 HRESULT battleScene::init()
 {
-	_pokemon = PLAYERDATA->getPokemon();
-	PLAYERDATA->setPokemon(nullptr);
+	// 배틀 ui
 	_battleUI = new battleUI;
 	_battleUI->init();
+	
+	// 적 포켓몬
+	_pokemon = PLAYERDATA->getPokemon();
+	PLAYERDATA->setPokemon(nullptr);
 
-
+	// 플레이어 포켓몬 todo
+	//int pmCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 	for (int ii = 0; ii < 6; ++ii)
 	{
+		// todo
 		//_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
+	}
+
+	// 테스트용 삭제 될 것
+	{
+		_pokemon = new pokemon;
+		_pokemon->init(NULL, PM_VENUSAUR, 15, false);
+		
+		_myPms[0] = new pokemon;
+		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
+
+		_myPms[1] = new pokemon;
+		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
+
+		_myPms[2] = new pokemon;
+		_myPms[2]->init(NULL, PM_SQUIRTLE, 15, true);
+
+		_myPms[3] = new pokemon;
+		_myPms[3]->init(NULL, PM_MAGIKARP, 20, true);
+
+		_myPms[4] = new pokemon;
+		_myPms[4]->init(NULL, PM_PIKACHU, 25, true);
+
+		_myPms[5] = new pokemon;
+		_myPms[5]->init(NULL, PM_CHARIZARD, 30, true);
 	}
 
 	_turn = TURN_PLAYER;
@@ -30,24 +59,14 @@ HRESULT battleScene::init()
 	_battleStep = STEP_APPLY_BUFF;
 	_selPokemon = 0;
 	_selectSkillIdx = 0;
-	
 	_pms[TURN_ENEMY] = _pokemon;
 	_pms[TURN_PLAYER] = _myPms[_selPokemon];
 
+	_pms[TURN_ENEMY]->setBattleUILink(_battleUI);
+	_pms[TURN_PLAYER]->setBattleUILink(_battleUI);
 	
-	// 테스트용 삭제 될 것
-	{
-		_pms[TURN_ENEMY] = new pokemon;
-		_pms[TURN_ENEMY]->init(NULL, PM_VENUSAUR, 15, false);
-		_pms[TURN_ENEMY]->setBattleUILink(_battleUI);
-		_pms[TURN_ENEMY]->battelStart();
-
-		_pms[TURN_PLAYER] = new pokemon;
-		_pms[TURN_PLAYER]->init(NULL, PM_CHARIZARD, 15, true);
-		_pms[TURN_PLAYER]->setBattleUILink(_battleUI);
-		_pms[TURN_PLAYER]->battelStart();
-
-	}
+	_pms[TURN_ENEMY]->battelStart();
+	_pms[TURN_PLAYER]->battelStart();
 
 	_pms[TURN_ENEMY]->setTargetPokemon(_pms[TURN_PLAYER]);
 	_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
@@ -270,6 +289,7 @@ void battleScene::battleStart()
 
 	pokemonSkill* skills = _pms[TURN_PLAYER]->getPokemonSkills();
 	
+	_battleUI->skillUIClear();
 	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
 	{
 		pokemonSkillInfo info = *skills[ii].getSkillInfomation();
@@ -281,6 +301,20 @@ void battleScene::battleStart()
 
 	_battleUI->setMyPokemonMemoryAdressLink(_pms[TURN_PLAYER]);
 	_battleUI->setEnemyPokemonMemoryAdressLink(_pms[TURN_ENEMY]);
+
+	_pms[TURN_ENEMY]->setBattleUILink(_battleUI);
+	_pms[TURN_PLAYER]->setBattleUILink(_battleUI);
+
+	_pms[TURN_ENEMY]->battelStart();
+	_pms[TURN_PLAYER]->battelStart();
+
+	_pms[TURN_ENEMY]->setTargetPokemon(_pms[TURN_PLAYER]);
+	_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
+
+	_turn = TURN_PLAYER;
+	_active = PA_NONE;
+	_battleStep = STEP_APPLY_BUFF;
+	_selectSkillIdx = 0;
 
 	_phase = PHASE_BATTLE;
 }
@@ -329,6 +363,9 @@ void battleScene::battle()
 
 				// todo 플레이어 포켓몬 전투 경험치 계산
 				int value = 2 * _pms[TURN_ENEMY]->getLevel();
+				if(_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
+					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
+
 				_pms[TURN_PLAYER]->gainExp(value);
 
 				script.clear();
@@ -344,10 +381,13 @@ void battleScene::battle()
 			}
 			else
 			{
-				wstring script = string2wstring(_pms[TURN_ENEMY]->getName());
+				wstring script = string2wstring(_pms[TURN_PLAYER]->getName());
 				script.append(L"이(가) 쓰러졌다!");
 
 				_battleUI->pushScript(script);
+
+				// 해당 포켓몬 기절함
+				_pms[TURN_PLAYER]->faint();
 
 				// 플레이어 포켓몬 변경
 				_turn = TURN_PLAYER;
@@ -369,7 +409,14 @@ void battleScene::battleChange()
 	//wstring script = L"포켓몬을 교체해보자";
 	//_battleUI->pushScript(script);
 
+	_selPokemon++;
+	//if(PLAYERDATA->getPlayer()->getCurrentPokemonCnt() < _selPokemon)
+	if(6 <= _selPokemon)
+		_phase = PHASE_END;
+	else
+		_pms[TURN_PLAYER] = _myPms[_selPokemon];
 
+	_phase = PHASE_START;
 }
 
 void battleScene::battleEvolution()
