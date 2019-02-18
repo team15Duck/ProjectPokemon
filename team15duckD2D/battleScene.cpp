@@ -153,53 +153,78 @@ void battleScene::render()
 
 void battleScene::keyControl()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	if (_battleUI->getCurrentMenu() == BATTLE_UI_NONE)
 	{
-		if (_battleUI->getCurrentSelectMenuNum() == 2 || _battleUI->getCurrentSelectMenuNum() == 3)
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 		{
-			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 2);
+			if (_battleUI->getCurrentSelectMenuNum() == 2 || _battleUI->getCurrentSelectMenuNum() == 3)
+			{
+				_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 2);
+			}
+			else if (_battleUI->getCurrentSelectMenuNum() == 1)
+			{
+				_battleUI->setCurrentSelctMenuNum(2);
+			}
+			else if (_battleUI->getCurrentSelectMenuNum() == 0)
+			{
+				_battleUI->setCurrentSelctMenuNum(3);
+			}
 		}
-		else if (_battleUI->getCurrentSelectMenuNum() == 1)
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 		{
-			_battleUI->setCurrentSelctMenuNum(2);
+			if (_battleUI->getCurrentSelectMenuNum() == 0 || _battleUI->getCurrentSelectMenuNum() == 1)
+			{
+				_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 2);
+			}
+			else if (_battleUI->getCurrentSelectMenuNum() == 2)
+			{
+				_battleUI->setCurrentSelctMenuNum(1);
+			}
+			else if (_battleUI->getCurrentSelectMenuNum() == 3)
+			{
+				_battleUI->setCurrentSelctMenuNum(0);
+			}
 		}
-		else if (_battleUI->getCurrentSelectMenuNum() == 0)
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
-			_battleUI->setCurrentSelctMenuNum(3);
+			if (_battleUI->getCurrentSelectMenuNum() > 0)
+			{
+				_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 1);
+			}
+			else
+			{
+				_battleUI->setCurrentSelctMenuNum(3);
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 1);
+			if (_battleUI->getCurrentSelectMenuNum() == 4)
+			{
+				_battleUI->setCurrentSelctMenuNum(0);
+			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	else if (_battleUI->getCurrentMenu() == BATTLE_UI_SKILL)
 	{
-		if (_battleUI->getCurrentSelectMenuNum() == 0 || _battleUI->getCurrentSelectMenuNum() == 1)
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
 		{
-			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 2);
+			if (_battleUI->getCurrentSelectSkill() > 0)
+			{
+				_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 1);
+			}
+			else
+			{
+				_battleUI->setCurrentSelctMenuNum(_battleUI->getSkillSize() - 1);
+			}
 		}
-		else if (_battleUI->getCurrentSelectMenuNum() == 2)
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
-			_battleUI->setCurrentSelctMenuNum(1);
-		}
-		else if (_battleUI->getCurrentSelectMenuNum() == 3)
-		{
-			_battleUI->setCurrentSelctMenuNum(0);
-		}
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
-	{
-		if (_battleUI->getCurrentSelectMenuNum() > 0)
-		{
-			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 1);
-		}
-		else
-		{
-			_battleUI->setCurrentSelctMenuNum(3);
-		}
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 1);
-		if (_battleUI->getCurrentSelectMenuNum() == 4)
-		{
-			_battleUI->setCurrentSelctMenuNum(0);
+			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 1);
+			if (_battleUI->getCurrentSelectMenuNum() == _battleUI->getSkillSize() - 1)
+			{
+				_battleUI->setCurrentSelctMenuNum(0);
+			}
 		}
 	}
 

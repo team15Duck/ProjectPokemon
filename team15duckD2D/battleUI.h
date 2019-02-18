@@ -7,6 +7,7 @@ typedef struct tagPokemonSkillUIInfo
 	wstring skillName;
 	UINT currentPP;
 	UINT maxPP;
+	wstring type;
 }SKILLUI;
 
 enum BATTLE_UI
@@ -50,12 +51,14 @@ public:
 	void render();
 
 	void skillUIClear() { _skillUI.clear(); }
-	void addSkill(wstring skillName, UINT cPP, UINT mPP)
+	void addSkill(wstring skillName, UINT cPP, UINT mPP, wstring type)
 	{
 		SKILLUI skill;
 		skill.skillName = skillName;
 		skill.currentPP = cPP;
 		skill.maxPP = mPP;
+		skill.type = type;
+		_skillUI.push_back(skill);
 	}
 	UINT getCurrentPP(UINT skillNum)
 	{
@@ -70,6 +73,7 @@ public:
 		_skillUI[skillNum].currentPP--;
 		if (_skillUI[skillNum].currentPP < 0) _skillUI[skillNum].currentPP = 0;
 	}
+	UINT getSkillSize() { return _skillUI.size(); }
 
 
 	BATTLE_UI getCurrentMenu() { return _currentMenu; }
@@ -89,5 +93,9 @@ public:
 
 	UINT getCurrentSelectMenuNum() { return _currentSelectMenu; }
 	void setCurrentSelctMenuNum(UINT num) { _currentSelectMenu = num; }
+
+	UINT getCurrentSelectSkill() { return _currentSelectSkill; }
+	void setCurrentSelectSkill(UINT num) { _currentSelectSkill = num; }
+
 };
 

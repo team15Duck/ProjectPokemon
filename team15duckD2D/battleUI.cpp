@@ -21,6 +21,8 @@ HRESULT battleUI::init()
 
 	
 	MENUMANAGER->addFrame("battleMenu", 480, 448, 15, 6);
+	MENUMANAGER->addFrame("skillPPFrame", 480, 448, 15, 6);
+	MENUMANAGER->addFrame("skillFrame", 0, 448, 15, 6);
 	
 	IMAGEMANAGER->addImage("playerUI", L"image/battle_UI/battle_UI_Player.png", 416, 148);
 	IMAGEMANAGER->addImage("enemyUI", L"image/battle_UI/battle_UI_enemy.png", 400, 116);
@@ -29,6 +31,7 @@ HRESULT battleUI::init()
 	_currentMenu = BATTLE_UI_NONE;
 
 	_currentSelectMenu = 0;
+	_currentSelectSkill = 0;
 	_isEscape = false;
 	return S_OK;
 }
@@ -126,24 +129,52 @@ void battleUI::render()
 	}
 	else
 	{
-		IMAGEMANAGER->findImage("battleScript")->render(0, 640 - 192);
-		wstring str = _pokemonName + L"은(는)";
-		D2DMANAGER->drawText(str.c_str(), 50, 500, 30);
-		str = L"무엇을할까?";
-		D2DMANAGER->drawText(str.c_str(), 50, 550, 30);
-		MENUMANAGER->findMenuFrame("battleMenu")->render();
+		
 
-		str = L"싸운다";
-		D2DMANAGER->drawText(str.c_str(), 600, 500, 30);
-		str = L"포켓몬";
-		D2DMANAGER->drawText(str.c_str(), 600, 550, 30);
-		str = L"가방";
-		D2DMANAGER->drawText(str.c_str(), 800, 500, 30);
-		str = L"도망간다";
-		D2DMANAGER->drawText(str.c_str(), 800, 550, 30);
+		if (_currentMenu == BATTLE_UI_SKILL)
+		{
+			MENUMANAGER->findMenuFrame("skillPPFrame")->render();
+			MENUMANAGER->findMenuFrame("skillFrame")->render();
+
+			for (int i = 0; i < _skillUI.size(); i++)
+			{
+				D2DMANAGER->drawText(_skillUI[i].skillName.c_str(), 80 + i / 2 * 200, 498 + i % 2 * 50, 30 );
+				if (i == _currentSelectSkill)
+				{
+					WCHAR str[128];
+					swprintf_s(str, L"PP     %d/", _skillUI[i].currentPP);
+					D2DMANAGER->drawText(str, 550, 500, 40);
+					swprintf_s(str, L"%d", _skillUI[i].maxPP);
+					D2DMANAGER->drawText(str, 750, 500, 40);
+				}
+			}
 
 
-		IMAGEMANAGER->findImage("battleCheckPoint")->render(560 + _currentSelectMenu / 2 * 200, 498 + _currentSelectMenu % 2 * 50);
+
+			IMAGEMANAGER->findImage("battleCheckPoint")->render(50 + _currentSelectSkill / 2 * 200, 498 + _currentSelectSkill % 2 * 50);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("battleScript")->render(0, 640 - 192);
+			wstring str = _pokemonName + L"은(는)";
+			D2DMANAGER->drawText(str.c_str(), 50, 500, 30);
+			str = L"무엇을할까?";
+			D2DMANAGER->drawText(str.c_str(), 50, 550, 30);
+			MENUMANAGER->findMenuFrame("battleMenu")->render();
+
+			str = L"싸운다";
+			D2DMANAGER->drawText(str.c_str(), 600, 500, 30);
+			str = L"포켓몬";
+			D2DMANAGER->drawText(str.c_str(), 600, 550, 30);
+			str = L"가방";
+			D2DMANAGER->drawText(str.c_str(), 800, 500, 30);
+			str = L"도망간다";
+			D2DMANAGER->drawText(str.c_str(), 800, 550, 30);
+
+
+			IMAGEMANAGER->findImage("battleCheckPoint")->render(560 + _currentSelectMenu / 2 * 200, 498 + _currentSelectMenu % 2 * 50);
+
+		}
 
 	}
 	IMAGEMANAGER->findImage("playerUI")->render(960 - 416, 448 - 148);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
