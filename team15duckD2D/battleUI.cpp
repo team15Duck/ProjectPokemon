@@ -95,7 +95,7 @@ void battleUI::update()
 					{
 						case 0:
 							//스킬창 열기
-
+							_currentMenu = BATTLE_UI_SKILL;
 						break;
 						case 1:
 							//가방 열기

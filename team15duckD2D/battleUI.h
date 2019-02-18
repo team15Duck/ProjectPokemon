@@ -72,7 +72,8 @@ public:
 	}
 
 
-
+	BATTLE_UI getCurrentMenu() { return _currentMenu; }
+	void setCurrentMenu(BATTLE_UI cMenu) { _currentMenu = cMenu; }
 
 
 	void pushScript(wstring script);
