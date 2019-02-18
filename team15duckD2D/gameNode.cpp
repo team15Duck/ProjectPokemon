@@ -39,6 +39,7 @@ HRESULT gameNode::init(bool managerInit)
 		POKEMONDATA->init();
 		SKILLDATA->init();
 		EFFECTMANAGER->init();
+		SCRIPTMANAGER->init();
 	}
 
 	return S_OK;
@@ -80,6 +81,8 @@ void gameNode::release()
 		SKILLDATA->releaseSingleton();
 		EFFECTMANAGER->release();
 		EFFECTMANAGER->releaseSingleton();
+		SCRIPTMANAGER->release();
+		SCRIPTMANAGER->releaseSingleton();
 	}
 }
 
