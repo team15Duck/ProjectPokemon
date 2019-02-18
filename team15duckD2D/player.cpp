@@ -465,22 +465,57 @@ void player::stateUpdate()
 		case player::PS_FISHING_LEFT:
 			_isRight = false;
 			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+			if (_currentFishingTime > _maxFishingTime)
+			{
+				_currentFishingTime = 0;
+				//À×¾îÅ·ÀÚ¸®
+				pokemon* enemy = new pokemon;
+				enemy->init(NULL, PM_MAGIKARP, 5, false);
+				PLAYERDATA->setPokemon(enemy);
+				SCENEMANAGER->changeScene("battleScene");
+			}
 
 		break;
 		case player::PS_FISHING_UP:
 			_isRight = false;
 			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+			if (_currentFishingTime > _maxFishingTime)
+			{
+				_currentFishingTime = 0;
+				//À×¾îÅ·ÀÚ¸®
+				pokemon* enemy = new pokemon;
+				enemy->init(NULL, PM_MAGIKARP, 5, false);
+				PLAYERDATA->setPokemon(enemy);
+				SCENEMANAGER->changeScene("battleScene");
+			}
 
 		break;
 		case player::PS_FISHING_RIGHT:
 			_isRight = true;
 			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+			if (_currentFishingTime > _maxFishingTime)
+			{
+				_currentFishingTime = 0;
+				//À×¾îÅ·ÀÚ¸®
+				pokemon* enemy = new pokemon;
+				enemy->init(NULL, PM_MAGIKARP, 5, false);
+				PLAYERDATA->setPokemon(enemy);
+				SCENEMANAGER->changeScene("battleScene");
+			}
 
 		break;
 		case player::PS_FISHING_DOWN:
 			_isRight = false;
 			_currentFishingTime += TIMEMANAGER->getElapsedTime();
-
+			if (_currentFishingTime > _maxFishingTime)
+			{
+				_currentFishingTime = 0;
+				//À×¾îÅ·ÀÚ¸®
+				pokemon* enemy = new pokemon;
+				enemy->init(NULL, PM_MAGIKARP, 5, false);
+				PLAYERDATA->setPokemon(enemy);
+				SCENEMANAGER->changeScene("battleScene");
+			}
 		break;
 		default:
 		break;
@@ -558,12 +593,7 @@ void player::fishingStart()
 			if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_WATER)
 			{
 				aniSetStart("fishing_down");
-				_state = PS_FISHING_DOWN;
-				//À×¾îÅ·ÀÚ¸®
-				//pokemon* enemy = new pokemon;
-				//enemy->init(NULL, _map->getPokemon(), _map->getLevel(), false);
-				//PLAYERDATA->setPokemon(enemy);
-				//SCENEMANAGER->changeScene("battleScene");
+				_state = PS_FISHING_DOWN;				
 			}
 		break;
 	}

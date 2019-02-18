@@ -393,6 +393,9 @@
     <ClInclude Include="townMap.h">
       <Filter>PlayGround\map</Filter>
     </ClInclude>
+    <ClInclude Include="scriptManager.h">
+      <Filter>2DFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -622,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="townMap.cpp">
       <Filter>PlayGround\map</Filter>
+    </ClCompile>
+    <ClCompile Include="scriptManager.cpp">
+      <Filter>2DFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

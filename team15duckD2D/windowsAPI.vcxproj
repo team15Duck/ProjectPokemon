@@ -211,6 +211,7 @@
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
+    <ClInclude Include="scriptManager.h" />
     <ClInclude Include="setting.h" />
     <ClInclude Include="shop.h" />
     <ClInclude Include="singletonBase.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="pokemonSkill.cpp" />
     <ClCompile Include="possessionPokemon.cpp" />
     <ClCompile Include="sceneManager.cpp" />
+    <ClCompile Include="scriptManager.cpp" />
     <ClCompile Include="setting.cpp" />
     <ClCompile Include="shop.cpp" />
     <ClCompile Include="skillDataBase.cpp" />
