@@ -17,6 +17,24 @@ HRESULT battleScene::init()
 	PLAYERDATA->setPokemon(nullptr);
 	_battleUI = new battleUI;
 	_battleUI->init();
+
+
+	for (int ii = 0; ii < 6; ++ii)
+	{
+		_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
+	}
+
+	_turn = TURN_PLAYER;
+	_phase = PHASE_START;
+	_active = PA_NONE;
+	_battleStep = STEP_APPLY_BUFF;
+	_selPokemon = 0;
+	_selectSkillIdx = 0;
+	
+	_pms[TURN_ENEMY] = _pokemon;
+	_pms[TURN_PLAYER] = _myPms[_selPokemon];
+
+	
 	// 테스트용 삭제 될 것
 	{
 		_pms[TURN_ENEMY] = new pokemon;
@@ -29,16 +47,11 @@ HRESULT battleScene::init()
 		_pms[TURN_PLAYER]->setBattleUILink(_battleUI);
 		_pms[TURN_PLAYER]->battelStart();
 
-		_pms[TURN_ENEMY]->setTargetPokemon(_pms[TURN_PLAYER]);
-		_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
-
-		_turn = TURN_PLAYER;
-		_phase = PHASE_START; 
-		_active = PA_NONE;
-		_battleStep = STEP_APPLY_BUFF;
-		_selectSkillIdx = 0;
-
 	}
+
+	_pms[TURN_ENEMY]->setTargetPokemon(_pms[TURN_PLAYER]);
+	_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
+
 	return S_OK;
 }
 
