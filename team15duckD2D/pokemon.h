@@ -209,6 +209,8 @@ public:
 
 	string getName()			{ return _nickName; }
 	
+	// 현재 경험치 : 표시용
+	unsigned int getCurrentDisplayExp() { return _displayExp - _currentLvExp; }
 	// 현재 경험치
 	unsigned int getCurrentExp()		{ return _currentExp - _currentLvExp; }
 	// 다음 레벨까지 경험치
