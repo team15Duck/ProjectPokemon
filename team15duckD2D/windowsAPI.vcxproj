@@ -156,15 +156,25 @@
     <ClInclude Include="battleUI.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="caveMap.h" />
+    <ClInclude Include="caveScene.h" />
+    <ClInclude Include="centerMap.h" />
+    <ClInclude Include="centerScene.h" />
     <ClInclude Include="chiyeongTestScene.h" />
     <ClInclude Include="d2dManager.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="field1Scnee.h" />
+    <ClInclude Include="fieldMap.h" />
+    <ClInclude Include="fieldScene.h" />
     <ClInclude Include="fontLoader.h" />
     <ClInclude Include="fontLoaderCommon.h" />
     <ClInclude Include="gameNode.h" />
+    <ClInclude Include="gymMap.h" />
+    <ClInclude Include="gymScene.h" />
     <ClInclude Include="hayoungTestScene.h" />
+    <ClInclude Include="homeMap.h" />
+    <ClInclude Include="homeScene.h" />
     <ClInclude Include="IllustratedBook.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
@@ -188,6 +198,8 @@
     <ClInclude Include="npc.h" />
     <ClInclude Include="objectTool.h" />
     <ClInclude Include="objectToolScene.h" />
+    <ClInclude Include="oLabScene.h" />
+    <ClInclude Include="oLapMap.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerDataBase.h" />
     <ClInclude Include="playGround.h" />
@@ -207,11 +219,14 @@
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="startScene.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="storeMap.h" />
+    <ClInclude Include="storeScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="testMap.h" />
     <ClInclude Include="tileNode.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="townMap.h" />
     <ClInclude Include="townScene.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
@@ -225,14 +240,24 @@
     <ClCompile Include="battleUI.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="caveMap.cpp" />
+    <ClCompile Include="caveScene.cpp" />
+    <ClCompile Include="centerMap.cpp" />
+    <ClCompile Include="centerScene.cpp" />
     <ClCompile Include="chiyeongTestScene.cpp" />
     <ClCompile Include="d2dManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="field1Scnee.cpp" />
+    <ClCompile Include="fieldMap.cpp" />
+    <ClCompile Include="fieldScene.cpp" />
     <ClCompile Include="fontLoader.cpp" />
     <ClCompile Include="gameNode.cpp" />
+    <ClCompile Include="gymMap.cpp" />
+    <ClCompile Include="gymScene.cpp" />
     <ClCompile Include="hayoungTestScene.cpp" />
+    <ClCompile Include="homeMap.cpp" />
+    <ClCompile Include="homeScene.cpp" />
     <ClCompile Include="IllustratedBook.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
@@ -256,6 +281,8 @@
     <ClCompile Include="npc.cpp" />
     <ClCompile Include="objectTool.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
+    <ClCompile Include="oLabScene.cpp" />
+    <ClCompile Include="oLapMap.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerDataBase.cpp" />
     <ClCompile Include="playGround.cpp" />
@@ -276,9 +303,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="storeMap.cpp" />
+    <ClCompile Include="storeScene.cpp" />
     <ClCompile Include="testMap.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="townMap.cpp" />
     <ClCompile Include="townScene.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
