@@ -102,7 +102,7 @@ void mapData::render()
 		swprintf_s(str, L"potalX : %d, potalY: %d", _potal[i].x, _potal[i].y);
 		D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 200, 30);
 	}
-
+	EFFECTMANAGER->render();
 }
 
 void mapData::load(const char * mapSizeFileName, const char * mapFileName, const char* mapPotalName)

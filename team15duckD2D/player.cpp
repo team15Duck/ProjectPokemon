@@ -42,6 +42,8 @@ HRESULT player::init()
 
 	aniSetUp();
 
+	EFFECTMANAGER->addEffect("grassEffect", "image/player/grassSprite.png", 256, 56, 64, 56, 7, 0.01, 20);
+	
 	return S_OK;
 }
 
@@ -55,6 +57,7 @@ void player::update()
 	KEYANIMANAGER->update(_key);
 	keyUpdate();
 	stateUpdate();
+	EFFECTMANAGER->update();
 }
 
 void player::render()
@@ -77,7 +80,7 @@ void player::render()
 			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 68 + _posZ, _playerAni);
 	}
 
-	
+
 
 	WCHAR str[128];
 	int min =  ((int)_playTime * 10) % 3600 / 60;
@@ -510,7 +513,8 @@ void player::appearTileCheck()
 {
 	if (_map->getTile(_tileX, _tileY)->attr & ATTR_APPEAR)
 	{
-		bool meet = RND->getInt(10) < 1 ? true : false;
+		EFFECTMANAGER->play("grassEffect", _posX, _posY + 5);
+		bool meet = RND->getInt(10) < 0 ? true : false;
 		if (meet)
 		{
 			pokemon* enemy = new pokemon;
@@ -519,6 +523,7 @@ void player::appearTileCheck()
 			SCENEMANAGER->changeScene("battleScene");
 		}
 	}
+	
 }
 
 void player::fishingStart()
