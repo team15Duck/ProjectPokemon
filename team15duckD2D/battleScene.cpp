@@ -36,6 +36,7 @@ HRESULT battleScene::init()
 		_phase = PHASE_START; 
 		_active = PA_NONE;
 		_battleStep = STEP_APPLY_BUFF;
+		_selectSkillIdx = 0;
 	}
 	return S_OK;
 }
@@ -96,8 +97,7 @@ void battleScene::update()
 					{
 						case PA_USE_SKILL:
 						{
-							int selectSkillIndex = 0;
-							_pms[_turn]->useSkill(selectSkillIndex);
+							_pms[_turn]->useSkill(_selectSkillIdx);
 							_active = PA_ACTIVE_END;
 							break;
 						}
@@ -228,7 +228,9 @@ void battleScene::keyControl()
 		}
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
-			//여기서 사용해주세요
+			_active = PA_USE_SKILL;
+			_selectSkillIdx = _battleUI->getCurrentSelectSkill();
+
 			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 			_battleUI->setCurrentSelectSkill(0);
 		}

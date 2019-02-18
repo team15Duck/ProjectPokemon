@@ -23,6 +23,8 @@ private:
 	pokemon* _pms[TURN_MAX + 1];	// 테스트용임 삭제 될 것
 
 	battleUI* _battleUI;
+
+	UINT _selectSkillIdx;
 public:
 	battleScene();
 	~battleScene();
