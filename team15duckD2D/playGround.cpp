@@ -158,7 +158,10 @@ HRESULT playGround::init()
 
 
 	//=============================================================================================== UI 이미지 
-
+	// 0. 메인
+	IMAGEMANAGER->addImage("기본하단", L"image/common_menu/common_menu_bg.png", 960, 160);
+	IMAGEMANAGER->addImage("화살표", L"image/common_menu/pokemonMenu_cursor.png", 24, 40);
+	IMAGEMANAGER->addImage("기본상단", L"image/common_menu/common_menu_top.png", 960, 64);
 	// 1. 도감
 	IMAGEMANAGER->addFrameImage("도감", L"image/common_menu/pokemonbook/cm_pokemon_book.png", 1920, 640, 2, 1);
 	IMAGEMANAGER->addFrameImage("포켓몬속성", L"image/Summary Menu/summary_pokemon_tage.png", 1152, 96, 9, 2);
@@ -198,7 +201,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("mapTestScene");
+		SCENEMANAGER->changeScene("하영씬");
 	}
 	
 	return S_OK;
