@@ -497,7 +497,7 @@ void pokemon::takeDamage(int value, SKILL_INFLUENCE influence)
 	_damage = value;
 	_displayHp = _nowStatus.hp;
 	
-	if (_nowStatus.hp < value )
+	if (_nowStatus.hp <= value )
 	{
 		_nowStatus.hp = 0;
 		_isAwake = false;

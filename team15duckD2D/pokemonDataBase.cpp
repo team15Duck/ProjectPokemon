@@ -554,7 +554,7 @@ int pokemonDataBase::calcuateExp(int level, POKEMON pokemonId)
 	if(POKEMON151 == pokemonId)
 		return ((1 * level * level * level) - (15 * level * level) + ( 100 * level) - 140);
 	else
-		return level * level * level;
+		return static_cast<int>(level * level * level * 0.5f);
 }
 
 SKILL_INFLUENCE pokemonDataBase::checkConflict(POKEMON_TYPE skillType, POKEMON targetIndex)
