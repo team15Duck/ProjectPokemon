@@ -9,13 +9,13 @@ typedef struct tagPokemonSkillUIInfo
 	UINT maxPP;
 }SKILLUI;
 
-enum BATTLEUI_MENU
+enum BATTLE_UI
 {
-	BATTLEUI_MENU_SKILL,
-	BATTLEUI_MENU_BAG,
-	BATTLEUI_MENU_POKEMON,
-	BATTLEUI_MENU_RUN,
-	BATTLEUI_MENU_NONE
+	BATTLE_UI_SKILL,
+	BATTLE_UI_BAG,
+	BATTLE_UI_POKEMON,
+	BATTLE_UI_RUN,
+	BATTLE_UI_NONE
 };
 
 
@@ -36,7 +36,9 @@ private:
 	vector<SKILLUI>		_skillUI;						//스킬의정보를담고있는 구조체의 벡터  최대사이즈는 4로 제한한다
 	UINT				_currentSelectSkill;			//현재 어떤스킬을 선택하고 있니?
 
-	BATTLEUI_MENU		_currentMenu;					//현재 메뉴 상태
+
+	bool				_isEscape;						//도망?
+	BATTLE_UI			_currentMenu;					//현재 메뉴 상태
 
 public:
 	battleUI();

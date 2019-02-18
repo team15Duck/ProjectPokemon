@@ -26,10 +26,10 @@ HRESULT battleUI::init()
 	IMAGEMANAGER->addImage("enemyUI", L"image/battle_UI/battle_UI_enemy.png", 400, 116);
 	IMAGEMANAGER->addImage("battleCheckPoint", L"image/battle_UI/battle_UI_chk_point.png", 24, 40);
 	_isSkip = false;
-
+	_currentMenu = BATTLE_UI_NONE;
 
 	_currentSelectMenu = 0;
-
+	_isEscape = false;
 	return S_OK;
 }
 
@@ -57,17 +57,14 @@ void battleUI::update()
 				if (_scriptLength == _script.front().size())
 				{
 					_isSkip = true;
+					if (_isEscape)
+					{
+						//원래있던씬으로
+						SCENEMANAGER->changeScene(PLAYERDATA->getPlayer()->getSceneName());
+					}
 				}
 			}
 		}
-
-		//if (_isSkip)
-		//{
-		//	_script.pop();
-		//	_scriptLength = 0;
-		//	_viewScript.clear();
-		//	_isSkip = false;
-		//}
 		if (_isSkip)
 		{
 			if (KEYMANAGER->isOnceKeyDown('Z'))
@@ -78,8 +75,45 @@ void battleUI::update()
 				_isSkip = false;
 			}
 		}
-		
-		
+	}
+	else
+	{
+		switch (_currentMenu)
+		{
+			case BATTLE_UI_SKILL:
+			break;
+			case BATTLE_UI_BAG:
+			break;
+			case BATTLE_UI_POKEMON:
+			break;
+			case BATTLE_UI_RUN:
+			break;
+			case BATTLE_UI_NONE:
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					switch (_currentSelectMenu)
+					{
+						case 0:
+							//스킬창 열기
+
+						break;
+						case 1:
+							//가방 열기
+
+						break;
+						case 2:
+							//포켓몬 열기
+
+						break;
+						case 3:
+							_isEscape = true;
+							pushScript(L"무사히 탈출했다.");
+							_isSkip = false;
+						break;
+					}				
+				}
+			break;
+		}
 	}
 }
 
