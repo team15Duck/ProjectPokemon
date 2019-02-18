@@ -59,6 +59,7 @@ HRESULT pokemon::init( int idNo
 
 	settingStatus();
 	_currentExp = _currentLvExp;
+	_displayExp = _currentExp;
 
 	// 최초 스킬 세팅
 	map<int, vector<int>> skillMap = *info->getSkillMap();
@@ -215,6 +216,7 @@ void pokemon::loadSavePack(pmPack* pack)
 	_level = pack->level;
 	settingStatus();
 	_currentExp = pack->currentExp;
+	_displayExp = _currentExp;
 
 	_upsetCondition.type = (POKEMON_UPSET_CONDITION)pack->upsetConditionType;
 	_upsetCondition.applyValue = pack->upsetConditionApplyValue;

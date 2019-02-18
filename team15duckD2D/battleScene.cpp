@@ -21,7 +21,7 @@ HRESULT battleScene::init()
 
 	for (int ii = 0; ii < 6; ++ii)
 	{
-		_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
+		//_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
 	}
 
 	_turn = TURN_PLAYER;
