@@ -222,6 +222,11 @@ void objectTool::render()
 					swprintf_s(str, L"POTAL");
 					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5);
 				}
+				if ((_vvTile[ii][jj]->attr & ATTR_OAK) == ATTR_OAK)
+				{
+					swprintf_s(str, L"¿À¹Ú»ç");
+					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255,255,0));
+				}
 			}
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
@@ -545,6 +550,21 @@ void objectTool::drawObject()
 				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 				{
 					_vvTile[i][j]->attr = ATTR_NONE;
+				}
+			}
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F9))
+	{
+		for (int i = 0; i < TILEY; ++i)
+		{
+			for (int j = 0; j < TILEX; ++j)
+			{
+				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
+				{
+					_vvTile[i][j]->attr |= ATTR_OAK;
+					_vvTile[i][j]->attr |= ATTR_UNMOVE;
 				}
 			}
 		}

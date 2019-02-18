@@ -194,11 +194,11 @@ HRESULT playGround::init()
 
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("caveScene");
+		SCENEMANAGER->changeScene("objectToolScene");
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("го©╣╬ю");
+		SCENEMANAGER->changeScene("mapTestScene");
 	}
 	
 	return S_OK;

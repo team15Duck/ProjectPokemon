@@ -49,9 +49,8 @@ protected:
 	UINT						jj;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 	UINT						jjMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 
-	npc*						_npc;
 	int							_count;							//프레임용
-
+	vector<npc*>				_npc;		
 public:
 	mapData();
 	~mapData();
@@ -92,6 +91,8 @@ public:
 	{
 		return (UINT)RND->getFromIntTo(_minLevel, _maxLevel + 1);
 	}
+
+	void pushNpc(npc* npc) { _npc.push_back(npc); }
 	
 };
 

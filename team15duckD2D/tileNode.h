@@ -32,7 +32,8 @@
 #define ATTR_SHOP			0X00400000UL					//상점
 #define ATTR_CENTER			0X00800000UL					//포켓몬센터
 #define ATTR_FLOWER			0X01000000UL					//꽃
-
+#define ATTR_OAK			0X02000000UL					//오박사
+#define ATTR_BOSS			0X04000000UL					//비주기
 
 
 

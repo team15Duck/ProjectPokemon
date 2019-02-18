@@ -318,9 +318,6 @@
     <ClInclude Include="mapTestScene.h">
       <Filter>PlayGround</Filter>
     </ClInclude>
-    <ClInclude Include="objectTool.h">
-      <Filter>PlayGround\object</Filter>
-    </ClInclude>
     <ClInclude Include="mapTool.h">
       <Filter>PlayGround\mapTool</Filter>
     </ClInclude>
@@ -347,9 +344,6 @@
     </ClInclude>
     <ClInclude Include="moveActive.h">
       <Filter>2DFramework\move</Filter>
-    </ClInclude>
-    <ClInclude Include="npc.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="effectManager.h">
       <Filter>2DFramework\Manager</Filter>
@@ -413,6 +407,15 @@
     </ClInclude>
     <ClInclude Include="ui_player.h">
       <Filter>PlayGround\ui\ui_Player</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>PlayGround\npc</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>PlayGround\object</Filter>
+    </ClInclude>
+    <ClInclude Include="objectTool.h">
+      <Filter>PlayGround\objectTool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -566,9 +569,6 @@
     <ClCompile Include="mapTestScene.cpp">
       <Filter>PlayGround</Filter>
     </ClCompile>
-    <ClCompile Include="objectTool.cpp">
-      <Filter>PlayGround\object</Filter>
-    </ClCompile>
     <ClCompile Include="mapTool.cpp">
       <Filter>PlayGround\mapTool</Filter>
     </ClCompile>
@@ -592,9 +592,6 @@
     </ClCompile>
     <ClCompile Include="moveActive.cpp">
       <Filter>2DFramework\move</Filter>
-    </ClCompile>
-    <ClCompile Include="npc.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="effectManager.cpp">
       <Filter>2DFramework\Manager</Filter>
@@ -658,6 +655,15 @@
     </ClCompile>
     <ClCompile Include="ui_player.cpp">
       <Filter>PlayGround\ui\ui_Player</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>PlayGround\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>PlayGround\object</Filter>
+    </ClCompile>
+    <ClCompile Include="objectTool.cpp">
+      <Filter>PlayGround\objectTool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

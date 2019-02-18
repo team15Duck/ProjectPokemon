@@ -17,12 +17,6 @@ HRESULT mapData::init(const char * mapSizeFileName, const char * mapFileName, co
 	load(mapSizeFileName, mapFileName, mapPotalName);
 	setPokemon();
 
-	//테슷흐
-	//=================================
-	_npc = new npc;
-	_npc->init("mapTestScene");
-	_count = 0;
-	//=================================
 	return S_OK;
 }
 
@@ -63,7 +57,6 @@ void mapData::update()
 	}
 	ii = CAMERA->getPosY() / TILE_SIZE;
 	if (ii < 0) ii = 0;
-
 }
 
 
@@ -91,8 +84,6 @@ void mapData::render()
 	ii = CAMERA->getPosY() / TILE_SIZE;
 	if (ii < 0) ii = 0;
 
-	//우선 간호사
-	//IMAGEMANAGER->findImage("nurse")->frameRender(17 * TILE_SIZE, 8.7 * TILE_SIZE, 0, 0);
 	//오브젝트 + 주인공
 	drawObject();
 
@@ -445,18 +436,17 @@ void mapData::drawObject()
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 
-
 		//오브젝트->타일로 변경완료되면 숫자 지워주기
 		if (((int)_player->getPosY() + 31) / 64 == ii)
 		{
 			_player->render();
 		}
 
-		//테슷흐
-		//=================================
-		_npc->render();
-		//=================================
-
+		for (int i = 0; i < _npc.size(); ++i)
+		{
+			if((_npc[i]->getTileY()) / 64 == ii)
+				_npc[i]->render();
+		}
 
 		for (; jj < jjMax; ++jj)
 		{

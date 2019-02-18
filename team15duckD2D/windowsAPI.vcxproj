@@ -197,6 +197,7 @@
     <ClInclude Include="moveActive.h" />
     <ClInclude Include="newGameScene.h" />
     <ClInclude Include="npc.h" />
+    <ClInclude Include="object.h" />
     <ClInclude Include="objectTool.h" />
     <ClInclude Include="objectToolScene.h" />
     <ClInclude Include="oLabScene.h" />
@@ -285,6 +286,7 @@
     <ClCompile Include="moveActive.cpp" />
     <ClCompile Include="newGameScene.cpp" />
     <ClCompile Include="npc.cpp" />
+    <ClCompile Include="object.cpp" />
     <ClCompile Include="objectTool.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
     <ClCompile Include="oLabScene.cpp" />
