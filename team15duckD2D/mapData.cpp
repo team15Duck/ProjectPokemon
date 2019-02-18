@@ -635,6 +635,11 @@ void mapData::drawObject()
 					swprintf_s(str, L"POTAL");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5);
 				}
+				if ((_vvTile[ii][jj]->attr & ATTR_APPEAR) == ATTR_APPEAR)
+				{
+					swprintf_s(str, L"APPEAR");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 0, 255));
+				}
 			}
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;

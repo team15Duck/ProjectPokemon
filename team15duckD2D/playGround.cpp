@@ -189,10 +189,12 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("battleScene", new battleScene);
 	SCENEMANAGER->addScene("battleScene2", new battleScene2);
 
+	SCENEMANAGER->addScene("caveScene", new caveScene);
+
 
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("objectToolScene");
+		SCENEMANAGER->changeScene("caveScene");
 	}
 	else
 	{
