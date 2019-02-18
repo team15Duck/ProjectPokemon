@@ -204,7 +204,7 @@ HRESULT playGround::init()
 	
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("caveScene");
+		SCENEMANAGER->changeScene("townScene");
 	}
 	else
 	{
