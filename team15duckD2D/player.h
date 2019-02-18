@@ -66,6 +66,7 @@ private:
 	float				_currentFishingTime;					//³¬½ÃÇÑ½Ã°£
 	float				_maxFishingTime;						//³¬½ÃÇÒ½Ã°£
 
+	UINT				_money;
 
 
 public:
@@ -121,6 +122,7 @@ public:
 	string getSceneName() { return _currentSceneName; }
 	void setSceneName(string name) { _currentSceneName; }
 
-
+	float getPlayTime() { return _playTime; }
+	UINT getMoney() { return _money; }
 };
 
