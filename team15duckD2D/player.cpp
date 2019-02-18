@@ -507,6 +507,7 @@ void player::appearTileCheck()
 			enemy->init(NULL, _map->getPokemon(), _map->getLevel(), false);
 			PLAYERDATA->setPokemon(enemy);
 			SCENEMANAGER->changeScene("battleScene");
+
 		}
 	}
 }

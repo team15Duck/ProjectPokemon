@@ -59,6 +59,9 @@ private:
 	float				_gravity;								//그래비티
 
 	mapData*			_map;									//이거슨 맵데이터?!
+
+	string				_currentSceneName;						//현재 위치한 씬의 이름
+
 public:
 	player();
 	~player();
@@ -108,6 +111,9 @@ public:
 
 
 	void fishingStart();
+
+	string getSceneName() { return _currentSceneName; }
+	void setSceneName(string name) { _currentSceneName; }
 
 
 };
