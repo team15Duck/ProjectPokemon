@@ -29,6 +29,8 @@ HRESULT player::init()
 	_moveDistance = 0;
 	_jumpPower = 0;
 	_gravity = GRAVITY;
+	_currentFishingTime = 0.0f;
+	_maxFishingTime = 0.0f;
 	//////////////////////////////////////
 
 	//성별따라 키값 셋팅해줌
@@ -459,15 +461,23 @@ void player::stateUpdate()
 		break;
 		case player::PS_FISHING_LEFT:
 			_isRight = false;
+			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+
 		break;
 		case player::PS_FISHING_UP:
 			_isRight = false;
+			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+
 		break;
 		case player::PS_FISHING_RIGHT:
 			_isRight = true;
+			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+
 		break;
 		case player::PS_FISHING_DOWN:
 			_isRight = false;
+			_currentFishingTime += TIMEMANAGER->getElapsedTime();
+
 		break;
 		default:
 		break;
@@ -507,13 +517,14 @@ void player::appearTileCheck()
 			enemy->init(NULL, _map->getPokemon(), _map->getLevel(), false);
 			PLAYERDATA->setPokemon(enemy);
 			SCENEMANAGER->changeScene("battleScene");
-
 		}
 	}
 }
 
 void player::fishingStart()
 {
+	_maxFishingTime = RND->getFromIntTo(5, 11);
+	_currentFishingTime = 0.0f;
 	switch (_state)
 	{
 		//IDLE 상태에서만 낚시 가능하겠져?
@@ -543,6 +554,11 @@ void player::fishingStart()
 			{
 				aniSetStart("fishing_down");
 				_state = PS_FISHING_DOWN;
+				//잉어킹자리
+				//pokemon* enemy = new pokemon;
+				//enemy->init(NULL, _map->getPokemon(), _map->getLevel(), false);
+				//PLAYERDATA->setPokemon(enemy);
+				//SCENEMANAGER->changeScene("battleScene");
 			}
 		break;
 	}

@@ -62,6 +62,12 @@ private:
 
 	string				_currentSceneName;						//현재 위치한 씬의 이름
 
+
+	float				_currentFishingTime;					//낚시한시간
+	float				_maxFishingTime;						//낚시할시간
+
+
+
 public:
 	player();
 	~player();
