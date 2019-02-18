@@ -90,8 +90,7 @@ void battleScene::update()
 				else										// 플레이어 행동 선택
 				{
 					keyControl();
-					if(KEYMANAGER->isOnceKeyDown('Z'))
-						_active = PA_USE_SKILL;
+
 					// todo 키 선택 결과 행동
 					switch (_active)
 					{
@@ -207,12 +206,25 @@ void battleScene::keyControl()
 
 }
 
+
+
 void battleScene::battleStart()
 {
 	// todo
 
 	wstring script = L"배틀 시작!";
 	_battleUI->pushScript(script);
+
+	pokemonSkill* skills = _pms[TURN_PLAYER]->getPokemonSkills();
+	
+	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
+	{
+		pokemonSkillInfo info = *skills[ii].getSkillInfomation();
+		if (info.getSkillID() != SKILL_INDEX_NONE)
+		{
+			_battleUI->addSkill(string2wstring(info.getSkillName()), skills[ii].getCurrentPP(), skills[ii].getMaxPP());
+		}
+	} 
 
 	_phase = PHASE_BATTLE;
 }
