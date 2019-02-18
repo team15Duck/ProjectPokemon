@@ -15,7 +15,8 @@ private:
 	set<UINT> _expList;			//경험치 받을 포켓몬 리스트 
 								//적이 죽을때마다 클리어되고 현재 포켓몬이 추가됨.
 
-	pokemon* _pokemon;
+	pokemon* _myPms[6];			// 플레이어 포켓몬
+	pokemon* _pokemon;			// 야생포켓몬
 
 	BattleStep _battleStep;			// 배틀 스텝
 	PlayerActive _active;			// 플레이어 행동
@@ -24,7 +25,8 @@ private:
 
 	battleUI* _battleUI;
 
-	UINT _selectSkillIdx;
+	UINT _selectSkillIdx;	// 선택 된 스킬 슬롯 번호
+	UINT _selPokemon;		// 출전중인 포켓몬 슬롯 번호
 public:
 	battleScene();
 	~battleScene();
