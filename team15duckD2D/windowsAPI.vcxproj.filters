@@ -112,14 +112,8 @@
     <Filter Include="PlayGround\newGameScene">
       <UniqueIdentifier>{242d706f-a9af-468f-ae1b-2aae74585eb8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayGround\IllustratedBook">
-      <UniqueIdentifier>{898ffac7-03b8-4ed9-b263-ae7c3c05a774}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayGround\pokemon\data">
       <UniqueIdentifier>{64963311-2d9d-4467-902d-cb2f74f1eb64}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayGround\bag">
-      <UniqueIdentifier>{3294593f-41d2-4929-b2e0-0796e13147ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="PlayGround\sound">
       <UniqueIdentifier>{a6c783fd-51cd-4c44-a494-83681b7ace7f}</UniqueIdentifier>
@@ -127,20 +121,32 @@
     <Filter Include="PlayGround\jaewonTestScene">
       <UniqueIdentifier>{35ac8f59-90b3-45c0-85dc-bf65376357ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayGround\setting">
-      <UniqueIdentifier>{347a256f-5686-42d4-afcb-1da6ffcfd24b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayGround\shop">
-      <UniqueIdentifier>{b807beb6-3e87-4f28-a78d-ac662bb29f4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PlayGround\possessionPokemon">
-      <UniqueIdentifier>{10f9fc4f-a2d3-44ec-9a93-84cf7be70e50}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2DFramework\move">
       <UniqueIdentifier>{704f9842-896e-4078-9a5e-cc999f53f401}</UniqueIdentifier>
     </Filter>
     <Filter Include="PlayGround\mapScene">
       <UniqueIdentifier>{7d7a0e8a-5dee-4864-a875-a637bc586deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_Player">
+      <UniqueIdentifier>{750258be-5abb-4c01-bfb6-4f22b17a999b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_Bag">
+      <UniqueIdentifier>{3294593f-41d2-4929-b2e0-0796e13147ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_IllustratedBook">
+      <UniqueIdentifier>{898ffac7-03b8-4ed9-b263-ae7c3c05a774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_PossessionPokemon">
+      <UniqueIdentifier>{10f9fc4f-a2d3-44ec-9a93-84cf7be70e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_Setting">
+      <UniqueIdentifier>{347a256f-5686-42d4-afcb-1da6ffcfd24b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_Shop">
+      <UniqueIdentifier>{b807beb6-3e87-4f28-a78d-ac662bb29f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\ui\ui_Report">
+      <UniqueIdentifier>{68710da5-cb1d-482f-bfef-cd43b429537d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -301,7 +307,7 @@
       <Filter>PlayGround\newGameScene</Filter>
     </ClInclude>
     <ClInclude Include="IllustratedBook.h">
-      <Filter>PlayGround\IllustratedBook</Filter>
+      <Filter>PlayGround\ui\ui_IllustratedBook</Filter>
     </ClInclude>
     <ClInclude Include="skillDataBase.h">
       <Filter>PlayGround\pokemon\data</Filter>
@@ -319,7 +325,7 @@
       <Filter>PlayGround\mapTool</Filter>
     </ClInclude>
     <ClInclude Include="bag.h">
-      <Filter>PlayGround\bag</Filter>
+      <Filter>PlayGround\ui\ui_Bag</Filter>
     </ClInclude>
     <ClInclude Include="battleUI.h">
       <Filter>PlayGround\battleScene</Filter>
@@ -331,13 +337,13 @@
       <Filter>PlayGround\jaewonTestScene</Filter>
     </ClInclude>
     <ClInclude Include="setting.h">
-      <Filter>PlayGround\setting</Filter>
+      <Filter>PlayGround\ui\ui_Setting</Filter>
     </ClInclude>
     <ClInclude Include="shop.h">
-      <Filter>PlayGround\shop</Filter>
+      <Filter>PlayGround\ui\ui_Shop</Filter>
     </ClInclude>
     <ClInclude Include="possessionPokemon.h">
-      <Filter>PlayGround\possessionPokemon</Filter>
+      <Filter>PlayGround\ui\ui_PossessionPokemon</Filter>
     </ClInclude>
     <ClInclude Include="moveActive.h">
       <Filter>2DFramework\move</Filter>
@@ -401,6 +407,12 @@
     </ClInclude>
     <ClInclude Include="uiManager.h">
       <Filter>PlayGround\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="report.h">
+      <Filter>PlayGround\ui\ui_Report</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_player.h">
+      <Filter>PlayGround\ui\ui_Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -543,7 +555,7 @@
       <Filter>PlayGround\newGameScene</Filter>
     </ClCompile>
     <ClCompile Include="IllustratedBook.cpp">
-      <Filter>PlayGround\IllustratedBook</Filter>
+      <Filter>PlayGround\ui\ui_IllustratedBook</Filter>
     </ClCompile>
     <ClCompile Include="skillDataBase.cpp">
       <Filter>PlayGround\pokemon\data</Filter>
@@ -561,7 +573,7 @@
       <Filter>PlayGround\mapTool</Filter>
     </ClCompile>
     <ClCompile Include="bag.cpp">
-      <Filter>PlayGround\bag</Filter>
+      <Filter>PlayGround\ui\ui_Bag</Filter>
     </ClCompile>
     <ClCompile Include="battleUI.cpp">
       <Filter>PlayGround\battleScene</Filter>
@@ -570,13 +582,13 @@
       <Filter>PlayGround\jaewonTestScene</Filter>
     </ClCompile>
     <ClCompile Include="setting.cpp">
-      <Filter>PlayGround\setting</Filter>
+      <Filter>PlayGround\ui\ui_Setting</Filter>
     </ClCompile>
     <ClCompile Include="shop.cpp">
-      <Filter>PlayGround\shop</Filter>
+      <Filter>PlayGround\ui\ui_Shop</Filter>
     </ClCompile>
     <ClCompile Include="possessionPokemon.cpp">
-      <Filter>PlayGround\possessionPokemon</Filter>
+      <Filter>PlayGround\ui\ui_PossessionPokemon</Filter>
     </ClCompile>
     <ClCompile Include="moveActive.cpp">
       <Filter>2DFramework\move</Filter>
@@ -640,6 +652,12 @@
     </ClCompile>
     <ClCompile Include="uiManager.cpp">
       <Filter>PlayGround\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="report.cpp">
+      <Filter>PlayGround\ui\ui_Report</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_player.cpp">
+      <Filter>PlayGround\ui\ui_Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

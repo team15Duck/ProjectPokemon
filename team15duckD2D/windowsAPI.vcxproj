@@ -210,6 +210,7 @@
     <ClInclude Include="pokemonSkill.h" />
     <ClInclude Include="possessionPokemon.h" />
     <ClInclude Include="randomFunction.h" />
+    <ClInclude Include="report.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="scriptManager.h" />
@@ -232,6 +233,7 @@
     <ClInclude Include="townScene.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="uiManager.h" />
+    <ClInclude Include="ui_player.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +297,7 @@
     <ClCompile Include="pokemonInfo.cpp" />
     <ClCompile Include="pokemonSkill.cpp" />
     <ClCompile Include="possessionPokemon.cpp" />
+    <ClCompile Include="report.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="scriptManager.cpp" />
     <ClCompile Include="setting.cpp" />
@@ -317,6 +320,7 @@
     <ClCompile Include="townScene.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="uiManager.cpp" />
+    <ClCompile Include="ui_player.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="windowsAPI.cpp" />
   </ItemGroup>
