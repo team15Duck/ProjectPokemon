@@ -11,10 +11,10 @@ mapData::~mapData()
 {
 }
 
-HRESULT mapData::init(const char * mapSizeFileName, const char * mapFileName)
+HRESULT mapData::init(const char * mapSizeFileName, const char * mapFileName, const char* mapPotalName)
 {
 	ii = iiMax = jj = jjMax = 0;
-	load(mapSizeFileName, mapFileName);
+	load(mapSizeFileName, mapFileName, mapPotalName);
 	setPokemon();
 	return S_OK;
 }
@@ -65,9 +65,17 @@ void mapData::render()
 	//IMAGEMANAGER->findImage("nurse")->frameRender(17 * TILE_SIZE, 8.7 * TILE_SIZE, 0, 0);
 	//오브젝트 + 주인공
 	drawObject();
+
+	for (int i = 0; i < POTAL_NUM; ++i)
+	{
+		WCHAR str[128];
+		swprintf_s(str, L"potalX : %d, potalY: %d", _potal[i].x, _potal[i].y);
+		D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 200, 30);
+	}
+
 }
 
-void mapData::load(const char * mapSizeFileName, const char * mapFileName)
+void mapData::load(const char * mapSizeFileName, const char * mapFileName, const char* mapPotalName)
 {
 	_vvTile.clear();
 
@@ -130,12 +138,118 @@ void mapData::load(const char * mapSizeFileName, const char * mapFileName)
 		}
 	}
 
-
+	potalLoad(mapPotalName);
 
 }
 
-void mapData::potalLoad()
+void mapData::potalLoad(const char* mapPotalName)
 {
+
+	HANDLE file3;
+	DWORD read3;
+	char potalNum[128] = { 0, };
+
+	//file = CreateFile(_mSizeNames[(MAP_NAME)_mapCase].c_str(), GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	//ReadFile(file, mapSize, 128, &read, NULL);
+	//CloseHandle(file);
+	file3 = CreateFile(mapPotalName, GENERIC_READ, NULL, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	ReadFile(file3, potalNum, 128, &read3, NULL);
+	CloseHandle(file3);
+
+	vector<savedPotalPos> potal;
+	potal.resize(POTAL_NUM);
+
+	string potalX[POTAL_NUM], potalY[POTAL_NUM];
+	for (int i = 0; i < POTAL_NUM; ++i)
+	{
+		potalX[i].clear();
+		potalY[i].clear();
+	}
+	bool isPosX = true;
+	int countX = 0;
+	for (int i = 0; i < strlen(potalNum); ++i)
+	{
+		if (potalNum[i] == ',')
+		{
+			isPosX = false;
+			countX++;
+			continue;
+		}
+		else if (potalNum[i] != ',')
+		{
+			if (countX % 2 == 0)
+				isPosX = true;
+			else if (countX % 2 == 1)
+				isPosX = false;
+		}
+		if (potalNum[i] == NULL)
+			break;
+		if (isPosX)
+		{
+			for (int j = 0; j < POTAL_NUM; ++j)
+			{
+				if (potal[j].x != "")
+					continue;
+				else if (potal[j].x == "")
+					potal[j].x.append((string)&potalNum[i]);
+			}
+		}
+		else
+		{
+			for (int j = 0; j < POTAL_NUM; ++j)
+			{
+				potal[j].y.append((string)&potalNum[i]);
+			}
+		}
+	}
+	_potal.resize(POTAL_NUM);
+	for (int i = 0; i < POTAL_NUM; ++i)
+	{
+
+		_potal[i].x = atoi(potal[i].x.c_str());
+		_potal[i].y = atoi(potal[i].y.c_str());
+		_potal[i].nextX = NULL;
+		_potal[i].nextY = NULL;
+		_potal[i].nextDirection = NULL;
+		_potal[i].nextScene.clear();
+	}
+	/*for (int i = 0; i < POTAL_NUM; ++i)
+	{
+		_potal[i].x = (UINT)potalX;
+		_potal[i].y = (UINT)potalY;
+		_potal[i].nextX = NULL;
+		_potal[i].nextY = NULL;
+		_potal[i].nextDirection = NULL;
+		_potal[i].nextScene.clear();
+	}*/
+
+
+	/*
+
+		potalInfo* potal = new potalInfo[POTAL_NUM];
+		ZeroMemory(potal, sizeof(potalInfo)*POTAL_NUM);
+		for (int i = 0; i < POTAL_NUM; ++i)
+		{
+			potal[i].x = potalPos[i].x;
+			potal[i].x = potalPos[i].y;
+			potal[i].nextX = NULL;
+			potal[i].nextY = NULL;
+			potal[i].nextDirection = NULL;
+			potal[i].nextScene.clear();
+			_potal.push_back(_potal[i]);
+		}
+		*/
+		//
+		//for (int i = 0; i < POTAL_NUM; ++i)
+		//{
+		//	_potal.push_back(potal[i]);
+		//	_potal[i].x = potalPos[i].x;
+		//	_potal[i].y = potalPos[i].y;
+		//	_potal[i].nextX = NULL;
+		//	_potal[i].nextY = NULL;
+		//	_potal[i].nextDirection = NULL;
+		//	_potal[i].nextScene.clear();
+		//}
 }
 
 void mapData::drawObject()

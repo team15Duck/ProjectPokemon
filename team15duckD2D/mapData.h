@@ -2,6 +2,7 @@
 #include <vector>
 #include "tileNode.h"
 #include "pokemon.h"
+#define POTAL_NUM 6
 
 
 
@@ -22,6 +23,11 @@ public:
 		UINT nextY;
 		int nextDirection;
 		// left = 0; top = 1; right = 2; down = 3;
+	};
+	struct savedPotalPos
+	{
+		string x;
+		string y;
 	};
 
 
@@ -45,13 +51,14 @@ public:
 	mapData();
 	~mapData();
 	
-	virtual HRESULT init(const char* mapSizeFileName, const char* mapFileName);
+	virtual HRESULT init(const char* mapSizeFileName, const char* mapFileName, const char* mapPotalName);
 	virtual void release();
 	virtual void update();
 	virtual void render();
-	virtual void load(const char* mapSizeFileName, const char* mapFileName);
+	virtual void load(const char* mapSizeFileName, const char* mapFileName, const char* mapPotalName);
 
-	virtual void potalLoad();
+	virtual void potalLoad(const char* mapPotalName);
+
 	
 	//오브젝트 렌더용 함수
 	virtual void drawObject();
