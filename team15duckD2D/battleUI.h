@@ -19,7 +19,7 @@ enum BATTLE_UI
 	BATTLE_UI_NONE
 };
 
-
+class pokemon;
 class battleUI
 {
 private:

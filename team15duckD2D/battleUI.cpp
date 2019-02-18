@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "battleUI.h"
-
+#include "pokemon.h"
 
 battleUI::battleUI()
 {

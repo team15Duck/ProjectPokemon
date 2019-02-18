@@ -37,6 +37,7 @@ HRESULT battleScene::init()
 		_active = PA_NONE;
 		_battleStep = STEP_APPLY_BUFF;
 		_selectSkillIdx = 0;
+
 	}
 	return S_OK;
 }
