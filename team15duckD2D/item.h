@@ -252,6 +252,8 @@ private:
 	POINTF					_imgPos;		//이미지위치
 	POINT					_imgSize;		//이미지크기
 
+	bool					_isEat;			//필드아이템 먹었니?
+
 
 public:
 	item();
@@ -287,6 +289,9 @@ public:
 
 	//아이템정보
 	string getItemInfo() { return _itemInfo; }
+
+	//필드아이템 렌더세팅
+	void setIsEat(bool eat) { _isEat = eat; }
 
 
 	//ITEM_VALUE makeItemValue(ITEM_TYPE type);
