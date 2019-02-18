@@ -20,12 +20,12 @@ HRESULT battleScene::init()
 	// 테스트용 삭제 될 것
 	{
 		_pms[TURN_ENEMY] = new pokemon;
-		_pms[TURN_ENEMY]->init(NULL, PM_VENUSAUR, 100, false);
+		_pms[TURN_ENEMY]->init(NULL, PM_VENUSAUR, 15, false);
 		_pms[TURN_ENEMY]->setBattleUILink(_battleUI);
 		_pms[TURN_ENEMY]->battelStart();
 
 		_pms[TURN_PLAYER] = new pokemon;
-		_pms[TURN_PLAYER]->init(NULL, PM_CHARIZARD, 100, true);
+		_pms[TURN_PLAYER]->init(NULL, PM_CHARIZARD, 15, true);
 		_pms[TURN_PLAYER]->setBattleUILink(_battleUI);
 		_pms[TURN_PLAYER]->battelStart();
 

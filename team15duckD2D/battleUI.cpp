@@ -27,6 +27,11 @@ HRESULT battleUI::init()
 	IMAGEMANAGER->addImage("playerUI", L"image/battle_UI/battle_UI_Player.png", 416, 148);
 	IMAGEMANAGER->addImage("enemyUI", L"image/battle_UI/battle_UI_enemy.png", 400, 116);
 	IMAGEMANAGER->addImage("battleCheckPoint", L"image/battle_UI/battle_UI_chk_point.png", 24, 40);
+
+	IMAGEMANAGER->addImage("hpBar01", L"image/battle_UI/battle_UI_HP_01.png", 36, 12);
+	IMAGEMANAGER->addImage("hpBar02", L"image/battle_UI/battle_UI_HP_02.png", 36, 12);
+	IMAGEMANAGER->addImage("hpBar03", L"image/battle_UI/battle_UI_HP_03.png", 36, 12);
+	IMAGEMANAGER->addImage("hpBarBase", L"image/battle_UI/battle_UI_HP_base.png", 36, 12);
 	_isSkip = false;
 	_currentMenu = BATTLE_UI_NONE;
 
@@ -180,23 +185,38 @@ void battleUI::render()
 		}
 
 	}
-	IMAGEMANAGER->findImage("playerUI")->render(960 - 416, 448 - 148);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
+	IMAGEMANAGER->findImage("playerUI")->render(544, 300);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
 	
 	
 	if (_myPokemon)
 	{
+		D2DMANAGER->drawText(string2wstring(_myPokemon->getName()).c_str(), 600, 320, 35);
+		WCHAR str[128];
+		swprintf_s(str, L"Lv %d", _myPokemon->getLevel());
+		D2DMANAGER->drawText(str, 800, 320, 35);
 
+		swprintf_s(str, L"%d/", _myPokemon->getDisplayHp());
+		D2DMANAGER->drawText(str, 700, 385, 30);
+		swprintf_s(str, L"%d", _myPokemon->getMaxHp());
+		D2DMANAGER->drawText(str, 800, 385, 30);
+		IMAGEMANAGER->findImage("hpBarBase")->render(737, 367, 190, 12);
+		float hpPercent = (float)_myPokemon->getDisplayHp() / (float)_myPokemon->getMaxHp();
+		if (hpPercent < 0) hpPercent = 0;
+		if (hpPercent > 0.5f)
+		{
+			IMAGEMANAGER->findImage("hpBar01")->render(737, 367, hpPercent * 190, 12);
+		}
+		else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+		{
+			IMAGEMANAGER->findImage("hpBar02")->render(737, 367, hpPercent * 190, 12);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("hpBar03")->render(737, 367, hpPercent * 190, 12);
+		}
+
+		//float expPercent = (float)(_myPokemon->getDisplayExp() - _myPokemon->g) / (float)_myPokemon->getNextExp();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	IMAGEMANAGER->findImage("enemyUI")->render(0, 0);// , L"image/battle_UI/battle_UI_enemy.png", 400, 116);
@@ -204,7 +224,28 @@ void battleUI::render()
 
 	if (_enemyPokemon)
 	{
+		D2DMANAGER->drawText(string2wstring(_enemyPokemon->getName()).c_str(), 13, 15, 30);
+		WCHAR str[128];
+		swprintf_s(str, L"Lv %d", _enemyPokemon->getLevel());
+		D2DMANAGER->drawText(str, 220, 15, 30);
 
+		
+
+		IMAGEMANAGER->findImage("hpBarBase")->render(157, 68, 190, 12);
+		float hpPercent = (float)_enemyPokemon->getDisplayHp() / (float)_enemyPokemon->getMaxHp();
+		if (hpPercent < 0) hpPercent = 0;
+		if (hpPercent > 0.5f)
+		{
+			IMAGEMANAGER->findImage("hpBar01")->render(157, 68, hpPercent * 190, 12);
+		}
+		else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+		{
+			IMAGEMANAGER->findImage("hpBar02")->render(157, 68, hpPercent * 190, 12);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("hpBar03")->render(157, 68, hpPercent * 190, 12);
+		}
 	}
 
 
