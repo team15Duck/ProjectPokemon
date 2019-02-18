@@ -21,6 +21,10 @@ HRESULT homeScene::init()
 	_player->init();
 	_homeMap->setPlayerMemoryAdressLink(_player);
 	_player->setMapDataMemoryAdressLink(_homeMap);
+
+	SOUNDMANAGER->addSound("homeBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
+	SOUNDMANAGER->play("homeBGM");
+
 	return S_OK;
 }
 

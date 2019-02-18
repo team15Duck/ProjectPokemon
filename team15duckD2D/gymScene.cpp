@@ -21,6 +21,10 @@ HRESULT gymScene::init()
 	_player->init();
 	_gymMap->setPlayerMemoryAdressLink(_player);
 	_player->setMapDataMemoryAdressLink(_gymMap);
+
+	SOUNDMANAGER->addSound("gymBGM", "sound/bgm_14_Pokemon_Gym.mp3", true, true);
+	SOUNDMANAGER->play("gymBGM");
+
 	return S_OK;
 }
 

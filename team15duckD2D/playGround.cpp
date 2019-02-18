@@ -204,7 +204,7 @@ HRESULT playGround::init()
 	
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("townScene");
+		SCENEMANAGER->changeScene("homeScene");
 	}
 	else
 	{

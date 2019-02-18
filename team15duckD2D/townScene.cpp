@@ -20,6 +20,10 @@ HRESULT townScene::init()
 	_player->init();
 	_townMap->setPlayerMemoryAdressLink(_player);
 	_player->setMapDataMemoryAdressLink(_townMap);
+
+	SOUNDMANAGER->addSound("townBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
+	SOUNDMANAGER->play("townBGM");
+
 	return S_OK;
 }
 

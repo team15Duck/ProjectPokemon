@@ -21,6 +21,10 @@ HRESULT storeScene::init()
 	_player->init();
 	_storeMap->setPlayerMemoryAdressLink(_player);
 	_player->setMapDataMemoryAdressLink(_storeMap);
+	
+	SOUNDMANAGER->addSound("storeBGM", "sound/bgm_13_Pokemon_Center.mp3", true, true);
+	SOUNDMANAGER->play("storeBGM");
+	
 	return S_OK;
 }
 

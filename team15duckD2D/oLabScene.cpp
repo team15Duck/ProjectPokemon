@@ -21,6 +21,10 @@ HRESULT oLabScene::init()
 	_player->init();
 	_oLabMap->setPlayerMemoryAdressLink(_player);
 	_player->setMapDataMemoryAdressLink(_oLabMap);
+
+	SOUNDMANAGER->addSound("oLabBGM", "sound/bgm_07_Professor_Oaks_Laboratory.mp3", true, true);
+	SOUNDMANAGER->play("oLabBGM");
+
 	return S_OK;
 }
 
