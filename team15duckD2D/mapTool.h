@@ -45,18 +45,6 @@ struct tagCurrentTile
 	int curY = 0;
 };
 
-//포탈의 정보를 담고있는 struct
-struct potalInfo
-{
-	UINT x;
-	UINT y;
-	string nextScene;
-	UINT nextX;
-	UINT nextY;
-	int nextDirection;
-	// left = 0; top = 1; right = 2; down = 3;
-};
-
 class mapTool
 {
 private:

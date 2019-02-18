@@ -1,15 +1,16 @@
 #pragma once
 #include "mapData.h"
 
-class oLapMap : public mapData
+class oLabMap : public mapData
 {
 private:
 
 public:
-	oLapMap();
-	~oLapMap();
+	oLabMap();
+	~oLabMap();
 
 
 	virtual void setPokemon() override;
+	void potalLoad() override;
 };
 

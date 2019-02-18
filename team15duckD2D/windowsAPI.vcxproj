@@ -200,8 +200,8 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="objectTool.h" />
     <ClInclude Include="objectToolScene.h" />
+    <ClInclude Include="oLabMap.h" />
     <ClInclude Include="oLabScene.h" />
-    <ClInclude Include="oLapMap.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="playerDataBase.h" />
     <ClInclude Include="playGround.h" />
@@ -289,8 +289,8 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="objectTool.cpp" />
     <ClCompile Include="objectToolScene.cpp" />
+    <ClCompile Include="oLabMap.cpp" />
     <ClCompile Include="oLabScene.cpp" />
-    <ClCompile Include="oLapMap.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="playerDataBase.cpp" />
     <ClCompile Include="playGround.cpp" />

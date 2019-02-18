@@ -239,12 +239,12 @@ void mapTool::render()
 				if ((_vvTile[i][j]->attr & ATTR_UNMOVE) == ATTR_UNMOVE)
 				{
 					swprintf_s(str, L"UnMove");
-					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(255,0,255));
+					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(255, 0, 255));
 				}
 				if ((_vvTile[i][j]->attr & ATTR_POTAL) == ATTR_POTAL)
 				{
 					swprintf_s(str, L"POTAL");
-					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(255, 0, 255));
+					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(0, 0, 255));
 				}
 				if ((_vvTile[i][j]->attr & ATTR_APPEAR) == ATTR_APPEAR)
 				{
@@ -635,7 +635,7 @@ void mapTool::drawMap()
 	//	_potalMap.erase(idx);
 	//}
 
-	
+
 	if (_potalNum == MAX_POTAL_NUM)
 		return;
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
@@ -665,7 +665,7 @@ void mapTool::drawMap()
 
 	if (KEYMANAGER->isOnceKeyUp(VK_SHIFT))
 		_isShift = false;
-	
+
 	if (_ptMouse.x - CAMERA->getPosX() > SAMPLETILE_STARTX) return;
 	if (_ptMouse.x > _vvRect[0][TILEX - 1].right) return;
 	if (_ptMouse.x < _vvRect[0][0].left) return;
@@ -733,7 +733,7 @@ void mapTool::drawMap()
 				{
 					if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 					{
-						
+
 						_vvTile[i][j]->terrainImageIndex = _curImgNum;
 						_vvTile[i][j]->terrainFrameX = _pickSampleTile.curX;
 						_vvTile[i][j]->terrainFrameY = _pickSampleTile.curY;
@@ -776,26 +776,8 @@ void mapTool::drawMap()
 			}
 		}
 	}
-	/*
 
-enum MAP_NAME
-{
-	MAP_TEST,		//테스트맵
-	MAP_TOWN,		//마을
-	MAP_HOME,		//내집
-	MAP_O_LAB,		//오박사 연구소
-	MAP_STORE,		//상점
-	MAP_CENTER,		//포켓몬센터
-	MAP_GYM,		//체육관
-	MAP_FIELD,		//필드
-	MAP_CAVE,		//동굴
 
-	MAP_NONE,
-	MAP_COUNT = MAP_NONE,
-
-};
-	*/
-	
 }
 
 void mapTool::save(int mapCase)
@@ -818,6 +800,78 @@ void mapTool::save(int mapCase)
 			for (int j = 0; j < TILEX; ++j)
 			{
 				tile[j + i * TILEX] = *_vvTile[i][j];
+
+				//마을맵의 포탈 정보 입력
+				if (mapCase ==  1)		//마을의 포탈
+				{
+					//필드로 가는 포탈
+					_vvTile[8][7]->attr |= ATTR_POTAL;
+					_vvTile[9][7]->attr |= ATTR_POTAL;
+					_vvTile[10][7]->attr |= ATTR_POTAL;
+
+					//집으로 가는 포탈
+					_vvTile[16][23]->attr |= ATTR_POTAL;
+
+					//오박사 실험실 포탈
+					_vvTile[17][36]->attr |= ATTR_POTAL;
+
+					//상점으로 이동하는 포탈
+					_vvTile[27][38]->attr |= ATTR_POTAL;
+
+					//센터로 이동하는 포탈
+					_vvTile[27][33]->attr |= ATTR_POTAL;
+
+					//체육관으로 이동하는 포탈
+					_vvTile[27][26]->attr |= ATTR_POTAL;
+
+				}
+				//플레이어 집의 포탈 정보 입력
+				if (mapCase == 2)
+				{
+					//마을로 이동하는 포탈
+					_vvTile[15][15]->attr |= ATTR_POTAL;
+				}
+				//오박사 연구소의 포탈정보 입력
+				if (mapCase == 3)
+				{
+					//마을로 이동하는 포탈
+					_vvTile[21][16]->attr |= ATTR_POTAL;
+				}
+				//상점의 포탈정보 입력
+				if (mapCase == 4)
+				{
+					//마을로 이동하는 포탈
+					_vvTile[14][14]->attr |= ATTR_POTAL;
+				}
+				//포켓몬센터의 포탈정보 입력
+				if (mapCase == 5)
+				{
+					//마을로 이동하는 포탈 
+					_vvTile[15][17]->attr |= ATTR_POTAL;
+				}
+				//체육관의 포탈정보 입력
+				if (mapCase == 6)
+				{
+					//마을로 이동하는 포탈
+					_vvTile[21][16]->attr |= ATTR_POTAL;
+				}
+				//필드의 포탈정보 입력
+				if (mapCase == 7)
+				{
+					//마을로 이동하는 포탈
+					_vvTile[42][47]->attr |= ATTR_POTAL;
+					_vvTile[42][48]->attr |= ATTR_POTAL;
+					_vvTile[42][49]->attr |= ATTR_POTAL;
+					_vvTile[42][50]->attr |= ATTR_POTAL;
+					//동굴로 이동하는 포탈
+					_vvTile[16][52]->attr |= ATTR_POTAL;
+				}
+				//동굴의 포탈정보 입력
+				if (mapCase == 8)
+				{
+					//필드로 가는 포탈
+					_vvTile[40][31]->attr |= ATTR_POTAL;
+				}
 			}
 		}
 
@@ -832,25 +886,7 @@ void mapTool::save(int mapCase)
 		delete[] tile;
 	}
 
-
-	HANDLE file3;
-	DWORD write3;
-
-	string data;
-	data.clear();
-
-	char potalPos[128] = "";
-	for (int i = 0; i < MAX_POTAL_NUM; ++i)
-	{
-		sprintf_s(potalPos, "%d,%d,", _potalPosX[i], _potalPosY[i]);
-		data.append(potalPos);
-	}
-	sprintf_s(potalPos, "%s", data.c_str());
-
-	file3 = CreateFile(_mPotalPos[(MAP_NAME)mapCase].c_str(), GENERIC_WRITE, NULL, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	WriteFile(file3, potalPos, strlen(potalPos), &write3, NULL);
-
-	CloseHandle(file3);
+	
 
 }
 

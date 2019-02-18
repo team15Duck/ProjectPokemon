@@ -15,7 +15,7 @@ caveScene::~caveScene()
 HRESULT caveScene::init()
 {
 	_caveMap = new caveMap;
-	_caveMap->init("data/caveMapSize.map", "data/caveMapData.map", "data/caveMapPotal.map");
+	_caveMap->init("data/caveMapSize.map", "data/caveMapData.map");
 
 	_player = new player;
 	_player->init();

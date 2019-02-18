@@ -14,7 +14,7 @@ mapTestScene::~mapTestScene()
 HRESULT mapTestScene::init()
 {
 	_testMap = new testMap;
-	_testMap->init("data/oLabMapSize.map", "data/oLabMapData.map", "data/oLabMapPotal.map");
+	_testMap->init("data/townMapSize.map", "data/townMapData.map");
 
 	_player = new player;
 	_player->init();

@@ -8,7 +8,16 @@
 #include "battleScene.h"
 #include "battleScene2.h"
 #include "jaewonTestScene.h"
+
 #include "caveScene.h"
+#include "centerScene.h"
+#include "fieldScene.h"
+#include "gymScene.h"
+#include "homeScene.h"
+#include "oLabScene.h"
+#include "storeScene.h"
+#include "townScene.h"
+
 
 class playGround : public gameNode
 {

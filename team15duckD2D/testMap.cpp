@@ -19,8 +19,14 @@ void testMap::setPokemon()
 	_pokemon.push_back(PM_CHARIZARD);
 	_pokemon.push_back(PM_IVYSAUR);
 
+}
+
+void testMap::potalLoad()
+{
+	{
+		//potalInfo* info;
 
 
-
+	}
 
 }

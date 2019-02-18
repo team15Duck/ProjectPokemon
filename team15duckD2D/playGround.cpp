@@ -193,11 +193,18 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("battleScene2", new battleScene2);
 
 	SCENEMANAGER->addScene("caveScene", new caveScene);
-
-
+	SCENEMANAGER->addScene("centerScene", new centerScene);
+	SCENEMANAGER->addScene("fieldScene", new fieldScene);
+	SCENEMANAGER->addScene("gymScene", new gymScene);
+	SCENEMANAGER->addScene("homeScene", new homeScene);
+	SCENEMANAGER->addScene("oLabScene", new oLabScene);
+	SCENEMANAGER->addScene("storeScene", new storeScene);
+	SCENEMANAGER->addScene("townScene", new townScene);
+	
+	
 	if (MAPTOOLSCENE)
 	{
-		SCENEMANAGER->changeScene("objectToolScene");
+		SCENEMANAGER->changeScene("caveScene");
 	}
 	else
 	{

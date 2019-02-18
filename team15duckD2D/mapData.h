@@ -55,13 +55,13 @@ public:
 	mapData();
 	~mapData();
 	
-	virtual HRESULT init(const char* mapSizeFileName, const char* mapFileName, const char* mapPotalName);
+	virtual HRESULT init(const char* mapSizeFileName, const char* mapFileName);
 	virtual void release();
 	virtual void update();
 	virtual void render();
-	virtual void load(const char* mapSizeFileName, const char* mapFileName, const char* mapPotalName);
+	virtual void load(const char* mapSizeFileName, const char* mapFileName);
 
-	virtual void potalLoad(const char* mapPotalName);
+	virtual void potalLoad();
 
 	
 	//오브젝트 렌더용 함수

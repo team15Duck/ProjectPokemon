@@ -148,6 +148,30 @@
     <Filter Include="PlayGround\ui\ui_Report">
       <UniqueIdentifier>{68710da5-cb1d-482f-bfef-cd43b429537d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\map\cave">
+      <UniqueIdentifier>{e189643c-828f-434c-a677-499ed39f9818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\center">
+      <UniqueIdentifier>{e5bfdbde-b82d-4976-9a9b-354c880ccad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\field">
+      <UniqueIdentifier>{21e11f14-bce9-4965-8694-636c0a61707c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\gym">
+      <UniqueIdentifier>{c699012c-c4de-4d2a-9c23-f81caa1b8aaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\home">
+      <UniqueIdentifier>{d46afd76-a863-44bb-96f9-6960602d2774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\oLab">
+      <UniqueIdentifier>{fc0b5698-0884-415d-a802-0b219317b5c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\store">
+      <UniqueIdentifier>{99c008a7-94e1-4c55-8647-360ee1ce0f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\map\town">
+      <UniqueIdentifier>{3815a404-541e-47cc-b927-0a0e7025f327}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -369,30 +393,6 @@
     <ClInclude Include="storeScene.h">
       <Filter>PlayGround\mapScene</Filter>
     </ClInclude>
-    <ClInclude Include="caveMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="centerMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="fieldMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="gymMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="homeMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="oLapMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="storeMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
-    <ClInclude Include="townMap.h">
-      <Filter>PlayGround\map</Filter>
-    </ClInclude>
     <ClInclude Include="scriptManager.h">
       <Filter>2DFramework\Manager</Filter>
     </ClInclude>
@@ -416,6 +416,30 @@
     </ClInclude>
     <ClInclude Include="objectTool.h">
       <Filter>PlayGround\objectTool</Filter>
+    </ClInclude>
+    <ClInclude Include="caveMap.h">
+      <Filter>PlayGround\map\cave</Filter>
+    </ClInclude>
+    <ClInclude Include="centerMap.h">
+      <Filter>PlayGround\map\center</Filter>
+    </ClInclude>
+    <ClInclude Include="fieldMap.h">
+      <Filter>PlayGround\map\field</Filter>
+    </ClInclude>
+    <ClInclude Include="gymMap.h">
+      <Filter>PlayGround\map\gym</Filter>
+    </ClInclude>
+    <ClInclude Include="homeMap.h">
+      <Filter>PlayGround\map\home</Filter>
+    </ClInclude>
+    <ClInclude Include="oLabMap.h">
+      <Filter>PlayGround\map\oLab</Filter>
+    </ClInclude>
+    <ClInclude Include="storeMap.h">
+      <Filter>PlayGround\map\store</Filter>
+    </ClInclude>
+    <ClInclude Include="townMap.h">
+      <Filter>PlayGround\map\town</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -617,30 +641,6 @@
     <ClCompile Include="storeScene.cpp">
       <Filter>PlayGround\mapScene</Filter>
     </ClCompile>
-    <ClCompile Include="caveMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="centerMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="fieldMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="gymMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="homeMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="oLapMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="storeMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
-    <ClCompile Include="townMap.cpp">
-      <Filter>PlayGround\map</Filter>
-    </ClCompile>
     <ClCompile Include="scriptManager.cpp">
       <Filter>2DFramework\Manager</Filter>
     </ClCompile>
@@ -664,6 +664,30 @@
     </ClCompile>
     <ClCompile Include="objectTool.cpp">
       <Filter>PlayGround\objectTool</Filter>
+    </ClCompile>
+    <ClCompile Include="caveMap.cpp">
+      <Filter>PlayGround\map\cave</Filter>
+    </ClCompile>
+    <ClCompile Include="centerMap.cpp">
+      <Filter>PlayGround\map\center</Filter>
+    </ClCompile>
+    <ClCompile Include="fieldMap.cpp">
+      <Filter>PlayGround\map\field</Filter>
+    </ClCompile>
+    <ClCompile Include="gymMap.cpp">
+      <Filter>PlayGround\map\gym</Filter>
+    </ClCompile>
+    <ClCompile Include="homeMap.cpp">
+      <Filter>PlayGround\map\home</Filter>
+    </ClCompile>
+    <ClCompile Include="oLabMap.cpp">
+      <Filter>PlayGround\map\oLab</Filter>
+    </ClCompile>
+    <ClCompile Include="storeMap.cpp">
+      <Filter>PlayGround\map\store</Filter>
+    </ClCompile>
+    <ClCompile Include="townMap.cpp">
+      <Filter>PlayGround\map\town</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
