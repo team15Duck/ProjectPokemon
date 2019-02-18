@@ -211,20 +211,30 @@ void battleScene::keyControl()
 		{
 			if (_battleUI->getCurrentSelectSkill() > 0)
 			{
-				_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() - 1);
+				_battleUI->setCurrentSelectSkill(_battleUI->getCurrentSelectSkill() - 1);
 			}
 			else
 			{
-				_battleUI->setCurrentSelctMenuNum(_battleUI->getSkillSize() - 1);
+				_battleUI->setCurrentSelectSkill(_battleUI->getSkillSize() - 1);
 			}
 		}
 		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 		{
-			_battleUI->setCurrentSelctMenuNum(_battleUI->getCurrentSelectMenuNum() + 1);
-			if (_battleUI->getCurrentSelectMenuNum() == _battleUI->getSkillSize() - 1)
+			_battleUI->setCurrentSelectSkill(_battleUI->getCurrentSelectSkill() + 1);
+			if (_battleUI->getCurrentSelectSkill() == _battleUI->getSkillSize())
 			{
-				_battleUI->setCurrentSelctMenuNum(0);
+				_battleUI->setCurrentSelectSkill(0);
 			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			//여기서 사용해주세요
+			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+			_battleUI->setCurrentSelectSkill(0);
+		}
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 		}
 	}
 

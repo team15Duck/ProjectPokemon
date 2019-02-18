@@ -142,10 +142,13 @@ void battleUI::render()
 				if (i == _currentSelectSkill)
 				{
 					WCHAR str[128];
-					swprintf_s(str, L"PP     %d/", _skillUI[i].currentPP);
+					swprintf_s(str, L"PP        %d/", _skillUI[i].currentPP);
 					D2DMANAGER->drawText(str, 550, 500, 40);
 					swprintf_s(str, L"%d", _skillUI[i].maxPP);
-					D2DMANAGER->drawText(str, 750, 500, 40);
+					D2DMANAGER->drawText(str, 810, 500, 40);
+					swprintf_s(str, L"기술타입  /");
+					D2DMANAGER->drawText(str, 550, 560, 40);
+					D2DMANAGER->drawText(_skillUI[i].type.c_str(), 800, 560, 40);
 				}
 			}
 
