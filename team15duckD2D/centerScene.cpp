@@ -19,6 +19,7 @@ HRESULT centerScene::init()
 
 	_centerMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
 	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_centerMap);
+	PLAYERDATA->getPlayer()->setSceneName("centerScene");
 
 	SOUNDMANAGER->addSound("centerBGM", "sound/bgm_13_Pokemon_Center.mp3", true, true);
 	SOUNDMANAGER->play("centerBGM");

@@ -19,6 +19,7 @@ HRESULT fieldScene::init()
 
 	_fieldMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
 	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_fieldMap);
+	PLAYERDATA->getPlayer()->setSceneName("fieldScene");
 
 	SOUNDMANAGER->addSound("fieldBGM", "sound/bgm_10_Road_to_Viridian_City.mp3", true, true);
 	SOUNDMANAGER->play("fieldBGM");
