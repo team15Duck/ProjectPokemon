@@ -45,7 +45,9 @@ typedef struct tagPpokemonInfo
 	wstring s_attk;
 	wstring def;
 	wstring s_def;
+	wstring speed;
 	wstring currentExp;
+	wstring nextLvExp;
 
 	bool isDataSet;
 
