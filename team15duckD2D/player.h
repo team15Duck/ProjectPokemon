@@ -113,7 +113,11 @@ public:
 	mapItemList getItem() { return _mItemList; }
 	//mapItemList getItemAmount() { return _mItemList.size; }
 	pokemon** getPokemon() { return _pokemon; }
+
+
 	UINT	getCurrentPokemonCnt() { return _currentPokemon; }
+	void	setCurrentPokemonCnt(int num) { _currentPokemon = num; }
+
 
 	void setMapDataMemoryAdressLink(mapData* map) { _map = map; }
 

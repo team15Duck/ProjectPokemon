@@ -307,6 +307,33 @@ void player::stateUpdate()
 	{
 		case player::PS_IDLE_LEFT:
 			_isRight = false;
+			if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_ITEM)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					for (int i = 0; i < _map->getFieldItems().size(); i++)
+					{
+						if (_map->getFieldItems()[i].x == _tileX - 1 && _map->getFieldItems()[i].y == _tileY)
+						{
+							mapItemIter iter = _mItemList.find(_map->getFieldItems()[i].itemType);
+							if (iter == _mItemList.end())
+							{
+								_mItemList.insert(make_pair(_map->getFieldItems()[i].itemType, 1));
+								_map->getFieldItems().erase(_map->getFieldItems().begin() + i);
+							}
+							else
+							{
+								iter->second++;
+							}
+							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_ITEM;
+							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_UNMOVE;
+							break;
+						}
+					}
+				}
+			}
+
+
 		break;
 		case player::PS_IDLE_UP:
 			_isRight = false;
