@@ -96,6 +96,7 @@ private:
 	void verticalSet();
 	void aniSetStart(string aniKeyName);
 	void appearTileCheck();
+	void potalCheck();
 
 public:
 	//°Ù¼Â

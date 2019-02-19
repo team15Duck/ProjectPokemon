@@ -16,11 +16,10 @@ HRESULT townScene::init()
 	_townMap = new townMap;
 	_townMap->init("data/townMapSize.map", "data/townMapData.map");
 
-	_player = new player;
-	_player->init();
-	_townMap->setPlayerMemoryAdressLink(_player);
-	_player->setMapDataMemoryAdressLink(_townMap);
 
+	_townMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
+	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_townMap);
+	PLAYERDATA->getPlayer()->setSceneName("townScene");
 	SOUNDMANAGER->addSound("townBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
 	SOUNDMANAGER->play("townBGM");
 
@@ -35,8 +34,8 @@ void townScene::release()
 void townScene::update()
 {
 	_townMap->update();
-	_player->update();
-	CAMERA->move(_player->getPosX(), _player->getPosY());
+	PLAYERDATA->getPlayer()->update();
+	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 
 void townScene::render()

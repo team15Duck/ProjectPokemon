@@ -94,5 +94,7 @@ public:
 
 	void pushNpc(npc* npc) { _npc.push_back(npc); }
 	
+
+	vector<potalInfo> getPotal() { return _potal; }
 };
 

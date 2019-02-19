@@ -328,6 +328,7 @@ void player::stateUpdate()
 				aniSetStart("idle_left");
 				_state = PS_IDLE_LEFT;
 				appearTileCheck();
+				potalCheck();
 			}
 		break;
 		case player::PS_MOVE_UP:
@@ -343,6 +344,7 @@ void player::stateUpdate()
 				aniSetStart("idle_up");
 				_state = PS_IDLE_UP;
 				appearTileCheck();
+				potalCheck();
 			}
 		break;
 		case player::PS_MOVE_RIGHT:
@@ -358,6 +360,7 @@ void player::stateUpdate()
 				aniSetStart("idle_left");
 				_state = PS_IDLE_RIGHT;
 				appearTileCheck();
+				potalCheck();
 			}
 		break;
 		case player::PS_MOVE_DOWN:
@@ -373,6 +376,7 @@ void player::stateUpdate()
 				aniSetStart("idle_down");
 				_state = PS_IDLE_DOWN;
 				appearTileCheck();
+				potalCheck();
 			}
 		break;
 		case player::PS_FASTMOVE_LEFT:
@@ -560,6 +564,61 @@ void player::appearTileCheck()
 		}
 	}
 	
+}
+
+void player::potalCheck()
+{
+	if (_map->getTile(_tileX, _tileY)->attr & ATTR_POTAL)
+	{
+		mapData::potalInfo potal;
+		for (int i = 0; i < _map->getPotal().size(); i++)
+		{	
+			if (_map->getPotal()[i].x == _tileX && _map->getPotal()[i].y == _tileY)
+			{
+				potal = _map->getPotal()[i];
+				break;
+			}
+		}
+		_tileX = potal.nextX;
+		_tileY = potal.nextY;
+
+		_posX = (float)_tileX * 64 + 32;
+		_posY = (float)_tileY * 64 + 32;
+
+		switch (potal.nextDirection)
+		{
+			//¿Þ
+			case 0:
+				_state = PS_MOVE_LEFT;
+				_isRight = false;
+				aniSetStart("move_left");
+				_moveDistance = 64;
+			break;
+			//À§
+			case 1: 
+				_state = PS_MOVE_UP;
+				_isRight = false;
+				aniSetStart("move_up");
+				_moveDistance = 64;
+			break;
+			//¿À
+			case 2:
+				_state = PS_MOVE_RIGHT;
+				_isRight = true;
+				aniSetStart("move_left");
+				_moveDistance = 64;
+			break;
+			//¾Æ·¡
+			case 3:
+				_state = PS_MOVE_DOWN;
+				_isRight = false;
+				aniSetStart("move_down");
+				_moveDistance = 64;
+			break;
+		}
+
+		SCENEMANAGER->changeScene(potal.nextScene);
+	}
 }
 
 void player::fishingStart()

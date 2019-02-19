@@ -7,8 +7,7 @@ class townScene : public gameNode
 {
 private:
 	mapData* _townMap;
-	player* _player;
-
+	
 public:
 	townScene();
 	~townScene();
