@@ -86,8 +86,8 @@ void mapData::render()
 
 	//오브젝트 + 주인공
 	drawObject();
-
-	EFFECTMANAGER->render();
+	if(_player->getSceneName() != "caveScene")
+		EFFECTMANAGER->render();
 }
 
 void mapData::load(const char * mapSizeFileName, const char * mapFileName)
@@ -326,9 +326,12 @@ void mapData::drawObject()
 		jj = CAMERA->getPosX() / TILE_SIZE;
 		if (jj < 0) jj = 0;
 
+		
 		//오브젝트->타일로 변경완료되면 숫자 지워주기
 		if (((int)_player->getPosY() + 31) / 64 == ii)
 		{
+			if (_player->getSceneName() == "caveScene")
+				EFFECTMANAGER->render();
 			_player->render();
 		}
 
