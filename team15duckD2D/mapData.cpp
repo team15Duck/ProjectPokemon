@@ -172,6 +172,10 @@ void mapData::fieldItemLoad()
 {
 }
 
+void mapData::monsterLoad()
+{
+}
+
 void mapData::drawObject()
 {
 	for (; ii < iiMax; ++ii)
@@ -311,7 +315,10 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
-
+				else if ((_vvTile[ii][jj]->objectFrameX >= 0 && _vvTile[ii][jj]->objectFrameX < 3) && _vvTile[ii][jj]->objectFrameY == 5) //체육관 큰돌 윗부분
+				{
+					imgObject();
+				}
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_11") //주인공 집
 			{
@@ -388,7 +395,7 @@ void mapData::drawObject()
 
 		for (int i = 0; i < _npc.size(); ++i)
 		{
-			if((_npc[i]->getTileY()) / 64 == ii)
+			if((_npc[i]->getTileY() + 41) / 64 == ii)
 				_npc[i]->render();
 		}
 
@@ -553,6 +560,8 @@ void mapData::drawObject()
 				}
 			}
 
+		
+
 
 			if ((int)_player->getPosX() / 64 == jj && (int)_player->getPosY() / 64 == ii)
 			{
@@ -578,9 +587,9 @@ void mapData::drawObject()
 					swprintf_s(str, L"APPEAR");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 0, 255));
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_ITEM) == ATTR_ITEM)
+				if ((_vvTile[ii][jj]->attr & ATTR_POKEMON) == ATTR_POKEMON)
 				{
-					swprintf_s(str, L"아이템");
+					swprintf_s(str, L"몬스터");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 255, 0));
 				}
 			}

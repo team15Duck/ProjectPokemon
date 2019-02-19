@@ -6,6 +6,7 @@ enum NPC_TYPE
 	NPC_TYPE_OAK,										  //오박사
 	NPC_TYPE_SHOPOWNER,									  //상점주인
 	NPC_TYPE_NURSE,										  //간호사
+	NPC_TYPE_BOSS,										  //비주기
 		
 	NPC_TYPE_NONE,
 	NPC_TYPE_COUNT = NPC_TYPE_NONE
@@ -23,6 +24,11 @@ enum NPC_ACTIVE_WAY
 										
 	NPC_ACTIVE_WAY_NURSE_DOWN,								//간호사(아래쪽)
 	NPC_ACTIVE_WAY_NURSE_LEFT,								//간호사(왼쪽)
+
+	NPC_ACTIVE_WAY_BOSS_DOWN,								//보스(아래쪽)
+	NPC_ACTIVE_WAY_BOSS_UP,									//보스(위쪽)
+	NPC_ACTIVE_WAY_BOSS_LEFT,								//보스(왼쪽)
+	NPC_ACTIVE_WAY_BOSS_RIGHT,								//보스(오른쪽)
 
 	NPC_ACTIVE_WAY_NONE,
 	NPC_ACTIVE_WAY_COUNT = NPC_ACTIVE_WAY_NONE

@@ -12,5 +12,6 @@ public:
 
 	virtual void setPokemon() override;
 	void potalLoad() override;
+	void monsterLoad() override;
 };
 

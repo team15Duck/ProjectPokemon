@@ -36,3 +36,25 @@ void oLabMap::potalLoad()
 		_potal.push_back(info);
 	}
 }
+
+void oLabMap::monsterLoad()
+{
+	{
+		tagStartingMon monster;
+		
+		monster.x = 18;
+		monster.y = 12;
+		monster.pokemon = PM_BULBASAUR;
+		_startingMonster.push_back(monster);
+
+		monster.x = 19;
+		monster.y = 12;
+		monster.pokemon = PM_CHARMANDER;
+		_startingMonster.push_back(monster);
+
+		monster.x = 20;
+		monster.y = 12;
+		monster.pokemon = PM_SQUIRTLE;
+		_startingMonster.push_back(monster);
+	}
+}

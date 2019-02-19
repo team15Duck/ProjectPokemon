@@ -15,6 +15,7 @@ HRESULT npc::init(NPC_TYPE type)
 {
 	//이거 나중에 옮기자
 	IMAGEMANAGER->addFrameImage("oak", L"image/oak.png", 720, 85, 12, 1);
+	IMAGEMANAGER->addFrameImage("boss", L"image/boss.png", 576, 80, 9, 1);
 	_npcType = type;
 	switch (type)
 	{
@@ -78,6 +79,29 @@ HRESULT npc::init(NPC_TYPE type)
 			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "nurse_Greeting", "nurse", nurse_Greeting, 1, 10, false);
 
 			_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Down");
+			break;
+		}
+		case NPC_TYPE_BOSS:
+		{
+			_sceneName = "gymScene";
+			_npcName = "boss";
+			_isTalk = false;
+			_isPrologue = false;
+			_isReverse = false;
+			_tileX = 16 * 64;
+			_tileY = 13 * 64 - 41;
+
+			KEYANIMANAGER->addAnimationType(_npcName);
+			int boss_Down[] = { 0 };
+			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "boss_Down", "boss", boss_Down, 1, 10, true);
+			int boss_Up[] = { 1 };
+			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "boss_Up", "boss", boss_Up, 1, 10, true);
+			int boss_Left[] = { 2 };
+			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "boss_Left", "nurse", boss_Left, 1, 10, true);
+			int boss_Right[] = { 2 };
+			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "boss_Right", "nurse", boss_Right, 1, 10, true);
+
+			_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Down");
 			break;
 		}
 		default:
@@ -373,6 +397,38 @@ void npc::activeWay()
 				_motion->start();
 				break;
 			}
+		}
+		case NPC_TYPE_BOSS:
+		{
+			if (_state == _player->PS_IDLE_RIGHT) //"플레이어방향이 오른쪽이니"
+			{
+				_npcActive = NPC_ACTIVE_WAY_BOSS_LEFT;
+				_isReverse = false;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Left");
+				_motion->start();
+			}
+			else if (_state == _player->PS_IDLE_LEFT) //"플레이어방향이 왼쪽이니"
+			{
+				_npcActive = NPC_ACTIVE_WAY_BOSS_RIGHT;
+				_isReverse = true;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Right");
+				_motion->start();
+			}
+			else if (_state == _player->PS_IDLE_DOWN) //"플레이어방향이 아래쪽이니"
+			{
+				_npcActive = NPC_ACTIVE_WAY_BOSS_UP;
+				_isReverse = false;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Up");
+				_motion->start();
+			}
+			else if (_state == _player->PS_IDLE_UP) //"플레이어방향이 위쪽이니"
+			{
+				_npcActive = NPC_ACTIVE_WAY_BOSS_DOWN;
+				_isReverse = false;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Down");
+				_motion->start();
+			}
+			break;
 		}
 		default:
 			break;

@@ -36,6 +36,12 @@ public:
 		ITEM_TYPE itemType;									//아이템타입
 		bool isEat;											//먹었는지?
 	};
+	struct tagStartingMon
+	{
+		UINT x;												//위치
+		UINT y;												//위치
+		POKEMON pokemon;									//포켓몬종류
+	};
 
 
 protected:
@@ -50,6 +56,7 @@ protected:
 
 	vector<potalInfo>			_potal;
 	vector<tagFieldItem>		_fieldItems;					//필드아이템
+	vector<tagStartingMon>		_startingMonster;				//스타팅몬스터
 
 	UINT						ii;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 	UINT						iiMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
@@ -71,6 +78,7 @@ public:
 	virtual void potalLoad();
 
 	virtual void fieldItemLoad();
+	virtual void monsterLoad();
 
 	
 	//오브젝트 렌더용 함수

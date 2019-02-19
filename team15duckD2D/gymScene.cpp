@@ -24,6 +24,10 @@ HRESULT gymScene::init()
 	SOUNDMANAGER->addSound("gymBGM", "sound/bgm_14_Pokemon_Gym.mp3", true, true);
 	SOUNDMANAGER->play("gymBGM");
 
+	_npc = new npc;
+	_npc->init(NPC_TYPE_BOSS);
+	_gymMap->pushNpc(_npc);
+
 	return S_OK;
 }
 
