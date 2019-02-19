@@ -200,7 +200,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("oLabScene", new oLabScene);
 	SCENEMANAGER->addScene("storeScene", new storeScene);
 	SCENEMANAGER->addScene("townScene", new townScene);
-	
+	PLAYERDATA->init();
 	
 	if (MAPTOOLSCENE)
 	{

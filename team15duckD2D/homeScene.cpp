@@ -17,7 +17,7 @@ HRESULT homeScene::init()
 	_homeMap = new homeMap;
 	_homeMap->init("data/homeMapSize.map", "data/homeMapData.map");
 
-	PLAYERDATA->init();
+	
 	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_homeMap);
 	_homeMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
 	PLAYERDATA->getPlayer()->setSceneName("hoemScene");
