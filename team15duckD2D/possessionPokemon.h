@@ -6,6 +6,7 @@ enum P_POKEMON_STATE
 	P_POKEMON_LIST,
 	P_POKEMON_SUB_MENU,
 	P_POKEMON_INFO,
+	P_POKEMON_CHANGE,
 };
 enum P_POKEMON_SELECT
 {
@@ -63,11 +64,13 @@ private :
 
 	int _pokemonCnt; // 보유하고 있는 포켓몬의 수
 
-	UINT _currentSelecPok;
+	UINT _currentSelecPok;	//선택한놈이랑
+	UINT _changeSelecPok;	//바꿀놈 
 
 	bool _isMainpokemon;	//메인포켓몬이냐?
 	bool _isSubpokemon;		//서브 포켓몬이 있냐?
 	bool _isSubMenu;
+	bool _isPokemonChange;
 
 public:
 	possessionPokemon();

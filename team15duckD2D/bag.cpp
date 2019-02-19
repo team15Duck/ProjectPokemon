@@ -162,7 +162,7 @@ void bag::render()
 		//unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayet()->getItem();
 		//imax 비교연산 녀석 size로 변경해야됨 
 		//이거 사이즈이상하게나옴 ㅠ 수정필요 
-		//unordered_map<ITEM_TYPE, UINT> itemList;
+	
 
 		int i = _currentSelectNum - 3;
 		int iMax = _currentSelectNum + 3;

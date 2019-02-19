@@ -50,7 +50,7 @@ HRESULT uiManager::init()
 	{
 		setting* gamesetting = new setting;
 		gamesetting->init();
-		_uiMap.insert(make_pair(UI_BAG, gamesetting));
+		_uiMap.insert(make_pair(UI_SETTING, gamesetting));
 	}
 	
 	_currentUI = UI_NONE;

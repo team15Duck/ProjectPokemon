@@ -37,7 +37,7 @@ HRESULT possessionPokemon::init()
 	_isMainpokemon = true;
 	_isSubpokemon = false;
 	_isSubMenu = false;
-
+	_isPokemonChange = false;
 	return S_OK;
 }
 
@@ -126,8 +126,18 @@ void possessionPokemon::update()
 			//하위메뉴창 출력
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
-				_isSubMenu = true;
-				//_ppselect = P_POKEMON_INFO;
+				if (!_isPokemonChange)
+				{
+					_isSubMenu = true;
+				}
+				else
+				{
+					//to do : 포켓몬바꾸기임다 
+					_changeSelecPok = _ppselect;
+
+					uiInfoSet();					//데이터신규갱신
+					_isPokemonChange = false;		//불값 끄기
+				}
 			}
 
 			//exit
@@ -190,7 +200,11 @@ void possessionPokemon::update()
 					_ppstate = P_POKEMON_INFO;
 				break;
 				case SELECT_CHANGE_ORDER:
+					_isPokemonChange = true;
+					_isSubMenu = false;
 					
+					_currentSelecPok = _ppselect;
+
 				break;
 				case SELECT_KEEP_ITEM:
 					
@@ -257,7 +271,7 @@ void possessionPokemon::render()
 			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
 		}
 
-		for (int i = 0; i < _pokemonCnt; ++i)
+		for (int i = 0; i < 6; ++i)
 		{
 			// 메인 포켓몬
 			if (i == 0)
@@ -265,10 +279,18 @@ void possessionPokemon::render()
 				if (_ppselect == SELECT_MAIN_POKEMON)
 				{
 					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 2);
+					if (_isPokemonChange)
+					{
+						IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 3);
+					}
 				}
 				else
 				{
 					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 0);
+					if (_isPokemonChange)
+					{
+						IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 1);
+					}
 				}
 
 				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 228, 115, 34, RGB(114,114,114));
@@ -603,8 +625,10 @@ void possessionPokemon::render()
 	
 	}
 
-	//swprintf_s(possessionPokemon, L"뭐선택중이냐너: %d", _pokemonCnt);
-	//D2DMANAGER->drawText(possessionPokemon, 285 + CAMERA->getPosX(), 415 + CAMERA->getPosY(), 40);
+	swprintf_s(possessionPokemon, L"선택한놈: %d", _currentSelecPok);
+	D2DMANAGER->drawText(possessionPokemon, 100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 40);
+	swprintf_s(possessionPokemon, L"바꿀놈: %d", _changeSelecPok);
+	D2DMANAGER->drawText(possessionPokemon, 200 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 40);
 }
 
 void possessionPokemon::uiInfoSet()
@@ -619,10 +643,10 @@ void possessionPokemon::pPokemonDataSet()
 	//_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
 	
 	//=============================================================임시데이터 지울꺼임
-	pokemon** pokemons = new pokemon*[6];
-	_pokemonCnt = 6;
+	pokemon** pokemons = new pokemon*[5];
+	_pokemonCnt = 5;
 	
-	for (int i = 0; i < 6; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		pokemons[i] = new pokemon;
 	}
@@ -631,7 +655,7 @@ void possessionPokemon::pPokemonDataSet()
 	pokemons[2]->init(0, (POKEMON)2, 15, true);
 	pokemons[3]->init(0, (POKEMON)3, 20, true);
 	pokemons[4]->init(0, (POKEMON)4, 15, true);
-	pokemons[5]->init(0, (POKEMON)5, 30, true);
+	//pokemons[5]->init(0, (POKEMON)5, 30, true);
 
 	//===============================================================================
 	for (int i = 0; i < _pokemonCnt; ++i)
@@ -666,7 +690,10 @@ void possessionPokemon::pPokemonDataSet()
 
 void possessionPokemon::uiOpen()
 {
-
+	_ppstate = P_POKEMON_LIST;
+	_ppselect = SELECT_MAIN_POKEMON;
+	_psmselect = SELECT_LOOK_POKEMON;
+	_plpokemon = LP_INFO;
 }
 
 void possessionPokemon::uiClose()

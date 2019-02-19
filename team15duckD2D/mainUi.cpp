@@ -95,21 +95,27 @@ void mainUi::update()
 		{
 		case POKEMON_BOOK:
 			UIMANAGER->selectUI(UI_ILLUST);
+			UIMANAGER->selecBeforeUI(UI_MAIN);
 			break;
 		case MY_POKEMON:
 			UIMANAGER->selectUI(UI_POKEMON);
+			UIMANAGER->selecBeforeUI(UI_MAIN);
 			break;
 		case BAG_ITEM:
 			UIMANAGER->selectUI(UI_BAG);
+			UIMANAGER->selecBeforeUI(UI_MAIN);
 			break;
 		case PLAYER:
 			UIMANAGER->selectUI(UI_PLAYER);
+			UIMANAGER->selecBeforeUI(UI_MAIN);
 			break;
 		case SAVE_REPORT:
 			UIMANAGER->selectUI(UI_REPORT);
+			UIMANAGER->selecBeforeUI(UI_MAIN);
 			break;
 		case SETTING:
 			UIMANAGER->selectUI(UI_SETTING);
+			UIMANAGER->selecBeforeUI(UI_MAIN);
 			break;
 		case CLOSE:
 			UIMANAGER->selectUI(UI_NONE);

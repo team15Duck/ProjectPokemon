@@ -232,6 +232,10 @@ void setting::update()
 		
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('X'))
+	{
+		UIMANAGER->moveBeforeUI();
+	}
 
 	//배경음악 소리설정
 	switch (_sbgMusic)
@@ -313,7 +317,7 @@ void setting::update()
 
 void setting::render()
 {
-	IMAGEMANAGER->findImage("테스트2")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+	//IMAGEMANAGER->findImage("테스트2")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 	IMAGEMANAGER->findImage("기본상단")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 	MENUMANAGER->findMenuFrame("설정프레임1")->render();
 	MENUMANAGER->findMenuFrame("설정프레임2")->render();
