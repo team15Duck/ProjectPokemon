@@ -319,7 +319,7 @@ void player::stateUpdate()
 							if (iter == _mItemList.end())
 							{
 								_mItemList.insert(make_pair(_map->getFieldItems()[i].itemType, 1));
-								_map->getFieldItems().erase(_map->getFieldItems().begin() + i);
+								_map->erase(i);
 							}
 							else
 							{
@@ -349,7 +349,7 @@ void player::stateUpdate()
 							if (iter == _mItemList.end())
 							{
 								_mItemList.insert(make_pair(_map->getFieldItems()[i].itemType, 1));
-								_map->getFieldItems().erase(_map->getFieldItems().begin() + i);
+								_map->erase(i);
 							}
 							else
 							{
@@ -359,6 +359,7 @@ void player::stateUpdate()
 							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_UNMOVE;
 							break;
 						}
+
 					}
 				}
 			}
@@ -377,7 +378,7 @@ void player::stateUpdate()
 							if (iter == _mItemList.end())
 							{
 								_mItemList.insert(make_pair(_map->getFieldItems()[i].itemType, 1));
-								_map->getFieldItems().erase(_map->getFieldItems().begin() + i);
+								_map->erase(i);
 							}
 							else
 							{
@@ -405,7 +406,7 @@ void player::stateUpdate()
 							if (iter == _mItemList.end())
 							{
 								_mItemList.insert(make_pair(_map->getFieldItems()[i].itemType, 1));
-								_map->getFieldItems().erase(_map->getFieldItems().begin() + i);
+								_map->erase(i);
 							}
 							else
 							{

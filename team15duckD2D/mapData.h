@@ -106,6 +106,7 @@ public:
 
 	vector<potalInfo> getPotal() { return _potal; }
 	vector<tagFieldItem> getFieldItems() { return _fieldItems; }
+	void erase(int num) { _fieldItems.erase(_fieldItems.begin() + num); }
 	
 };
 
