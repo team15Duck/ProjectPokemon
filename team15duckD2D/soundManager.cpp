@@ -133,17 +133,20 @@ void soundManager::play(string keyName, float volume)// 0.0 ~ 1.0f -> 0 ~ 255
 
 		if (keyName == iter->first)
 		{
-			_system->playSound(FMOD_CHANNEL_FREE, sound, false, &_channel[count]);
-			_channel[count]->setVolume(volume);
-
 			// 어느 사운드 그룹에 속해있는지 확인
 			sound->getSoundGroup(&soundGroup);
 
 			if (soundGroup == _bgmSoundGroup)	// bgm soundgroup
+			{
+				_bgmGroup->stop();
 				_channel[count]->setChannelGroup(_bgmGroup);
+			}
 			else								// effect soundgroup
 				_channel[count]->setChannelGroup(_effectGroup);
 
+			_system->playSound(FMOD_CHANNEL_FREE, sound, false, &_channel[count]);
+			_channel[count]->setVolume(volume);
+			
 			break;
 		}
 	}
