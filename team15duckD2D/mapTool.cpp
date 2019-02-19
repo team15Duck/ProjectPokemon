@@ -244,6 +244,11 @@ void mapTool::render()
 					swprintf_s(str, L"APPEAR");
 					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(0, 255, 255));
 				}
+				if ((_vvTile[i][j]->attr & ATTR_FOOT_PRINT) == ATTR_FOOT_PRINT)
+				{
+					swprintf_s(str, L"FOOT_PRINT");
+					D2DMANAGER->drawText(str, j *TILE_SIZE + 5, i * TILE_SIZE + 5, 20, RGB(0, 0, 255));
+				}
 			}
 		}
 	}
@@ -863,7 +868,7 @@ void mapTool::save(int mapCase)
 				if (mapCase == 8)
 				{
 					//필드로 가는 포탈
-					_vvTile[41][31]->attr |= ATTR_POTAL;
+					_vvTile[40][31]->attr |= ATTR_POTAL;
 				}
 			}
 		}
@@ -1024,6 +1029,10 @@ DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)
 		 ((frameX >= 0 && frameX < SAMPLETILE) && frameY == 5))
 		{
 			result |= ATTR_APPEAR;		//몬스터 출몰 속성
+			if (frameX == 1 && frameY == 5)
+			{
+				result |= ATTR_FOOT_PRINT;
+			}
 		}
 	}
 	//물

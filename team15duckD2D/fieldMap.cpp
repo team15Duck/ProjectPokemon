@@ -71,7 +71,7 @@ void fieldMap::potalLoad()
 		//필드의 포탈 좌표2 ( 동굴로 가는 포탈 )
 		potalInfo info2;
 		info2.x = 52;					//동굴로 이동하는 포탈
-		info2.y = 16;					//동굴로 이동하는 포탈
+		info2.y = 15;					//동굴로 이동하는 포탈
 		info2.nextX = 31;				//동굴에서 시작하는 좌표
 		info2.nextY = 40;				//동굴에서 시작하는 좌표
 		info2.nextScene = "caveScene";	//동굴씬

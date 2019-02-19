@@ -28,7 +28,7 @@ void townMap::potalLoad()
 		potalInfo info;
 		//마을의 포탈 좌표 1 ( 집 )
 		info.x = 23;					// 집으로 이동할 포탈 좌표
-		info.y = 16;					// 집으로 이동할 포탈 좌표
+		info.y = 15;					// 집으로 이동할 포탈 좌표
 		info.nextX = 15;				// 집으로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextY = 15;				// 집으로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextScene = "homeScene";	// 집 씬으로 전환
@@ -37,7 +37,7 @@ void townMap::potalLoad()
 
 		//마을의 포탈 좌표 2 ( 오박사 연구실 )
 		info.x = 36;					// 연구실로 이동할 포탈 좌표
-		info.y = 17;					// 연구실로 이동할 포탈 좌표
+		info.y = 16;					// 연구실로 이동할 포탈 좌표
 		info.nextX = 16;				// 연구실로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextY = 21;				// 연구실로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextScene = "oLabScene";	// 연구실 씬으로 전환
@@ -46,7 +46,7 @@ void townMap::potalLoad()
 
 		//마을의 포탈 좌표 3 ( 상점 )
 		info.x = 38;					// 상점으로 이동할 포탈 좌표
-		info.y = 27;					// 상점으로 이동할 포탈 좌표
+		info.y = 26;					// 상점으로 이동할 포탈 좌표
 		info.nextX = 14;				// 상점으로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextY = 14;				// 상점으로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextScene = "storeScene";	// 상점 씬으로 전환
@@ -55,7 +55,7 @@ void townMap::potalLoad()
 
 		//마을의 포탈 좌표 4 ( 포켓몬센터 )
 		info.x = 33;					// 센터로 이동할 포탈 좌표
-		info.y = 27;					// 센터로 이동할 포탈 좌표
+		info.y = 26;					// 센터로 이동할 포탈 좌표
 		info.nextX = 17;				// 센터로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextY = 15;				// 센터로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextScene = "centerScene";	// 센터 씬으로 전환
@@ -64,7 +64,7 @@ void townMap::potalLoad()
 
 		//마을의 포탈 좌표 5 ( 체육관 )
 		info.x = 26;					// 체육관으로 이동할 포탈 좌표
-		info.y = 27;					// 체육관으로 이동할 포탈 좌표
+		info.y = 26;					// 체육관으로 이동할 포탈 좌표
 		info.nextX = 16;				// 체육관으로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextY = 20;				// 체육관으로 씬이 전환되면 플레이어가 위치할 좌표
 		info.nextScene = "gymScene";	// 체육관 씬으로 전환

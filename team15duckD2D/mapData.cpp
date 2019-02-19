@@ -529,6 +529,11 @@ void mapData::drawObject()
 					swprintf_s(str, L"APPEAR");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 0, 255));
 				}
+				if ((_vvTile[ii][jj]->attr & ATTR_FOOT_PRINT) == ATTR_FOOT_PRINT)
+				{
+					swprintf_s(str, L"FOOT_PRINT");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(0, 0, 255));
+				}
 			}
 		}
 		jj = CAMERA->getPosX() / TILE_SIZE;
