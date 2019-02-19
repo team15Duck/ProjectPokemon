@@ -288,6 +288,10 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
+				else if ((_vvTile[ii][jj]->objectFrameX == 3 || _vvTile[ii][jj]->objectFrameX == 5) && _vvTile[ii][jj]->objectFrameY == 5) // 초록색 책장 밑부분 & 등받이의자
+				{
+					imgObject();
+				}
 
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_09")
@@ -452,6 +456,10 @@ void mapData::drawObject()
 			if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_06")
 			{
 				if (_vvTile[ii][jj]->objectFrameX == 4 && _vvTile[ii][jj]->objectFrameY == 2)
+				{
+					imgObject();
+				}
+				else if (_vvTile[ii][jj]->objectFrameX == 3 && _vvTile[ii][jj]->objectFrameY == 4)
 				{
 					imgObject();
 				}
