@@ -332,8 +332,36 @@ void player::stateUpdate()
 					}
 				}
 			}
-
-
+			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_OAK)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"나는오박사다");
+				}
+			}
+			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_SHOP)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴상점임");
+					//상점유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_CENTER)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴센터임");
+					//센터유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_BOSS)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					//보스씬으로 넘어가자
+				}
+			}
 		break;
 		case player::PS_IDLE_UP:
 			_isRight = false;
@@ -361,6 +389,36 @@ void player::stateUpdate()
 						}
 
 					}
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_OAK)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"나는오박사다");
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_SHOP)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴상점임");
+					//상점유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_CENTER)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴센터임");
+					//센터유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_BOSS)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					//보스씬으로 넘어가자
 				}
 			}
 		break;
@@ -391,6 +449,36 @@ void player::stateUpdate()
 					}
 				}
 			}
+			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_OAK)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"나는오박사다");
+				}
+			}
+			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_SHOP)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴상점임");
+					//상점유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_CENTER)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴센터임");
+					//센터유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_BOSS)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					//보스씬으로 넘어가자
+				}
+			}
 		break;
 		case player::PS_IDLE_DOWN:
 			_isRight = false;
@@ -417,6 +505,36 @@ void player::stateUpdate()
 							break;
 						}
 					}
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_OAK)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"나는오박사다");
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_SHOP)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴상점임");
+					//상점유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_CENTER)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					SCRIPTMANAGER->pushScript(L"여긴센터임");
+					//센터유아이켜주셈
+				}
+			}
+			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_BOSS)
+			{
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					//보스씬으로 넘어가자
 				}
 			}
 		break;
