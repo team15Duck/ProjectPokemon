@@ -92,12 +92,6 @@ private:
 	//세이브 파일의 스트링 벡터
 	map<MAP_NAME, string> _mSizeNames;
 	map<MAP_NAME, string> _mDataNames;
-	//map<int, int>
-	
-	
-
-
-
 
 	int _mapCase;
 

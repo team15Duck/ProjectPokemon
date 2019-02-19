@@ -803,19 +803,19 @@ void mapTool::save(int mapCase)
 					_vvTile[10][7]->attr |= ATTR_POTAL;
 
 					//집으로 가는 포탈
-					_vvTile[16][23]->attr |= ATTR_POTAL;
+					_vvTile[15][23]->attr |= ATTR_POTAL;
 
 					//오박사 실험실 포탈
-					_vvTile[17][36]->attr |= ATTR_POTAL;
+					_vvTile[16][36]->attr |= ATTR_POTAL;
 
 					//상점으로 이동하는 포탈
-					_vvTile[27][38]->attr |= ATTR_POTAL;
+					_vvTile[26][38]->attr |= ATTR_POTAL;
 
 					//센터로 이동하는 포탈
-					_vvTile[27][33]->attr |= ATTR_POTAL;
+					_vvTile[26][33]->attr |= ATTR_POTAL;
 
 					//체육관으로 이동하는 포탈
-					_vvTile[27][26]->attr |= ATTR_POTAL;
+					_vvTile[26][26]->attr |= ATTR_POTAL;
 
 				}
 				//플레이어 집의 포탈 정보 입력
@@ -857,13 +857,13 @@ void mapTool::save(int mapCase)
 					_vvTile[42][49]->attr |= ATTR_POTAL;
 					_vvTile[42][50]->attr |= ATTR_POTAL;
 					//동굴로 이동하는 포탈
-					_vvTile[16][52]->attr |= ATTR_POTAL;
+					_vvTile[15][52]->attr |= ATTR_POTAL;
 				}
 				//동굴의 포탈정보 입력
 				if (mapCase == 8)
 				{
 					//필드로 가는 포탈
-					_vvTile[40][31]->attr |= ATTR_POTAL;
+					_vvTile[41][31]->attr |= ATTR_POTAL;
 				}
 			}
 		}
@@ -878,9 +878,6 @@ void mapTool::save(int mapCase)
 
 		delete[] tile;
 	}
-
-	
-
 }
 
 void mapTool::load()
