@@ -93,6 +93,9 @@ public:
 	//원래 크기 프레임렌더 - 그려줄 x, y 좌표, 가로 방향 프레임 인덱스, 세로 방향 프레임 인덱스, 투명도
 	void frameRender(float destX, float destY, int currentFrameX, int currentFrameY, float alpha = 1.0f);
 
+
+	void frameRenderAngle(float destX, float destY, int currentFrameX, int currentFrameY, float angle, float alpha = 1.0f);
+
 	//변형 크기 프레임렌더 - 그려줄 x, y 좌표, 출력할 너비, 출력할 높이, 가로 방향 프레임 인덱스, 세로 방향 프레임 인덱스, 투명도
 	void frameRender(float destX, float destY, int showWidth, int showHeight, int currentFrameX, int currentFrameY, float alpha = 1.0f);
 

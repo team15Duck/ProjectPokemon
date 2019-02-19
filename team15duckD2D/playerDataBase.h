@@ -48,6 +48,7 @@ public:
 	void currentPokemonLoad(DATA data);
 	void fieldItemDataLoad(DATA data);
 	void npcDataLoad(DATA data);
+	void itemDataLoad(DATA data);
 	void objectDataLoad(DATA data);
 	void playerDataLoad(DATA data);
 
@@ -56,6 +57,7 @@ public:
 	void currentPokemonSave(DATA data);
 	void fieldItemDataSave(DATA data);
 	void npcDataSave(DATA data);
+	void itemDataSave(DATA data);
 	void objectDataSave(DATA data);
 	void playerDataSave(DATA data);
 

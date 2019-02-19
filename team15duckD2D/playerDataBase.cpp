@@ -40,6 +40,7 @@ void playerDataBase::dataLoad(DATA data)
 	currentPokemonLoad(data);
 	fieldItemDataLoad(data);
 	npcDataLoad(data);
+	itemDataLoad(data);
 	objectDataLoad(data);
 	playerDataLoad(data);
 }
@@ -50,6 +51,7 @@ void playerDataBase::dataSave(DATA data)
 	currentPokemonSave(data);
 	fieldItemDataSave(data);
 	npcDataSave(data);
+	itemDataSave(data);
 	objectDataSave(data);
 	playerDataSave(data);
 }
@@ -122,6 +124,10 @@ void playerDataBase::npcDataLoad(DATA data)
 	case playerDataBase::DATA_6:
 		break;
 	}
+}
+
+void playerDataBase::itemDataLoad(DATA data)
+{
 }
 
 void playerDataBase::objectDataLoad(DATA data)
@@ -254,6 +260,10 @@ void playerDataBase::npcDataSave(DATA data)
 	case playerDataBase::DATA_6:
 		break;
 	}
+}
+
+void playerDataBase::itemDataSave(DATA data)
+{
 }
 
 void playerDataBase::objectDataSave(DATA data)

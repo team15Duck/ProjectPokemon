@@ -151,6 +151,13 @@ void image::frameRender(float destX, float destY, int currentFrameX, int current
 	frameRender(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, currentFrameX, currentFrameY, alpha);
 }
 
+void image::frameRenderAngle(float destX, float destY, int currentFrameX, int currentFrameY, float angle, float alpha)
+{
+	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(angle, Point2F(destX + _imageInfo->frameWidth / 2, destY / _imageInfo->frameHeight / 2)));
+	frameRender(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, currentFrameX, currentFrameY, alpha);
+	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+}
+
 void image::frameRender(float destX, float destY, int showWidth, int showHeight, int currentFrameX, int currentFrameY, float alpha)
 {
 	POINTFLOAT pf = GetRenderPosition(destX, destY);
