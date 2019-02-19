@@ -47,7 +47,6 @@ void possessionPokemon::release()
 
 void possessionPokemon::update()
 {
-	//pPokemonDataSet();
 
 	if (_ppstate == P_POKEMON_LIST)
 	{
@@ -61,7 +60,7 @@ void possessionPokemon::update()
 				case SELECT_MAIN_POKEMON:
 					if (0 < _pokemonCnt)
 					{
-						_ppselect = (P_POKEMON_SELECT)(_pokemonCnt - 1);
+						_ppselect = SELECT_SUB_POKEMON1;
 					}
 					else
 					{
@@ -69,19 +68,19 @@ void possessionPokemon::update()
 					}
 					break;
 				case SELECT_SUB_POKEMON1:
-
+					_ppselect = SELECT_SUB_POKEMON2;
 					break;
 				case SELECT_SUB_POKEMON2:
-
+					_ppselect = SELECT_SUB_POKEMON3;
 					break;
 				case SELECT_SUB_POKEMON3:
-
+					_ppselect = SELECT_SUB_POKEMON4;
 					break;
 				case SELECT_SUB_POKEMON4:
-
+					_ppselect = SELECT_SUB_POKEMON5;
 					break;
 				case SELECT_SUB_POKEMON5:
-
+					_ppselect = SELECT_CANCEL;
 					break;
 				case SELECT_CANCEL:
 					_ppselect = SELECT_MAIN_POKEMON;
@@ -134,8 +133,6 @@ void possessionPokemon::update()
 			//exit
 			if (KEYMANAGER->isOnceKeyDown('X'))
 			{
-				//UI_TYPE type = UIMANAGER->getbeforeUI();
-				//UIMANAGER->selectUI(type);
 				UIMANAGER->moveBeforeUI();
 			}
 		}
@@ -260,7 +257,7 @@ void possessionPokemon::render()
 			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
 		}
 
-		for (int i = 0; i < 6; ++i)
+		for (int i = 0; i < _pokemonCnt; ++i)
 		{
 			// 메인 포켓몬
 			if (i == 0)
@@ -274,23 +271,38 @@ void possessionPokemon::render()
 					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 0);
 				}
 
-				//D2DMANAGER->drawText(_pPokemon[i].level.c_str, 150, 150);
+				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 228, 115, 34, RGB(114,114,114));
+				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 225, 115, 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 353, 170, 34, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 350, 170, 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 263, 228, 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 260, 225, 48, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 343, 228, 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 340, 225, 48, RGB(255, 255, 255));
 			}
 			else
 			{
 				if(i < _pokemonCnt)
-				//if (_pPokemon[ii].isDataSet)
 				{
 					if (_ppselect == i)
 					{
 						// 하늘색
-						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + (i * 90) + CAMERA->getPosY(), 1, 0);
+						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i-1) * 90) + CAMERA->getPosY(), 1, 0);
 					}
 					else
 					{
 						// 파란색
-						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + (i * 90) + CAMERA->getPosY(), 0, 0);
+						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i-1) * 90) + CAMERA->getPosY(), 0, 0);
 					}
+
+					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
 				}
 				else
 				{
@@ -352,22 +364,50 @@ void possessionPokemon::render()
 	
 	}
 
-	//swprintf_s(possessionPokemon, L"서머리상태값: %d", _ppstate);
-	//D2DMANAGER->drawText(possessionPokemon, 285 + CAMERA->getPosX(), 415 + CAMERA->getPosY(), 40);
+	swprintf_s(possessionPokemon, L"뭐선택중이냐너: %d", _pokemonCnt);
+	D2DMANAGER->drawText(possessionPokemon, 285 + CAMERA->getPosX(), 415 + CAMERA->getPosY(), 40);
+}
+
+void possessionPokemon::uiInfoSet()
+{
+	pPokemonDataSet();
 }
 
 void possessionPokemon::pPokemonDataSet()
 {
 	locale("kor");
-	pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
-	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+	//pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
+	//_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+	
+	//=============================================================임시데이터 지울꺼임
+	pokemon** pokemons = new pokemon*[6];
+	_pokemonCnt = 6;
+	
+	for (int i = 0; i < 6; ++i)
+	{
+		pokemons[i] = new pokemon;
+	}
+	pokemons[0]->init(0, (POKEMON)0, 5, true);
+	pokemons[1]->init(0, (POKEMON)1, 10, true);
+	pokemons[2]->init(0, (POKEMON)2, 15, true);
+	pokemons[3]->init(0, (POKEMON)3, 20, true);
+	pokemons[4]->init(0, (POKEMON)4, 15, true);
+	pokemons[5]->init(0, (POKEMON)5, 30, true);
 
+	//===============================================================================
 	for (int i = 0; i < _pokemonCnt; ++i)
 	{
+
 		if (pokemons[i] == nullptr) continue;
 
 		_pPokemon[i].isDataSet = false;
 		_pPokemon[i].level = to_wstring(pokemons[i]->getLevel());
+
+		_pPokemon[i].iD_number = to_wstring(pokemons[i]->getIdNo());
+		_pPokemon[i].name = string2wstring(pokemons[i]->getName());
+		_pPokemon[i].currentHp = to_wstring(pokemons[i]->getHp()); // 현재?
+		_pPokemon[i].maxHp = to_wstring(pokemons[i]->getDisplayHp()); // 전체?
+
 	}
 
 

@@ -32,9 +32,20 @@ enum P_LOOK_POKEMON
 };
 typedef struct tagPpokemonInfo
 {
+	wstring iD_number;
 	wstring name;
 	wstring level;
-	wstring hp;
+	wstring type;
+	wstring item;
+
+	wstring currentHp;
+	wstring maxHp;
+
+	wstring attk;
+	wstring s_attk;
+	wstring def;
+	wstring s_def;
+	wstring currentExp;
 
 	bool isDataSet;
 
@@ -65,6 +76,8 @@ public:
 	void update();
 	void render();
 
+
+	void uiInfoSet();
 	void pPokemonDataSet();
 
 	void uiOpen();
