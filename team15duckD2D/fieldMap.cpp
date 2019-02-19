@@ -101,5 +101,9 @@ void fieldMap::fieldItemLoad()
 	field.x = 57;						 //네번째 아이템 위치
 	field.y = 25;						 //네번째 아이템 위치
 	field.itemType = NORMAL_ETHER;		 //PP에이드
+
+	field.x = 57;						 //네번째 아이템 위치
+	field.y = 10;						 //네번째 아이템 위치
+	field.itemType = FULL_HEAL;		 //PP에이드
 	_fieldItems.push_back(field);
 }

@@ -227,10 +227,15 @@ void objectTool::render()
 					swprintf_s(str, L"아이템");
 					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255,255,0));
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_WATER) == ATTR_WATER)
+				if ((_vvTile[ii][jj]->attr & ATTR_POKEMON) == ATTR_POKEMON)
 				{
-					swprintf_s(str, L"ATTR_WATER");
-					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 10, RGB(255, 0, 255));
+					swprintf_s(str, L"포켓몬");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 255, 0));
+				}
+				if ((_vvTile[ii][jj]->attr & ATTR_CENTER) == ATTR_CENTER)
+				{
+					swprintf_s(str, L"센터");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 255, 0));
 				}
 			}
 		}
@@ -540,7 +545,8 @@ void objectTool::drawObject()
 			{
 				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 				{
-					_vvTile[i][j]->attr = ATTR_UNMOVE;
+					_vvTile[i][j]->attr |= ATTR_SHOP;
+					_vvTile[i][j]->attr |= ATTR_UNMOVE;
 				}
 			}
 		}
