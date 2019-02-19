@@ -1,6 +1,9 @@
 #pragma once
 class baseUI
 {
+protected:
+	//UI_TYPE _type;
+
 public:
 	baseUI();
 	~baseUI();

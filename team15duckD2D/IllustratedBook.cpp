@@ -280,3 +280,8 @@ void IllustratedBook::pokemonDataSet()
 		}
 	}
 }
+
+void IllustratedBook::uiInfoSet()
+{
+	pokemonDataSet();
+}

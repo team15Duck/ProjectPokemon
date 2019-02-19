@@ -26,6 +26,7 @@ private:
 	map<UI_TYPE, baseUI*> _uiMap;
 
 	UI_TYPE _currentUI;
+	UI_TYPE _beforeUI;
 
 public:
 	uiManager();
@@ -39,6 +40,15 @@ public:
 	void uiDataSetting();
 
 	void selectUI(UI_TYPE type) { _currentUI = type; }
+	void selecBeforeUI(UI_TYPE type) { _beforeUI = type; }
+	void moveBeforeUI() 
+	{
+		_uiMap[_currentUI]->uiClose();
+		
+		_currentUI = _beforeUI;
+		_beforeUI = UI_NONE;
+		selectUI(_currentUI);
+	}
 	map<UI_TYPE, baseUI*> getUiMap() { return _uiMap; }
 };
 

@@ -51,8 +51,10 @@ public:
 	void update();
 	void render();
 
-	void uiInfoSet();
+	void uiOpen();
+	void uiClose();
 
+	void uiInfoSet();
 	void itemDataSet();
 
 };

@@ -13,6 +13,7 @@ bag::~bag()
 
 HRESULT bag::init()
 {
+	//_type = UI_BAG;
 	_bag_state = ITEM_LIST;
 
 	_currentSelectNum = 0;
@@ -127,6 +128,7 @@ void bag::update()
 				{
 				case ITEM_USE:
 					UIMANAGER->selectUI(UI_POKEMON);
+					UIMANAGER->selecBeforeUI(UI_BAG);
 					break;
 				case ITEM_PASS:
 					UIMANAGER->selectUI(UI_POKEMON);
@@ -231,6 +233,16 @@ void bag::render()
 			}
 		}
 	}
+}
+
+void bag::uiOpen()
+{
+
+}
+
+void bag::uiClose()
+{
+	_currentSelectNum = 0;
 }
 
 void bag::uiInfoSet()

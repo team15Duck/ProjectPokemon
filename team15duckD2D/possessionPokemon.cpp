@@ -126,6 +126,14 @@ void possessionPokemon::update()
 				_isSubMenu = true;
 				//_ppselect = P_POKEMON_INFO;
 			}
+
+			//exit
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				//UI_TYPE type = UIMANAGER->getbeforeUI();
+				//UIMANAGER->selectUI(type);
+				UIMANAGER->moveBeforeUI();
+			}
 		}
 
 		//하위메뉴창이 열렸을때 키세팅

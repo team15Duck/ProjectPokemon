@@ -62,6 +62,7 @@ public:
 	POKEMONBOOK* getBook() { return _book; }
 
 	void pokemonDataSet();
+	void uiInfoSet();
 
 	POKEMON_BOOK_STATE getState() { return _pbstate; }
 };
