@@ -524,6 +524,39 @@ bool pokemon::evolution()
 		{
 			_index = evolutionIndex;
 			settingStatus();
+
+			int idx = _index * 2;
+			if (_isMyPokemon)
+				idx += 1;
+
+			_frameX = idx % _img->GetMaxFrameX();
+			_frameY = idx / _img->GetMaxFrameX();
+
+			pokemonInfo* evolutionInfo = POKEMONDATA->getPokemonInfomation(evolutionIndex);
+			if (evolutionIndex)
+			{
+				_nickName = *evolutionInfo->getPokemonName();
+			}
+			
+			_isPossibleEvolution = false;
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool pokemon::checkPossibleEvolution()
+{
+	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(_index);
+	int evolutionLv = info->getEvolutionLevel();
+	if (0 != evolutionLv && evolutionLv <= _level)
+	{
+		//포켓몬 진화아아ㅏㅏ 가능?
+		POKEMON evolutionIndex = info->getEvolutionIndex();
+		if (POKEMON_NONE != evolutionIndex)
+		{
 			return true;
 		}
 	}
@@ -548,6 +581,15 @@ bool pokemon::evolutionForce()
 	}
 
 	return false;
+}
+
+bool pokemon::displayEvolution()
+{
+	if(!_isPossibleEvolution)
+		return false;
+
+	evolution();
+	return true;
 }
 
 
@@ -583,10 +625,11 @@ void pokemon::gainExp(int exp)
 	_currentExp += exp;
 	
 	// 필요 경험치 채웠으면 레벨업
-	if (_nextLvExp < _currentExp )
-	{
-		levelUp();
-	}
+	//if (_nextLvExp < _currentExp )
+	//{
+	//	levelUp();
+	//	_isPossibleEvolution = checkPossibleEvolution();
+	//}
 
 	startProgessing(bind(&pokemon::progressingIncreseExp, this), PROGRESSING_VALUE);
 }
@@ -657,7 +700,6 @@ void pokemon::levelUp()
 	_beforeLvStatus = _currentLvStatus;
 	++_level;
 	
-	evolution();
 	settingStatus();
 	gainSkill();
 }
@@ -681,7 +723,6 @@ void pokemon::settingStatus()
 	}
 
 	_displayHp = _nowStatus.hp;
-	_displayExp = _currentExp;
 }
 
 
@@ -791,7 +832,16 @@ void pokemon::progressingIncreseExp(void)
 	if (_displayExp == _currentExp)
 		endProgressing();
 	else
+	{
+		if (_nextLvExp <= _displayExp)
+		{
+			levelUp();
+			if(!_isPossibleEvolution)
+				_isPossibleEvolution = checkPossibleEvolution();
+		}
+
 		++_displayExp;
+	}
 }
 
 void pokemon::progressintSkillEffect(int idx)
@@ -960,6 +1010,18 @@ int pokemon::calculateAttkValue(int skillIdx)
 	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 1.f) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
+}
+
+void pokemon::progressingEvolution()
+{
+	if(10 < _displayValue)
+	{
+		endProgressing();
+	}
+	else
+	{
+		
+	}
 }
 
 void pokemon::faint()

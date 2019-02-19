@@ -23,7 +23,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 49;
 		kindStatus->spAttk = 65;
 		kindStatus->spDex = 65;
-		kindStatus->spAttk = 45;
+		kindStatus->speed = 45;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -71,7 +71,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 63;
 		kindStatus->spAttk = 80;
 		kindStatus->spDex = 80;
-		kindStatus->spAttk = 60;
+		kindStatus->speed = 60;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -115,7 +115,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 83;
 		kindStatus->spAttk = 100;
 		kindStatus->spDex = 100;
-		kindStatus->spAttk = 80;
+		kindStatus->speed = 80;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -156,7 +156,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 43;
 		kindStatus->spAttk = 60;
 		kindStatus->spDex = 50;
-		kindStatus->spAttk = 65;
+		kindStatus->speed = 65;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -199,7 +199,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 58;
 		kindStatus->spAttk = 80;
 		kindStatus->spDex = 65;
-		kindStatus->spAttk = 80;
+		kindStatus->speed = 80;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -241,7 +241,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 78;
 		kindStatus->spAttk = 109;
 		kindStatus->spDex = 85;
-		kindStatus->spAttk = 100;
+		kindStatus->speed = 100;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -280,7 +280,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 65;
 		kindStatus->spAttk = 50;
 		kindStatus->spDex = 64;
-		kindStatus->spAttk = 43;
+		kindStatus->speed = 43;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -323,7 +323,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 80;
 		kindStatus->spAttk = 65;
 		kindStatus->spDex = 80;
-		kindStatus->spAttk = 58;
+		kindStatus->speed = 58;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -361,7 +361,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 100;
 		kindStatus->spAttk = 85;
 		kindStatus->spDex = 105;
-		kindStatus->spAttk = 78;
+		kindStatus->speed = 78;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -399,7 +399,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 30;
 		kindStatus->spAttk = 50;
 		kindStatus->spDex = 40;
-		kindStatus->spAttk = 90;
+		kindStatus->speed = 90;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -446,7 +446,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 55;
 		kindStatus->spAttk = 90;
 		kindStatus->spDex = 80;
-		kindStatus->spAttk = 100;
+		kindStatus->speed = 100;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -475,7 +475,7 @@ HRESULT pokemonDataBase::init()
 		kindStatus->dex = 55;
 		kindStatus->spAttk = 15;
 		kindStatus->spDex = 20;
-		kindStatus->spAttk = 80;
+		kindStatus->speed = 80;
 
 		map<int, vector<int>> skillMap;
 		{
@@ -554,7 +554,7 @@ int pokemonDataBase::calcuateExp(int level, POKEMON pokemonId)
 	if(POKEMON151 == pokemonId)
 		return ((1 * level * level * level) - (15 * level * level) + ( 100 * level) - 140);
 	else
-		return static_cast<int>(level * level * level * 0.5f);
+		return static_cast<int>(level * level);
 }
 
 SKILL_INFLUENCE pokemonDataBase::checkConflict(POKEMON_TYPE skillType, POKEMON targetIndex)

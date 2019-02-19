@@ -87,6 +87,9 @@ private:
 	float _displayTimeCnt;						// 연출 용 시간
 	float _displayValue;						// 연출 용 변수
 	bool _isIdle;								// 행동 대기중인가
+
+	bool _isPossibleEvolution;					// 진화가능?
+
 	PROGRESSING_TYPE	_progressingType;
 
 	pokemonUC		_upsetCondition;				// 상태 이상
@@ -145,11 +148,12 @@ public:
 	
 	// 데미지 입음
 	void takeDamage(int value, SKILL_INFLUENCE influence = SI_NORMAL);
-	// 진화
-	bool evolution();
+	
 	// 강제 진화
 	bool evolutionForce();
-	
+	// 진화
+	bool displayEvolution();
+
 	// 기절
 	void faint();
 
@@ -192,6 +196,9 @@ public:
 	
 	// 행동 대기중인가 : 행동 대기 중일때만 다음 행동을 할 수 있다.
 	bool isIdle()				{ return _isIdle;}
+
+	// 진화 가능한가
+	bool isPossibleEvolution()	{ return _isPossibleEvolution;}
 
 	// 깨어있는가
 	bool isAwake()				{ return _isAwake;}
@@ -261,7 +268,10 @@ private:
 	// 공격
 	void attack(int value, pokemonUC* upsetCondition);
 
-	
+	// 진화
+	bool evolution();
+
+	bool checkPossibleEvolution();
 	
 	// 연출 시작
 	void startProgessing(function<void(void)> func, PROGRESSING_TYPE type);
@@ -281,6 +291,8 @@ private:
 	
 	// 데미지 계산
 	int calculateAttkValue(int skillIdx);
+
+	void progressingEvolution();
 
 
 

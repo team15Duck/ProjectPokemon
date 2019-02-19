@@ -208,7 +208,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("го©╣╬ю");
+		SCENEMANAGER->changeScene("battleScene");
 	}
 	
 	return S_OK;

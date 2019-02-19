@@ -32,10 +32,10 @@ HRESULT battleScene::init()
 	// 테스트용 삭제 될 것
 	{
 		_pokemon = new pokemon;
-		_pokemon->init(NULL, PM_VENUSAUR, 15, false);
+		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
 		
 		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
+		_myPms[0]->init(NULL, PM_BULBASAUR, 30, true);
 
 		_myPms[1] = new pokemon;
 		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
@@ -93,6 +93,12 @@ void battleScene::update()
 	_pms[TURN_ENEMY]->update();
 	_pms[TURN_PLAYER]->update();
 
+	// 행동 대기중이 아니라면 
+	if (!_pms[TURN_ENEMY]->isIdle() || !_pms[TURN_PLAYER]->isIdle())
+	{
+		return;
+	}
+
 	switch (_phase)
 	{
 		case PHASE_START:
@@ -102,12 +108,6 @@ void battleScene::update()
 		}
 		case PHASE_BATTLE:
 		{
-			// 행동 대기중이 아니라면 
-			if (!_pms[TURN_ENEMY]->isIdle() || !_pms[TURN_PLAYER]->isIdle())
-			{
-				return;
-			}
-
 			// 적 포켓몬이나 플레이어 포켓몬이 쓰러짐
 			if (!_pms[TURN_ENEMY]->isAwake() || !_pms[TURN_PLAYER]->isAwake())
 			{
@@ -362,7 +362,7 @@ void battleScene::battle()
 				_battleUI->pushScript(script);
 
 				// todo 플레이어 포켓몬 전투 경험치 계산
-				int value = 2 * _pms[TURN_ENEMY]->getLevel();
+				int value = 100; //2 * _pms[TURN_ENEMY]->getLevel();
 				if(_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
 					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
 
@@ -378,6 +378,8 @@ void battleScene::battle()
 
 				// 적 포켓몬 변경
 				_turn = TURN_ENEMY;
+				
+				_phase = PHASE_EVOLUTION;
 			}
 			else
 			{
@@ -391,16 +393,18 @@ void battleScene::battle()
 
 				// 플레이어 포켓몬 변경
 				_turn = TURN_PLAYER;
+		
+				// 포켓몬 변경
+				_phase = PHASE_CHANGE;
 			}
-
-			// 포켓몬 변경
-			_phase = PHASE_CHANGE;
 		}
 	}
 }
 
 void battleScene::battleEnd()
 {
+	wstring script = L"배틀 종료";
+	_battleUI->pushScript(script);
 }
 
 void battleScene::battleChange()
@@ -421,4 +425,12 @@ void battleScene::battleChange()
 
 void battleScene::battleEvolution()
 {
+	if (_pms[TURN_PLAYER]->isPossibleEvolution())
+	{
+		_pms[TURN_PLAYER]->displayEvolution();
+		wstring script = L"진화했다..!";
+		_battleUI->pushScript(script);
+	}
+	
+	_phase = PHASE_END;
 }
