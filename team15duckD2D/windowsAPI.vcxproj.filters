@@ -193,6 +193,9 @@
     <Filter Include="PlayGround\mapScene\townScene">
       <UniqueIdentifier>{5218a358-dc00-4150-9687-8594012e9bdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\ui\hpBar">
+      <UniqueIdentifier>{9f6a3cb0-d284-4408-91eb-91e1b6ce1b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -462,6 +465,9 @@
     <ClInclude Include="storeScene.h">
       <Filter>PlayGround\mapScene\storeScene</Filter>
     </ClInclude>
+    <ClInclude Include="hpBar.h">
+      <Filter>PlayGround\ui\hpBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -709,6 +715,9 @@
     </ClCompile>
     <ClCompile Include="storeScene.cpp">
       <Filter>PlayGround\mapScene\storeScene</Filter>
+    </ClCompile>
+    <ClCompile Include="hpBar.cpp">
+      <Filter>PlayGround\ui\hpBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

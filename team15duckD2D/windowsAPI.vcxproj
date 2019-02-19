@@ -23,7 +23,7 @@
     <ProjectGuid>{BE5C2545-DA5C-402F-8068-3E1EDF185C1C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>windowsAPI</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -176,6 +176,7 @@
     <ClInclude Include="hayoungTestScene.h" />
     <ClInclude Include="homeMap.h" />
     <ClInclude Include="homeScene.h" />
+    <ClInclude Include="hpBar.h" />
     <ClInclude Include="IllustratedBook.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
@@ -265,6 +266,7 @@
     <ClCompile Include="hayoungTestScene.cpp" />
     <ClCompile Include="homeMap.cpp" />
     <ClCompile Include="homeScene.cpp" />
+    <ClCompile Include="hpBar.cpp" />
     <ClCompile Include="IllustratedBook.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
