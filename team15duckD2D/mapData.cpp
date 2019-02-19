@@ -191,13 +191,13 @@ void mapData::drawObject()
 				}
 				else if (_vvTile[ii][jj]->attr & ATTR_ITEM)
 				{
-					for (int i = 0; i < _fieldItems.size(); i++)
-					{
-						if (!(_fieldItems[i].isEat))
-							imgObject();
-					}
+					imgObject();
 				}
-				else
+				else if(_vvTile[ii][jj]->attr & ATTR_UNMOVE)
+				{
+					imgObject();
+				}
+				else if (_vvTile[ii][jj]->attr & ATTR_NONE)
 				{
 					imgObject();
 				}
@@ -215,6 +215,13 @@ void mapData::drawObject()
 					imgObject();
 				}
 
+			}
+			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_02")
+			{
+				if (_vvTile[ii][jj]->objectFrameX == 0 && (_vvTile[ii][jj]->objectFrameY == 3 || _vvTile[ii][jj]->objectFrameY == 5))  //동굴계단
+				{
+					imgObject();
+				}
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_03")
 			{
@@ -240,6 +247,17 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
+				if (_vvTile[ii][jj]->objectFrameX == 4 && _vvTile[ii][jj]->objectFrameY == 2) //움직일 수 있는 다리
+				{
+					imgObject();
+				}
+			}
+			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_06")
+			{
+				if ((_vvTile[ii][jj]->objectFrameX == 1 || _vvTile[ii][jj]->objectFrameX == 2) && _vvTile[ii][jj]->objectFrameY == 2)  //동굴계단
+				{
+					imgObject();
+				}
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_07")
 			{
@@ -251,6 +269,10 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
+				else if ((_vvTile[ii][jj]->objectFrameX == 0 || _vvTile[ii][jj]->objectFrameX == 1) && _vvTile[ii][jj]->objectFrameY == 3)
+				{
+					imgObject();
+				}
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_08")
 			{
@@ -258,10 +280,11 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
-				else if ((_vvTile[ii][jj]->objectFrameX == 0 || _vvTile[ii][jj]->objectFrameX == 1) && (_vvTile[ii][jj]->objectFrameY == 4 || _vvTile[ii][jj]->objectFrameX == 5)) // 초록색 책장 밑부분 & 등받이의자
+				else if ((_vvTile[ii][jj]->objectFrameX == 0 || _vvTile[ii][jj]->objectFrameX == 1) && (_vvTile[ii][jj]->objectFrameY == 4 || _vvTile[ii][jj]->objectFrameY == 5)) // 초록색 책장 밑부분 & 등받이의자
 				{
 					imgObject();
 				}
+
 			}
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_09")
 			{
@@ -324,6 +347,10 @@ void mapData::drawObject()
 				{
 					imgObject();
 				}
+				else if (_vvTile[ii][jj]->objectFrameX == 3 && _vvTile[ii][jj]->objectFrameY == 4)
+				{
+					imgObject();
+				}
 			}
 
 			else if (OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex] == "object_17") //기타
@@ -332,6 +359,10 @@ void mapData::drawObject()
 				{
 					if (_vvTile[ii][jj]->objectFrameY == 1)
 						IMAGEMANAGER->findImage(OBJECT_NAME[_vvTile[ii][jj]->objectImageIndex])->frameRender(jj*TILE_SIZE, ii*TILE_SIZE, 0, 0, 64, 28, _vvTile[ii][jj]->objectFrameX, _vvTile[ii][jj]->objectFrameY, 1);
+				}
+				else if ((_vvTile[ii][jj]->objectFrameX == 3 || _vvTile[ii][jj]->objectFrameX == 5) && _vvTile[ii][jj]->objectFrameY == 2)
+				{
+					imgObject();
 				}
 				else if ((_vvTile[ii][jj]->objectFrameX == 1 || _vvTile[ii][jj]->objectFrameX == 2) && _vvTile[ii][jj]->objectFrameY == 4) //체육관 밑부분
 				{
@@ -547,10 +578,10 @@ void mapData::drawObject()
 					swprintf_s(str, L"APPEAR");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 0, 255));
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_FOOT_PRINT) == ATTR_FOOT_PRINT)
+				if ((_vvTile[ii][jj]->attr & ATTR_ITEM) == ATTR_ITEM)
 				{
-					swprintf_s(str, L"FOOT_PRINT");
-					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(0, 0, 255));
+					swprintf_s(str, L"아이템");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 255, 0));
 				}
 			}
 		}

@@ -24,6 +24,10 @@ HRESULT centerScene::init()
 	SOUNDMANAGER->addSound("centerBGM", "sound/bgm_13_Pokemon_Center.mp3", true, true);
 	SOUNDMANAGER->play("centerBGM");
 
+	_npc = new npc;
+	_npc->init(NPC_TYPE_NURSE);
+	_centerMap->pushNpc(_npc);
+
 	return S_OK;
 }
 

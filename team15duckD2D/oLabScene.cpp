@@ -23,6 +23,10 @@ HRESULT oLabScene::init()
 	SOUNDMANAGER->addSound("oLabBGM", "sound/bgm_07_Professor_Oaks_Laboratory.mp3", true, true);
 	SOUNDMANAGER->play("oLabBGM");
 
+	_npc = new npc;
+	_npc->init(NPC_TYPE_OAK);
+	_oLabMap->pushNpc(_npc);
+
 	return S_OK;
 }
 

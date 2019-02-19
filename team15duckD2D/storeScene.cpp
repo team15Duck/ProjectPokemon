@@ -22,6 +22,10 @@ HRESULT storeScene::init()
 	
 	SOUNDMANAGER->addSound("storeBGM", "sound/bgm_13_Pokemon_Center.mp3", true, true);
 	SOUNDMANAGER->play("storeBGM");
+
+	_npc = new npc;
+	_npc->init(NPC_TYPE_SHOPOWNER);
+	_storeMap->pushNpc(_npc);
 	
 	return S_OK;
 }

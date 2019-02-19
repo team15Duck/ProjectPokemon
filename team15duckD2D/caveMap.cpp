@@ -36,3 +36,29 @@ void caveMap::potalLoad()
 
 
 }
+
+void caveMap::fieldItemLoad()
+{
+	{
+		tagFieldItem field;
+		field.x = 19;						 //첫번째 아이템 위치
+		field.y = 22;						 //첫번째 아이템 위치
+		field.itemType = REVIVE;		 //고급회복약
+		_fieldItems.push_back(field);
+
+		field.x = 35;						 //두번째 아이템 위치
+		field.y = 25;						 //두번째 아이템 위치
+		field.itemType = NORMAL_ETHER;		 //슈퍼볼
+		_fieldItems.push_back(field);
+
+		field.x = 42;						 //세번째 아이템 위치
+		field.y = 25;						 //세번째 아이템 위치
+		field.itemType = HYPER_BALL;			 //해독제
+		_fieldItems.push_back(field);
+
+		field.x = 45;						 //네번째 아이템 위치
+		field.y = 9;						 //네번째 아이템 위치
+		field.itemType = NORMAL_POTION;		 //PP에이드
+		_fieldItems.push_back(field);
+	}
+}

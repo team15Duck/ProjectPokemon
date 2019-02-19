@@ -35,6 +35,7 @@
 #define ATTR_OAK			0X02000000UL					//오박사
 #define ATTR_BOSS			0X04000000UL					//비주기
 #define ATTR_FOOT_PRINT		0x08000000UL					//발자국 남는 타일
+#define ATTR_POKEMON		0x10000000UL					//포켓몬
 
 
 
