@@ -317,6 +317,11 @@ void battleScene::battleStart()
 	_selectSkillIdx = 0;
 
 	_phase = PHASE_BATTLE;
+
+	if (_expList.find(_selPokemon) == _expList.end())
+	{
+		_expList.insert(_selPokemon);
+	}
 }
 
 void battleScene::battle()
@@ -366,7 +371,16 @@ void battleScene::battle()
 				if(_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
 					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
 
-				_pms[TURN_PLAYER]->gainExp(value);
+
+				// 경험치 분배
+				int cnt = _expList.size();
+				value /= cnt;
+				for (set<UINT>::iterator iter = _expList.begin(); _expList.end() != iter; ++iter)
+				{
+					_myPms[*iter]->gainExp(value);
+				}
+
+				//_pms[TURN_PLAYER]->gainExp(value);
 
 				script.clear();
 				script = string2wstring(_pms[TURN_PLAYER]->getName());
@@ -404,6 +418,7 @@ void battleScene::battle()
 void battleScene::battleEnd()
 {
 	wstring script = L"배틀 종료";
+	_expList.clear();
 	_battleUI->pushScript(script);
 }
 
@@ -425,11 +440,15 @@ void battleScene::battleChange()
 
 void battleScene::battleEvolution()
 {
-	if (_pms[TURN_PLAYER]->isPossibleEvolution())
+	int cnt = _expList.size();
+	for (set<UINT>::iterator iter = _expList.begin(); _expList.end() != iter; ++iter)
 	{
-		_pms[TURN_PLAYER]->displayEvolution();
-		wstring script = L"진화했다..!";
-		_battleUI->pushScript(script);
+		if (_myPms[*iter]->isPossibleEvolution())
+		{
+			_myPms[*iter]->displayEvolution();
+			wstring script = L"진화했다..!";
+			_battleUI->pushScript(script);
+		}
 	}
 	
 	_phase = PHASE_END;
