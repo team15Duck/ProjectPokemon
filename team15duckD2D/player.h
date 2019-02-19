@@ -121,7 +121,7 @@ public:
 	void fishingStart();
 
 	string getSceneName() { return _currentSceneName; }
-	void setSceneName(string name) { _currentSceneName; }
+	void setSceneName(string name) { _currentSceneName = name; }
 
 	float getPlayTime() { return _playTime; }
 	UINT getMoney() { return _money; }

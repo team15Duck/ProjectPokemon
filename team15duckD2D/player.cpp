@@ -575,7 +575,7 @@ void player::appearTileCheck()
 		
 			}
 		}
-		else
+		else if (_currentSceneName != "caveScene")
 		{
 			EFFECTMANAGER->play("grassEffect", _posX, _posY + 5);
 		}

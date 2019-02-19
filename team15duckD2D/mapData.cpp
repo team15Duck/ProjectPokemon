@@ -86,8 +86,11 @@ void mapData::render()
 
 	//오브젝트 + 주인공
 	drawObject();
-	if(_player->getSceneName() != "caveScene")
+	if (_player->getSceneName() != "caveScene")
+	{
 		EFFECTMANAGER->render();
+	}
+		
 }
 
 void mapData::load(const char * mapSizeFileName, const char * mapFileName)
@@ -331,7 +334,10 @@ void mapData::drawObject()
 		if (((int)_player->getPosY() + 31) / 64 == ii)
 		{
 			if (_player->getSceneName() == "caveScene")
+			{
 				EFFECTMANAGER->render();
+			}
+				
 			_player->render();
 		}
 
