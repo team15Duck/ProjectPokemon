@@ -44,7 +44,10 @@ HRESULT player::init()
 	aniSetUp();
 
 	EFFECTMANAGER->addEffect("grassEffect", "image/player/grassSprite.png", 256, 56, 64, 56, 7, 0.01, 20);
-	
+	EFFECTMANAGER->addEffect("footLeft", "image/player/footLeft.png", 256, 64, 64, 64, 7, 0.01, 20);
+	EFFECTMANAGER->addEffect("footUp", "image/player/footUp.png", 256, 64, 64, 64, 7, 0.01, 20);
+	EFFECTMANAGER->addEffect("footRight", "image/player/footRight.png", 256, 64, 64, 64, 7, 0.01, 20);
+	EFFECTMANAGER->addEffect("footDown", "image/player/footDown.png", 256, 64, 64, 64, 7, 0.01, 20);
 	return S_OK;
 }
 
@@ -553,7 +556,29 @@ void player::appearTileCheck()
 {
 	if (_map->getTile(_tileX, _tileY)->attr & ATTR_APPEAR)
 	{
-		EFFECTMANAGER->play("grassEffect", _posX, _posY + 5);
+		if (_currentSceneName == "caveScene")
+		{
+			switch (_state)
+			{
+				case player::PS_IDLE_LEFT:
+					EFFECTMANAGER->play("footLeft", _posX, _posY);
+				break;
+				case player::PS_IDLE_UP:
+					EFFECTMANAGER->play("footUp", _posX, _posY);
+				break;
+				case player::PS_IDLE_RIGHT:
+					EFFECTMANAGER->play("footRight", _posX, _posY);
+				break;
+				case player::PS_IDLE_DOWN:
+					EFFECTMANAGER->play("footDown", _posX, _posY);
+				break;
+		
+			}
+		}
+		else
+		{
+			EFFECTMANAGER->play("grassEffect", _posX, _posY + 5);
+		}
 		bool meet = RND->getInt(10) < 0 ? true : false;
 		if (meet)
 		{
