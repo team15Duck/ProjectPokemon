@@ -355,8 +355,8 @@ void player::stateUpdate()
 							{
 								iter->second++;
 							}
-							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_ITEM;
-							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_UNMOVE;
+							_map->getTile(_tileX, _tileY - 1)->attr ^= ATTR_ITEM;
+							_map->getTile(_tileX, _tileY - 1)->attr ^= ATTR_UNMOVE;
 							break;
 						}
 
@@ -384,8 +384,8 @@ void player::stateUpdate()
 							{
 								iter->second++;
 							}
-							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_ITEM;
-							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_UNMOVE;
+							_map->getTile(_tileX + 1, _tileY)->attr ^= ATTR_ITEM;
+							_map->getTile(_tileX + 1, _tileY)->attr ^= ATTR_UNMOVE;
 							break;
 						}
 					}
@@ -412,8 +412,8 @@ void player::stateUpdate()
 							{
 								iter->second++;
 							}
-							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_ITEM;
-							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_UNMOVE;
+							_map->getTile(_tileX, _tileY + 1)->attr ^= ATTR_ITEM;
+							_map->getTile(_tileX, _tileY + 1)->attr ^= ATTR_UNMOVE;
 							break;
 						}
 					}
