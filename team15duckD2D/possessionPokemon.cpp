@@ -20,6 +20,7 @@ HRESULT possessionPokemon::init()
 	_ppstate = P_POKEMON_LIST;
 	_ppselect = SELECT_MAIN_POKEMON;
 	_psmselect = SELECT_LOOK_POKEMON;
+	_plpokemon = LP_INFO;
 	_currentSelecPok = 0;
 
 	//초기화해벌이기 
@@ -29,7 +30,10 @@ HRESULT possessionPokemon::init()
 	}
 
 	IMAGEMANAGER->addFrameImage("서머리상단", L"image/Summary Menu/summary_top_bar.png", 960, 192, 1, 3);
-
+	IMAGEMANAGER->addImage("서머리배경", L"image/Summary Menu/summary_base.png", 960, 640);
+	IMAGEMANAGER->addFrameImage("서머리프레임", L"image/Summary Menu/summary_pokemon_info.png", 1920, 576, 2, 1);
+	IMAGEMANAGER->addImage("서머리포켓몬", L"image/Summary Menu/summary_pokemon_base.png", 484, 336);
+	IMAGEMANAGER->addImage("서머리스킬", L"image/Summary Menu/summary_pokemon_skill.png", 484, 576);
 	_isMainpokemon = true;
 	_isSubpokemon = false;
 	_isSubMenu = false;
@@ -201,6 +205,38 @@ void possessionPokemon::update()
 			}
 		}
 	}
+	if (_ppstate == P_POKEMON_INFO)
+	{
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			_ppstate = P_POKEMON_LIST;
+			_isSubMenu = true;
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+		{
+			switch (_plpokemon)
+			{
+				case LP_INFO:
+					_plpokemon = LP_ABILITY;
+				break;
+				case LP_ABILITY:
+					_plpokemon = LP_ATTK_SKILL;
+				break;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+		{
+			switch (_plpokemon)
+			{
+				case LP_ABILITY:
+					_plpokemon = LP_INFO;
+				break;
+				case LP_ATTK_SKILL:
+					_plpokemon = LP_ABILITY;
+				break;
+			}
+		}
+	}
 
 
 }
@@ -231,7 +267,7 @@ void possessionPokemon::render()
 			{
 				if (_ppselect == SELECT_MAIN_POKEMON)
 				{
-					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 1);
+					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 2);
 				}
 				else
 				{
@@ -296,7 +332,24 @@ void possessionPokemon::render()
 	}
 	if (_ppstate == P_POKEMON_INFO)
 	{
-		IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+		IMAGEMANAGER->findImage("서머리배경")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+		IMAGEMANAGER->findImage("서머리포켓몬")->render(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY());
+		switch (_plpokemon)
+		{
+		case LP_INFO:
+			IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+			IMAGEMANAGER->findImage("서머리프레임")->frameRender(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY(), 0, 0);
+		break;
+		case LP_ABILITY:
+			IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 1);
+			IMAGEMANAGER->findImage("서머리프레임")->frameRender(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY(), 1, 0);
+		break;
+		case LP_ATTK_SKILL:
+			IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 2);
+			IMAGEMANAGER->findImage("서머리스킬")->render(476 + CAMERA->getPosX(), 64 + CAMERA->getPosY());
+		break;
+		}
+	
 	}
 
 	//swprintf_s(possessionPokemon, L"서머리상태값: %d", _ppstate);

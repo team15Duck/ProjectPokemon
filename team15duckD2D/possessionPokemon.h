@@ -24,6 +24,12 @@ enum P_SUB_MENU_SELECT
 	SELECT_KEEP_ITEM,
 	SELECT_NONE,
 };
+enum P_LOOK_POKEMON
+{
+	LP_INFO,
+	LP_ABILITY,
+	LP_ATTK_SKILL
+};
 typedef struct tagPpokemonInfo
 {
 	wstring name;
@@ -39,6 +45,7 @@ private :
 	P_POKEMON_STATE		_ppstate;
 	P_POKEMON_SELECT	_ppselect;
 	P_SUB_MENU_SELECT	_psmselect;
+	P_LOOK_POKEMON		_plpokemon;
 	PPOKEMON			_pPokemon[6];
 
 	int _pokemonCnt; // 보유하고 있는 포켓몬의 수
