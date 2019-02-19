@@ -138,7 +138,7 @@ void soundManager::play(string keyName, float volume)// 0.0 ~ 1.0f -> 0 ~ 255
 
 			if (soundGroup == _bgmSoundGroup)	// bgm soundgroup
 			{
-				_bgmGroup->stop();
+				_bgmSoundGroup->stop(); // 플레이중인 bgm 정지
 				_channel[count]->setChannelGroup(_bgmGroup);
 			}
 			else								// effect soundgroup
