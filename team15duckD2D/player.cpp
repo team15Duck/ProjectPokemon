@@ -556,23 +556,27 @@ void player::appearTileCheck()
 {
 	if (_map->getTile(_tileX, _tileY)->attr & ATTR_APPEAR)
 	{
+		
 		if (_currentSceneName == "caveScene")
 		{
-			switch (_state)
+			if (_map->getTile(_tileX, _tileY)->attr & ATTR_FOOT_PRINT)
 			{
+				switch (_state)
+				{
 				case player::PS_IDLE_LEFT:
 					EFFECTMANAGER->play("footLeft", _posX, _posY);
-				break;
+					break;
 				case player::PS_IDLE_UP:
 					EFFECTMANAGER->play("footUp", _posX, _posY);
-				break;
+					break;
 				case player::PS_IDLE_RIGHT:
 					EFFECTMANAGER->play("footRight", _posX, _posY);
-				break;
+					break;
 				case player::PS_IDLE_DOWN:
 					EFFECTMANAGER->play("footDown", _posX, _posY);
-				break;
-		
+					break;
+
+				}
 			}
 		}
 		else if (_currentSceneName != "caveScene")
