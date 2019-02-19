@@ -13,8 +13,6 @@ npc::~npc()
 
 HRESULT npc::init(NPC_TYPE type)
 {
-	//_player = new player;
-	//_player->init();
 	//이거 나중에 옮기자
 	IMAGEMANAGER->addFrameImage("oak", L"image/oak.png", 720, 85, 12, 1);
 	_npcType = type;
@@ -22,10 +20,11 @@ HRESULT npc::init(NPC_TYPE type)
 	{
 		case NPC_TYPE_OAK:
 		{
-			_sceneName = "mapTestScene";
+			_sceneName = "oLabScene";
 			_npcName = "oak";
 			_isTalk = false;
 			_isPrologue = true;
+			_isReverse = false;
 			_tileX = 16 * 64;
 			_tileY = 10 * 64 - 20;
 			KEYANIMANAGER->addAnimationType(_npcName);
@@ -44,11 +43,12 @@ HRESULT npc::init(NPC_TYPE type)
 		}
 		case NPC_TYPE_SHOPOWNER:
 		{
-			_sceneName = "caveScene";
+			_sceneName = "storeScene";
 			_npcName = "shopOwner";
 			_isTalk = false;
 			_isPrologue = false;
-			_tileX = 16 * 64;
+			_isReverse = true;
+			_tileX = 12 * 64;
 			_tileY = 10 * 64 - 20;
 			KEYANIMANAGER->addAnimationType(_npcName);
 			int shopOwner_Down[] = { 0 };
@@ -61,10 +61,13 @@ HRESULT npc::init(NPC_TYPE type)
 		}
 		case NPC_TYPE_NURSE:
 		{
-			_sceneName = "mapTestScene";
+			_sceneName = "centerScene";
 			_npcName = "nurse";
 			_isTalk = false;
 			_isPrologue = false;
+			_isReverse = false;
+			_tileX = 17 * 64;
+			_tileY = 9 * 64 - 20;
 
 			KEYANIMANAGER->addAnimationType(_npcName);
 			int nurse_Down[] = { 0 };
@@ -74,15 +77,13 @@ HRESULT npc::init(NPC_TYPE type)
 			int nurse_Greeting[] = { 3 };
 			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "nurse_Greeting", "nurse", nurse_Greeting, 1, 10, false);
 
-			_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Right");
+			_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Down");
 			break;
 		}
 		default:
 			break;
 	}
-
-	_isReverse = false;
-	_test = 0;
+	_isHealing = false;
 
 	return S_OK;
 }
@@ -98,19 +99,34 @@ void npc::update()
 	// 플레이어가 말걸었을때 보는 방향의 반대로 플레이어를 봐야한다.
 	//
 	//=================================
-	
+
 	//테슷흐
-	if (KEYMANAGER->isOnceKeyDown(VK_F9))
+	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		_isTalk = true;
 	}
-	if (KEYMANAGER->isOnceKeyUp(VK_F9))
+	if (KEYMANAGER->isOnceKeyUp('Z'))
 	{
 		_isTalk = false;
 	}
-	if(_isTalk)
+	if (_isTalk)
+	{
 		activeWay();
-
+		activeDialog();
+	}
+	if (KEYMANAGER->isOnceKeyDown('X'))
+	{
+		_isHealing = true;
+	}
+	if (KEYMANAGER->isOnceKeyUp('X'))
+	{
+		_isHealing = false;
+	}
+	if (_isHealing)
+	{
+		activeWay();
+		//activeDialog();
+	}
 }
 
 void npc::render()
@@ -129,20 +145,157 @@ void npc::activeDialog()
 	{
 		if (_npcName == "oak")
 		{
-			if (_isPrologue)
-			{
-				wstring text = L"안녕! \n 포켓몬의 세계에 잘 왔다!";
-				SCRIPTMANAGER->pushScript(text);
-			}
+			//if (_isPrologue)
+			//{
+			//	{
+			//		wstring text = L"안녕! \n포켓몬의 세계에 잘 왔다!";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		wstring text = L"나는 포켓몬 박사로 존경받는 오박사란다. \n그리고 이 세계에는 포켓몬이라고 ";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		wstring text = L"불리는 생명체가 도처에 살고있다! \n사람들은 이 포켓몬이라는 생명체를";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		wstring text = L"에완동물로 기르거나 승부를 하지만... \n나는 포켓몬을 전문적으로 연구하고 있지!";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		wstring text = L"자... 그러면 이제 너에 대해 알려다오. \n너는 남자아이인가? 여자아이인가?";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	//성별선택 후
+
+			//	{
+			//		wstring text = L"너의 이름은 뭐지?";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	//이름선택 후
+
+			//	{
+			//		wstring text = L"음...";
+			//		//이름추가
+			//		text.append(L"(이름)이구나?");
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		//이름추가
+			//		wstring text = L"(이름)!\n";
+			//		text.append(L"준비는 되었는가?");
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		wstring text = L"드디어 이제부터 \n너의 이야기가 시작되어진다.";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+
+			//	{
+			//		wstring text = L"즐거운 것도 괴로운 것도 \n잔뜩 널 기다리고 있을 것이다!";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+			//	{
+			//		wstring text = L"꿈과 모험과! 포켓몬스터의 세계로 \n 렛츠 고!";
+			//		SCRIPTMANAGER->pushScript(text);
+			//	}
+			//	//text.clear();
+			//	//text = 
+
+			//}
 		}
 		else if (_npcName == "shopOwner")
 		{
+			{
+					wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+					SCRIPTMANAGER->pushScript(text);
+			}
 
+			//선택창 ( 1. 사러왔다 / 2. 팔러왔다 / 3. 아닙니다)
+
+			//1. 사러왔다 선택했을때
+			{
+				wstring text = L"(아이템)(를)을 \n몇 개 구입하시겠습니까?";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			//개수선택
+			{
+				wstring text = L"(아이템) (개수)로군요. \n총 (금액)원니다.";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			{
+				wstring text = L"네 여기 있습니다. \n대단히 감사합니다.";
+				SCRIPTMANAGER->pushScript(text);
+			}
+
+			//2. 팔러왔다 선택했을때 
+			{
+				wstring text = L"(아이템)(를)을 \n 몇 개 파시겠습니까?";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			//개수선택
+			{
+				wstring text = L"(아이템) (개수)로군요. 총 (금액)원입니다.";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			{
+				wstring text = L"(아이템)(를)을 받아 (금액)원을 드렸습니다.";
+				SCRIPTMANAGER->pushScript(text);
+			}
+
+			//1,2번에서 취소버튼 눌렀을때
+			{
+				wstring text = L"그 밖에 저희가 \n뭐 도와드릴 건 없습니까?";
+				SCRIPTMANAGER->pushScript(text);
+			}
+
+			//3. 아닙니다.
+			{
+				wstring text = L"또 오세요!";
+				SCRIPTMANAGER->pushScript(text);
+			}
 		}
 		else if (_npcName == "nurse")
 		{
+			{
+				wstring text = L"안녕하세요! \n포켓몬 센터입니다!";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			{
+				wstring text = L"이곳에서는 포켓몬의 체력을 회복합니다. \n당신의 포켓몬을 쉬게 하시겠습니까?";
+				SCRIPTMANAGER->pushScript(text);
+			}
 
+			//선택창 (1. 예 /2. 아니오)
+			//1. 예 선택한 경우
+			{
+				wstring text = L"그럼 \n맡아놓겠습니다.";
+				SCRIPTMANAGER->pushScript(text);
+			}
 
+			//회복중
+			{
+				wstring text = L"오래 기다렸습니다!";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			{
+				wstring text = L"맡아놓은 포켓몬은 \n모두 건강해졌습니다!";
+				SCRIPTMANAGER->pushScript(text);
+			}
+			//인사 또는 2. 아니오 선택한 경우
+			{
+				wstring text = L"다음 번에도 \n 방문하시길 기다리겠습니다!";
+				SCRIPTMANAGER->pushScript(text);
+			}
 		}
 	}
 
@@ -204,14 +357,26 @@ void npc::activeWay()
 		}
 		case NPC_TYPE_NURSE:
 		{
-			//간호사는 플레이어 방향에 상관없이 오로지 정면이되 치료하는 와중에는 왼쪽도 본다.
-			_npcActive = NPC_ACTIVE_WAY_NURSE_DOWN;
-			_isReverse = true;
-			_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Down");
-			_motion->start();
-			break;
+			if (_isHealing)
+			{
+				_npcActive = NPC_ACTIVE_WAY_NURSE_LEFT;
+				_isReverse = false;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Left");
+				_motion->start();
+				break;
+			}
+			else
+			{//간호사는 플레이어 방향에 상관없이 오로지 정면이되 치료하는 와중에는 왼쪽도 본다.
+				_npcActive = NPC_ACTIVE_WAY_NURSE_DOWN;
+				_isReverse = false;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Down");
+				_motion->start();
+				break;
+			}
 		}
 		default:
 			break;
 	}
 }
+
+

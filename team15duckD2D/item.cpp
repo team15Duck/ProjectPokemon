@@ -3,6 +3,7 @@
 
 
 item::item()
+	:_tileX(0), _tileY(0)
 {
 }
 
@@ -432,7 +433,7 @@ void item::update()
 
 void item::render()
 {
-	_img->frameRender(_imgPos.x + CAMERA->getPosX(), _imgPos.y + CAMERA->getPosY(), _itemType, 0, 1.0f);
+	//_img->frameRender(_imgPos.x + CAMERA->getPosX(), _imgPos.y + CAMERA->getPosY(), _itemType, 0, 1.0f);
 }
 
 
@@ -445,48 +446,3 @@ item * item::settingItemInfo(ITEM_TYPE type)
 	return newItem;
 }
 
-void item::settingFieldItem(string sceneName, UINT tileX, UINT tileY)
-{
-	_sceneName = sceneName;
-	_tileX = tileX;
-	_tileY = tileY;
-
-	if (sceneName == "ÇÊµå¾À")
-	{
-		if (tileX == 13 && tileY == 8)
-		{
-			ITEMDATA->settingItemInfo(NORMAL_POTION);
-		}
-		else if (tileX == 22 && tileY == 11)
-		{
-			ITEMDATA->settingItemInfo(ANTIDOTE);
-		}
-		else if (tileX == 58 && tileY == 38)
-		{
-			ITEMDATA->settingItemInfo(MONSTER_BALL);
-		}
-		else if (tileX == 57 && tileY == 25)
-		{
-			ITEMDATA->settingItemInfo(NORMAL_ETHER);
-		}
-	}
-	else if (sceneName == "µ¿±¼¾À")
-	{
-		if (tileX == 19 && tileY == 22)
-		{
-			ITEMDATA->settingItemInfo(REVIVE);
-		}
-		else if (tileX == 35 && tileY == 25)
-		{
-			ITEMDATA->settingItemInfo(NORMAL_ETHER);
-		}
-		else if (tileX == 42 && tileY == 25)
-		{
-			ITEMDATA->settingItemInfo(TM_FLAMETHROWER);
-		}
-		else if (tileX == 45 && tileY == 9)
-		{
-			ITEMDATA->settingItemInfo(RARE_CANDY);
-		}
-	}
-}

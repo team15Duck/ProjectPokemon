@@ -14,16 +14,19 @@ mapTestScene::~mapTestScene()
 HRESULT mapTestScene::init()
 {
 	_testMap = new testMap;
-	_testMap->init("data/townMapSize.map", "data/townMapData.map");
+	_testMap->init("data/fieldMapSize.map", "data/fieldMapData.map");
 
 	_player = new player;
 	_player->init();
 	_testMap->setPlayerMemoryAdressLink(_player);
 	_player->setMapDataMemoryAdressLink(_testMap);
 
+	ITEMDATA->setCurrentScene("mapTestScene");
+
 	_npc = new npc;
-	_npc->init(NPC_TYPE_OAK);
+	_npc->init(NPC_TYPE_NURSE);
 	_testMap->pushNpc(_npc);
+
 
 	return S_OK;
 }
@@ -45,4 +48,5 @@ void mapTestScene::update()
 void mapTestScene::render()
 {
 	_testMap->render();
+	ITEMDATA->render();
 }

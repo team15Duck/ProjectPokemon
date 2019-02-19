@@ -222,10 +222,15 @@ void objectTool::render()
 					swprintf_s(str, L"POTAL");
 					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5);
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_OAK) == ATTR_OAK)
+				if ((_vvTile[ii][jj]->attr & ATTR_ITEM) == ATTR_ITEM)
 				{
-					swprintf_s(str, L"오박사");
+					swprintf_s(str, L"아이템");
 					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255,255,0));
+				}
+				if ((_vvTile[ii][jj]->attr & ATTR_WATER) == ATTR_WATER)
+				{
+					swprintf_s(str, L"ATTR_WATER");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 10, RGB(255, 0, 255));
 				}
 			}
 		}
@@ -563,7 +568,7 @@ void objectTool::drawObject()
 			{
 				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 				{
-					_vvTile[i][j]->attr |= ATTR_OAK;
+					_vvTile[i][j]->attr |= ATTR_ITEM;
 					_vvTile[i][j]->attr |= ATTR_UNMOVE;
 				}
 			}

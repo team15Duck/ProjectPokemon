@@ -157,6 +157,8 @@ void mapData::load(const char * mapSizeFileName, const char * mapFileName)
 	}
 
 	potalLoad();
+	fieldItemLoad();
+
 
 }
 
@@ -164,6 +166,10 @@ void mapData::potalLoad()
 {
 
 	
+}
+
+void mapData::fieldItemLoad()
+{
 }
 
 void mapData::drawObject()
@@ -182,6 +188,14 @@ void mapData::drawObject()
 				else if (_vvTile[ii][jj]->attr & ATTR_FLOWER)
 				{
 					imgObject();
+				}
+				else if (_vvTile[ii][jj]->attr & ATTR_ITEM)
+				{
+					for (int i = 0; i < _fieldItems.size(); i++)
+					{
+						if (!(_fieldItems[i].isEat))
+							imgObject();
+					}
 				}
 				else
 				{
@@ -411,6 +425,10 @@ void mapData::drawObject()
 					imgObject();
 				}
 				else if (_vvTile[ii][jj]->objectFrameX == 5 && _vvTile[ii][jj]->objectFrameY == 2) //È­ºÐ À­ºÎºÐ
+				{
+					imgObject();
+				}
+				else if (_vvTile[ii][jj]->objectFrameX == 5 && _vvTile[ii][jj]->objectFrameY == 0)
 				{
 					imgObject();
 				}

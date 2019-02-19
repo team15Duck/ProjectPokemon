@@ -79,3 +79,27 @@ void fieldMap::potalLoad()
 		_potal.push_back(info2);		
 	}
 }
+
+void fieldMap::fieldItemLoad()
+{
+	tagFieldItem field;
+	field.x = 13;						 //첫번째 아이템 위치
+	field.y = 7;						 //첫번째 아이템 위치
+	field.itemType = SUPER_POTION;		 //고급회복약
+	_fieldItems.push_back(field);		 
+
+	field.x = 22;						 //두번째 아이템 위치
+	field.y = 11;						 //두번째 아이템 위치
+	field.itemType = SUPER_BALL;		 //슈퍼볼
+	_fieldItems.push_back(field);
+
+	field.x = 58;						 //세번째 아이템 위치
+	field.y = 38;						 //세번째 아이템 위치
+	field.itemType = ANTIDOTE;			 //해독제
+	_fieldItems.push_back(field);
+
+	field.x = 57;						 //네번째 아이템 위치
+	field.y = 25;						 //네번째 아이템 위치
+	field.itemType = NORMAL_ETHER;		 //PP에이드
+	_fieldItems.push_back(field);
+}

@@ -252,7 +252,7 @@ private:
 	POINTF					_imgPos;		//이미지위치
 	POINT					_imgSize;		//이미지크기
 
-	bool					_isEat;			//필드아이템 먹었니?
+	vector<item*>			_fieldItem;
 
 
 public:
@@ -290,8 +290,17 @@ public:
 	//아이템정보
 	string getItemInfo() { return _itemInfo; }
 
-	//필드아이템 렌더세팅
-	void setIsEat(bool eat) { _isEat = eat; }
+
+	//아이템 위치
+	UINT getTileX() { return _tileX; }
+	UINT getTileY() { return _tileY; }
+	void setTileX(UINT tileX) { _tileX = tileX; }
+	void setTileY(UINT tileY) { _tileY = tileY; }
+
+	//현재씬받아오기
+	void setCurrentScene(string scene) { _sceneName = scene; }
+
+
 
 
 	//ITEM_VALUE makeItemValue(ITEM_TYPE type);
@@ -303,6 +312,5 @@ public:
 	//아이템정보를 쓸때 아이템타입 넣어주쎄요
 	item* settingItemInfo(ITEM_TYPE type);
 
-	void settingFieldItem(string sceneName, UINT tileX, UINT tileY);
 };
 

@@ -4,7 +4,6 @@
 #include "pokemon.h"
 #include "npc.h"
 
-
 #define POTAL_NUM 6
 
 
@@ -30,6 +29,13 @@ public:
 		string x;
 		string y;
 	};
+	struct tagFieldItem
+	{
+		UINT x;												//필드아이템 위치
+		UINT y;												//필드아이템 위치
+		ITEM_TYPE itemType;									//아이템타입
+		bool isEat;											//먹었는지?
+	};
 
 
 protected:
@@ -43,6 +49,7 @@ protected:
 	UINT						_minLevel;						//출현하는 포켓몬의 레벨 범위
 
 	vector<potalInfo>			_potal;
+	vector<tagFieldItem>		_fieldItems;					//필드아이템
 
 	UINT						ii;								//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
 	UINT						iiMax;							//렌더시 for문을 덜 돌기 위해 이녀석들을 세팅해 준다.
@@ -62,6 +69,8 @@ public:
 	virtual void load(const char* mapSizeFileName, const char* mapFileName);
 
 	virtual void potalLoad();
+
+	virtual void fieldItemLoad();
 
 	
 	//오브젝트 렌더용 함수
@@ -96,5 +105,7 @@ public:
 	
 
 	vector<potalInfo> getPotal() { return _potal; }
+	vector<tagFieldItem> getFieldItems() { return _fieldItems; }
+	
 };
 

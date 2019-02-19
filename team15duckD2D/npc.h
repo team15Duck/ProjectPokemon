@@ -36,23 +36,24 @@ private:
 	//대사는 우선 벡터로 넣어보자.
 
 
-	string			_sceneName;						//등장할 씬이름
-	string			_npcName;						//npc이름(키값용)
-	NPC_TYPE		_npcType;						//npc종류
-	NPC_ACTIVE_WAY	_npcActive;						//플레이어가 npc에게 말걸었을때 방향
+	string					_sceneName;						//등장할 씬이름
+	string					_npcName;						//npc이름(키값용)
+	NPC_TYPE				_npcType;						//npc종류
+	NPC_ACTIVE_WAY			_npcActive;						//플레이어가 npc에게 말걸었을때 방향
 
-	UINT			_tileX;							//위치
-	UINT			_tileY;							//위치
+	UINT					_tileX;							//위치
+	UINT					_tileY;							//위치
 
-	bool			_isTalk;						//말걸었는지?
-	bool			_isPrologue;					//오박사용 첫 시작이니?
-	bool			_isReverse;						//상점주인용 좌우반전했니?
+	bool					_isTalk;						//말걸었는지?
+	bool					_isPrologue;					//오박사용 첫 시작이니?
+	bool					_isReverse;						//상점주인용 좌우반전했니?
 
-	animation*		_motion;						//실행중인 애니메이션
-	int				_test;
+	animation*				_motion;						//실행중인 애니메이션
+	bool					_isHealing;
 
 	player::PLAYER_STATE	_state;
 	player*					_player;
+
 
 public:
 	npc();
@@ -68,7 +69,16 @@ public:
 	
 	void setPlayerState(player::PLAYER_STATE state) { _state = state; }
 
+	
+
+
+
+
+	//NPC위치
 	UINT getTileX() { return _tileX; }
 	UINT getTileY() { return _tileY; }
+
+	//NPC랑 말했니?
+	bool getIsTalk() { return _isTalk; }
 };
 
