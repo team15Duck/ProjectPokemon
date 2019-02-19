@@ -17,10 +17,8 @@ HRESULT storeScene::init()
 	_storeMap = new storeMap;
 	_storeMap->init("data/storeMapSize.map", "data/storeMapData.map");
 
-	_player = new player;
-	_player->init();
-	_storeMap->setPlayerMemoryAdressLink(_player);
-	_player->setMapDataMemoryAdressLink(_storeMap);
+	_storeMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
+	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_storeMap);
 	
 	SOUNDMANAGER->addSound("storeBGM", "sound/bgm_13_Pokemon_Center.mp3", true, true);
 	SOUNDMANAGER->play("storeBGM");
@@ -36,8 +34,8 @@ void storeScene::release()
 void storeScene::update()
 {
 	_storeMap->update();
-	_player->update();
-	CAMERA->move(_player->getPosX(), _player->getPosY());
+	PLAYERDATA->getPlayer()->update();
+	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 
 void storeScene::render()

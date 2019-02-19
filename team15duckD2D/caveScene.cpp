@@ -17,10 +17,8 @@ HRESULT caveScene::init()
 	_caveMap = new caveMap;
 	_caveMap->init("data/caveMapSize.map", "data/caveMapData.map");
 
-	_player = new player;
-	_player->init();
-	_caveMap->setPlayerMemoryAdressLink(_player);
-	_player->setMapDataMemoryAdressLink(_caveMap);
+	_caveMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
+	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_caveMap);
 
 	SOUNDMANAGER->addSound("caveBGM", "sound/bgm_15_Caves_of_Mt_Moon.mp3", true, true);
 	SOUNDMANAGER->play("caveBGM");
@@ -31,13 +29,14 @@ HRESULT caveScene::init()
 void caveScene::release()
 {
 	_caveMap->release();
+	
 }
 
 void caveScene::update()
 {
 	_caveMap->update();
-	_player->update();
-	CAMERA->move(_player->getPosX(), _player->getPosY());
+	PLAYERDATA->getPlayer()->update();
+	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 
 void caveScene::render()

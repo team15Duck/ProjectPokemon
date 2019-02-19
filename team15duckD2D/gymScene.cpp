@@ -17,10 +17,8 @@ HRESULT gymScene::init()
 	_gymMap = new gymMap;
 	_gymMap->init("data/gymMapSize.map", "data/gymMapData.map");
 
-	_player = new player;
-	_player->init();
-	_gymMap->setPlayerMemoryAdressLink(_player);
-	_player->setMapDataMemoryAdressLink(_gymMap);
+	_gymMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
+	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_gymMap);
 
 	SOUNDMANAGER->addSound("gymBGM", "sound/bgm_14_Pokemon_Gym.mp3", true, true);
 	SOUNDMANAGER->play("gymBGM");
@@ -36,8 +34,8 @@ void gymScene::release()
 void gymScene::update()
 {
 	_gymMap->update();
-	_player->update();
-	CAMERA->move(_player->getPosX(), _player->getPosY());
+	PLAYERDATA->getPlayer()->update();
+	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 
 void gymScene::render()

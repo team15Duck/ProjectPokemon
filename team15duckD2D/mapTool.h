@@ -93,8 +93,8 @@ private:
 	map<MAP_NAME, string> _mSizeNames;
 	map<MAP_NAME, string> _mDataNames;
 	//map<int, int>
-	//포탈 자표를 저장할 스트링 벡터
-	map<MAP_NAME, string> _mPotalPos;
+	
+	
 
 
 

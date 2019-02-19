@@ -208,7 +208,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("го©╣╬ю");
+		SCENEMANAGER->changeScene("homeScene");
 	}
 	
 	return S_OK;

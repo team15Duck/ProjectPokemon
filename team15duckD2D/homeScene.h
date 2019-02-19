@@ -1,7 +1,6 @@
 #pragma once
 #include "homeMap.h"
 #include "gameNode.h"
-#include "player.h"
 
 class homeScene : public gameNode
 {

@@ -24,6 +24,7 @@ HRESULT homeScene::init()
 
 	SOUNDMANAGER->addSound("homeBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
 	SOUNDMANAGER->play("homeBGM");
+	
 
 	return S_OK;
 }

@@ -29,6 +29,7 @@ HRESULT townScene::init()
 void townScene::release()
 {
 	_townMap->release();
+	
 }
 
 void townScene::update()
@@ -36,6 +37,7 @@ void townScene::update()
 	_townMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+	
 }
 
 void townScene::render()

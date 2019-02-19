@@ -17,9 +17,6 @@ mapTool::~mapTool()
 
 HRESULT mapTool::init()
 {
-	//_objectTool = new objectTool;
-	//_objectTool->init();
-
 	//이미지 설정은 플레이그라운드에 있어영
 	_sampleImg[0] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME1 ]);
 	_sampleImg[1] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME2 ]);
@@ -32,7 +29,7 @@ HRESULT mapTool::init()
 	_sampleImg[8] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME9 ]);
 	_sampleImg[9] = IMAGEMANAGER->findImage	(TERRAIN_NAME[TERRAIN_NAME10]);
 	_sampleImg[10] = IMAGEMANAGER->findImage(TERRAIN_NAME[TERRAIN_NAME11]);
-	//_tempImg[0] =   IMAGEMANAGER->findImage (OBJECT_NAME[OBJECT_NAME1   ]);
+
 	for (int i = 1; i < OBJ_IMG_NUM; ++i)
 	{
 		_tempImg[i] = nullptr;
@@ -50,7 +47,7 @@ HRESULT mapTool::init()
 	_sizeDownHeight = { _preButton.left + 75, _sizeUpWidth.bottom + 10 ,  _preButton.left + 125 , _sizeUpWidth.bottom + 40 };
 
 	_isTileClick = false;
-	//윤정언니가 쓸 오브젝트의 불값
+	
 	_isObj = false;
 	_isRND = false;
 	_turnObjCount = 0;
@@ -120,11 +117,7 @@ void mapTool::update()
 		}
 
 	}
-	//if (KEYMANAGER->isOnceKeyDown('L'))
-	//{
-	//	_objectTool->update();
-	//	_isObj = true;
-	//}
+
 
 	_preButton = { CAMERA->getPosX() + WINSIZEX / 2 + 400, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 450, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
 	_nextButton = { CAMERA->getPosX() + WINSIZEX / 2 + 550, CAMERA->getPosY() + WINSIZEY / 2 + 50, CAMERA->getPosX() + WINSIZEX / 2 + 600, CAMERA->getPosY() + WINSIZEY / 2 + 80 };
@@ -988,39 +981,30 @@ void mapTool::nameInit()
 	//테스트용 맵
 	_mSizeNames.insert(make_pair(MAP_TEST, "data/testMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_TEST, "data/testMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_TEST, "data/testMapPotal.map"));
 	
 	_mDataNames.insert(make_pair(MAP_TOWN, "data/townMapData.map"));
 	_mSizeNames.insert(make_pair(MAP_TOWN, "data/townMapSize.map"));
-	_mPotalPos.insert(make_pair(MAP_TOWN, "data/townMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_HOME, "data/homeMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_HOME, "data/homeMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_HOME, "data/homeMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_O_LAB, "data/oLabMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_O_LAB, "data/oLabMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_O_LAB, "data/oLabMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_FIELD, "data/fieldMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_FIELD, "data/fieldMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_FIELD, "data/fieldMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_CAVE, "data/caveMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_CAVE, "data/caveMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_CAVE, "data/caveMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_STORE, "data/storeMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_STORE, "data/storeMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_STORE, "data/storeMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_CENTER, "data/centerMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_CENTER, "data/centerMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_CENTER, "data/centerMapPotal.map"));
 
 	_mSizeNames.insert(make_pair(MAP_GYM, "data/gymMapSize.map"));
 	_mDataNames.insert(make_pair(MAP_GYM, "data/gymMapData.map"));
-	_mPotalPos.insert(make_pair(MAP_GYM, "data/gymMapPotal.map"));
 }
 
 DWORD mapTool::setAttribute(string imgName, UINT frameX, UINT frameY)

@@ -17,10 +17,8 @@ HRESULT fieldScene::init()
 	_fieldMap = new fieldMap;
 	_fieldMap->init("data/fieldMapSize.map", "data/fieldMapData.map");
 
-	_player = new player;
-	_player->init();
-	_fieldMap->setPlayerMemoryAdressLink(_player);
-	_player->setMapDataMemoryAdressLink(_fieldMap);
+	_fieldMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
+	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_fieldMap);
 
 	SOUNDMANAGER->addSound("fieldBGM", "sound/bgm_10_Road_to_Viridian_City.mp3", true, true);
 	SOUNDMANAGER->play("fieldBGM");
@@ -36,8 +34,8 @@ void fieldScene::release()
 void fieldScene::update()
 {
 	_fieldMap->update();
-	_player->update();
-	CAMERA->move(_player->getPosX(), _player->getPosY());
+	PLAYERDATA->getPlayer()->update();
+	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 
 void fieldScene::render()
