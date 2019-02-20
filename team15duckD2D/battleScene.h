@@ -54,11 +54,13 @@ private:
 	int _evolFrameX;
 	int _evolFrameY;
 
+	bool _isAwakeMyPokemon;
+	bool _isAwakeEnemyPokemon;
+
 	float _evolutionDisTime;	// 진화 연출용 시간
 	int _evolutionDisCount;		// 진화 연출 용 카운트
 
 	bool _isEvolution;
-	bool _isEvolutionFin;
 	
 	float _delayTime;
 

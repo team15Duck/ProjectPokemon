@@ -641,6 +641,21 @@ void pokemon::gainExp(int exp)
 	startProgessing(bind(&pokemon::progressingIncreseExp, this), PROGRESSING_VALUE);
 }
 
+void pokemon::gainExpEnterBattle(int exp)
+{
+	_displayValue = exp;
+	_displayExp = _currentExp;
+	_currentExp += exp;
+
+	// 필요 경험치 채웠으면 레벨업
+	while (_currentExp < _nextLvExp || POKEMON_MAX_LEVEL != _level)
+	{
+		levelUp();
+		if(!_isPossibleEvolution)
+			_isPossibleEvolution = checkPossibleEvolution();
+	}
+}
+
 ITEM_TYPE pokemon::withdrawItem()
 {
 	ITEM_TYPE type = _ownerItemType;

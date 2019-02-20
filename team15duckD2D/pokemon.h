@@ -167,6 +167,8 @@ public:
 	void hillHp(int value);
 	// 경험치 획득
 	void gainExp(int exp);
+	// 경험치 획득 : 현재 출전 중은 아니지만 한번이라도 출전 했을때
+	void gainExpEnterBattle(int exp);
 	// 소지 아이템 해제
 	ITEM_TYPE withdrawItem();
 	// 상태이상 해제

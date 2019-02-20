@@ -37,7 +37,7 @@ HRESULT battleScene::init()
 		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
 		
 		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 99, true);
+		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
 
 		_myPms[1] = new pokemon;
 		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
@@ -88,6 +88,9 @@ HRESULT battleScene::init()
 	else if (sceneName.compare("fieldScene") == 0)	{ _frameX = 1; _frameY = 0; }
 	else if (sceneName.compare("gymScene") == 0)	{ _frameX = 0; _frameY = 0; }
 	else if (sceneName.compare("oLabScene") == 0)	{ _frameX = 0; _frameY = 3; }
+
+	_isAwakeMyPokemon = true;
+	_isAwakeEnemyPokemon = true;
 
 	return S_OK;
 }
@@ -258,8 +261,10 @@ void battleScene::render()
 	{
 		_background->frameRender(CAMERA->getPosX() + 0, CAMERA->getPosY() + 0, _frameX, _frameY);
 
-		_pms[TURN_ENEMY]->render();
-		_pms[TURN_PLAYER]->render();
+		if(_isAwakeMyPokemon)
+			_pms[TURN_PLAYER]->render();
+		if(_isAwakeEnemyPokemon)
+			_pms[TURN_ENEMY]->render();
 	}
 
 	_battleUI->render();
@@ -394,6 +399,7 @@ void battleScene::battleStart()
 	_battleStep = STEP_APPLY_BUFF;
 	_selectSkillIdx = 0;
 
+	_isAwakeMyPokemon = true;
 	_phase = PHASE_BATTLE;
 
 	if (_expList.find(_selPokemon) == _expList.end())
@@ -441,11 +447,12 @@ void battleScene::battle()
 			{
 				wstring script = string2wstring(_pms[TURN_ENEMY]->getName());
 				script.append(L"이(가) 쓰러졌다!");
+				_isAwakeEnemyPokemon = false;
 
 				_battleUI->pushScript(script);
 
 				// todo 플레이어 포켓몬 전투 경험치 계산
-				int value = 1000; //2 * _pms[TURN_ENEMY]->getLevel();
+				int value = 500; //2 * _pms[TURN_ENEMY]->getLevel();
 				if(_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
 					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
 
@@ -457,7 +464,10 @@ void battleScene::battle()
 				{
 					int index = *iter;
 
-					_myPms[index]->gainExp(value);
+					if(index == _selPokemon)
+						_myPms[index]->gainExp(value);
+					else
+						_myPms[index]->gainExpEnterBattle(value);
 					
 					script.clear();
 					script = string2wstring(_myPms[index]->getName());
@@ -482,6 +492,7 @@ void battleScene::battle()
 
 				// 해당 포켓몬 기절함
 				_pms[TURN_PLAYER]->faint();
+				_isAwakeMyPokemon = false;
 
 				// 플레이어 포켓몬 변경
 				_turn = TURN_PLAYER;
