@@ -1,6 +1,7 @@
 #pragma once
 #include "baseUI.h"
 
+
 enum P_POKEMON_STATE
 {
 	P_POKEMON_LIST,

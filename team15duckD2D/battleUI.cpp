@@ -16,10 +16,16 @@ HRESULT battleUI::init()
 	_scriptLength = 0;
 	_scriptCount = 0;
 	_scriptDelay = 0.05f;
-
+	_currentPokemonNum = 0;
 	IMAGEMANAGER->addImage("battleScript", L"image/battle_UI/battle_UI_Main_chat_board.png", 960, 192);
 
-	
+	_ppState = P_POKEMON_LIST;
+	_ppselect = SELECT_MAIN_POKEMON;
+	_psmselect = SELECT_LOOK_POKEMON;
+	_plpokemon = LP_INFO;
+
+	_isSubMenu = false;
+
 	MENUMANAGER->addFrame("battleMenu", 480, 448, 15, 6);
 	MENUMANAGER->addFrame("skillPPFrame", 480, 448, 15, 6);
 	MENUMANAGER->addFrame("skillFrame", 0, 448, 15, 6);
@@ -44,6 +50,23 @@ HRESULT battleUI::init()
 
 	_isPlayerTurn = false;
 	_isBattle = false;
+
+	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
+	MENUMANAGER->addFrame("서머리메뉴2", 635, 444, 10, 6);
+	MENUMANAGER->addFrame("서머리정보", 0, 512, 20, 4);
+
+
+
+	IMAGEMANAGER->addFrameImage("서머리상단", L"image/Summary Menu/summary_top_bar.png", 960, 192, 1, 3);
+	IMAGEMANAGER->addImage("서머리배경", L"image/Summary Menu/summary_base.png", 960, 640);
+	IMAGEMANAGER->addFrameImage("서머리프레임", L"image/Summary Menu/summary_pokemon_info.png", 1920, 576, 2, 1);
+	IMAGEMANAGER->addImage("서머리포켓몬", L"image/Summary Menu/summary_pokemon_base.png", 484, 336);
+	IMAGEMANAGER->addImage("서머리스킬", L"image/Summary Menu/summary_pokemon_skill.png", 484, 576);
+	IMAGEMANAGER->addImage("체력베이스", L"image/battle_UI/battle_UI_HP_base.png", 36, 12);
+	IMAGEMANAGER->addFrameImage("체력게이지", L"image/pokemonMenu_gauge.png", 192, 12, 3, 1);
+
+
+	_pokemonSelectNum = 0;
 
 	return S_OK;
 }
@@ -102,6 +125,7 @@ void battleUI::update()
 			case BATTLE_UI_BAG:
 			break;
 			case BATTLE_UI_POKEMON:
+
 			break;
 			case BATTLE_UI_RUN:
 			break;
@@ -115,12 +139,12 @@ void battleUI::update()
 							_currentMenu = BATTLE_UI_SKILL;
 						break;
 						case 1:
-							//가방 열기
+							//포켓몬 열기
+							_currentMenu = BATTLE_UI_POKEMON;
 
 						break;
 						case 2:
-							//포켓몬 열기
-
+							//가방 열기
 						break;
 						case 3:
 							_isEscape = true;
@@ -263,6 +287,226 @@ void battleUI::render()
 			}
 		}
 	}
+	
+	switch (_currentMenu)
+	{
+		case BATTLE_UI_SKILL:
+		break;
+		case BATTLE_UI_BAG:
+		break;
+		case BATTLE_UI_POKEMON:
+
+			WCHAR possessionPokemon[1024];
+			if (_ppState == P_POKEMON_LIST)
+			{
+				IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+				if (!_isSubMenu)
+				{
+					MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
+				}
+				if (_ppselect == SELECT_CANCEL)
+				{
+					IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 1);
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
+				}
+				int j = 1;
+				for (int i = 0; i < 6; ++i)
+				{
+					// 메인 포켓몬
+					if (i == _currentPokemonNum && i < PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
+					{
+						if (_ppselect == SELECT_MAIN_POKEMON)
+						{
+							IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 2);
+						}
+						else
+						{
+							IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 0);
+						}
+
+						//hp
+						float currentHp = PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp();
+						float maxHp = PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp();
+
+						float hpPercent = currentHp / maxHp;
+
+						if (hpPercent < 0)
+						{
+							hpPercent = 0;
+						}
+						if (hpPercent > 0.5f)
+						{
+							IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 2, 0);
+						}
+						else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+						{
+							IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 1, 0);
+						}
+						else
+						{
+							IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 0, 0);
+						}
+
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 228, 115, 34, RGB(114, 114, 114));
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 225, 115, 34, RGB(255, 255, 255));
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 353, 170, 34, RGB(114, 114, 114));
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 350, 170, 34, RGB(255, 255, 255));
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 263, 228, 48, RGB(114, 114, 114));
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 260, 225, 48, RGB(255, 255, 255));
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 343, 228, 48, RGB(114, 114, 114));
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 340, 225, 48, RGB(255, 255, 255));
+					}
+					else
+					{
+						if (i < PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
+						{
+							if (_ppselect == i)
+							{
+								// 하늘색
+								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 1, 0);
+							}
+							else
+							{
+								// 파란색
+								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 0, 0);
+							}
+							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getName()).c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
+							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getName()).c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getLevel()).c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getLevel()).c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getHp()).c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getHp()).c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getMaxHp()).c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getMaxHp()).c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+
+							//hp
+							float currentHp = PLAYERDATA->getPlayer()->getPokemonArray(j)->getHp();
+							float maxHp = PLAYERDATA->getPlayer()->getPokemonArray(j)->getMaxHp();
+
+							float hpPercent = currentHp / maxHp;
+
+							if (hpPercent < 0)
+							{
+								hpPercent = 0;
+							}
+							if (hpPercent > 0.5f)
+							{
+								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 2, 0);
+							}
+							else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+							{
+								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 1, 0);
+							}
+							else
+							{
+								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 0, 0);
+							}
+							
+						}
+						else
+						{
+							IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY());
+						}
+						j++;
+					}
+
+					if (_isSubMenu)
+					{
+						MENUMANAGER->findMenuFrame("서머리메뉴2")->render();
+						MENUMANAGER->findMenuFrame("서머리정보")->render();
+
+						swprintf_s(possessionPokemon, L"내보내기");
+						D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 465 + CAMERA->getPosY(), 40);
+						swprintf_s(possessionPokemon, L"상태보기");
+						D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 515 + CAMERA->getPosY(), 40);
+						swprintf_s(possessionPokemon, L"그만두기");
+						D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 565 + CAMERA->getPosY(), 40);
+
+						switch (_psmselect)
+						{
+							case SELECT_LOOK_POKEMON:
+								IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 465 + CAMERA->getPosY());
+							break;
+							case SELECT_CHANGE_ORDER:
+								IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 515 + CAMERA->getPosY());
+							break;
+							case SELECT_KEEP_ITEM:
+								IMAGEMANAGER->findImage("화살표")->render(670 + CAMERA->getPosX(), 565 + CAMERA->getPosY());
+							break;
+						}
+					}
+				}
+			}
+			if (_ppState == P_POKEMON_INFO)
+			{
+				IMAGEMANAGER->findImage("서머리배경")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+				IMAGEMANAGER->findImage("서머리포켓몬")->render(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY());
+				switch (_plpokemon)
+				{
+					case LP_INFO:
+						IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
+						IMAGEMANAGER->findImage("서머리프레임")->frameRender(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY(), 0, 0);
+
+						swprintf_s(possessionPokemon, L"Lv.");
+						D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getLevel()).c_str(), 100, 70, 58);
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getName()).c_str(), 230, 70, 58);
+
+						//오른쪽정보
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getName()).c_str(), 670, 145, 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getIdNo()).c_str(), 670, 325, 40);
+						
+					break;
+					case LP_ABILITY:
+						IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 1);
+						IMAGEMANAGER->findImage("서머리프레임")->frameRender(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY(), 1, 0);
+
+						swprintf_s(possessionPokemon, L"Lv.");
+						D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getLevel()).c_str(), 100, 70, 58);
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getName()).c_str(), 230, 70, 58);
+
+						//오른쪽정보
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getHp()).c_str(), 740, 85, 40);
+						swprintf_s(possessionPokemon, L" / ");
+						D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getMaxHp()).c_str(), 860, 85, 40);
+
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getAttk()).c_str(), 860, 155, 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getDex()).c_str(), 860, 210, 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getSpAttk()).c_str(), 860, 260, 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getSpDex()).c_str(), 860, 310, 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getspeed()).c_str(), 860, 355, 40);
+
+					break;
+					case LP_ATTK_SKILL:
+						IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 2);
+						IMAGEMANAGER->findImage("서머리스킬")->render(476 + CAMERA->getPosX(), 64 + CAMERA->getPosY());
+						swprintf_s(possessionPokemon, L"Lv.");
+						D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getLevel()).c_str(), 100, 70, 58);
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getName()).c_str(), 230, 70, 58);
+
+						//오른쪽정보
+						D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getName()).c_str(), 670, 145, 40);
+						D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(_ppselect)->getIdNo()).c_str(), 670, 325, 40);
+					break;
+				}
+
+			}
+
+		break;
+		case BATTLE_UI_RUN:
+		break;
+		case BATTLE_UI_NONE:
+		break;
+		default:
+		break;
+	}
+	
 }
 
 void battleUI::pushScript(wstring script)

@@ -1,6 +1,7 @@
 #pragma once
 #include <queue>
 #include <vector>
+#include "possessionPokemon.h"
 
 typedef struct tagPokemonSkillUIInfo
 {
@@ -46,6 +47,19 @@ private:
 
 	pokemon*			_myPokemon;						//정보를 출력하기 위함
 	pokemon*			_enemyPokemon;					//정보를 출력하기 위함
+	
+
+	UINT				_pokemonSelectNum;
+
+
+	P_POKEMON_STATE		_ppState;
+	P_POKEMON_SELECT	_ppselect;
+	P_SUB_MENU_SELECT	_psmselect;
+	P_LOOK_POKEMON		_plpokemon;
+
+	bool				_isSubMenu;
+
+	UINT				_currentPokemonNum;
 
 public:
 	battleUI();
@@ -56,6 +70,20 @@ public:
 	void update();
 	void render();
 
+	P_POKEMON_STATE		getPPState() { return _ppState; }
+	void				setPPState(P_POKEMON_STATE state) { _ppState = state; }
+
+	P_POKEMON_SELECT	getPPSelect() { return _ppselect; }
+	void				setPPSelect(P_POKEMON_SELECT select) { _ppselect = select; }
+
+	P_SUB_MENU_SELECT	getSubMenu() { return _psmselect; }
+	void				setSubMenu(P_SUB_MENU_SELECT sub) { _psmselect = sub; }
+
+	P_LOOK_POKEMON		getLookPokemon() { return _plpokemon; }
+	void				setLookPokemon(P_LOOK_POKEMON lp) { _plpokemon = lp; }
+
+	bool				getIsSubMenu() { return _isSubMenu; }
+	void				setIsSubMenu(bool isSub) { _isSubMenu = isSub; }
 
 
 	void skillUIClear() { _skillUI.clear(); }

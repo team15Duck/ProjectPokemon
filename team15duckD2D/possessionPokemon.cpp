@@ -21,6 +21,7 @@ HRESULT possessionPokemon::init()
 	_ppselect = SELECT_MAIN_POKEMON;
 	_psmselect = SELECT_LOOK_POKEMON;
 	_plpokemon = LP_INFO;
+	
 	_currentSelecPok = 0;
 
 	//초기화해벌이기 

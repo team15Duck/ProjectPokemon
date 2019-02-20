@@ -213,7 +213,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("loadScene");
+		SCENEMANAGER->changeScene("battleScene");
 	}
 	
 	return S_OK;

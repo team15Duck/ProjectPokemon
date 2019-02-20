@@ -361,6 +361,144 @@ void battleScene::keyControl()
 			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 		}
 	}
+	else if (_battleUI->getCurrentMenu() == BATTLE_UI_POKEMON)
+	{
+
+		if (_battleUI->getIsSubMenu())
+		{
+			switch (_battleUI->getPPState())
+			{
+				case P_POKEMON_LIST:
+					if (KEYMANAGER->isOnceKeyDown(VK_UP))
+					{
+						switch (_battleUI->getSubMenu())
+						{
+							//내보내기
+							case SELECT_LOOK_POKEMON:
+								_battleUI->setSubMenu( SELECT_KEEP_ITEM);
+							break;
+							//정보보기
+							case SELECT_CHANGE_ORDER:
+								_battleUI->setSubMenu(SELECT_LOOK_POKEMON);
+							break;
+							case SELECT_KEEP_ITEM:
+								_battleUI->setSubMenu(SELECT_CHANGE_ORDER);
+							break;
+						}
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+					{
+						switch (_battleUI->getSubMenu())
+						{
+							//내보내기
+							case SELECT_LOOK_POKEMON:
+								_battleUI->setSubMenu(SELECT_CHANGE_ORDER);
+							break;
+							//정보보기
+							case SELECT_CHANGE_ORDER:
+								_battleUI->setSubMenu(SELECT_KEEP_ITEM);
+							break;
+							case SELECT_KEEP_ITEM:
+								_battleUI->setSubMenu(SELECT_LOOK_POKEMON);
+							break;
+						}
+					}
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						switch (_battleUI->getSubMenu())
+						{
+							//내보내기
+							case SELECT_LOOK_POKEMON:
+
+							break;
+							//정보보기
+							case SELECT_CHANGE_ORDER:
+								_battleUI->setPPState(P_POKEMON_INFO);
+							break;
+							case SELECT_KEEP_ITEM:
+								_battleUI->setIsSubMenu(false);
+								_battleUI->setSubMenu(SELECT_LOOK_POKEMON);
+							break;
+						}
+					}
+					if (KEYMANAGER->isOnceKeyDown('X'))
+					{
+						_battleUI->setIsSubMenu(false);
+					}
+				break;
+				case P_POKEMON_INFO:
+					if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+					{
+						switch (_battleUI->getLookPokemon())
+						{
+							case LP_INFO:
+								_battleUI->setLookPokemon(LP_ATTK_SKILL);
+							break;
+							case LP_ABILITY:
+								_battleUI->setLookPokemon(LP_INFO);
+							break;
+							case LP_ATTK_SKILL:
+								_battleUI->setLookPokemon(LP_ABILITY);
+							break;
+						}
+					}
+					if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+					{
+						switch (_battleUI->getLookPokemon())
+						{
+							case LP_INFO:
+								_battleUI->setLookPokemon(LP_ABILITY);
+							break;
+							case LP_ABILITY:
+								_battleUI->setLookPokemon(LP_ATTK_SKILL);
+							break;
+							case LP_ATTK_SKILL:
+								_battleUI->setLookPokemon(LP_INFO);
+							break;
+						}
+					}
+					if (KEYMANAGER->isOnceKeyDown('X'))
+					{
+						_battleUI->setPPState(P_POKEMON_LIST);
+						_battleUI->setLookPokemon(LP_INFO);
+					}
+				break;
+			}
+		}
+		else
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				if (_battleUI->getPPSelect() == SELECT_MAIN_POKEMON)
+				{
+					_battleUI->setPPSelect((P_POKEMON_SELECT)(PLAYERDATA->getPlayer()->getCurrentPokemonCnt() - 1));
+				}
+				else
+				{
+					_battleUI->setPPSelect((P_POKEMON_SELECT)(_battleUI->getPPSelect() - 1));
+				}
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				if (_battleUI->getPPSelect() == PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
+				{
+					_battleUI->setPPSelect(SELECT_MAIN_POKEMON);
+				}
+				else
+				{
+					_battleUI->setPPSelect((P_POKEMON_SELECT)(_battleUI->getPPSelect() + 1));
+				}
+			}
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_battleUI->setIsSubMenu(true);
+			}
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+			}
+		}
+	}
 }
 
 void battleScene::battleStart()
