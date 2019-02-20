@@ -101,8 +101,10 @@ void playerDataBase::currentPokemonLoad(DATA data)
 				ReadFile(file2, &loadPokemon, sizeof(pokemon), &read2, NULL);
 
 				CloseHandle(file2);
-				_currentPlayer->getPokemon[ii] = new pokemon;
-				*(_currentPlayer->getPokemon[ii]) = loadPokemon;
+				
+				//_currentPlayer->getPokemon[ii] = new pokemon;
+				_currentPlayer->setPokemonArray(ii, new pokemon);
+				*(_currentPlayer->getPokemonArray(ii)) = loadPokemon;
 			}
 
 
@@ -410,7 +412,7 @@ void playerDataBase::itemDataSave(DATA data)
 
 			string saveData = "";
 
-			for (player::mapItemIter iter = _currentPlayer->getItem().begin(); iter != _currentPlayer->getItem().end; iter++)
+			for (player::mapItemIter iter = _currentPlayer->getItem().begin(); iter != _currentPlayer->getItem().end(); iter++)
 			{
 				saveData += "/";
 				saveData += to_string(iter->first);

@@ -119,6 +119,8 @@ public:
 	mapItemList getItem() { return _mItemList; }
 	//mapItemList getItemAmount() { return _mItemList.size; }
 	pokemon** getPokemon() { return _pokemon; }
+	pokemon* getPokemonArray(int num) { return _pokemon[num]; }
+	void setPokemonArray(int num, pokemon* pokemon) { _pokemon[num] = pokemon; }
 
 
 	UINT	getCurrentPokemonCnt() { return _currentPokemon; }
