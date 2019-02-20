@@ -66,6 +66,9 @@ public:
 	void render(string strKey, float destX, float destY, int showWidth, int showHeight, float sourX, float sourY,
 		int sourWidth, int sourHeight, float alpha = 1.0f);
 
+	//루프렌더
+	void loopRender(string strKey, D2D1_RECT_F drawArea, int offSetX, int offSetY, float opacity = 1.0f);
+
 	//원래 크기 프레임렌더 - 키값, 그려줄 x, y 좌표, 가로 방향 프레임 인덱스, 세로 방향 프레임 인덱스, 투명도
 	void frameRender(string strKey, float destX, float destY, int currentFrameX, int currentFrameY, float alpha = 1.0f);
 

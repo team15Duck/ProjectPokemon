@@ -190,7 +190,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
 	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
 	SCENEMANAGER->addScene("objectToolScene", new objectToolScene);
-	SCENEMANAGER->addScene("재원테스트씬", new jaewonTestScene);
+	SCENEMANAGER->addScene("startScene", new startScene);
 
 	SCENEMANAGER->addScene("battleScene", new battleScene);
 	SCENEMANAGER->addScene("battleScene2", new battleScene2);
@@ -203,6 +203,8 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("oLabScene", new oLabScene);
 	SCENEMANAGER->addScene("storeScene", new storeScene);
 	SCENEMANAGER->addScene("townScene", new townScene);
+	SCENEMANAGER->addScene("loadScene", new loadScene);
+
 	PLAYERDATA->init();
 	
 	if (MAPTOOLSCENE)
@@ -211,7 +213,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("battleScene");
+		SCENEMANAGER->changeScene("loadScene");
 	}
 	
 	return S_OK;

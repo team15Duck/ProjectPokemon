@@ -7,7 +7,8 @@
 #include "objectToolScene.h"
 #include "battleScene.h"
 #include "battleScene2.h"
-#include "jaewonTestScene.h"
+#include "startScene.h"
+#include "loadScene.h"
 
 #include "caveScene.h"
 #include "centerScene.h"

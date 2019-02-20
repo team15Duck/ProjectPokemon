@@ -108,7 +108,7 @@ public:
 	void frameRenderReverseX(float destX, float destY, int showWidth, int showHeight, int currentFrameX, int currentFrameY, float alpha = 1.0f);
 
 	//루프 렌더 - 수정 필요
-	//void LoopRender(const LPRECT drawArea, int offSetX = 0, int offSetY = 0, float opacity = 1.0f);
+	void loopRender(D2D1_RECT_F drawArea, int offSetX = 0, int offSetY = 0, float opacity = 1.0f);
 
 	void aniRender(int destX, int destY, animation* ani);
 	void aniRenderReverseX(int destX, int destY, animation* ani);

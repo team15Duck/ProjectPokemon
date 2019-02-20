@@ -153,7 +153,7 @@ void image::frameRender(float destX, float destY, int currentFrameX, int current
 
 void image::frameRenderAngle(float destX, float destY, int currentFrameX, int currentFrameY, float angle, float alpha)
 {
-	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(angle, Point2F(destX + _imageInfo->frameWidth / 2, destY / _imageInfo->frameHeight / 2)));
+	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(angle, Point2F(destX + _imageInfo->frameWidth / 2, destY + _imageInfo->frameHeight / 2)));
 	frameRender(destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight, currentFrameX, currentFrameY, alpha);
 	D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 }
@@ -233,6 +233,73 @@ void image::frameRenderReverseX(float destX, float destY, int showWidth, int sho
 			, dxArea2);
 		D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 	}
+}
+
+void image::loopRender(D2D1_RECT_F drawArea, int offSetX, int offSetY, float opacity)
+{
+	if (offSetX < 0) offSetX = _imageInfo->width + (offSetX % _imageInfo->width);
+	if (offSetY < 0) offSetY = _imageInfo->height + (offSetY % _imageInfo->height);
+
+	int sourWidth;
+	int sourHeight;
+
+	RECT rcDest;
+	RECT rcSour;
+
+	//화면에 루프이미지 그려줄 영역을 셋팅해보자
+	int drawAreaX = (&drawArea)->left;				//그려줄 영역의 Left
+	int drawAreaY = (&drawArea)->top;				//그려줄 영역의 top
+	int drawAreaW = (&drawArea)->right - drawAreaX; //그려줄 영역의 가로크기
+	int drawAreaH = (&drawArea)->bottom - drawAreaY;//그려줄 영역의 세로크기
+
+	//세로
+	for (int y = 0; y < drawAreaH; y += sourHeight)
+	{
+		//나머지 연산을 통해서 정확한 수치를 알아온다
+		rcSour.top = (y + offSetY) % _imageInfo->height;
+		rcSour.bottom = _imageInfo->height;
+
+		//밀려올라간 간격 계산
+		sourHeight = rcSour.bottom - rcSour.top;
+
+		//화면밖으로 이미지가 나갔다면
+		if (y + sourHeight > drawAreaH)
+		{
+			//그만큼 보정해줘라 - 연산때문에 실제로 -빼면 위가 아니라 밑으로간다
+			rcSour.bottom -= (y + sourHeight) - drawAreaH;
+			sourHeight = rcSour.bottom - rcSour.top;
+		}
+
+		//화면밖으로 나간영역을 다시 밀어올린다(다시 그려준다)
+		rcDest.top = y + drawAreaY;
+		rcDest.bottom = rcDest.top + sourHeight;
+
+		// X축
+		for (int x = 0; x < drawAreaW; x += sourWidth)
+		{
+			//나머지 연산을 통한 정밀 보정
+			rcSour.left = (x + offSetX) % _imageInfo->width;
+			rcSour.right = _imageInfo->width;
+
+			sourWidth = rcSour.right - rcSour.left;
+
+			if (x + sourWidth > drawAreaW)
+			{
+				rcSour.right -= (x + sourWidth) - drawAreaW;
+				sourWidth = rcSour.right - rcSour.left;
+			}
+
+			rcDest.left = x + drawAreaX;
+			rcDest.right = rcDest.left + sourWidth;
+
+			render(rcDest.left, rcDest.top,
+				   rcSour.left, rcSour.top,
+				   rcSour.right - rcSour.left,
+				   rcSour.bottom - rcSour.top);
+		}
+	}
+
+
 }
 
 void image::aniRender(int destX, int destY, animation * ani)

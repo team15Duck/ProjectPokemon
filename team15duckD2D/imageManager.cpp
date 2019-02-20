@@ -162,6 +162,13 @@ void imageManager::render(string strKey, float destX, float destY, int showWidth
 	if (img) img->render(destX, destY, showWidth, showHeight, sourX, sourY, sourWidth, sourHeight, alpha);
 }
 
+void imageManager::loopRender(string strKey, D2D1_RECT_F drawArea, int offSetX, int offSetY, float opacity)
+{
+	image* img = findImage(strKey);
+
+	if (img) img->loopRender(drawArea, offSetX, offSetY);
+}
+
 void imageManager::frameRender(string strKey, float destX, float destY, int currentFrameX, int currentFrameY, float alpha)
 {
 	image* img = findImage(strKey);
