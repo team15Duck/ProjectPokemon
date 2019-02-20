@@ -86,6 +86,9 @@ public:
 	void				setIsSubMenu(bool isSub) { _isSubMenu = isSub; }
 
 
+	UINT				getCurrentPokemonNum() { return _currentPokemonNum; }
+	void				setCurrentPokemonNum(UINT num) { _currentPokemonNum = num; }
+
 	void skillUIClear() { _skillUI.clear(); }
 	void addSkill(wstring skillName, UINT cPP, UINT mPP, wstring type)
 	{

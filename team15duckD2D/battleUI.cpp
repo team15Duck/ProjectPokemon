@@ -373,18 +373,18 @@ void battleUI::render()
 								// 파란색
 								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 0, 0);
 							}
-							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getName()).c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
-							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getName()).c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getLevel()).c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getLevel()).c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getHp()).c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getHp()).c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getMaxHp()).c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(j)->getMaxHp()).c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
+							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
 
 							//hp
-							float currentHp = PLAYERDATA->getPlayer()->getPokemonArray(j)->getHp();
-							float maxHp = PLAYERDATA->getPlayer()->getPokemonArray(j)->getMaxHp();
+							float currentHp = PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp();
+							float maxHp = PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp();
 
 							float hpPercent = currentHp / maxHp;
 

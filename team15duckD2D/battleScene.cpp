@@ -409,6 +409,39 @@ void battleScene::keyControl()
 						{
 							//내보내기
 							case SELECT_LOOK_POKEMON:
+								////////////////////////////
+								//여기서 내보내면 됨
+								if (_battleUI->getPPSelect() != SELECT_MAIN_POKEMON)		//이미 나간놈이 아니면 
+								{
+									if (_battleUI->getPPSelect() > _battleUI->getCurrentPokemonNum())
+									{
+										//PLAYERDATA->getPlayer()->getPokemonArray(_battleUI->getPPSelect()) <<이놈 가져가면됨
+										_battleUI->setCurrentPokemonNum(_battleUI->getPPSelect());
+									}
+									else
+									{
+										//PLAYERDATA->getPlayer()->getPokemonArray(_battleUI->getPPSelect() - 1) <<이놈 가져가면됨
+										_battleUI->setCurrentPokemonNum(_battleUI->getPPSelect() - 1);
+									}
+
+
+									_battleUI->setIsSubMenu(false);
+									_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+									_battleUI->setPPSelect(SELECT_MAIN_POKEMON);
+								}
+
+
+
+
+								////////////////////////////
+
+
+
+
+
+
+
+
 
 							break;
 							//정보보기
