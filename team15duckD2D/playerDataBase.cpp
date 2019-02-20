@@ -94,7 +94,7 @@ void playerDataBase::currentPokemonLoad(DATA data)
 				HANDLE file2;
 				DWORD read2;
 				string fileName2 = "data/saveData" + to_string(data) + "/currentPokemon/pokemon" + to_string(ii) + ".txt";
-				pmPack* loadPokemon;
+				pmPack* loadPokemon = nullptr;
 				file2 = CreateFile(fileName2.c_str(), GENERIC_READ, NULL, NULL,
 					OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
