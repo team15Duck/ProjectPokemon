@@ -73,6 +73,8 @@ private :
 	bool _isSubMenu;
 	bool _isPokemonChange;
 
+	animation* _pokemonAni[6];
+
 public:
 	possessionPokemon();
 	~possessionPokemon();
@@ -89,6 +91,7 @@ public:
 	void uiOpen();
 	void uiClose();
 
+	void keyani();
 	P_POKEMON_STATE getstate() { return _ppstate; }
 };
 

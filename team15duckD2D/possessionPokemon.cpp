@@ -41,6 +41,16 @@ HRESULT possessionPokemon::init()
 	_isSubpokemon = false;
 	_isSubMenu = false;
 	_isPokemonChange = false;
+
+
+	//================================ 애니 테스트
+	keyani();
+	//애니테스트 
+
+
+	//_pokemonAni = KEYANIMANAGER->findAnimation("포켓몬선택", name);
+	//_pokemonAni->start();
+
 	return S_OK;
 }
 
@@ -53,14 +63,16 @@ void possessionPokemon::update()
 
 	if (_ppstate == P_POKEMON_LIST)
 	{
+		for (int ii = 0; ii < _pokemonCnt; ++ii)
+			_pokemonAni[ii]->frameUpdate(TIMEMANAGER->getElapsedTime());
+
 		//포켓몬 리스트 이동관련
 		if (!_isSubMenu)
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
-				switch (_ppselect)
+				if (_ppselect == SELECT_MAIN_POKEMON)
 				{
-				case SELECT_MAIN_POKEMON:
 					if (0 < _pokemonCnt)
 					{
 						_ppselect = SELECT_SUB_POKEMON1;
@@ -69,25 +81,38 @@ void possessionPokemon::update()
 					{
 						_ppselect = SELECT_CANCEL;
 					}
-					break;
-				case SELECT_SUB_POKEMON1:
-					_ppselect = SELECT_SUB_POKEMON2;
-					break;
-				case SELECT_SUB_POKEMON2:
-					_ppselect = SELECT_SUB_POKEMON3;
-					break;
-				case SELECT_SUB_POKEMON3:
-					_ppselect = SELECT_SUB_POKEMON4;
-					break;
-				case SELECT_SUB_POKEMON4:
-					_ppselect = SELECT_SUB_POKEMON5;
-					break;
-				case SELECT_SUB_POKEMON5:
-					_ppselect = SELECT_CANCEL;
-					break;
-				case SELECT_CANCEL:
+				}
+				else if (_ppselect == SELECT_CANCEL)
+				{
 					_ppselect = SELECT_MAIN_POKEMON;
-					break;
+				}
+				else
+				{
+					if (_pokemonCnt <= _ppselect + 1)
+					{
+						_ppselect = SELECT_CANCEL;
+					}
+					else
+					{
+						switch (_ppselect)
+						{
+						case SELECT_SUB_POKEMON1:
+							_ppselect = SELECT_SUB_POKEMON2;
+							break;
+						case SELECT_SUB_POKEMON2:
+							_ppselect = SELECT_SUB_POKEMON3;
+							break;
+						case SELECT_SUB_POKEMON3:
+							_ppselect = SELECT_SUB_POKEMON4;
+							break;
+						case SELECT_SUB_POKEMON4:
+							_ppselect = SELECT_SUB_POKEMON5;
+							break;
+						case SELECT_SUB_POKEMON5:
+							_ppselect = SELECT_CANCEL;
+							break;
+						}
+					}
 				}
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_UP))
@@ -207,13 +232,12 @@ void possessionPokemon::update()
 					_isSubMenu = false;
 					
 					_currentSelecPok = _ppselect;
-
 				break;
 				case SELECT_KEEP_ITEM:
-					
+					//아이템 전달하기 끝나면추가추가 
 				break;
 				case SELECT_NONE:
-					
+					_isSubMenu = false;
 				break;
 				}
 			}
@@ -260,10 +284,14 @@ void possessionPokemon::render()
 	WCHAR possessionPokemon[1024];
 	if (_ppstate == P_POKEMON_LIST)
 	{
+		
+
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		if (!_isSubMenu)
 		{
 			MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
+			swprintf_s(possessionPokemon, L"포켓몬을 선택해주세요");
+			D2DMANAGER->drawText(possessionPokemon, 50 + CAMERA->getPosX(), 555 + CAMERA->getPosY(), 40);
 		}
 		if (_ppselect == SELECT_CANCEL)
 		{
@@ -273,7 +301,8 @@ void possessionPokemon::render()
 		{
 			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
 		}
-
+		swprintf_s(possessionPokemon, L"취소");
+		D2DMANAGER->drawText(possessionPokemon, 835 + CAMERA->getPosX(), 558 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 		for (int i = 0; i < 6; ++i)
 		{
 			// 메인 포켓몬
@@ -380,10 +409,16 @@ void possessionPokemon::render()
 				}
 			}
 
+			for(int ii = 0 ; ii < _pokemonCnt; ++ii)
+				IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100, 100 + ii * 50, _pokemonAni[ii]);
+
 			if (_isSubMenu)
 			{
 				MENUMANAGER->findMenuFrame("서머리메뉴")->render();
 				MENUMANAGER->findMenuFrame("서머리정보")->render();
+
+				swprintf_s(possessionPokemon, L"어떻게할까?");
+				D2DMANAGER->drawText(possessionPokemon, 50 + CAMERA->getPosX(), 555 + CAMERA->getPosY(), 40);
 
 				swprintf_s(possessionPokemon, L"상태보기");
 				D2DMANAGER->drawText(possessionPokemon, 700 + CAMERA->getPosX(), 415 + CAMERA->getPosY(), 40);
@@ -411,6 +446,7 @@ void possessionPokemon::render()
 				}
 			}
 		}
+		
 	}
 	if (_ppstate == P_POKEMON_INFO)
 	{
@@ -731,6 +767,11 @@ void possessionPokemon::pPokemonDataSet()
 		_pPokemon[i].currentExp = to_wstring(pokemons[i]->getCurrentExp());
 		_pPokemon[i].nextLvExp = to_wstring(pokemons[i]->getNextExp());
 
+
+		char name[128] = "";
+		sprintf_s(name, "ui_pokemons_%d", pokemons[i]->getPokeminIndex());
+		_pokemonAni[i] = KEYANIMANAGER->findAnimation("포켓몬선택", name);
+		_pokemonAni[i]->start();
 	}
 
 
@@ -746,4 +787,20 @@ void possessionPokemon::uiOpen()
 
 void possessionPokemon::uiClose()
 {
+}
+
+void possessionPokemon::keyani()
+{
+	IMAGEMANAGER->addFrameImage("포켓몬파닥", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);
+
+	KEYANIMANAGER->addAnimationType("포켓몬선택");
+	
+	for (int i = 0; i < 151; ++i)
+	{
+		int pokemons_mini[] = { i * 2, i * 2 + 1 };
+		char keyName[128] = "";
+		sprintf_s(keyName, "ui_pokemons_%d", i);
+		
+		KEYANIMANAGER->addArrayFrameAnimation("포켓몬선택", keyName, "포켓몬파닥", pokemons_mini, 2, 10, true);
+	}
 }
