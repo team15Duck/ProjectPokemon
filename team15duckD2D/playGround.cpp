@@ -156,6 +156,9 @@ HRESULT playGround::init()
 	// 간호사 이미지
 	IMAGEMANAGER->addFrameImage("nurse", L"image/nurse.png", 272, 80, 4, 1);
 
+	// 배틀 배경
+	IMAGEMANAGER->addFrameImage("battleBackground", L"image/BattleBackgrounds.png", 2880, 1792, 3, 4);
+
 
 	//=============================================================================================== UI 이미지 
 	// 0. 메인

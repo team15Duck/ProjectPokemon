@@ -21,9 +21,12 @@ private:
 	BattleStep _battleStep;			// 배틀 스텝
 	PlayerActive _active;			// 플레이어 행동
 
-	pokemon* _pms[TURN_MAX + 1];	// 테스트용임 삭제 될 것
+	pokemon* _pms[TURN_MAX + 1];	// 출전중인 포켓몬
 
-	battleUI* _battleUI;
+	battleUI* _battleUI;	// ui
+	image* _background;		// 배경
+	int _frameX;			// 배경 이미지 프레임
+	int _frameY;			// 배경 이미지 프레임
 
 	UINT _selectSkillIdx;	// 선택 된 스킬 슬롯 번호
 	UINT _selPokemon;		// 출전중인 포켓몬 슬롯 번호

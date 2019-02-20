@@ -3,6 +3,8 @@
 
 
 battleScene::battleScene()
+: _frameX(0)
+, _frameY(0)
 {
 }
 
@@ -35,7 +37,7 @@ HRESULT battleScene::init()
 		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
 		
 		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 30, true);
+		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
 
 		_myPms[1] = new pokemon;
 		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
@@ -71,6 +73,21 @@ HRESULT battleScene::init()
 	_pms[TURN_ENEMY]->setTargetPokemon(_pms[TURN_PLAYER]);
 	_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
 
+	_background = IMAGEMANAGER->findImage("battleBackground");
+
+
+	// todo 야생 포켓몬 출현 지역에 따라 배경이 바뀜
+
+	string sceneName;
+	sceneName.clear();
+	
+	sceneName = PLAYERDATA->getPlayer()->getSceneName();
+
+	if (sceneName.compare("caveScene") == 0)		{ _frameX = 0; _frameY = 1; }
+	else if (sceneName.compare("fieldScene") == 0)	{ _frameX = 1; _frameY = 0; }
+	else if (sceneName.compare("gymScene") == 0)	{ _frameX = 0; _frameY = 0; }
+	else if (sceneName.compare("oLabScene") == 0)	{ _frameX = 0; _frameY = 3; }
+
 	return S_OK;
 }
 
@@ -79,6 +96,15 @@ void battleScene::release()
 	SAFE_DELETE(_pokemon);
 	SAFE_RELEASE(_battleUI);
 	SAFE_DELETE(_battleUI);
+
+	_background = nullptr;
+	for (int ii = 0; ii < 6; ++ii)
+	{
+		_myPms[ii] = nullptr;
+	}
+
+	_pms[TURN_PLAYER] = nullptr;
+	_pms[TURN_ENEMY] = nullptr;
 }
 
 void battleScene::update()
@@ -179,6 +205,8 @@ void battleScene::update()
 
 void battleScene::render()
 {
+	_background->frameRender(CAMERA->getPosX() + 0, CAMERA->getPosY() + 0, 960, 488, _frameX, _frameY);
+
 	_pms[TURN_ENEMY]->render();
 	_pms[TURN_PLAYER]->render();
 
@@ -378,17 +406,15 @@ void battleScene::battle()
 				for (set<UINT>::iterator iter = _expList.begin(); _expList.end() != iter; ++iter)
 				{
 					_myPms[*iter]->gainExp(value);
+					
+					script.clear();
+					script = string2wstring(_myPms[*iter]->getName());
+					script.append(L"은(는)");
+					script.append(to_wstring(value));
+					script.append(L"의 경험치를 획득하였다!");
+
+					_battleUI->pushScript(script);
 				}
-
-				//_pms[TURN_PLAYER]->gainExp(value);
-
-				script.clear();
-				script = string2wstring(_pms[TURN_PLAYER]->getName());
-				script.append(L"은(는)");
-				script.append(to_wstring(value));
-				script.append(L"의 경험치를 획득하였다!");
-
-				_battleUI->pushScript(script);
 
 				// 적 포켓몬 변경
 				_turn = TURN_ENEMY;
