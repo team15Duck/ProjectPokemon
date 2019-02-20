@@ -871,6 +871,12 @@ void player::potalCheck()
 	}
 }
 
+void player::setPos()
+{
+	_posX = (float)_tileX * 64 + 32;
+	_posY = (float)_tileY * 64 + 32;
+}
+
 void player::fishingStart()
 {
 	_maxFishingTime = RND->getFromIntTo(5, 11);

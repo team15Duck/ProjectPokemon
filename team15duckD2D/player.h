@@ -104,11 +104,17 @@ public:
 	float getPosX() { return _posX; }
 	float getPosY() { return _posY; }
 
+	void setPos();
+
 	UINT getTileX() { return _tileX; }
+	void setTileX(int x) { _tileX = x; }
 	UINT getTileY() { return _tileY; }
+	void setTileY(int y) { _tileY = y; }
 	
 	string getName() { return _name; }
+	void setName(string name) { _name = name; }
 	bool getIsMan() { return _isMan; }
+	void setIsMan(bool isMan) { _isMan = isMan; }
 
 	mapItemList getItem() { return _mItemList; }
 	//mapItemList getItemAmount() { return _mItemList.size; }
@@ -128,9 +134,14 @@ public:
 	void setSceneName(string name) { _currentSceneName = name; }
 
 	float getPlayTime() { return _playTime; }
+	void setPlayTime(float time) { _playTime = time; }
 	UINT getMoney() { return _money; }
+	void setMoney(int money) { _money = money; }
 
 	PLAYER_STATE getState() { return _state; }
+
+
+
 
 };
 
