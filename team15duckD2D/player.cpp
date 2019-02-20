@@ -23,7 +23,7 @@ HRESULT player::init()
 	_posY = (float)_tileY * 64 + 32;
 	_isMan = true;
 	_state = PS_IDLE_DOWN;
-	_playTime = 5461;
+	_playTime = 0;
 	_isRight = false;
 	_posZ = 0;
 	_moveDistance = 0;

@@ -42,7 +42,16 @@ void playerDataBase::dataLoad(DATA data)
 	npcDataLoad(data);
 	itemDataLoad(data);
 	objectDataLoad(data);
-	playerDataLoad(data);
+	vector<string> vData = playerDataLoad(data);
+
+	_currentPlayer->setName(vData[0]);
+	_currentPlayer->setPlayTime(stoi(vData[1]));
+	_currentPlayer->setTileX(stoi(vData[2]));
+	_currentPlayer->setTileY(stoi(vData[3]));
+	_currentPlayer->setSceneName(vData[4]);
+	_currentPlayer->setMoney(stoi(vData[5]));
+	_currentPlayer->setIsMan(stoi(vData[6]));
+	_currentPlayer->setPos();
 }
 
 void playerDataBase::dataSave(DATA data)
@@ -278,14 +287,7 @@ vector<string> playerDataBase::playerDataLoad(DATA data)
 				}
 			}
 
-			_currentPlayer->setName(vData[0]);
-			_currentPlayer->setPlayTime(stoi(vData[1]));
-			_currentPlayer->setTileX(stoi(vData[2]));
-			_currentPlayer->setTileY(stoi(vData[3]));
-			_currentPlayer->setSceneName(vData[4]);
-			_currentPlayer->setMoney(stoi(vData[5]));
-			_currentPlayer->setIsMan(stoi(vData[6]));
-			_currentPlayer->setPos();
+			
 			
 		break;
 	}
