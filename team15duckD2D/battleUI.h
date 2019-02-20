@@ -39,6 +39,9 @@ private:
 
 
 	bool				_isEscape;						//도망?
+	bool				_isPlayerTurn;					//플레이어 행동 턴?
+	bool				_isBattle;						//배틀중인가
+	bool				_isKeyDownZ;					//Z키가 눌렸는가
 	BATTLE_UI			_currentMenu;					//현재 메뉴 상태
 
 	pokemon*			_myPokemon;						//정보를 출력하기 위함
@@ -106,5 +109,9 @@ public:
 	void setMyPokemonMemoryAdressLink(pokemon* m) { _myPokemon = m; }
 	void setEnemyPokemonMemoryAdressLink(pokemon* e) { _enemyPokemon = e; }
 
+	void setIsPlayerTurn(bool isPlayerTurn) { _isPlayerTurn = isPlayerTurn;	}
+	void setIsBattle(bool isBattle)			{ _isBattle = isBattle;			}
+
+	bool isKeyDownKeyZ() { return _isKeyDownZ; }
 };
 

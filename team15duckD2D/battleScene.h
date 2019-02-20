@@ -49,7 +49,7 @@ private:
 	int _frameX;			// 배경 이미지 프레임
 	int _frameY;			// 배경 이미지 프레임
 
-	EVOLUTIONPOKEMON _evPokemon;
+	EVOLUTIONPOKEMON _evPokemon;	// 진화하는 정보
 	image* _pokemonImg;
 	int _evolFrameX;
 	int _evolFrameY;
@@ -58,7 +58,9 @@ private:
 	int _evolutionDisCount;		// 진화 연출 용 카운트
 
 	bool _isEvolution;
-	bool _isEvolutinFin;
+	bool _isEvolutionFin;
+	
+	float _delayTime;
 
 	UINT _selectSkillIdx;	// 선택 된 스킬 슬롯 번호
 	UINT _selPokemon;		// 출전중인 포켓몬 슬롯 번호

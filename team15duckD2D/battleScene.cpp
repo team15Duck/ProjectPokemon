@@ -142,11 +142,19 @@ void battleScene::update()
 			
 		_myPms[_evPokemon.index]->displayEvolution();
 		
-		wstring script;
-		script.clear();
-		script.append(string2wstring(_myPms[_evPokemon.index]->getName()));
-		script.append(L"로 진화를 했다!");
-		_battleUI->pushScript(script);
+		if (!_battleUI->isKeyDownKeyZ())
+		{
+			wstring script;
+			script.clear();
+			script.append(string2wstring(_myPms[_evPokemon.index]->getName()));
+			script.append(L"로 진화를 했다!");
+			_battleUI->pushScript(script);
+			_battleUI->setScriptSkip(false);
+		}
+		else
+		{
+			_isEvolution = false;
+		}
 	}
 	
 	// 포켓몬 상태 업데이트
@@ -159,6 +167,7 @@ void battleScene::update()
 		return;
 	}
 
+	_battleUI->setIsBattle(false);
 	switch (_phase)
 	{
 		case PHASE_START:
@@ -168,6 +177,7 @@ void battleScene::update()
 		}
 		case PHASE_BATTLE:
 		{
+			_battleUI->setIsBattle(true);
 			// 적 포켓몬이나 플레이어 포켓몬이 쓰러짐
 			if (!_pms[TURN_ENEMY]->isAwake() || !_pms[TURN_PLAYER]->isAwake())
 			{
@@ -183,6 +193,7 @@ void battleScene::update()
 					battle();
 				else										// 플레이어 행동 선택
 				{
+					_battleUI->setIsPlayerTurn(true);
 					keyControl();
 
 					// todo 키 선택 결과 행동
@@ -337,6 +348,8 @@ void battleScene::keyControl()
 
 			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 			_battleUI->setCurrentSelectSkill(0);
+
+			_battleUI->setIsPlayerTurn(false);
 		}
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
@@ -344,8 +357,6 @@ void battleScene::keyControl()
 		}
 	}
 }
-
-
 
 void battleScene::battleStart()
 {

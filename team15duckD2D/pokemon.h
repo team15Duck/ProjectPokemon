@@ -91,6 +91,7 @@ private:
 	bool _isIdle;								// 행동 대기중인가
 
 	bool _isPossibleEvolution;					// 진화가능?
+	bool _isLevelUp;							// 레벨업을 했는가
 	
 
 	PROGRESSING_TYPE	_progressingType;

@@ -18,6 +18,8 @@ pokemon::pokemon()
 , _displayTime(0.f)
 , _displayTimeCnt(0.f)
 , _isIdle(true)
+, _isPossibleEvolution(false)
+, _isLevelUp(false)
 , _buff(PMB_NONE)
 , _img(nullptr)
 , _target(nullptr)
@@ -704,6 +706,7 @@ void pokemon::levelUp()
 
 	_beforeLvStatus = _currentLvStatus;
 	++_level;
+	_isLevelUp = true;
 	
 	settingStatus();
 	gainSkill();
@@ -804,6 +807,14 @@ void pokemon::endProgressing()
 	_isIdle = true;
 	_progressingType = PROGRESSING_NONE;
 	_function = NULL;
+
+	if (_isLevelUp)
+	{
+		wstring script = L"레벨업을 하였다!";
+		sendScriptToUI(script);
+
+		_isLevelUp = false;
+	}
 }
 
 void pokemon::progressingIncreaseHp()
@@ -844,7 +855,7 @@ void pokemon::progressingIncreseExp(void)
 			if(!_isPossibleEvolution)
 				_isPossibleEvolution = checkPossibleEvolution();
 
-			if(POKEMON_MAX_LEVEL == _level)
+			if (POKEMON_MAX_LEVEL == _level)
 				endProgressing();
 		}
 
