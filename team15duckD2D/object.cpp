@@ -34,7 +34,7 @@ void object::release()
 void object::update()
 {
 	//다되면 이거 풀면된다
-	_curPokemon = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
+	//_curPokemon = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 
 	//테슷흐 버튼
 	if (KEYMANAGER->isOnceKeyDown(VK_F9))
@@ -42,8 +42,8 @@ void object::update()
 		_isBallUp = true;
 	}
 
-	if(_isBallUp && _sceneName == "centerScene")
-		centerHealing();
+	//if(_isBallUp && _sceneName == "centerScene")
+		//centerHealing();
 
 }
 

@@ -70,5 +70,7 @@ public:
 	void setIsBallUp(bool ballUp) { _isBallUp = ballUp; }
 
 	void setSceneName(string name) { _sceneName = name; }
+
+	int getTime() { return _time; }
 };
 
