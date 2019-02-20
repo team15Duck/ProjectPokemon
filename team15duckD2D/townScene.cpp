@@ -34,6 +34,8 @@ void townScene::release()
 
 void townScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_townMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
@@ -43,4 +45,5 @@ void townScene::update()
 void townScene::render()
 {
 	_townMap->render();
+	SCRIPTMANAGER->render();
 }

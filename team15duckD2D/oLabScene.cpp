@@ -37,6 +37,8 @@ void oLabScene::release()
 
 void oLabScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_oLabMap->update();
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
@@ -46,4 +48,5 @@ void oLabScene::update()
 void oLabScene::render()
 {
 	_oLabMap->render();
+	SCRIPTMANAGER->render();
 }

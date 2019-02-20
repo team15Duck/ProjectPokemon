@@ -300,18 +300,7 @@ void battleUI::render()
 			if (_ppState == P_POKEMON_LIST)
 			{
 				IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
-				if (!_isSubMenu)
-				{
-					MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
-				}
-				if (_ppselect == SELECT_CANCEL)
-				{
-					IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 1);
-				}
-				else
-				{
-					IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
-				}
+
 				int j = 1;
 				for (int i = 0; i < 6; ++i)
 				{
@@ -366,21 +355,21 @@ void battleUI::render()
 							if (_ppselect == i)
 							{
 								// 하늘색
-								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 1, 0);
+								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((j - 1) * 90) + CAMERA->getPosY(), 1, 0);
 							}
 							else
 							{
 								// 파란색
-								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 0, 0);
+								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((j - 1) * 90) + CAMERA->getPosY(), 0, 0);
 							}
-							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
-							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 553, 60 + ((j - 1) * 90), 30, RGB(114, 114, 114));
+							D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getName()).c_str(), 550, 60 + ((j - 1) * 90), 30, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 623, 98 + ((j - 1) * 90), 38, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getLevel()).c_str(), 620, 95 + ((j - 1) * 90), 38, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 813, 98 + ((j - 1) * 90), 40, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp()).c_str(), 810, 95 + ((j - 1) * 90), 40, RGB(255, 255, 255));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 883, 98 + ((j - 1) * 90), 40, RGB(114, 114, 114));
+							D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getPokemonArray(i)->getMaxHp()).c_str(), 880, 95 + ((j - 1) * 90), 40, RGB(255, 255, 255));
 
 							//hp
 							float currentHp = PLAYERDATA->getPlayer()->getPokemonArray(i)->getHp();
@@ -394,21 +383,21 @@ void battleUI::render()
 							}
 							if (hpPercent > 0.5f)
 							{
-								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 2, 0);
+								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((j - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 2, 0);
 							}
 							else if (hpPercent > 0.2f && hpPercent <= 0.5f)
 							{
-								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 1, 0);
+								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((j - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 1, 0);
 							}
 							else
 							{
-								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 0, 0);
+								IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((j - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 0, 0);
 							}
 							
 						}
 						else
 						{
-							IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY());
+							IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 50 + ((j - 1) * 90) + CAMERA->getPosY());
 						}
 						j++;
 					}
@@ -440,7 +429,7 @@ void battleUI::render()
 					}
 				}
 			}
-			if (_ppState == P_POKEMON_INFO)
+			else if (_ppState == P_POKEMON_INFO)
 			{
 				IMAGEMANAGER->findImage("서머리배경")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 				IMAGEMANAGER->findImage("서머리포켓몬")->render(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY());

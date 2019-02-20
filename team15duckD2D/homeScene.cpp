@@ -36,6 +36,8 @@ void homeScene::release()
 
 void homeScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_homeMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
@@ -44,4 +46,5 @@ void homeScene::update()
 void homeScene::render()
 {
 	_homeMap->render();
+	SCRIPTMANAGER->render();
 }

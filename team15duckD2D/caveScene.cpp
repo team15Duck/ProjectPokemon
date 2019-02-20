@@ -35,6 +35,8 @@ void caveScene::release()
 
 void caveScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_caveMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
@@ -43,4 +45,5 @@ void caveScene::update()
 void caveScene::render()
 {
 	_caveMap->render();
+	SCRIPTMANAGER->render();
 }

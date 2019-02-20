@@ -38,6 +38,8 @@ void gymScene::release()
 
 void gymScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_gymMap->update();
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
@@ -47,4 +49,5 @@ void gymScene::update()
 void gymScene::render()
 {
 	_gymMap->render();
+	SCRIPTMANAGER->render();
 }

@@ -39,6 +39,8 @@ void storeScene::release()
 
 void storeScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_storeMap->update();
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
@@ -49,7 +51,6 @@ void storeScene::update()
 		//activeShopOwner();
 	}
 
-	SCRIPTMANAGER->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 

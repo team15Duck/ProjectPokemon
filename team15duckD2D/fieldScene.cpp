@@ -34,6 +34,8 @@ void fieldScene::release()
 
 void fieldScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
 	_fieldMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
@@ -42,4 +44,5 @@ void fieldScene::update()
 void fieldScene::render()
 {
 	_fieldMap->render();
+	SCRIPTMANAGER->render();
 }

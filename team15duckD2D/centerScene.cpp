@@ -42,6 +42,9 @@ void centerScene::release()
 
 void centerScene::update()
 {
+	SCRIPTMANAGER->update();
+	if (!SCRIPTMANAGER->isUpdate())return;
+
 	_centerMap->update();
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
@@ -53,6 +56,8 @@ void centerScene::update()
 
 void centerScene::render()
 {
+	
 	_centerMap->render();
 	_obj->render();
+	SCRIPTMANAGER->render();
 }
