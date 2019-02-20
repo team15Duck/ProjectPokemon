@@ -127,11 +127,10 @@ void bag::update()
 				switch (_item_use)
 				{
 				case ITEM_USE:
-					UIMANAGER->selectUI(UI_POKEMON);
-					UIMANAGER->selecBeforeUI(UI_BAG);
+					_bag_state = ITEM_USE_SELECT;
 					break;
 				case ITEM_PASS:
-					UIMANAGER->selectUI(UI_POKEMON);
+					_bag_state = ITEM_PASS_SELECT;
 					break;
 				case ITEM_THROW_AWAY:
 					_item_use = ITEM_STATE_NONE;
@@ -142,11 +141,241 @@ void bag::update()
 				}
 			}
 		}
-		
+
 		//메인메뉴로 이동하기
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			UIMANAGER->selectUI(UI_MAIN);
+		}
+	}
+	if (_bag_state == ITEM_USE_SELECT)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			if (_ie_Pokemon == USE_MAIN_POKEMON)
+			{
+				if (0 < _pokemonCnt)
+				{
+					_ie_Pokemon = USE_SUB_POKEMON1;
+				}
+				else
+				{
+					_ie_Pokemon = USE_CANCEL;
+				}
+			}
+			else if (_ie_Pokemon == USE_CANCEL)
+			{
+				_ie_Pokemon = USE_MAIN_POKEMON;
+			}
+			else
+			{
+				if (_pokemonCnt <= _ie_Pokemon + 1)
+				{
+					_ie_Pokemon = USE_CANCEL;
+				}
+				else
+				{
+					switch (_ie_Pokemon)
+					{
+					case USE_SUB_POKEMON1:
+						_ie_Pokemon = USE_SUB_POKEMON2;
+						break;
+					case USE_SUB_POKEMON2:
+						_ie_Pokemon = USE_SUB_POKEMON3;
+						break;
+					case USE_SUB_POKEMON3:
+						_ie_Pokemon = USE_SUB_POKEMON4;
+						break;
+					case USE_SUB_POKEMON4:
+						_ie_Pokemon = USE_SUB_POKEMON5;
+						break;
+					case USE_SUB_POKEMON5:
+						_ie_Pokemon = USE_CANCEL;
+						break;
+					}
+				}
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			switch (_ie_Pokemon)
+			{
+			case USE_MAIN_POKEMON:
+				_ie_Pokemon = USE_CANCEL;
+				break;
+			case USE_SUB_POKEMON1:
+				_ie_Pokemon = USE_MAIN_POKEMON;
+				break;
+			case USE_SUB_POKEMON2:
+				_ie_Pokemon = USE_SUB_POKEMON1;
+				break;
+			case USE_SUB_POKEMON3:
+				_ie_Pokemon = USE_SUB_POKEMON2;
+				break;
+			case USE_SUB_POKEMON4:
+				_ie_Pokemon = USE_SUB_POKEMON3;
+				break;
+			case USE_SUB_POKEMON5:
+				_ie_Pokemon = USE_SUB_POKEMON4;
+				break;
+			case USE_CANCEL:
+				if (0 < _pokemonCnt)
+				{
+					_ie_Pokemon = (ITEM_USE_POKEMON)(_pokemonCnt - 1);
+				}
+				else
+				{
+					_ie_Pokemon = USE_MAIN_POKEMON;
+				}
+
+				break;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			switch (_ie_Pokemon)
+			{
+			case USE_MAIN_POKEMON:
+				
+				break;
+			case USE_SUB_POKEMON1:
+				
+				break;
+			case USE_SUB_POKEMON2:
+				
+				break;
+			case USE_SUB_POKEMON3:
+				
+				break;
+			case USE_SUB_POKEMON4:
+				
+				break;
+			case USE_SUB_POKEMON5:
+				
+				break;
+			case USE_CANCEL:
+				_bag_state = ITEM_LIST;
+				break;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			_bag_state = ITEM_LIST;
+		}
+	}
+	if (_bag_state == ITEM_PASS_SELECT)
+	{
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			if (_ie_Pokemon == USE_MAIN_POKEMON)
+			{
+				if (0 < _pokemonCnt)
+				{
+					_ie_Pokemon = USE_SUB_POKEMON1;
+				}
+				else
+				{
+					_ie_Pokemon = USE_CANCEL;
+				}
+			}
+			else if (_ie_Pokemon == USE_CANCEL)
+			{
+				_ie_Pokemon = USE_MAIN_POKEMON;
+			}
+			else
+			{
+				if (_pokemonCnt <= _ie_Pokemon + 1)
+				{
+					_ie_Pokemon = USE_CANCEL;
+				}
+				else
+				{
+					switch (_ie_Pokemon)
+					{
+					case USE_SUB_POKEMON1:
+						_ie_Pokemon = USE_SUB_POKEMON2;
+						break;
+					case USE_SUB_POKEMON2:
+						_ie_Pokemon = USE_SUB_POKEMON3;
+						break;
+					case USE_SUB_POKEMON3:
+						_ie_Pokemon = USE_SUB_POKEMON4;
+						break;
+					case USE_SUB_POKEMON4:
+						_ie_Pokemon = USE_SUB_POKEMON5;
+						break;
+					case USE_SUB_POKEMON5:
+						_ie_Pokemon = USE_CANCEL;
+						break;
+					}
+				}
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			switch (_ie_Pokemon)
+			{
+			case USE_MAIN_POKEMON:
+				_ie_Pokemon = USE_CANCEL;
+				break;
+			case USE_SUB_POKEMON1:
+				_ie_Pokemon = USE_MAIN_POKEMON;
+				break;
+			case USE_SUB_POKEMON2:
+				_ie_Pokemon = USE_SUB_POKEMON1;
+				break;
+			case USE_SUB_POKEMON3:
+				_ie_Pokemon = USE_SUB_POKEMON2;
+				break;
+			case USE_SUB_POKEMON4:
+				_ie_Pokemon = USE_SUB_POKEMON3;
+				break;
+			case USE_SUB_POKEMON5:
+				_ie_Pokemon = USE_SUB_POKEMON4;
+				break;
+			case USE_CANCEL:
+				if (0 < _pokemonCnt)
+				{
+					_ie_Pokemon = (ITEM_USE_POKEMON)(_pokemonCnt - 1);
+				}
+				else
+				{
+					_ie_Pokemon = USE_MAIN_POKEMON;
+				}
+
+				break;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			switch (_ie_Pokemon)
+			{
+			case USE_MAIN_POKEMON:
+
+				break;
+			case USE_SUB_POKEMON1:
+
+				break;
+			case USE_SUB_POKEMON2:
+
+				break;
+			case USE_SUB_POKEMON3:
+
+				break;
+			case USE_SUB_POKEMON4:
+
+				break;
+			case USE_SUB_POKEMON5:
+
+				break;
+			case USE_CANCEL:
+				_bag_state = ITEM_LIST;
+				break;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			_bag_state = ITEM_LIST;
 		}
 	}
 }
@@ -207,7 +436,7 @@ void bag::render()
 
 				if (!_isitemUse)
 				{
-					D2DMANAGER->drawText(_bag[i].info.c_str(), 100, 495, 38);
+					D2DMANAGER->drawText(_bag[i].info.c_str(), 160, 495, 38);
 				}
 			}
 			if (_isitemUse)
@@ -241,6 +470,24 @@ void bag::render()
 			
 			}
 		}
+	}
+	if (_bag_state == ITEM_USE_SELECT)
+	{
+		itemUseScreen();
+		swprintf_s(itemuse, L"누구에게 사용할까요?");
+		D2DMANAGER->drawText(itemuse, 50 + CAMERA->getPosX(), 555 + CAMERA->getPosY(), 40);
+
+		swprintf_s(itemuse, L"취소");
+		D2DMANAGER->drawText(itemuse, 835 + CAMERA->getPosX(), 558 + CAMERA->getPosY(), 40, RGB(255,255,255));
+	}
+	if (_bag_state == ITEM_PASS_SELECT)
+	{
+		itemUseScreen();
+		swprintf_s(itemuse, L"누구에게 건내줄까?");
+		D2DMANAGER->drawText(itemuse, 50 + CAMERA->getPosX(), 555 + CAMERA->getPosY(), 40);
+
+		swprintf_s(itemuse, L"취소");
+		D2DMANAGER->drawText(itemuse, 835 + CAMERA->getPosX(), 558 + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 	}
 }
 
@@ -304,4 +551,155 @@ void bag::itemDataSet()
 		_bag[i].amount = to_wstring(bagItem.getItemNum());
 	}
 
+
+	//=============================================================== 아이템세팅 및 건네주기용 데이터 세팅
+
+	//pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
+	//_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+
+	//=============================================================임시데이터 지울꺼임
+	pokemon** pokemons = new pokemon*[5];
+	_pokemonCnt = 5;
+
+	for (int i = 0; i < 5; ++i)
+	{
+		pokemons[i] = new pokemon;
+	}
+	pokemons[0]->init(0, (POKEMON)0, 5, true);
+	pokemons[1]->init(0, (POKEMON)1, 10, true);
+	pokemons[2]->init(0, (POKEMON)2, 15, true);
+	pokemons[3]->init(0, (POKEMON)3, 20, true);
+	pokemons[4]->init(0, (POKEMON)4, 15, true);
+	//pokemons[5]->init(0, (POKEMON)5, 30, true);
+
+	//===============================================================================
+	for (int i = 0; i < _pokemonCnt; ++i)
+	{
+
+		if (pokemons[i] == nullptr) continue;
+
+		_iuPokemon[i].isDataSet = false;
+		_iuPokemon[i].level = to_wstring(pokemons[i]->getLevel());
+		_iuPokemon[i].name = string2wstring(pokemons[i]->getName());
+		_iuPokemon[i].currentHp = to_wstring(pokemons[i]->getHp()); // 현재?
+		_iuPokemon[i].maxHp = to_wstring(pokemons[i]->getMaxHp()); // 전체?
+
+	}
+}
+
+void bag::itemUseScreen()
+{
+	//if (_bag_state == ITEM_USE_SELECT)
+	{
+		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
+		MENUMANAGER->findMenuFrame("포켓몬프레임1")->render();
+
+		if (_ie_Pokemon == USE_CANCEL)
+		{
+			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 1);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("포켓몬메뉴_취소")->frameRender(735 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 0, 0);
+		}
+
+		for (int i = 0; i < 6; ++i)
+		{
+			// 메인 포켓몬
+			if (i == 0)
+			{
+				if (_ie_Pokemon == SELECT_MAIN_POKEMON)
+				{
+					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 2);
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 0);
+				}
+
+				//hp
+				float currentHp = stof(_iuPokemon[i].currentHp);
+				float maxHp = stof(_iuPokemon[i].maxHp);
+
+				float hpPercent = currentHp / maxHp;
+
+				if (hpPercent < 0)
+				{
+					hpPercent = 0;
+				}
+				if (hpPercent > 0.5f)
+				{
+					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 2, 0);
+				}
+				else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+				{
+					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 1, 0);
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 0, 0);
+				}
+
+				D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 228, 115, 34, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 225, 115, 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 353, 170, 34, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 350, 170, 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 263, 228, 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 260, 225, 48, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 343, 228, 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 340, 225, 48, RGB(255, 255, 255));
+			}
+			else
+			{
+				if (i < _pokemonCnt)
+				{
+					if (_ie_Pokemon == i)
+					{
+						// 하늘색
+						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 1, 0);
+					}
+					else
+					{
+						// 파란색
+						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 0, 0);
+					}
+					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+
+					//hp
+					float currentHp = stof(_iuPokemon[i].currentHp);
+					float maxHp = stof(_iuPokemon[i].maxHp);
+
+					float hpPercent = currentHp / maxHp;
+
+					if (hpPercent < 0)
+					{
+						hpPercent = 0;
+					}
+					if (hpPercent > 0.5f)
+					{
+						IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 2, 0);
+					}
+					else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+					{
+						IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 1, 0);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 0, 0);
+					}
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("서브포켓몬1")->render(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY());
+				}
+			}
+		}
+	}
 }
