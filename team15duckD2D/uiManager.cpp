@@ -40,11 +40,15 @@ HRESULT uiManager::init()
 	}
 	//4. 플레이어 초기화
 	{
-
+		ui_player* playercard = new ui_player;
+		playercard->init();
+		_uiMap.insert(make_pair(UI_PLAYER, playercard));
 	}
 	//5. 리포트 초기화
 	{
-
+		report* savereport = new report;
+		savereport->init();
+		_uiMap.insert(make_pair(UI_REPORT, savereport));
 	}
 	//6. 세팅 초기화
 	{

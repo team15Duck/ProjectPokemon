@@ -157,7 +157,16 @@ void bag::render()
 	if (_bag_state == ITEM_LIST)
 	{
 		IMAGEMANAGER->findImage("가방메뉴배경")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
-		IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 160 + CAMERA->getPosY(), 0, 0);
+		
+		if (PLAYERDATA->getPlayer()->getIsMan())
+		{
+			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 160 + CAMERA->getPosY(), 0, 0);
+		}
+		else
+		{
+			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 160 + CAMERA->getPosY(), 1, 0);
+		}
+		
 		//실제 게임으로 들어가면 이걸로바꿔야뎀
 		//unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayet()->getItem();
 		//imax 비교연산 녀석 size로 변경해야됨 

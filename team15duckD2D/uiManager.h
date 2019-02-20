@@ -5,6 +5,8 @@
 #include "IllustratedBook.h"
 #include "possessionPokemon.h"
 #include "bag.h"
+#include "ui_player.h"
+#include "report.h"
 #include "setting.h"
 
 enum UI_TYPE
