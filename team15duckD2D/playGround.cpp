@@ -204,6 +204,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("storeScene", new storeScene);
 	SCENEMANAGER->addScene("townScene", new townScene);
 	SCENEMANAGER->addScene("loadScene", new loadScene);
+	SCENEMANAGER->addScene("newGameScene", new newGameScene);
 
 	PLAYERDATA->init();
 	
@@ -213,7 +214,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("го©╣╬ю");
+		SCENEMANAGER->changeScene("newGameScene");
 	}
 	
 	return S_OK;

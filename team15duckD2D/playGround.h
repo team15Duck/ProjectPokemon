@@ -19,6 +19,8 @@
 #include "storeScene.h"
 #include "townScene.h"
 
+#include "newGameScene.h"
+
 
 class playGround : public gameNode
 {
