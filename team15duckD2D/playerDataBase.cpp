@@ -94,17 +94,16 @@ void playerDataBase::currentPokemonLoad(DATA data)
 				HANDLE file2;
 				DWORD read2;
 				string fileName2 = "data/saveData" + to_string(data) + "/currentPokemon/pokemon" + to_string(ii) + ".txt";
-				pokemon loadPokemon;
+				pmPack* loadPokemon;
 				file2 = CreateFile(fileName2.c_str(), GENERIC_READ, NULL, NULL,
 					OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-				ReadFile(file2, &loadPokemon, sizeof(pokemon), &read2, NULL);
+				ReadFile(file2, loadPokemon, sizeof(pmPack), &read2, NULL);
 
 				CloseHandle(file2);
 				
-				//_currentPlayer->getPokemon[ii] = new pokemon;
 				_currentPlayer->setPokemonArray(ii, new pokemon);
-				*(_currentPlayer->getPokemonArray(ii)) = loadPokemon;
+				_currentPlayer->getPokemonArray(ii)->loadSavePack(loadPokemon);
 			}
 
 
@@ -235,10 +234,10 @@ void playerDataBase::objectDataLoad(DATA data)
 
 vector<string> playerDataBase::playerDataLoad(DATA data)
 {
+	vector<string> vData;
 	switch (data)
 	{
 		case playerDataBase::DATA_DEFAULT:
-
 		break;
 		case playerDataBase::DATA_1:case playerDataBase::DATA_2:case playerDataBase::DATA_3:case playerDataBase::DATA_4:case playerDataBase::DATA_5:case playerDataBase::DATA_6:
 			HANDLE file;
@@ -255,7 +254,6 @@ vector<string> playerDataBase::playerDataLoad(DATA data)
 
 			string loadData = str;
 
-			vector<string> vData;
 
 		
 			int i = 0;
@@ -288,9 +286,10 @@ vector<string> playerDataBase::playerDataLoad(DATA data)
 			_currentPlayer->setMoney(stoi(vData[5]));
 			_currentPlayer->setIsMan(stoi(vData[6]));
 			_currentPlayer->setPos();
-			return vData;
+			
 		break;
 	}
+	return vData;
 }
 
 void playerDataBase::bankPokemonSave(DATA data)
@@ -339,13 +338,12 @@ void playerDataBase::currentPokemonSave(DATA data)
 				HANDLE file2;
 				DWORD write2;
 				
-				pokemon saveData2 = *(_currentPlayer->getPokemon()[i]);
-
+				
 
 				string fileName2 = "data/saveData" + to_string(data) + "/currentPokemon/pokemon" + to_string(i) + ".txt";
 				file2 = CreateFile(fileName2.c_str(), GENERIC_WRITE, NULL, NULL,
 					CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-				WriteFile(file, &saveData2, sizeof(pokemon), &write2, NULL);
+				WriteFile(file, _currentPlayer->getPokemon()[i]->makeSavePack(), sizeof(pmPack), &write2, NULL);
 				CloseHandle(file2);
 			}
 
