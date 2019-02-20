@@ -16,6 +16,7 @@ HRESULT report::init()
 	MENUMANAGER->addFrame("현재정보", 0, 0, 14, 6);
 	MENUMANAGER->addFrame("저장메뉴", 0, 190, 12, 14);
 	MENUMANAGER->addFrame("체크박스", 750, 280, 6, 5);
+	MENUMANAGER->addFrame("확인창", 200, 200, 6, 5);
 
 	_rState = RS_CURRENT_INFO;
 	_rSelect = YES;
@@ -99,6 +100,31 @@ void report::update()
 				break;
 			}
 		}
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			switch (_rsPosition)
+			{
+			case RS_1_POSITION:
+				
+				break;
+			case RS_2_POSITION:
+				
+				break;
+			case RS_3_POSITION:
+				
+				break;
+			case RS_4_POSITION:
+				
+				break;
+			case RS_5_POSITION:
+				
+				break;
+			case RS_6_POSITION:
+				
+				break;
+			}
+		}
+
 		if (KEYMANAGER->isOnceKeyDown('X'))
 		{
 			_rState = RS_CURRENT_INFO;
@@ -183,6 +209,9 @@ void report::render()
 		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 		swprintf_s(report, L"6.");
 		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 40);
+
+		MENUMANAGER->findMenuFrame("확인창")->render();
+
 	}
 }
 
