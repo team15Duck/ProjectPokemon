@@ -5,6 +5,7 @@
 pokemon::pokemon()
 : _idNo(0)
 , _index(POKEMON_NONE)
+, _evolutionIndex(POKEMON_NONE)
 , _ownerItemType(ITEM_TYPE_NONE)
 , _level(0)
 , _currentLvExp(0)
@@ -51,6 +52,7 @@ HRESULT pokemon::init( int idNo
 
 	_idNo = idNo;
 	_index = index;
+	_evolutionIndex = info->getEvolutionIndex();
 	_type = info->getPokemonType();
 	_nickName = *info->getPokemonName();
 	_level = level;
@@ -538,6 +540,7 @@ bool pokemon::evolution()
 			{
 				_type = info->getPokemonType();
 				_nickName = *evolutionInfo->getPokemonName();
+				_evolutionIndex = info->getEvolutionIndex();
 			}
 			
 			_isPossibleEvolution = false;
@@ -840,6 +843,9 @@ void pokemon::progressingIncreseExp(void)
 			levelUp();
 			if(!_isPossibleEvolution)
 				_isPossibleEvolution = checkPossibleEvolution();
+
+			if(POKEMON_MAX_LEVEL == _level)
+				endProgressing();
 		}
 
 		++_displayExp;

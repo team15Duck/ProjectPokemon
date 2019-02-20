@@ -60,6 +60,7 @@ private:
 
 	unsigned int _idNo;							// 고유 번호
 	POKEMON _index;								// 도감 번호
+	POKEMON _evolutionIndex;					// 진화 도감 번호
 	POKEMON_TYPE _type;							// 포켓몬 타입
 
 	string _nickName;							// 닉네임
@@ -90,6 +91,7 @@ private:
 	bool _isIdle;								// 행동 대기중인가
 
 	bool _isPossibleEvolution;					// 진화가능?
+	
 
 	PROGRESSING_TYPE	_progressingType;
 
@@ -210,6 +212,8 @@ public:
 	unsigned int getIdNo()		{ return _idNo; }
 	// 포켓몬 번호
 	POKEMON getPokeminIndex()	{ return _index; }
+	// 진화 번호
+	POKEMON getEvolutionIndex() {return _evolutionIndex;}
 	// 포켓몬 타입
 	POKEMON_TYPE getPokemonType() { return _type; }
 

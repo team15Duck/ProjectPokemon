@@ -5,6 +5,27 @@
 #include "pokemon.h"
 #include "battleUI.h"
 
+typedef struct tagEvolutionPokemon
+{
+	UINT index;
+	int curFrameX;
+	int curFrameY;
+
+	int evolutionFrameX;
+	int evolutionFrameY;
+
+	void operator=(tagEvolutionPokemon pm)
+	{
+		index = pm.index;
+		curFrameX = pm.curFrameX;
+		curFrameY = pm.curFrameY;
+		
+		evolutionFrameX = pm.evolutionFrameX;
+		evolutionFrameY = pm.evolutionFrameY;
+	}
+
+}EVOLUTIONPOKEMON;
+
 //포켓몬과배틀
 class battleScene : public gameNode
 {
@@ -27,6 +48,17 @@ private:
 	image* _background;		// 배경
 	int _frameX;			// 배경 이미지 프레임
 	int _frameY;			// 배경 이미지 프레임
+
+	EVOLUTIONPOKEMON _evPokemon;
+	image* _pokemonImg;
+	int _evolFrameX;
+	int _evolFrameY;
+
+	float _evolutionDisTime;	// 진화 연출용 시간
+	int _evolutionDisCount;		// 진화 연출 용 카운트
+
+	bool _isEvolution;
+	bool _isEvolutinFin;
 
 	UINT _selectSkillIdx;	// 선택 된 스킬 슬롯 번호
 	UINT _selPokemon;		// 출전중인 포켓몬 슬롯 번호

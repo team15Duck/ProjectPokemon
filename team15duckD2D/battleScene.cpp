@@ -37,7 +37,7 @@ HRESULT battleScene::init()
 		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
 		
 		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
+		_myPms[0]->init(NULL, PM_BULBASAUR, 99, true);
 
 		_myPms[1] = new pokemon;
 		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
@@ -74,6 +74,7 @@ HRESULT battleScene::init()
 	_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
 
 	_background = IMAGEMANAGER->findImage("battleBackground");
+	_pokemonImg = IMAGEMANAGER->findImage("pokemon_ingame");
 
 
 	// todo 야생 포켓몬 출현 지역에 따라 배경이 바뀜
@@ -114,6 +115,39 @@ void battleScene::update()
 
 	//스크립트가 실행중이다? 그럼 아무것도못해
 	if (!_battleUI->battleSceneUpdate()) return;
+
+	// 진화중이라면
+	if (_isEvolution)
+	{
+		_evolutionDisTime -= TIMEMANAGER->getElapsedTime();
+		if (_evolutionDisTime < 0.f)
+		{
+			_evolutionDisTime = 0.1;
+			--_evolutionDisCount;
+
+			if (_evolutionDisCount % 2 == 0)
+			{
+				_evolFrameX = _evPokemon.curFrameX;
+				_evolFrameY = _evPokemon.curFrameY;
+			}
+			else
+			{
+				_evolFrameX = _evPokemon.evolutionFrameX;
+				_evolFrameY = _evPokemon.evolutionFrameY;
+			}
+		}
+		
+		if (1 < _evolutionDisCount)
+			return;
+			
+		_myPms[_evPokemon.index]->displayEvolution();
+		
+		wstring script;
+		script.clear();
+		script.append(string2wstring(_myPms[_evPokemon.index]->getName()));
+		script.append(L"로 진화를 했다!");
+		_battleUI->pushScript(script);
+	}
 	
 	// 포켓몬 상태 업데이트
 	_pms[TURN_ENEMY]->update();
@@ -205,10 +239,17 @@ void battleScene::update()
 
 void battleScene::render()
 {
-	_background->frameRender(CAMERA->getPosX() + 0, CAMERA->getPosY() + 0, 960, 488, _frameX, _frameY);
+	if (_isEvolution)
+	{
+		_pokemonImg->frameRender(CAMERA->getPosX() + (WINSIZEX - _pokemonImg->GetFrameWidth()) / 2.f, CAMERA->getPosY() + (WINSIZEY - _pokemonImg->GetFrameHeight()) / 2.f, _evolFrameX, _evolFrameY);
+	}
+	else
+	{
+		_background->frameRender(CAMERA->getPosX() + 0, CAMERA->getPosY() + 0, _frameX, _frameY);
 
-	_pms[TURN_ENEMY]->render();
-	_pms[TURN_PLAYER]->render();
+		_pms[TURN_ENEMY]->render();
+		_pms[TURN_PLAYER]->render();
+	}
 
 	_battleUI->render();
 }
@@ -302,8 +343,6 @@ void battleScene::keyControl()
 			_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 		}
 	}
-
-
 }
 
 
@@ -395,7 +434,7 @@ void battleScene::battle()
 				_battleUI->pushScript(script);
 
 				// todo 플레이어 포켓몬 전투 경험치 계산
-				int value = 100; //2 * _pms[TURN_ENEMY]->getLevel();
+				int value = 1000; //2 * _pms[TURN_ENEMY]->getLevel();
 				if(_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
 					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
 
@@ -405,10 +444,12 @@ void battleScene::battle()
 				value /= cnt;
 				for (set<UINT>::iterator iter = _expList.begin(); _expList.end() != iter; ++iter)
 				{
-					_myPms[*iter]->gainExp(value);
+					int index = *iter;
+
+					_myPms[index]->gainExp(value);
 					
 					script.clear();
-					script = string2wstring(_myPms[*iter]->getName());
+					script = string2wstring(_myPms[index]->getName());
 					script.append(L"은(는)");
 					script.append(to_wstring(value));
 					script.append(L"의 경험치를 획득하였다!");
@@ -466,16 +507,47 @@ void battleScene::battleChange()
 
 void battleScene::battleEvolution()
 {
-	int cnt = _expList.size();
-	for (set<UINT>::iterator iter = _expList.begin(); _expList.end() != iter; ++iter)
+	set<UINT>::iterator iter = _expList.begin();
+	set<UINT>::iterator end = _expList.end();
+
+	for (; iter != end; )
 	{
-		if (_myPms[*iter]->isPossibleEvolution())
+		int index = *iter;
+		iter = _expList.erase(iter);
+
+		if (_myPms[index]->isPossibleEvolution())
 		{
-			_myPms[*iter]->displayEvolution();
-			wstring script = L"진화했다..!";
+			EVOLUTIONPOKEMON evPokemon;
+
+			int idx = _myPms[index]->getPokeminIndex();
+			int evIndex = _myPms[index]->getEvolutionIndex();
+
+			evPokemon.curFrameX = (idx * 2) % _pokemonImg->GetMaxFrameX();
+			evPokemon.curFrameY = (idx * 2) / _pokemonImg->GetMaxFrameX();
+
+			evPokemon.evolutionFrameX = (evIndex * 2) % _pokemonImg->GetMaxFrameX();
+			evPokemon.evolutionFrameY = (evIndex * 2) / _pokemonImg->GetMaxFrameX();
+
+			_evPokemon = evPokemon;
+
+			_isEvolution = true;
+			
+			_evPokemon.index = index;
+
+			_evolFrameX = _evPokemon.curFrameX;
+			_evolFrameY = _evPokemon.curFrameY;
+
+			_evolutionDisTime = 0.1f;
+			_evolutionDisCount = 20;
+
+			wstring script = L"어..?\n";
+			script.append(string2wstring(_myPms[index]->getName()));
+			script.append(L"의 상태가..?");
 			_battleUI->pushScript(script);
+			
+			return;
 		}
 	}
-	
+
 	_phase = PHASE_END;
 }
