@@ -17,7 +17,7 @@ HRESULT hpBar::init(string imgname, int framX, int framY, int x, int y, int widt
 	_x = x;
 	_y = y;
 
-	_hpBar = { _x, _y, width, height };
+//	_hpBar = { _x, _y, width, height };
 
 	_maxwidht = width;
 	_height = height;

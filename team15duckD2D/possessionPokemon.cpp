@@ -34,6 +34,8 @@ HRESULT possessionPokemon::init()
 	IMAGEMANAGER->addFrameImage("서머리프레임", L"image/Summary Menu/summary_pokemon_info.png", 1920, 576, 2, 1);
 	IMAGEMANAGER->addImage("서머리포켓몬", L"image/Summary Menu/summary_pokemon_base.png", 484, 336);
 	IMAGEMANAGER->addImage("서머리스킬", L"image/Summary Menu/summary_pokemon_skill.png", 484, 576);
+	IMAGEMANAGER->addImage("체력베이스", L"image/battle_UI/battle_UI_HP_base.png", 36, 12);
+	IMAGEMANAGER->addFrameImage("체력게이지", L"image/pokemonMenu_gauge.png", 192, 12, 3, 1);
 	_isMainpokemon = true;
 	_isSubpokemon = false;
 	_isSubMenu = false;
@@ -293,6 +295,29 @@ void possessionPokemon::render()
 					}
 				}
 
+				//hp
+				float currentHp = stof(_pPokemon[i].currentHp);
+				float maxHp = stof(_pPokemon[i].maxHp);
+
+				float hpPercent = currentHp / maxHp;
+
+				if (hpPercent < 0)
+				{
+					hpPercent = 0;
+				}
+				if (hpPercent > 0.5f)
+				{
+					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 2, 0);
+				}
+				else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+				{
+					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 1, 0);
+				}
+				else
+				{
+					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 0, 0);
+				}
+
 				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 228, 115, 34, RGB(114,114,114));
 				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 225, 115, 34, RGB(255, 255, 255));
 				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 353, 170, 34, RGB(114, 114, 114));
@@ -316,7 +341,6 @@ void possessionPokemon::render()
 						// 파란색
 						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i-1) * 90) + CAMERA->getPosY(), 0, 0);
 					}
-
 					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
 					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
 					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
@@ -325,6 +349,29 @@ void possessionPokemon::render()
 					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
 					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
 					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+				
+					//hp
+					float currentHp = stof(_pPokemon[i].currentHp);
+					float maxHp = stof(_pPokemon[i].maxHp);
+
+					float hpPercent = currentHp / maxHp;
+
+					if (hpPercent < 0)
+					{
+						hpPercent = 0;
+					}
+					if (hpPercent > 0.5f)
+					{
+						IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 2, 0);
+					}
+					else if (hpPercent > 0.2f && hpPercent <= 0.5f)
+					{
+						IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 1, 0);
+					}
+					else
+					{
+						IMAGEMANAGER->findImage("체력게이지")->frameRender(770 + CAMERA->getPosX(), 80 + ((i - 1) * 90) + CAMERA->getPosY(), hpPercent * 160, 10, 0, 0);
+					}
 				}
 				else
 				{
@@ -625,10 +672,10 @@ void possessionPokemon::render()
 	
 	}
 
-	swprintf_s(possessionPokemon, L"선택한놈: %d", _currentSelecPok);
-	D2DMANAGER->drawText(possessionPokemon, 100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 40);
-	swprintf_s(possessionPokemon, L"바꿀놈: %d", _changeSelecPok);
-	D2DMANAGER->drawText(possessionPokemon, 200 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 40);
+	//swprintf_s(possessionPokemon, L"선택한놈: %d", _currentSelecPok);
+	//D2DMANAGER->drawText(possessionPokemon, 100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 40);
+	//swprintf_s(possessionPokemon, L"바꿀놈: %d", _changeSelecPok);
+	//D2DMANAGER->drawText(possessionPokemon, 200 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 40);
 }
 
 void possessionPokemon::uiInfoSet()
@@ -670,7 +717,7 @@ void possessionPokemon::pPokemonDataSet()
 		_pPokemon[i].name = string2wstring(pokemons[i]->getName());
 		//_pPokemon[i].type = string2wstring(pokemons[i].get)
 		_pPokemon[i].currentHp = to_wstring(pokemons[i]->getHp()); // 현재?
-		_pPokemon[i].maxHp = to_wstring(pokemons[i]->getDisplayHp()); // 전체?
+		_pPokemon[i].maxHp = to_wstring(pokemons[i]->getMaxHp()); // 전체?
 		
 		_pPokemon[i].def = to_wstring(pokemons[i]->getDex());
 		_pPokemon[i].s_def = to_wstring(pokemons[i]->getSpDex());
