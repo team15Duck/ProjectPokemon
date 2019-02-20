@@ -60,6 +60,7 @@ private:
 
 	unsigned int _idNo;							// 고유 번호
 	POKEMON _index;								// 도감 번호
+	POKEMON_TYPE _type;							// 포켓몬 타입
 
 	string _nickName;							// 닉네임
 	string _trainerNote;						// 트레이너 노트
@@ -209,6 +210,9 @@ public:
 	unsigned int getIdNo()		{ return _idNo; }
 	// 포켓몬 번호
 	POKEMON getPokeminIndex()	{ return _index; }
+	// 포켓몬 타입
+	POKEMON_TYPE getPokemonType() { return _type; }
+
 	// 트레이너 노트
 	string getTrainerNote()		{ return _trainerNote; }
 	// 소지하고 있는 아이템 타입

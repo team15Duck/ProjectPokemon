@@ -51,6 +51,7 @@ HRESULT pokemon::init( int idNo
 
 	_idNo = idNo;
 	_index = index;
+	_type = info->getPokemonType();
 	_nickName = *info->getPokemonName();
 	_level = level;
 	_isMyPokemon = isMyPokemon;
@@ -533,8 +534,9 @@ bool pokemon::evolution()
 			_frameY = idx / _img->GetMaxFrameX();
 
 			pokemonInfo* evolutionInfo = POKEMONDATA->getPokemonInfomation(evolutionIndex);
-			if (evolutionIndex)
+			if (evolutionInfo)
 			{
+				_type = info->getPokemonType();
 				_nickName = *evolutionInfo->getPokemonName();
 			}
 			
