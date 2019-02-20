@@ -45,11 +45,6 @@ HRESULT possessionPokemon::init()
 
 	//================================ 애니 테스트
 	keyani();
-	//애니테스트 
-
-
-	//_pokemonAni = KEYANIMANAGER->findAnimation("포켓몬선택", name);
-	//_pokemonAni->start();
 
 	return S_OK;
 }
@@ -63,8 +58,10 @@ void possessionPokemon::update()
 
 	if (_ppstate == P_POKEMON_LIST)
 	{
-		for (int ii = 0; ii < _pokemonCnt; ++ii)
-			_pokemonAni[ii]->frameUpdate(TIMEMANAGER->getElapsedTime());
+		for (int i = 0; i < _pokemonCnt; ++i)
+		{
+			_pokemonAni[i]->frameUpdate(TIMEMANAGER->getElapsedTime());
+		}
 
 		//포켓몬 리스트 이동관련
 		if (!_isSubMenu)
@@ -284,8 +281,6 @@ void possessionPokemon::render()
 	WCHAR possessionPokemon[1024];
 	if (_ppstate == P_POKEMON_LIST)
 	{
-		
-
 		IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		if (!_isSubMenu)
 		{
@@ -371,8 +366,8 @@ void possessionPokemon::render()
 						// 파란색
 						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i-1) * 90) + CAMERA->getPosY(), 0, 0);
 					}
-					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 583, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 580, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
 					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
 					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
 					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
@@ -409,8 +404,17 @@ void possessionPokemon::render()
 				}
 			}
 
-			for(int ii = 0 ; ii < _pokemonCnt; ++ii)
-				IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100, 100 + ii * 50, _pokemonAni[ii]);
+			//===================================================================================== 애니메이션
+			
+			//메인 포켓몬 애니
+			IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100,100, _pokemonAni[0]);
+
+			//서브 포켓몬 애니
+			for (int i = 1; i < _pokemonCnt; ++i)
+			{
+				IMAGEMANAGER->findImage("포켓몬파닥2")->aniRender(510, 60 + ((i - 1) * 85), _pokemonAni[i]);
+			}
+			//===============================================================================================
 
 			if (_isSubMenu)
 			{
@@ -544,7 +548,9 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(_pPokemon[0].def.c_str(), 860, 210, 40);
 				D2DMANAGER->drawText(_pPokemon[0].s_attk.c_str(), 860, 260, 40);
 				D2DMANAGER->drawText(_pPokemon[0].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[0].speed.c_str(), 860, 355, 40);
+				D2DMANAGER->drawText(_pPokemon[0].speed.c_str(), 860, 365, 40);
+				D2DMANAGER->drawText(_pPokemon[0].currentExp.c_str(), 860, 420, 40);
+				D2DMANAGER->drawText(_pPokemon[0].nextLvExp.c_str(), 860, 470, 40);
 				break;
 			case SELECT_SUB_POKEMON1:
 				swprintf_s(possessionPokemon, L"Lv.");
@@ -563,6 +569,8 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(_pPokemon[1].s_attk.c_str(), 860, 260, 40);
 				D2DMANAGER->drawText(_pPokemon[1].s_def.c_str(), 860, 310, 40);
 				D2DMANAGER->drawText(_pPokemon[1].speed.c_str(), 860, 355, 40);
+				D2DMANAGER->drawText(_pPokemon[1].currentExp.c_str(), 860, 420, 40);
+				D2DMANAGER->drawText(_pPokemon[1].nextLvExp.c_str(), 860, 470, 40);
 				break;
 			case SELECT_SUB_POKEMON2:
 				swprintf_s(possessionPokemon, L"Lv.");
@@ -581,6 +589,8 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(_pPokemon[2].s_attk.c_str(), 860, 260, 40);
 				D2DMANAGER->drawText(_pPokemon[2].s_def.c_str(), 860, 310, 40);
 				D2DMANAGER->drawText(_pPokemon[2].speed.c_str(), 860, 355, 40);
+				D2DMANAGER->drawText(_pPokemon[2].currentExp.c_str(), 860, 420, 40);
+				D2DMANAGER->drawText(_pPokemon[2].nextLvExp.c_str(), 860, 470, 40);
 				break;
 			case SELECT_SUB_POKEMON3:
 				swprintf_s(possessionPokemon, L"Lv.");
@@ -599,6 +609,8 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(_pPokemon[3].s_attk.c_str(), 860, 260, 40);
 				D2DMANAGER->drawText(_pPokemon[3].s_def.c_str(), 860, 310, 40);
 				D2DMANAGER->drawText(_pPokemon[3].speed.c_str(), 860, 355, 40);
+				D2DMANAGER->drawText(_pPokemon[3].currentExp.c_str(), 860, 420, 40);
+				D2DMANAGER->drawText(_pPokemon[3].nextLvExp.c_str(), 860, 470, 40);
 				break;
 			case SELECT_SUB_POKEMON4:
 				swprintf_s(possessionPokemon, L"Lv.");
@@ -617,6 +629,9 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(_pPokemon[4].s_attk.c_str(), 860, 260, 40);
 				D2DMANAGER->drawText(_pPokemon[4].s_def.c_str(), 860, 310, 40);
 				D2DMANAGER->drawText(_pPokemon[4].speed.c_str(), 860, 355, 40);
+				D2DMANAGER->drawText(_pPokemon[4].currentExp.c_str(), 860, 420, 40);
+				D2DMANAGER->drawText(_pPokemon[4].nextLvExp.c_str(), 860, 470, 40);
+
 				break;
 			case SELECT_SUB_POKEMON5:
 				swprintf_s(possessionPokemon, L"Lv.");
@@ -635,6 +650,9 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(_pPokemon[5].s_attk.c_str(), 860, 260, 40);
 				D2DMANAGER->drawText(_pPokemon[5].s_def.c_str(), 860, 310, 40);
 				D2DMANAGER->drawText(_pPokemon[5].speed.c_str(), 860, 355, 40);
+				D2DMANAGER->drawText(_pPokemon[5].currentExp.c_str(), 860, 420, 40);
+				D2DMANAGER->drawText(_pPokemon[5].nextLvExp.c_str(), 860, 470, 40);
+				
 				break;
 			}
 			break;
@@ -709,10 +727,6 @@ void possessionPokemon::render()
 	
 	}
 
-	//swprintf_s(possessionPokemon, L"선택한놈: %d", _currentSelecPok);
-	//D2DMANAGER->drawText(possessionPokemon, 100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 40);
-	//swprintf_s(possessionPokemon, L"바꿀놈: %d", _changeSelecPok);
-	//D2DMANAGER->drawText(possessionPokemon, 200 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 40);
 }
 
 void possessionPokemon::uiInfoSet()
@@ -752,7 +766,7 @@ void possessionPokemon::pPokemonDataSet()
 
 		_pPokemon[i].iD_number = to_wstring(pokemons[i]->getIdNo());
 		_pPokemon[i].name = string2wstring(pokemons[i]->getName());
-		//_pPokemon[i].type = string2wstring(pokemons[i].get)
+		//_pPokemon[i].type = string2wstring(pokemons[i]->getPokemonType()); 이뇨속 스위치로해서 가져와야하나욥?
 		_pPokemon[i].currentHp = to_wstring(pokemons[i]->getHp()); // 현재?
 		_pPokemon[i].maxHp = to_wstring(pokemons[i]->getMaxHp()); // 전체?
 		
@@ -766,6 +780,10 @@ void possessionPokemon::pPokemonDataSet()
 
 		_pPokemon[i].currentExp = to_wstring(pokemons[i]->getCurrentExp());
 		_pPokemon[i].nextLvExp = to_wstring(pokemons[i]->getNextExp());
+
+
+
+
 
 
 		char name[128] = "";
@@ -791,16 +809,27 @@ void possessionPokemon::uiClose()
 
 void possessionPokemon::keyani()
 {
-	IMAGEMANAGER->addFrameImage("포켓몬파닥", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);
+	IMAGEMANAGER->addFrameImage("포켓몬파닥", L"image/pokemon/pokemon_mini.png", 2304, 2176, 18, 17);	//큰사이즈 메인 포켓몬용
+	IMAGEMANAGER->addFrameImage("포켓몬파닥2", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);	//작은사이즈 서브 포켓몬용
 
 	KEYANIMANAGER->addAnimationType("포켓몬선택");
 	
+	//큰 포켓몬용
 	for (int i = 0; i < 151; ++i)
 	{
 		int pokemons_mini[] = { i * 2, i * 2 + 1 };
 		char keyName[128] = "";
 		sprintf_s(keyName, "ui_pokemons_%d", i);
-		
+
 		KEYANIMANAGER->addArrayFrameAnimation("포켓몬선택", keyName, "포켓몬파닥", pokemons_mini, 2, 10, true);
+	}
+	//작은포켓몬용
+	for (int i = 0; i < 151; ++i)
+	{
+		int pokemons_mini2[] = { i * 2, i * 2 + 1 };
+		char keyName2[128] = "";
+		sprintf_s(keyName2, "ui_pokemons_%d", i);
+		
+		KEYANIMANAGER->addArrayFrameAnimation("포켓몬선택", keyName2, "포켓몬파닥2", pokemons_mini2, 2, 10, true);
 	}
 }
