@@ -50,7 +50,7 @@ public:
 	void npcDataLoad(DATA data);
 	void itemDataLoad(DATA data);
 	void objectDataLoad(DATA data);
-	void playerDataLoad(DATA data);
+	vector<string> playerDataLoad(DATA data);
 
 
 	void bankPokemonSave(DATA data);

@@ -233,7 +233,7 @@ void playerDataBase::objectDataLoad(DATA data)
 	}
 }
 
-void playerDataBase::playerDataLoad(DATA data)
+vector<string> playerDataBase::playerDataLoad(DATA data)
 {
 	switch (data)
 	{
@@ -288,7 +288,7 @@ void playerDataBase::playerDataLoad(DATA data)
 			_currentPlayer->setMoney(stoi(vData[5]));
 			_currentPlayer->setIsMan(stoi(vData[6]));
 			_currentPlayer->setPos();
-
+			return vData;
 		break;
 	}
 }
