@@ -34,7 +34,7 @@ HRESULT battleScene::init()
 	// 테스트용 삭제 될 것
 	{
 		_pokemon = new pokemon;
-		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
+		_pokemon->init(NULL, PM_VENUSAUR, 100, false);
 		
 		_myPms[0] = new pokemon;
 		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
@@ -118,6 +118,21 @@ void battleScene::update()
 
 	//스크립트가 실행중이다? 그럼 아무것도못해
 	if (!_battleUI->battleSceneUpdate()) return;
+	
+
+	if (_active == PA_CHANGE_POKEMON)
+	{
+		if (_battleUI->getCurrentMenu() != BATTLE_UI_POKEMON)
+		{
+			_battleUI->setCurrentMenu(BATTLE_UI_POKEMON);
+			_battleUI->setIsSubMenu(true);
+			_battleUI->setPPState(P_POKEMON_LIST);
+		}
+
+		keyControl();
+		return;
+	}
+
 
 	// 진화중이라면
 	if (_isEvolution)
@@ -415,12 +430,14 @@ void battleScene::keyControl()
 								{
 									if (_battleUI->getPPSelect() > _battleUI->getCurrentPokemonNum())
 									{
-										//PLAYERDATA->getPlayer()->getPokemonArray(_battleUI->getPPSelect()) <<이놈 가져가면됨
+										_phase = PHASE_CHANGE;
+										_selPokemon = _battleUI->getPPSelect();		
 										_battleUI->setCurrentPokemonNum(_battleUI->getPPSelect());
 									}
 									else
 									{
-										//PLAYERDATA->getPlayer()->getPokemonArray(_battleUI->getPPSelect() - 1) <<이놈 가져가면됨
+										_phase = PHASE_CHANGE;
+										_selPokemon = _battleUI->getPPSelect() - 1;
 										_battleUI->setCurrentPokemonNum(_battleUI->getPPSelect() - 1);
 									}
 
@@ -428,6 +445,8 @@ void battleScene::keyControl()
 									_battleUI->setIsSubMenu(false);
 									_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 									_battleUI->setPPSelect(SELECT_MAIN_POKEMON);
+
+									_active = PA_ACTIVE_END;
 								}
 
 
@@ -456,7 +475,8 @@ void battleScene::keyControl()
 					}
 					if (KEYMANAGER->isOnceKeyDown('X'))
 					{
-						_battleUI->setIsSubMenu(false);
+						if(_active != PA_CHANGE_POKEMON)
+							_battleUI->setIsSubMenu(false);
 					}
 				break;
 				case P_POKEMON_INFO:
@@ -668,8 +688,25 @@ void battleScene::battle()
 				// 플레이어 포켓몬 변경
 				_turn = TURN_PLAYER;
 		
-				// 포켓몬 변경
-				_phase = PHASE_CHANGE;
+				// 교체 할 포켓몬이 있는지 없는지 확인
+				// todo 데이터 연결 후 
+				//int cnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
+				int cnt = 6;
+				bool isAwake = false;
+				for (int ii = 0; ii < cnt; ++ii)
+				{
+					isAwake = _pms[ii]->isAwake();
+					if(isAwake)
+						break;
+				}
+				
+				if(isAwake)
+					_active = PA_CHANGE_POKEMON;
+				else
+				{
+					_active = PA_ACTIVE_END;
+					_phase =  PHASE_END;
+				}
 			}
 		}
 	}
@@ -684,17 +721,8 @@ void battleScene::battleEnd()
 
 void battleScene::battleChange()
 {
-	// todo
-	//wstring script = L"포켓몬을 교체해보자";
-	//_battleUI->pushScript(script);
-
-	_selPokemon++;
-	//if(PLAYERDATA->getPlayer()->getCurrentPokemonCnt() < _selPokemon)
-	if(6 <= _selPokemon)
-		_phase = PHASE_END;
-	else
-		_pms[TURN_PLAYER] = _myPms[_selPokemon];
-
+	// todo 
+	_pms[TURN_PLAYER] = _myPms[_selPokemon];
 	_phase = PHASE_START;
 }
 
