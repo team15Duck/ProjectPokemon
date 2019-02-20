@@ -102,27 +102,8 @@ void report::update()
 		}
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
-			switch (_rsPosition)
-			{
-			case RS_1_POSITION:
-				
-				break;
-			case RS_2_POSITION:
-				
-				break;
-			case RS_3_POSITION:
-				
-				break;
-			case RS_4_POSITION:
-				
-				break;
-			case RS_5_POSITION:
-				
-				break;
-			case RS_6_POSITION:
-				
-				break;
-			}
+			PLAYERDATA->dataSave((playerDataBase::DATA)(_rsPosition + 1));
+			SCRIPTMANAGER->pushScript(L"저장되었습니다");
 		}
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
