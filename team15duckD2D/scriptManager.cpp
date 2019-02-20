@@ -17,7 +17,7 @@ HRESULT scriptManager::init()
 	_scriptCount = 0;
 	_scriptDelay = 0.05f;
 
-	MENUMANAGER->addFrame("scriptFrame", 0, 640 - 192, 15, 6);
+	MENUMANAGER->addFrame("scriptFrame", 0, 640 - 192, 30, 6);
 
 	
 	return S_OK;

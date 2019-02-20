@@ -127,10 +127,6 @@ void npc::update()
 
 	
 	//Å×½ÁÈå¹öÆ°
-	if (KEYMANAGER->isOnceKeyDown(VK_F8))
-	{
-		_isTalk = true;
-	}
 	if (_isTalk)
 	{
 		if (_npcType == NPC_TYPE_OAK)
@@ -144,7 +140,7 @@ void npc::update()
 		else if(_npcType == NPC_TYPE_NURSE)
 		{
 			activeWay();
-			activeDialog();
+			//activeDialog();
 		}
 		else if (_npcType == NPC_TYPE_BOSS)
 		{
