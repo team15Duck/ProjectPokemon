@@ -29,6 +29,9 @@ private:
 	DWORD _nowPlayIndex;		//현재 플레이 인덱스
 	BOOL _play;					//애니메이션 재생여부
 
+	DWORD _eventFrameIndex;		//이벤트가 발생하는 프레임 번호
+	bool _isDoEvent;			// 이벤트 실행했는가
+
 	void*						_obj;
 	CALLBACK_FUNCTION			_callbackFunction;
 	CALLBACK_FUNCTION_PARAMETER _callbackFunctionParameter;
@@ -74,5 +77,15 @@ public:
 	inline int getFrameWidth() { return _frameWidth; }
 	inline int getFrameHeight() { return _frameHeight; }
 
+	// 이벤트 프레임 번호 set/get
+	inline void setEventFrame(int frameIndex) { _eventFrameIndex = frameIndex; }
+	inline int getEventFrame() { return _eventFrameIndex; }
+
+	// 이벤트 실행 했는지 
+	void setEventDo(bool flag) { _isDoEvent = flag; }
+	bool getEventDo() {return _isDoEvent;}
+
+	// 이벤트 프레임인가
+	bool isEventFrame() { _nowPlayIndex  == _eventFrameIndex; }
 };
 

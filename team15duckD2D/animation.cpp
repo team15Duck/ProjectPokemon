@@ -633,7 +633,11 @@ void animation::frameUpdate(float elapsedTime)
 
 			if (_nowPlayIndex == _playList.size())
 			{
-				if (_loop) _nowPlayIndex = 0;
+				if (_loop)
+				{
+					_nowPlayIndex = 0;
+					_isDoEvent = false;
+				}
 				else
 				{
 					if (_obj == NULL)
@@ -658,6 +662,7 @@ void animation::start()
 {
 	_play = TRUE;
 	_nowPlayIndex = 0;
+	_isDoEvent = false;
 }
 
 void animation::stop()
