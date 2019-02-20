@@ -468,6 +468,9 @@
     <ClInclude Include="hpBar.h">
       <Filter>PlayGround\ui\hpBar</Filter>
     </ClInclude>
+    <ClInclude Include="trainerNpc.h">
+      <Filter>PlayGround\npc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -718,6 +721,9 @@
     </ClCompile>
     <ClCompile Include="hpBar.cpp">
       <Filter>PlayGround\ui\hpBar</Filter>
+    </ClCompile>
+    <ClCompile Include="trainerNpc.cpp">
+      <Filter>PlayGround\npc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
