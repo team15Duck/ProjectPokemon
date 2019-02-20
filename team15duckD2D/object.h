@@ -19,22 +19,26 @@ class object
 {
 private:
 
-
-
-
 	string						_sceneName;				//현재씬
-	OBJECT_ACTIVE_TYPE			_activeType;			//오브젝트 어떤타입으로 작동하는지
-
+	
+	//회복용
 	UINT						_tileX;					//위치
 	UINT						_tileY;					//위치
+	UINT						_curPokemon;			//플레이어가 가지고 있는 포켓몬 수
+	UINT						_healedPokemon;			//치료받는 포켓몬 수(비교용)
+	OBJECT_ACTIVE_TYPE			_activeType;			//오브젝트 어떤타입으로 작동하는지
+
+
 
 	bool						_isActive;				//작동했는지?
+	bool						_isBallUp;				//볼올리는중인지?
+	bool						_isHealing;				//회복중인지?
 
 
 	animation*					_motion;
-	bool						_isHealing;
-	int							_count;
-	int							_ballX;
+	int							_count;					//프레임용
+	int							_ballX;					//프레임x
+	int							_time;					//이시간동안 회복하는 프레임 돌거다
 
 public:
 	object();
@@ -45,12 +49,11 @@ public:
 	void update();
 	void render();
 
-
-
+	
+	void centerHealing();
 
 	//테슷흐함수
 	void aniSetting();
-	void startAni();
 
 
 	//=============겟셋====================
@@ -59,5 +62,13 @@ public:
 	UINT getTIleY() { return _tileY; }
 	void setTileX(UINT tileX) { _tileX = tileX; }
 	void setTIleY(UINT tileY) { _tileY = tileY; }
+
+	bool getIsActive() { return _isActive; }
+	void setIsActive(bool active) { _isActive = active; }
+
+	bool getIsBallUp() { return _isBallUp; }
+	void setIsBallUp(bool ballUp) { _isBallUp = ballUp; }
+
+	void setSceneName(string name) { _sceneName = name; }
 };
 

@@ -107,7 +107,7 @@ HRESULT npc::init(NPC_TYPE type)
 		default:
 			break;
 	}
-	_isHealing = false;
+	_isBallUp = false;
 
 	return S_OK;
 }
@@ -123,34 +123,38 @@ void npc::update()
 	// 플레이어가 말걸었을때 보는 방향의 반대로 플레이어를 봐야한다.
 	//
 	//=================================
+	setPlayerState(PLAYERDATA->getPlayer()->getState());
 
-	//테슷흐
-	if (KEYMANAGER->isOnceKeyDown('Z'))
+	
+	//테슷흐버튼
+	if (KEYMANAGER->isOnceKeyDown(VK_F8))
 	{
 		_isTalk = true;
 	}
-	if (KEYMANAGER->isOnceKeyUp('Z'))
-	{
-		_isTalk = false;
-	}
 	if (_isTalk)
 	{
-		activeWay();
-		activeDialog();
+		if (_npcType == NPC_TYPE_OAK)
+		{
+			activeWay();
+		}
+		else if (_npcType == NPC_TYPE_SHOPOWNER)
+		{
+			activeWay();
+		}
+		else if(_npcType == NPC_TYPE_NURSE)
+		{
+			activeWay();
+			activeDialog();
+		}
+		else if (_npcType == NPC_TYPE_BOSS)
+		{
+			activeWay();
+			//activeDialog();
+		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('X'))
-	{
-		_isHealing = true;
-	}
-	if (KEYMANAGER->isOnceKeyUp('X'))
-	{
-		_isHealing = false;
-	}
-	if (_isHealing)
-	{
-		activeWay();
-		//activeDialog();
-	}
+	
+
+	
 }
 
 void npc::render()
@@ -161,13 +165,15 @@ void npc::render()
 	else
 		IMAGEMANAGER->findImage(_npcName)->aniRender(_tileX, _tileY, _motion);
 
+
+
 }
 
 void npc::activeDialog()
 {
 	if (_isTalk)
 	{
-		if (_npcName == "oak")
+		if (_npcType == NPC_TYPE_OAK)
 		{
 			//if (_isPrologue)
 			//{
@@ -237,11 +243,11 @@ void npc::activeDialog()
 
 			//}
 		}
-		else if (_npcName == "shopOwner")
+		else if (_npcType == NPC_TYPE_SHOPOWNER)
 		{
 			{
-					wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
-					SCRIPTMANAGER->pushScript(text);
+				wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+				SCRIPTMANAGER->pushScript(text);
 			}
 
 			//선택창 ( 1. 사러왔다 / 2. 팔러왔다 / 3. 아닙니다)
@@ -288,7 +294,7 @@ void npc::activeDialog()
 				SCRIPTMANAGER->pushScript(text);
 			}
 		}
-		else if (_npcName == "nurse")
+		else if (_npcType == NPC_TYPE_NURSE)
 		{
 			{
 				wstring text = L"안녕하세요! \n포켓몬 센터입니다!";
@@ -381,7 +387,7 @@ void npc::activeWay()
 		}
 		case NPC_TYPE_NURSE:
 		{
-			if (_isHealing)
+			if (_isBallUp)
 			{
 				_npcActive = NPC_ACTIVE_WAY_NURSE_LEFT;
 				_isReverse = false;
@@ -389,7 +395,7 @@ void npc::activeWay()
 				_motion->start();
 				break;
 			}
-			else
+			else if (!_isBallUp)
 			{//간호사는 플레이어 방향에 상관없이 오로지 정면이되 치료하는 와중에는 왼쪽도 본다.
 				_npcActive = NPC_ACTIVE_WAY_NURSE_DOWN;
 				_isReverse = false;
@@ -400,21 +406,7 @@ void npc::activeWay()
 		}
 		case NPC_TYPE_BOSS:
 		{
-			if (_state == _player->PS_IDLE_RIGHT) //"플레이어방향이 오른쪽이니"
-			{
-				_npcActive = NPC_ACTIVE_WAY_BOSS_LEFT;
-				_isReverse = false;
-				_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Left");
-				_motion->start();
-			}
-			else if (_state == _player->PS_IDLE_LEFT) //"플레이어방향이 왼쪽이니"
-			{
-				_npcActive = NPC_ACTIVE_WAY_BOSS_RIGHT;
-				_isReverse = true;
-				_motion = KEYANIMANAGER->findAnimation(_npcName, "boss_Right");
-				_motion->start();
-			}
-			else if (_state == _player->PS_IDLE_DOWN) //"플레이어방향이 아래쪽이니"
+			if (_state == _player->PS_IDLE_DOWN) //"플레이어방향이 아래쪽이니"
 			{
 				_npcActive = NPC_ACTIVE_WAY_BOSS_UP;
 				_isReverse = false;

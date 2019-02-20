@@ -50,12 +50,12 @@ private:
 	UINT					_tileX;							//위치
 	UINT					_tileY;							//위치
 
-	bool					_isTalk;						//말걸었는지?
+	bool					_isTalk;						//플레이어가 말걸었는지?
 	bool					_isPrologue;					//오박사용 첫 시작이니?
 	bool					_isReverse;						//상점주인용 좌우반전했니?
 
 	animation*				_motion;						//실행중인 애니메이션
-	bool					_isHealing;
+	bool					_isBallUp;
 
 	player::PLAYER_STATE	_state;
 	player*					_player;
@@ -86,5 +86,9 @@ public:
 
 	//NPC랑 말했니?
 	bool getIsTalk() { return _isTalk; }
+	void setIsTalk(bool talk) { _isTalk = talk; }
+
+	bool getIsBallUp() { return _isBallUp; }
+	void setIsBallUp(bool ballUp) { _isBallUp = ballUp; }
 };
 

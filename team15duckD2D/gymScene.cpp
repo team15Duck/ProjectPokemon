@@ -40,6 +40,7 @@ void gymScene::update()
 {
 	_gymMap->update();
 	PLAYERDATA->getPlayer()->update();
+	_npc->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 

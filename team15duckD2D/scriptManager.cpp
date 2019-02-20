@@ -68,7 +68,7 @@ void scriptManager::render()
 	if (_script.size() > 0)
 	{
 		MENUMANAGER->findMenuFrame("scriptFrame")->render();
-		D2DMANAGER->drawText(_viewScript.c_str(), 50, 500, 30);
+		D2DMANAGER->drawText(_viewScript.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 30);
 	}
 }
 

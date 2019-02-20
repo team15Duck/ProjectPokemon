@@ -68,7 +68,7 @@ private:
 
 	UINT				_money;
 
-
+	bool				_isShopOn;
 public:
 	player();
 	~player();
@@ -143,7 +143,7 @@ public:
 	PLAYER_STATE getState() { return _state; }
 
 
-
-
+	bool getShopOn() { return _isShopOn; }
+	void setShopOn(bool shopOn) { _isShopOn = shopOn; }
 };
 

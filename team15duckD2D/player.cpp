@@ -31,9 +31,10 @@ HRESULT player::init()
 	_gravity = GRAVITY;
 	_currentFishingTime = 0.0f;
 	_maxFishingTime = 0.0f;
-	_currentPokemon = 0;
+	_currentPokemon = 4;
 	//////////////////////////////////////
 
+	_isShopOn = false;
 	//성별따라 키값 셋팅해줌
 	if (_isMan)
 		_key = "playerM";
@@ -341,10 +342,14 @@ void player::stateUpdate()
 			}
 			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_SHOP)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴상점임");
-					//상점유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+						SCRIPTMANAGER->pushScript(text);
+					}
 				}
 			}
 			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_CENTER)
@@ -400,10 +405,14 @@ void player::stateUpdate()
 			}
 			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_SHOP)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴상점임");
-					//상점유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+						SCRIPTMANAGER->pushScript(text);
+					}
 				}
 			}
 			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_CENTER)
@@ -411,8 +420,9 @@ void player::stateUpdate()
 				if (KEYMANAGER->isOnceKeyDown('Z'))
 				{
 					SCRIPTMANAGER->pushScript(L"여긴센터임");
-					//센터유아이켜주셈
+					//상점유아이켜주셈
 				}
+
 			}
 			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_BOSS)
 			{
@@ -458,10 +468,14 @@ void player::stateUpdate()
 			}
 			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_SHOP)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴상점임");
-					//상점유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+						SCRIPTMANAGER->pushScript(text);
+					}
 				}
 			}
 			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_CENTER)
@@ -516,10 +530,14 @@ void player::stateUpdate()
 			}
 			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_SHOP)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴상점임");
-					//상점유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+						SCRIPTMANAGER->pushScript(text);
+					}
 				}
 			}
 			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_CENTER)

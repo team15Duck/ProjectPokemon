@@ -28,6 +28,10 @@ HRESULT centerScene::init()
 	_npc->init(NPC_TYPE_NURSE);
 	_centerMap->pushNpc(_npc);
 
+	_obj = new object;
+	_obj->init();
+	_obj->setSceneName("centerScene");
+
 	return S_OK;
 }
 
@@ -40,10 +44,15 @@ void centerScene::update()
 {
 	_centerMap->update();
 	PLAYERDATA->getPlayer()->update();
+	_npc->update();
+	if (_npc->getIsTalk())
+		_obj->update();
+	_npc->setIsBallUp(_obj->getIsBallUp());
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 }
 
 void centerScene::render()
 {
 	_centerMap->render();
+	_obj->render();
 }

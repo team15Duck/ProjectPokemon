@@ -9,6 +9,8 @@ private:
 	mapData* _storeMap;
 	npc*	_npc;
 
+	bool	_test;
+
 
 public:
 	storeScene();
@@ -19,6 +21,8 @@ public:
 	void update();
 	void render();
 
+	//상점주인 대화
+	void activeShopOwner();
 
 };
 
