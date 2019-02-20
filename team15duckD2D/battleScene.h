@@ -5,26 +5,6 @@
 #include "pokemon.h"
 #include "battleUI.h"
 
-typedef struct tagEvolutionPokemon
-{
-	UINT index;
-	int curFrameX;
-	int curFrameY;
-
-	int evolutionFrameX;
-	int evolutionFrameY;
-
-	void operator=(tagEvolutionPokemon pm)
-	{
-		index = pm.index;
-		curFrameX = pm.curFrameX;
-		curFrameY = pm.curFrameY;
-		
-		evolutionFrameX = pm.evolutionFrameX;
-		evolutionFrameY = pm.evolutionFrameY;
-	}
-
-}EVOLUTIONPOKEMON;
 
 //포켓몬과배틀
 class battleScene : public gameNode

@@ -34,6 +34,7 @@ void trainerNPC::release()
 
 void trainerNPC::render()
 {
+	_img->render(CAMERA->getPosX() + 576.f, CAMERA->getPosY() + 42.f);
 }
 
 void trainerNPC::update()

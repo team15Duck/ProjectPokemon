@@ -42,3 +42,24 @@ enum PlayerActive
 	PA_NONE,
 	PA_COUNT = PA_NONE,
 };
+
+typedef struct tagEvolutionPokemon
+{
+	UINT index;
+	int curFrameX;
+	int curFrameY;
+
+	int evolutionFrameX;
+	int evolutionFrameY;
+
+	void operator=(tagEvolutionPokemon pm)
+	{
+		index = pm.index;
+		curFrameX = pm.curFrameX;
+		curFrameY = pm.curFrameY;
+
+		evolutionFrameX = pm.evolutionFrameX;
+		evolutionFrameY = pm.evolutionFrameY;
+	}
+
+}EVOLUTIONPOKEMON;

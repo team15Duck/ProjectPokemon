@@ -34,10 +34,10 @@ HRESULT battleScene::init()
 	// 테스트용 삭제 될 것
 	{
 		_pokemon = new pokemon;
-		_pokemon->init(NULL, PM_VENUSAUR, 100, false);
+		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
 		
 		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
+		_myPms[0]->init(NULL, PM_BULBASAUR, 100, true);
 
 		_myPms[1] = new pokemon;
 		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
@@ -158,8 +158,6 @@ void battleScene::update()
 		if (1 < _evolutionDisCount)
 			return;
 			
-		_myPms[_evPokemon.index]->displayEvolution();
-		
 		if (!_battleUI->isKeyDownKeyZ())
 		{
 			wstring script;
@@ -750,8 +748,6 @@ void battleScene::battleEvolution()
 			evPokemon.evolutionFrameY = (evIndex * 2) / _pokemonImg->GetMaxFrameX();
 
 			_evPokemon = evPokemon;
-
-			_isEvolution = true;
 			
 			_evPokemon.index = index;
 
@@ -766,6 +762,9 @@ void battleScene::battleEvolution()
 			script.append(L"의 상태가..?");
 			_battleUI->pushScript(script);
 			
+			_isEvolution = true;
+			_myPms[_evPokemon.index]->displayEvolution();
+
 			return;
 		}
 	}
