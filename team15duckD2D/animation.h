@@ -86,6 +86,6 @@ public:
 	bool getEventDo() {return _isDoEvent;}
 
 	// 이벤트 프레임인가
-	bool isEventFrame() { _nowPlayIndex  == _eventFrameIndex; }
+	bool isEventFrame() { return _nowPlayIndex  == _eventFrameIndex; }
 };
 
