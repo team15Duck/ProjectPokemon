@@ -218,7 +218,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("battleScene");
+		SCENEMANAGER->changeScene("homeScene");
 	}
 	
 	return S_OK;

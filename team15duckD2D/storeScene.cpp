@@ -36,6 +36,7 @@ HRESULT storeScene::init()
 
 	MENUMANAGER->addFrame("choiceFrame_shop", 35, 5, 10, 8);
 
+	UIMANAGER->init();
 	return S_OK;
 }
 
@@ -89,6 +90,8 @@ void storeScene::update()
 		CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 	else if(_shop->getIsBuy())
 		CAMERA->move(PLAYERDATA->getPlayer()->getPosX() + 200, PLAYERDATA->getPlayer()->getPosY());
+
+	UIMANAGER->update();
 }
 
 void storeScene::render()
@@ -130,6 +133,8 @@ void storeScene::render()
 		D2DMANAGER->drawText(str, 110 + CAMERA->getPosX(), (55 * 3) + CAMERA->getPosY(), 35);
 		IMAGEMANAGER->findImage("È­»ìÇ¥")->render(80 + CAMERA->getPosX(), _curPointY + CAMERA->getPosY());
 	}
+
+	UIMANAGER->render();
 }
 
 void storeScene::activeShopOwner()

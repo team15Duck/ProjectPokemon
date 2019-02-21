@@ -36,6 +36,8 @@ HRESULT centerScene::init()
 
 	MENUMANAGER->addFrame("choiceFrame", 960 - 290, 640 - 370, 8, 5);
 
+	UIMANAGER->init();
+
 	return S_OK;
 }
 
@@ -172,6 +174,8 @@ void centerScene::update()
 		_centerTalk = CENTER_TALK_HELLO;
 
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+
+	UIMANAGER->update();
 }
 
 void centerScene::render()
@@ -196,6 +200,8 @@ void centerScene::render()
 		IMAGEMANAGER->findImage("È­»ìÇ¥")->render(710 + CAMERA->getPosX(), _curPointY + CAMERA->getPosY());
 
 	}
+
+	UIMANAGER->render();
 }
 
 void centerScene::centerHello()
