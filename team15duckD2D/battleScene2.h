@@ -48,6 +48,8 @@ private:
 	UINT _selectSkillIdx;	// 선택 된 스킬 슬롯 번호
 	UINT _selPokemon;		// 출전중인 포켓몬 슬롯 번호
 
+	bool _isBattleFin;		// 배틀 종료
+
 public:
 	battleScene2();
 	~battleScene2();

@@ -5,6 +5,7 @@
 battleScene2::battleScene2()
 	: _frameX(0)
 	, _frameY(0)
+	, _isBattleFin(false)
 {
 }
 
@@ -436,7 +437,7 @@ void battleScene2::keyControl()
 							case SELECT_LOOK_POKEMON:
 								////////////////////////////
 								//여기서 내보내면 됨
-								//if (_battleUI->getPPSelect() != SELECT_MAIN_POKEMON)		//이미 나간놈이 아니면 
+								if (_battleUI->getPPSelect() != SELECT_MAIN_POKEMON)		//이미 나간놈이 아니면 
 								{
 									if (_battleUI->getPPSelect() > _battleUI->getCurrentPokemonNum())
 									{
@@ -543,7 +544,7 @@ void battleScene2::keyControl()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
-				if (_battleUI->getPPSelect() == PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
+				if (_battleUI->getPPSelect() == PLAYERDATA->getPlayer()->getCurrentPokemonCnt() - 1)
 				{
 					_battleUI->setPPSelect(SELECT_MAIN_POKEMON);
 				}
@@ -561,6 +562,10 @@ void battleScene2::keyControl()
 				_battleUI->setCurrentMenu(BATTLE_UI_NONE);
 			}
 		}
+	}
+	else if (_battleUI->getCurrentMenu() == BATTLE_UI_BAG)
+	{
+
 	}
 }
 
@@ -701,7 +706,9 @@ void battleScene2::battle()
 					if (index == _selPokemon)
 						_myPms[index]->gainExp(value);
 					else
+					{
 						_myPms[index]->gainExpEnterBattle(value);
+					}
 
 					script.clear();
 					script = string2wstring(_myPms[index]->getName());
@@ -726,6 +733,10 @@ void battleScene2::battle()
 				// 해당 포켓몬 기절함
 				_pms[TURN_PLAYER]->faint();
 				_isAwakeMyPokemon = false;
+
+				// 경험치 받을 목록에서 제외
+				set<UINT>::iterator iter = _expList.find(_selPokemon);
+				_expList.erase(iter);
 
 				// 플레이어 포켓몬 변경
 				_turn = TURN_PLAYER;
@@ -755,9 +766,39 @@ void battleScene2::battle()
 
 void battleScene2::battleEnd()
 {
-	wstring script = L"배틀 종료";
-	_expList.clear();
-	_battleUI->pushScript(script);
+	if (_isBattleFin)
+	{
+		if (_pms[TURN_PLAYER]->isAwake())
+		{
+			SCENEMANAGER->changeScene("endingScene");
+		}
+		else
+		{
+			SCENEMANAGER->changeScene(PLAYERDATA->getPlayer()->getSceneName());
+		}
+	}
+	else
+	{
+		if (_pms[TURN_PLAYER]->isAwake())
+		{
+			wstring script = L"승리하였다.";
+			_battleUI->pushScript(script);
+
+			script.clear();
+			script = L"상금 ";
+			script.append(to_wstring(_npc->getPrizeGold()));
+			script.append(L" GOLD를 획득하였다.");
+
+			_battleUI->pushScript(script);
+		}
+		else
+		{
+			wstring script = L"정신이 아득해졌다...!";
+			_battleUI->pushScript(script);
+		}
+
+		_isBattleFin = true;
+	}
 }
 
 void battleScene2::battleChange()

@@ -874,9 +874,38 @@ void battleScene::battle()
 
 void battleScene::battleEnd()
 {
-	wstring script = L"¹èÆ² Á¾·á";
-	_expList.clear();
-	_battleUI->pushScript(script);
+	if (_isBattleFin)
+	{
+		SCENEMANAGER->changeScene(PLAYERDATA->getPlayer()->getSceneName());
+	}
+	else
+	{
+		if (_pms[TURN_PLAYER]->isAwake())
+		{
+			wstring script = L"½Â¸®ÇÏ¿´´Ù.";
+			_battleUI->pushScript(script);
+
+			int value = RND->getFromIntTo(1, 1000);
+			
+			script.clear();
+			script = L"»ó±Ý ";
+
+			script.append(to_wstring(value));
+			script.append(L" GOLD¸¦ È¹µæÇÏ¿´´Ù.");
+
+			// µ· È¹µæ
+			PLAYERDATA->getPlayer()->setMoney(PLAYERDATA->getPlayer()->getMoney() + value);
+
+			_battleUI->pushScript(script);
+		}
+		else
+		{
+			wstring script = L"Á¤½ÅÀÌ ¾ÆµæÇØÁ³´Ù...!";
+			_battleUI->pushScript(script);
+		}
+
+		_isBattleFin = true;
+	}
 }
 
 void battleScene::battleChange()
