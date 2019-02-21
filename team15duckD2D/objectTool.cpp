@@ -227,14 +227,14 @@ void objectTool::render()
 					swprintf_s(str, L"아이템");
 					D2DMANAGER->drawText(str, jj * TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255,255,0));
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_POKEMON) == ATTR_POKEMON)
+				if ((_vvTile[ii][jj]->attr & ATTR_SHOP) == ATTR_SHOP)
 				{
-					swprintf_s(str, L"포켓몬");
-					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 255, 0));
+					swprintf_s(str, L"샵");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 20, 20, RGB(255, 255, 0));
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_BOSS) == ATTR_BOSS)
+				if ((_vvTile[ii][jj]->attr & ATTR_COMPUTER) == ATTR_COMPUTER)
 				{
-					swprintf_s(str, L"비주기");
+					swprintf_s(str, L"컴퓨터");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 255, 0));
 				}
 			}
@@ -545,7 +545,7 @@ void objectTool::drawObject()
 			{
 				if (PtInRect(&makeRECT(_vvRect[i][j]), makePOINT(_ptMouse)))
 				{
-					_vvTile[i][j]->attr |= ATTR_BOSS;
+					_vvTile[i][j]->attr |= ATTR_COMPUTER;
 					_vvTile[i][j]->attr |= ATTR_UNMOVE;
 				}
 			}

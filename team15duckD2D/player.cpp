@@ -346,20 +346,23 @@ void player::stateUpdate()
 			{
 				if (!_isShopOn)
 				{
-					if (KEYMANAGER->isOnceKeyDown('Z'))
+					if (!_isShopOn)
 					{
-						_isShopOn = true;
-						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
-						SCRIPTMANAGER->pushScript(text);
+						if (KEYMANAGER->isOnceKeyDown('Z'))
+						{
+							_isShopOn = true;
+						}
 					}
 				}
 			}
 			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_CENTER)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴센터임");
-					//센터유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+					}
 				}
 			}
 			else if (_map->getTile(_tileX - 1, _tileY)->attr & ATTR_BOSS)
@@ -412,17 +415,17 @@ void player::stateUpdate()
 					if (KEYMANAGER->isOnceKeyDown('Z'))
 					{
 						_isShopOn = true;
-						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
-						SCRIPTMANAGER->pushScript(text);
 					}
 				}
 			}
 			else if (_map->getTile(_tileX, _tileY - 1)->attr & ATTR_CENTER)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴센터임");
-					//상점유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+					}
 				}
 
 			}
@@ -475,17 +478,17 @@ void player::stateUpdate()
 					if (KEYMANAGER->isOnceKeyDown('Z'))
 					{
 						_isShopOn = true;
-						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
-						SCRIPTMANAGER->pushScript(text);
 					}
 				}
 			}
 			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_CENTER)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴센터임");
-					//센터유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+					}
 				}
 			}
 			else if (_map->getTile(_tileX + 1, _tileY)->attr & ATTR_BOSS)
@@ -537,17 +540,17 @@ void player::stateUpdate()
 					if (KEYMANAGER->isOnceKeyDown('Z'))
 					{
 						_isShopOn = true;
-						wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
-						SCRIPTMANAGER->pushScript(text);
 					}
 				}
 			}
 			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_CENTER)
 			{
-				if (KEYMANAGER->isOnceKeyDown('Z'))
+				if (!_isShopOn)
 				{
-					SCRIPTMANAGER->pushScript(L"여긴센터임");
-					//센터유아이켜주셈
+					if (KEYMANAGER->isOnceKeyDown('Z'))
+					{
+						_isShopOn = true;
+					}
 				}
 			}
 			else if (_map->getTile(_tileX, _tileY + 1)->attr & ATTR_BOSS)

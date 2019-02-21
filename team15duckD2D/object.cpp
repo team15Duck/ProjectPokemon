@@ -42,8 +42,12 @@ void object::update()
 		_isBallUp = true;
 	}
 
-	//if(_isBallUp && _sceneName == "centerScene")
-		//centerHealing();
+	if(_isBallUp && _sceneName == "centerScene")
+		centerHealing();
+	else if (!_isBallUp)
+	{
+		this->init();
+	}
 
 }
 
@@ -71,9 +75,8 @@ void object::render()
 
 	WCHAR str[128];
 
-	swprintf_s(str, L"시간: %d", _time);
-	D2DMANAGER->drawText(str, 15 * TILE_SIZE, 5 * TILE_SIZE, 20, RGB(255, 0, 255));
-
+	//swprintf_s(str, L"시간: %d", _time);
+	//D2DMANAGER->drawText(str, 500 + CAMERA->getPosX(), 320 + CAMERA->getPosY(), 20, RGB(255, 0, 255));
 
 }
 
@@ -93,12 +96,16 @@ void object::centerHealing()
 	{
 		_time--;
 		aniSetting();
-	}
-	else if (_time <= 0)
-	{
-		this->init();
-	}
 
+		if (_time <= 0)
+		{
+			_time = -1;
+			_isHealing = false; //회복중이니?
+			_count = 0;			//프레임용
+			_ballX = 0;			//프레임좌표
+			_healedPokemon = 0;
+		}
+	}
 }
 
 

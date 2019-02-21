@@ -67,6 +67,7 @@ HRESULT npc::init(NPC_TYPE type)
 			_isTalk = false;
 			_isPrologue = false;
 			_isReverse = false;
+			_isGreeting = false;
 			_tileX = 17 * 64;
 			_tileY = 9 * 64 - 20;
 
@@ -76,7 +77,7 @@ HRESULT npc::init(NPC_TYPE type)
 			int nurse_Left[] = { 2 };
 			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "nurse_Left", "nurse", nurse_Left, 1, 10, true);
 			int nurse_Greeting[] = { 3 };
-			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "nurse_Greeting", "nurse", nurse_Greeting, 1, 10, false);
+			KEYANIMANAGER->addArrayFrameAnimation(_npcName, "nurse_Greeting", "nurse", nurse_Greeting, 1, 10, true);
 
 			_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Down");
 			break;
@@ -383,7 +384,7 @@ void npc::activeWay()
 		}
 		case NPC_TYPE_NURSE:
 		{
-			if (_isBallUp)
+			if (_isBallUp && !_isGreeting)
 			{
 				_npcActive = NPC_ACTIVE_WAY_NURSE_LEFT;
 				_isReverse = false;
@@ -391,11 +392,19 @@ void npc::activeWay()
 				_motion->start();
 				break;
 			}
-			else if (!_isBallUp)
+			else if (!_isBallUp && !_isGreeting)
 			{//간호사는 플레이어 방향에 상관없이 오로지 정면이되 치료하는 와중에는 왼쪽도 본다.
 				_npcActive = NPC_ACTIVE_WAY_NURSE_DOWN;
 				_isReverse = false;
 				_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Down");
+				_motion->start();
+				break;
+			}
+			else if (!_isBallUp && _isGreeting)
+			{
+				_npcActive = NPC_ACTIVE_WAY_NURSE_GREETING;
+				_isReverse = false;
+				_motion = KEYANIMANAGER->findAnimation(_npcName, "nurse_Greeting");
 				_motion->start();
 				break;
 			}

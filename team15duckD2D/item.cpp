@@ -124,7 +124,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = NORMAL_ETHER_VALUE;
 			_buyPrice = NORMAL_ETHER_BUY_PRICE;
 			_sellPrice = NORMAL_ETHER_SELL_PRICE;
-			_itemInfo = "포켓몬이 기억하고 있는 기술 중 1개의 PP를 10만큼 회복한다.";
+			_itemInfo = "포켓몬이 기억하고 있는 기술 중 \n1개의 PP를 10만큼 회복한다.";
 			_imgSize = { 64, 88 };
 			break;
 		}
@@ -134,7 +134,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = MAX_ETHER_VALUE;
 			_buyPrice = MAX_ETHER_BUY_PRICE;
 			_sellPrice = MAX_ETHER_SELL_PRICE;
-			_itemInfo = "포켓몬이 기억하고 있는 기술 중 1개의 PP를 모두 회복한다.";
+			_itemInfo = "포켓몬이 기억하고 있는 기술 중 \n1개의 PP를 모두 회복한다.";
 			_imgSize = { 64, 88 };
 			break;
 		}
@@ -144,7 +144,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = NORMAL_ELIXIR_VALUE;
 			_buyPrice = NORMAL_ELIXIR_BUY_PRICE;
 			_sellPrice = NORMAL_ELIXIR_SELL_PRICE;
-			_itemInfo = "포켓몬이 기억하고 있는 4개 기술의 PP를 10씩 회복한다.";
+			_itemInfo = "포켓몬이 기억하고 있는 \n4개 기술의 PP를 10씩 회복한다.";
 			_imgSize = { 64, 88 };
 			break;
 		}
@@ -154,7 +154,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = MAX_ELIXIR_VALUE;
 			_buyPrice = MAX_ELIXIR_BUY_PRICE;
 			_sellPrice = MAX_ELIXIR_SELL_PRICE;
-			_itemInfo = "포켓몬이 기억하고 있는 4개 기술의 PP를 모두 회복한다.";
+			_itemInfo = "포켓몬이 기억하고 있는 \n4개 기술의 PP를 모두 회복한다.";
 			_imgSize = { 64, 88 };
 			break;
 		}
@@ -164,7 +164,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = ANTIDOTE_VALUE;
 			_buyPrice = ANTIDOTE_BUY_PRICE;
 			_sellPrice = ANTIDOTE_SELL_PRICE;
-			_itemInfo = "스프레이식의 약. 포켓몬 1마리의 독 상태를 회복한다.";
+			_itemInfo = "스프레이식의 약. \n포켓몬 1마리의 독 상태를 회복한다.";
 			_imgSize = { 52, 84 };
 			break;
 		}
@@ -174,7 +174,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = PARLYZE_HEAL_VALUE;
 			_buyPrice = PARLYZE_HEAL_BUY_PRICE;
 			_sellPrice = PARLYZE_HEAL_SELL_PRICE;
-			_itemInfo = "스프레이식의 약. 포켓몬 1마리의 마비 상태를 회복한다.";
+			_itemInfo = "스프레이식의 약. \n포켓몬 1마리의 마비 상태를 회복한다.";
 			_imgSize = { 52, 84 };
 			break;
 		}
@@ -184,7 +184,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = BURN_HEAL_VALUE;
 			_buyPrice = BURN_HEAL_BUY_PRICE;
 			_sellPrice = BURN_HEAL_SELL_PRICE;
-			_itemInfo = "스프레이식의 약. 포켓몬 1마리의 화상 상태를 회복한다.";
+			_itemInfo = "스프레이식의 약. \n포켓몬 1마리의 화상 상태를 회복한다.";
 			_imgSize = { 52, 84 };
 			break;
 		}
@@ -194,7 +194,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = ICE_HEAL_VALUE;
 			_buyPrice = ICE_HEAL_BUY_PRICE;
 			_sellPrice = ICE_HEAL_SELL_PRICE;
-			_itemInfo = "스프레이식의 약. 포켓몬 1마리의 얼음 상태를 회복한다.";
+			_itemInfo = "스프레이식의 약. \n포켓몬 1마리의 얼음 상태를 회복한다.";
 			_imgSize = { 52, 84 };
 			break;
 		}
@@ -204,7 +204,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = AWAKENING_VALUE;
 			_buyPrice = AWAKENING_BUY_PRICE;
 			_sellPrice = AWAKENING_SELL_PRICE;
-			_itemInfo = "스프레이식의 약. 포켓몬 1마리의 잠듦 상태를 회복한다.";
+			_itemInfo = "스프레이식의 약. \n포켓몬 1마리의 잠듦 상태를 회복한다.";
 			_imgSize = { 52, 84 };
 			break;
 		}
@@ -214,7 +214,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = FULL_HEAL_VALUE;
 			_buyPrice = FULL_HEAL_BUY_PRICE;
 			_sellPrice = FULL_HEAL_SELL_PRICE;
-			_itemInfo = "스프레이식의 약. 포켓몬 1마리의 상태이상을 모두 회복한다.";
+			_itemInfo = "스프레이식의 약. \n포켓몬 1마리의 상태이상을 모두 회복한다.";
 			_imgSize = { 52, 84 };
 			break;
 		}
@@ -224,7 +224,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = RARE_CANDY_VALUE;
 			_buyPrice = RARE_CANDY_BUY_PRICE;
 			_sellPrice = RARE_CANDY_SELL_PRICE;
-			_itemInfo = "에너지가 가득한 사탕. 먹이면 포켓몬 1마리의 레벨이 1만큼 올라간다.";
+			_itemInfo = "에너지가 가득한 사탕. \n먹이면 포켓몬 1마리의 레벨이 1만큼 올라간다.";
 			_imgSize = { 84, 84 };
 			break;
 		}
@@ -234,7 +234,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = ESCAPE_ROPE_VALUE;
 			_buyPrice = ESCAPE_ROPE_BUY_PRICE;
 			_sellPrice = ESCAPE_ROPE_SELL_PRICE;
-			_itemInfo = "길고 튼튼한 밧줄. 동굴이나 던전등에서 빠져 나올 수 있다.";
+			_itemInfo = "길고 튼튼한 밧줄. \n동굴이나 던전등에서 빠져 나올 수 있다.";
 			_imgSize = { 84, 68 };
 			break;
 		}
@@ -244,7 +244,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = REVIVE_VALUE;
 			_buyPrice = REVIVE_BUY_PRICE;
 			_sellPrice = REVIVE_SELL_PRICE;
-			_itemInfo = "기절해 버린 포켓몬 1마리의 HP를 절반까지 회복한다.";
+			_itemInfo = "기절해 버린 포켓몬 1마리의 \nHP를 절반까지 회복한다.";
 			_imgSize = { 40, 60 };
 			break;
 		}
@@ -254,7 +254,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = BICYCLE_VALUE;
 			_buyPrice = BICYCLE_BUY_PRICE;
 			_sellPrice = BICYCLE_SELL_PRICE;
-			_itemInfo = "접이식 자전거. 운동화보다 빠르게 이동할 수 있다.";
+			_itemInfo = "접이식 자전거. \n운동화보다 빠르게 이동할 수 있다.";
 			_imgSize = { 84, 88 };
 			break;
 		}
@@ -264,7 +264,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = FISHING_ROD_VALUE;
 			_buyPrice = FISHING_ROD_BUY_PRICE;
 			_sellPrice = FISHING_ROD_SELL_PRICE;
-			_itemInfo = "굉장히 고급진 낚시대. 야생 물 포켓몬을 낚기 위해 수역에서 사용한다.";
+			_itemInfo = "굉장히 고급진 낚시대. \n야생 물 포켓몬을 낚기 위해 수역에서 사용한다.";
 			_imgSize = { 88, 84 };
 			break;
 		}
@@ -274,7 +274,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = TOWN_MAP_VALUE;
 			_buyPrice = TOWN_MAP_BUY_PRICE;
 			_sellPrice = TOWN_MAP_SELL_PRICE;
-			_itemInfo = "언제든지 간편하게 볼 수 있는 편리한 지도. 자신의 위치도 알 수 있다.";
+			_itemInfo = "언제든지 간편하게 볼 수 있는 편리한 지도. \n자신의 위치도 알 수 있다.";
 			_imgSize = { 84, 76 };
 			break;
 		}
@@ -284,7 +284,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = HM_CUT_VALUE;
 			_buyPrice = HM_CUT_BUY_PRICE;
 			_sellPrice = HM_CUT_SELL_PRICE;
-			_itemInfo = "낫이나 손톱 등으로 상대를 베어 공격한다. 가느다란 나무 등도 자를 수 있다.";
+			_itemInfo = "낫이나 손톱 등으로 상대를 베어 공격한다. \n가느다란 나무 등도 자를 수 있다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -294,7 +294,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = HM_FLASH_VALUE;
 			_buyPrice = HM_FLASH_BUY_PRICE;
 			_sellPrice = HM_FLASH_SELL_PRICE;
-			_itemInfo = "눈이 부신 빛으로 상대의 명중률을 떨어트린다. 어두운 동굴을 밝게 비춘다.";
+			_itemInfo = "눈이 부신 빛으로 상대의 명중률을 떨어트린다. \n어두운 동굴을 밝게 비춘다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -304,7 +304,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = TM_THUNDERBOLT_VALUE;
 			_buyPrice = TM_THUNDERBOLT_BUY_PRICE;
 			_sellPrice = TM_THUNDERBOLT_SELL_PRICE;
-			_itemInfo = "강한 전격을 상대에게 날려서 공격한다. 마비 상태로 만들 때가 있다.";
+			_itemInfo = "강한 전격을 상대에게 날려서 공격한다. \n마비 상태로 만들 때가 있다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -314,7 +314,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = TM_THUNDER_VALUE;
 			_buyPrice = TM_THUNDER_BUY_PRICE;
 			_sellPrice = TM_THUNDER_SELL_PRICE;
-			_itemInfo = "강한 번개를 상대에게 떨어트려 공격한다. 마비 상태로 만들 때가 있다.";
+			_itemInfo = "강한 번개를 상대에게 떨어트려 공격한다. \n마비 상태로 만들 때가 있다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -324,7 +324,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = TM_FLAMETHROWER_VALUE;
 			_buyPrice = TM_FLAMETHROWER_BUY_PRICE;
 			_sellPrice = TM_FLAMETHROWER_SELL_PRICE;
-			_itemInfo = "세찬 불꽃을 상대에게 발사하여 공격한다. 화상 상태로 만들 떄가 있다.";
+			_itemInfo = "세찬 불꽃을 상대에게 발사하여 공격한다. \n화상 상태로 만들 떄가 있다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -334,7 +334,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = CHERI_BERRY_VALUE;
 			_buyPrice = CHERI_BERRY_BUY_PRICE;
 			_sellPrice = CHERI_BERRY_SELL_PRICE;
-			_itemInfo = "버치열매는 꽤 매워서 조금 자극적인 맛이 난다. 먹으면 마비 상태를 낫게 한다.";
+			_itemInfo = "버치열매는 꽤 매워서 조금 자극적인 맛이 난다. \n먹으면 마비 상태를 낫게 한다.";
 			_imgSize = { 88, 88 };
 			break;
 		}
@@ -433,7 +433,7 @@ void item::update()
 
 void item::render()
 {
-	//_img->frameRender(_imgPos.x + CAMERA->getPosX(), _imgPos.y + CAMERA->getPosY(), _itemType, 0, 1.0f);
+	_img->frameRender(_imgPos.x + CAMERA->getPosX(), _imgPos.y + CAMERA->getPosY(), _itemType, 0, 1.0f);
 }
 
 string item::makeName(ITEM_TYPE type)

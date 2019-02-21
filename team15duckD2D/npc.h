@@ -24,6 +24,7 @@ enum NPC_ACTIVE_WAY
 										
 	NPC_ACTIVE_WAY_NURSE_DOWN,								//간호사(아래쪽)
 	NPC_ACTIVE_WAY_NURSE_LEFT,								//간호사(왼쪽)
+	NPC_ACTIVE_WAY_NURSE_GREETING,							//간호사(인사)
 
 	NPC_ACTIVE_WAY_BOSS_DOWN,								//보스(아래쪽)
 	NPC_ACTIVE_WAY_BOSS_UP,									//보스(위쪽)
@@ -53,6 +54,7 @@ private:
 	bool					_isTalk;						//플레이어가 말걸었는지?
 	bool					_isPrologue;					//오박사용 첫 시작이니?
 	bool					_isReverse;						//상점주인용 좌우반전했니?
+	bool					_isGreeting;					//간호사용 인사모션
 
 	animation*				_motion;						//실행중인 애니메이션
 	bool					_isBallUp;
@@ -90,5 +92,8 @@ public:
 
 	bool getIsBallUp() { return _isBallUp; }
 	void setIsBallUp(bool ballUp) { _isBallUp = ballUp; }
+
+	bool getIsGreeting() { return _isGreeting; }
+	void setIsGreeting(bool greeting) { _isGreeting = greeting; }
 };
 

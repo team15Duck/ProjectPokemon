@@ -386,6 +386,9 @@ void mapData::drawObject()
 		if (jj < 0) jj = 0;
 
 		
+
+
+
 		//오브젝트->타일로 변경완료되면 숫자 지워주기
 		if (((int)_player->getPosY() + 31) / 64 == ii)
 		{
@@ -590,10 +593,10 @@ void mapData::drawObject()
 					swprintf_s(str, L"POTAL");
 					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(0, 255, 255));
 				}
-				if ((_vvTile[ii][jj]->attr & ATTR_APPEAR) == ATTR_APPEAR)
+				if ((_vvTile[ii][jj]->attr & ATTR_SHOP) == ATTR_SHOP)
 				{
-					swprintf_s(str, L"APPEAR");
-					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 5, 20, RGB(255, 0, 255));
+					swprintf_s(str, L"샵");
+					D2DMANAGER->drawText(str, jj *TILE_SIZE + 5, ii * TILE_SIZE + 20, 20, RGB(255, 255, 0));
 				}
 				if ((_vvTile[ii][jj]->attr & ATTR_POKEMON) == ATTR_POKEMON)
 				{

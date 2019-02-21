@@ -2,9 +2,13 @@
 #include "storeMap.h"
 #include "gameNode.h"
 #include "npc.h"
+#include "shop.h"
 
 enum SHOP_TALK
 {
+	//인사
+	SHOP_TALK_HELLO,
+	SHOP_TALK_BUY_UI,
 	//1. 사러왔다
 	SHOP_TALK_BUY_CHOICE,						//아이템을 선택했을때
 	SHOP_TALK_BUY,								//개수까지 정했을때
@@ -16,7 +20,7 @@ enum SHOP_TALK
 	SHOP_TALK_SELL_SURE,						//판매함
 	
 	//3. 아닙니다
-	SHOP_TALK_NOPE,								//나갈때
+	SHOP_TALK_NOPE_OR_BYE,						//나갈때
 
 	//4. 이전버튼
 	SHOP_TALK_CANCEL,							//1. 사러왔다 / 2. 팔러왔다에서
@@ -31,9 +35,15 @@ class storeScene : public gameNode
 private:
 	mapData*	_storeMap;						//스토어맵
 	npc*		_npc;							//NPC
-												
+	shop*		_shop;
+
+	float		_curPointY;						//선택창에서의 화살표 Y위치
+	
 	bool		_isTalk;						//NPC랑 얘기하니
-	bool		_isVisible;						//대사 가리기용
+	bool		_isChoice;						//사러왔니 팔러왔니 뭐하러왔니
+	bool		_isBuy;							//사러왔니?(아이템UI)
+	bool		_isSure;						//골랐니?
+	
 	SHOP_TALK	_shopTalk;						//상태
 
 public:
