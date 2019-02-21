@@ -311,6 +311,25 @@ DWORD CALLBACK ThreadFunction(LPVOID lpParameter)
 	IMAGEMANAGER->addFrameImage("남여가방", L"image/common_menu/bag/item_bag.png", 472, 257, 2, 1);																					 loadHelper->_currentCount++;	Sleep(30);
 	MENUMANAGER->addFrame("서머리메뉴3", 635, 444, 10, 6);																															loadHelper->_currentCount++;	Sleep(30);
 	IMAGEMANAGER->addImage("boss_battle", L"image/boss_battle.png", 230, 260);																										loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("치영씬", new chiyeongTestScene);																															loadHelper->_currentCount++;	Sleep(30);						
+	SCENEMANAGER->addScene("하영씬", new hayoungTestScene);																														  loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);																														loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);																														loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("objectToolScene", new objectToolScene);																													loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("startScene", new startScene);																															loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("battleScene", new battleScene);																															loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("battleScene2", new battleScene2);																														loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("caveScene", new caveScene);																																loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("centerScene", new centerScene);																															loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("fieldScene", new fieldScene);																															loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("gymScene", new gymScene);																																loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("homeScene", new homeScene);																																loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("oLabScene", new oLabScene);																																loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("storeScene", new storeScene);																															loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("townScene", new townScene);																																loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("loadScene", new loadScene);																																loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("newGameScene", new newGameScene);																														loadHelper->_currentCount++;	Sleep(30);
+	SCENEMANAGER->addScene("endingScene", new endingScene);																															loadHelper->_currentCount++;	Sleep(30);
 	PLAYERDATA->init(); loadHelper->_currentCount++;																																								Sleep(30);
 
 
