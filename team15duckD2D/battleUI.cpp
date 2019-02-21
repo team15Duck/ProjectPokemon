@@ -80,10 +80,7 @@ HRESULT battleUI::init()
 	}
 	_itemSubMenuOn = false;
 	_subMenuSelectNum = 0;
-	_bagState = 0;
-	_bagPokemonSubNum = 0;
-	_bagPokemonSelectNum = 0;
-	_isBagSubMenu = false;
+
 	return S_OK;
 }
 

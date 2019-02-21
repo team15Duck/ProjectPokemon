@@ -554,7 +554,7 @@ void battleScene::keyControl()
 					_battleUI->getBagSelectNum();	//가방에서 선택한번호
 					player::mapItemIter iter;
 					int ii = 0;
-					for (; iter != PLAYERDATA->getPlayer()->getItem().end; iter++,ii++)
+					for (; iter != PLAYERDATA->getPlayer()->getItem().end(); iter++,ii++)
 					{
 						if (ii == _battleUI->getBagSelectNum()) break;
 					}
@@ -562,6 +562,7 @@ void battleScene::keyControl()
 					switch (_battleUI->getItemArray(iter->first)->getItemType())
 					{
 						case MONSTER_BALL:
+							_battleUI->getItemArray(iter->first)->getItemValue();
 						break;
 						case SUPER_BALL:
 						break;
@@ -570,16 +571,35 @@ void battleScene::keyControl()
 						case MASTER_BALL:
 						break;
 						case NORMAL_POTION:
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
+							}
 						break;
 						case SUPER_POTION:
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
+							}
 						break;
 						case HYPER_POTION:
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
+							}
 						break;
 						case MAX_POTION:
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
+							}
 						break;
 						case FULL_RESTORE:
+							_pms[TURN_PLAYER]->clearUpsetCondtion();
+							_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
 						break;
 						case NORMAL_ETHER:
+
 						break;
 						case MAX_ETHER:
 						break;
