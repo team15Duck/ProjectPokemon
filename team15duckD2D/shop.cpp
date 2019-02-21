@@ -215,7 +215,7 @@ void shop::keyControl()
 
 				if (iter == PLAYERDATA->getPlayer()->getItem().end())
 				{
-					PLAYERDATA->getPlayer()->getItem().insert(make_pair(_itemType, _itemNum));
+					PLAYERDATA->getPlayer()->pushItem(_itemType, _itemNum);
 				}
 				else
 				{
@@ -224,9 +224,9 @@ void shop::keyControl()
 			}
 			else
 			{
-				PLAYERDATA->getPlayer()->getItem().insert(make_pair(_itemType, _itemNum));
+				PLAYERDATA->getPlayer()->pushItem(_itemType, _itemNum);
 			}
-
+			
 			_isSure = false;
 			_itemNum = 1;
 		}
@@ -235,6 +235,7 @@ void shop::keyControl()
 			_isSure = false;
 			_itemNum = 1;
 		}
+		UIMANAGER->uiDataSetting();
 	}
 	if (KEYMANAGER->isOnceKeyDown('X'))
 	{

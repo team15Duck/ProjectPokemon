@@ -120,7 +120,7 @@ void battleScene2::update()
 {
 	//유아이는 실시간업뎃해야됨
 	_battleUI->update();
-
+	CAMERA->init(0, 0, 0, 0);
 	//스크립트가 실행중이다? 그럼 아무것도못해
 	if (!_battleUI->battleSceneUpdate()) return;
 
@@ -843,7 +843,7 @@ void battleScene2::battle()
 				_battleUI->pushScript(script);
 
 				// todo 플레이어 포켓몬 전투 경험치 계산
-				int value = 500; //2 * _pms[TURN_ENEMY]->getLevel();
+				int value = 4 * _pms[TURN_ENEMY]->getLevel();
 				if (_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
 					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
 

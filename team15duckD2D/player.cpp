@@ -15,7 +15,8 @@ HRESULT player::init()
 {
 	dataLoad();
 
-	
+	SOUNDMANAGER->addSound("bgm_22_Battle_Wild_Pokemon.mp3", "sound/bgm_22_Battle_Wild_Pokemon.mp3", true, true);
+	SOUNDMANAGER->addSound("bgm_23_Battle_Gym_Leader_Battle.mp3", "sound/bgm_23_Battle_Gym_Leader_Battle.mp3", true, true);
 	/////////////이건나중에지울거야/////////
 	_tileX = 15	;
 	_tileY = 10;
@@ -39,13 +40,10 @@ HRESULT player::init()
 
 	_isShopOn = false;
 	//성별따라 키값 셋팅해줌
-	if (_isMan)
-		_key = "playerM";
-	else
-		_key = "playerF";
+	setKey();
 	_boss = false;
 
-	aniSetUp();
+
 
 	EFFECTMANAGER->addEffect("grassEffect", "image/player/grassSprite.png", 256, 56, 64, 56, 7, 0.01, 20);
 	EFFECTMANAGER->addEffect("footLeft", "image/player/footLeft.png", 256, 64, 64, 64, 7, 0.01, 20);
@@ -80,7 +78,9 @@ void player::update()
 		}
 		else
 		{
+			
 			SCENEMANAGER->changeScene("battleScene");
+			
 
 		}
 	}
@@ -441,6 +441,7 @@ void player::stateUpdate()
 					_angle[8] = 0;
 					_scale = 1;
 					_boss = true;
+					SOUNDMANAGER->play("bgm_23_Battle_Gym_Leader_Battle.mp3");
 				}
 			}
 		break;
@@ -520,6 +521,7 @@ void player::stateUpdate()
 					_angle[8] = 0;
 					_scale = 1;
 					_boss = true;
+					SOUNDMANAGER->play("bgm_23_Battle_Gym_Leader_Battle.mp3");
 				}
 			}
 		break;
@@ -596,6 +598,7 @@ void player::stateUpdate()
 					_angle[8] = 0;
 					_scale = 1;
 					_boss = true;
+					SOUNDMANAGER->play("bgm_23_Battle_Gym_Leader_Battle.mp3");
 				}
 			}
 		break;
@@ -672,6 +675,7 @@ void player::stateUpdate()
 					_angle[8] = 0;
 					_scale = 1;
 					_boss = true;
+					SOUNDMANAGER->play("bgm_23_Battle_Gym_Leader_Battle.mp3");
 				}
 			}
 		break;
@@ -942,8 +946,15 @@ void player::appearTileCheck()
 			EFFECTMANAGER->play("grassEffect", _posX, _posY + 5);
 		}
 		int num = RND->getInt(10);
-		bool meet = num < 3 ? true : false;
-
+		bool meet;
+		if (KEYMANAGER->isToggleKey(VK_CONTROL))
+		{
+			meet = num < -10 ? true : false;
+		}
+		else
+		{
+			meet = num < 3 ? true : false;
+		}
 		
 		
 		if (meet)
@@ -964,6 +975,7 @@ void player::appearTileCheck()
 			_angle[7] = RND->getFromIntTo(-15, 15);
 			_angle[8] = 0;
 			_scale = 1;
+			SOUNDMANAGER->play("bgm_22_Battle_Wild_Pokemon.mp3");
 			rectSet();
 		}
 	}
@@ -1023,6 +1035,14 @@ void player::potalCheck()
 
 		SCENEMANAGER->changeScene(potal.nextScene);
 	}
+}
+
+void player::setKey()
+{
+	if (_isMan)
+		_key = "playerM";
+	else
+		_key = "playerF";
 }
 
 void player::setPos()

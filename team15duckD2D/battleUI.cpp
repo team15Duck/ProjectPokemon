@@ -353,7 +353,8 @@ void battleUI::render()
 				int iii = 0;
 				if (iMax != i)
 				{
-					for (player::mapItemIter iter = PLAYERDATA->getPlayer()->getItem().begin(); iter != PLAYERDATA->getPlayer()->getItem().end(); iter++, iii++)
+					player::mapItemList maplist = PLAYERDATA->getPlayer()->getItem();
+					for (player::mapItemIter iter = maplist.begin(); iter != maplist.end(); iter++, iii++)
 					{
 						D2DMANAGER->drawText(string2wstring(_item[iter->first]->getItemName()).c_str(), 400, height, 40);
 						D2DMANAGER->drawText(to_wstring(iter->second).c_str(), 870, height, 40);
@@ -372,6 +373,7 @@ void battleUI::render()
 						if (i == iii && i < iMax)
 						{
 							i++;
+							height += 60;
 						}
 					}
 				}

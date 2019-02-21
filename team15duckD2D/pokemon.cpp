@@ -50,7 +50,7 @@ HRESULT pokemon::init( int idNo
 					  )
 {
 	pokemonInfo* info = POKEMONDATA->getPokemonInfomation(index);
-	assert(nullptr != info);
+	if (info == nullptr) return S_OK;
 
 	_idNo = idNo;
 	_index = index;

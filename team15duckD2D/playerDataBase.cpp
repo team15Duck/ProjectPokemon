@@ -19,7 +19,7 @@ HRESULT playerDataBase::init()
 
 	{
 		pokemon* pm = new pokemon;
-		pm->init(NULL, PM_BULBASAUR, 100, true);
+		pm->init(NULL, PM_BULBASAUR, 10, true);
 		_currentPlayer->setPokemonArray(0, pm);
 	}
 
@@ -63,7 +63,10 @@ void playerDataBase::dataLoad(DATA data)
 	_currentPlayer->setMoney(stoi(vData[5]));
 	_currentPlayer->setIsMan(stoi(vData[6]));
 	_currentPlayer->setPos();
+	_currentPlayer->setKey();
+	_currentPlayer->aniSetUp();
 	SCENEMANAGER->changeScene(_currentPlayer->getSceneName());
+	UIMANAGER->uiDataSetting();
 }
 
 void playerDataBase::dataSave(DATA data)
@@ -225,7 +228,7 @@ void playerDataBase::itemDataLoad(DATA data)
 						num += loadData[ii];
 						ii++;
 					}
-					_currentPlayer->getItem().insert(make_pair((ITEM_TYPE)stoi(itemType), stoi(num)));
+					_currentPlayer->pushItem((ITEM_TYPE)stoi(itemType), stoi(num));
 				}
 			}
 
@@ -429,7 +432,8 @@ void playerDataBase::itemDataSave(DATA data)
 			string saveData = "";
 			if (_currentPlayer->getItem().size() != 0)
 			{
-				for (player::mapItemIter iter = _currentPlayer->getItem().begin(); iter != _currentPlayer->getItem().end(); iter++)
+				player::mapItemList map = _currentPlayer->getItem();
+				for (player::mapItemIter iter = map.begin(); iter != map.end(); iter++)
 				{
 					saveData += "/";
 					saveData += to_string(iter->first);

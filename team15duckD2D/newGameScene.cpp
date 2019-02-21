@@ -133,6 +133,7 @@ void newGameScene::update()
 				{
 					PLAYERDATA->getPlayer()->setName(_name);
 					PLAYERDATA->getPlayer()->setSceneName("homeScene");
+					PLAYERDATA->getPlayer()->aniSetUp();
 					SCENEMANAGER->changeScene("homeScene");
 				}
 			}

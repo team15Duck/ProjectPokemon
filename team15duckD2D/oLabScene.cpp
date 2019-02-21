@@ -39,9 +39,9 @@ void oLabScene::release()
 
 void oLabScene::update()
 {
+	_oLabMap->update();
 	SCRIPTMANAGER->update();
 	if (!SCRIPTMANAGER->isUpdate())return;
-	_oLabMap->update();
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());

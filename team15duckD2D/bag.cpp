@@ -398,6 +398,7 @@ void bag::render()
 		}
 
 		unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayer()->getItem();
+		if (itemList.size() == 0) return;
 
 		int i = _currentSelectNum - 3;
 		int iMax = _currentSelectNum + 3;
@@ -422,8 +423,9 @@ void bag::render()
 		int height = 48;
 		for (; i < iMax; ++i, height += 63)
 		{
-			D2DMANAGER->drawText(_bag[i].name.c_str(), 400, height, 40);
-			D2DMANAGER->drawText(_bag[i].amount.c_str(), 870, height, 40);
+			if (_bag[i].type == -1) continue;
+			D2DMANAGER->drawText(_bag[i].name.c_str(),   400 +  CAMERA->getPosX(), height +  CAMERA->getPosY(), 40);
+			D2DMANAGER->drawText(_bag[i].amount.c_str(), 870 +  CAMERA->getPosX(), height +  CAMERA->getPosY(), 40);
 			//만약에 i가 선택한 번호라면 
 			if (i == _currentSelectNum)
 			{
@@ -507,9 +509,9 @@ void bag::uiInfoSet()
 void bag::itemDataSet()
 {
 	locale("kor");
-
+	
 	unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayer()->getItem();
-
+	if (itemList.size() == 0) return;
 	unordered_map<ITEM_TYPE, UINT>::iterator iter = itemList.begin();
 	unordered_map<ITEM_TYPE, UINT>::iterator end = itemList.end();
 
@@ -526,7 +528,7 @@ void bag::itemDataSet()
 		_bag[i].name = string2wstring(bagItem.getItemName());
 		_bag[i].type = bagItem.getItemType();
 		_bag[i].info = string2wstring(bagItem.getItemInfo());
-		_bag[i].amount = to_wstring(bagItem.getItemNum());
+		_bag[i].amount = to_wstring(iter->second);
 	}
 
 
@@ -637,14 +639,14 @@ void bag::itemUseScreen()
 					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 0, 0);
 				}
 
-				D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 228, 115, 34, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 225, 115, 34, RGB(255, 255, 255));
-				D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 353, 170, 34, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 350, 170, 34, RGB(255, 255, 255));
-				D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 263, 228, 48, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 260, 225, 48, RGB(255, 255, 255));
-				D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 343, 228, 48, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 340, 225, 48, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].name.c_str(),      228 + CAMERA->getPosX(), 115 + CAMERA->getPosY(), 34, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].name.c_str(),      225 + CAMERA->getPosX(), 115 + CAMERA->getPosY(), 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].level.c_str(),     353 + CAMERA->getPosX(), 170 + CAMERA->getPosY(), 34, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].level.c_str(),     350 + CAMERA->getPosX(), 170 + CAMERA->getPosY(), 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 263 + CAMERA->getPosX(), 228 + CAMERA->getPosY(), 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 260 + CAMERA->getPosX(), 225 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(),     343 + CAMERA->getPosX(), 228 + CAMERA->getPosY(), 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(),     340 + CAMERA->getPosX(), 225 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
 			}
 			else
 			{
@@ -664,23 +666,23 @@ void bag::itemUseScreen()
 					//======== 애니 
 
 					//메인 포켓몬 애니
-					IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100, 100, _pkAni[0]);
+					IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), _pkAni[0]);
 
 					//서브 포켓몬 애니
 					for (int i = 1; i < _pokemonCnt; ++i)
 					{
-						IMAGEMANAGER->findImage("포켓몬파닥2")->aniRender(510, 60 + ((i - 1) * 85), _pkAni[i]);
+						IMAGEMANAGER->findImage("포켓몬파닥2")->aniRender(510 + CAMERA->getPosX(), 60 + ((i - 1) * 85) + CAMERA->getPosY(), _pkAni[i]);
 					}
 
 					//=============
-					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 583, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 580, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
-					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
-					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
-					D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(),      583 +  CAMERA->getPosX(), 60 + ((i - 1) * 90) +  CAMERA->getPosY(), 30, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(),      580 +  CAMERA->getPosX(), 60 + ((i - 1) * 90) +  CAMERA->getPosY(), 30, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(),     623 +  CAMERA->getPosX(), 98 + ((i - 1) * 90) +  CAMERA->getPosY(), 38, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(),     620 +  CAMERA->getPosX(), 95 + ((i - 1) * 90) +  CAMERA->getPosY(), 38, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 813 +  CAMERA->getPosX(), 98 + ((i - 1) * 90) +  CAMERA->getPosY(), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 810 +  CAMERA->getPosX(), 95 + ((i - 1) * 90) +  CAMERA->getPosY(), 40, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(),     883 +  CAMERA->getPosX(), 98 + ((i - 1) * 90) +  CAMERA->getPosY(), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].maxHp.c_str(),     880 +  CAMERA->getPosX(), 95 + ((i - 1) * 90) +  CAMERA->getPosY(), 40, RGB(255, 255, 255));
 
 					//hp
 					float currentHp = stof(_iuPokemon[i].currentHp);

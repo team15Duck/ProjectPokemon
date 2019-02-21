@@ -91,9 +91,9 @@ public:
 	void rectSet();
 	void dataLoad();
 	void rectRender();
+	void aniSetUp();
 private:
 	//내부함수
-	void aniSetUp();
 	
 
 	void keyUpdate();
@@ -110,6 +110,7 @@ private:
 
 public:
 	//겟셋
+	void setKey();
 
 	float getPosX() { return _posX; }
 	float getPosY() { return _posY; }
@@ -124,14 +125,25 @@ public:
 	string getName() { return _name; }
 	void setName(string name) { _name = name; }
 	bool getIsMan() { return _isMan; }
-	void setIsMan(bool isMan) { _isMan = isMan; }
+	void setIsMan(bool isMan)
+	{ 
+		_isMan = isMan; 
+		if (isMan)
+			_key = "playerM";
+		else
+			_key = "playerF";
+	}
 
 	mapItemList getItem() { return _mItemList; }
 	//mapItemList getItemAmount() { return _mItemList.size; }
 	pokemon** getPokemon() { return _pokemon; }
 	pokemon* getPokemonArray(int num) { return _pokemon[num]; }
 	void setPokemonArray(int num, pokemon* pokemon) { _pokemon[num] = pokemon; }
+	void pushItem(ITEM_TYPE type, int num)
+	{
 
+		_mItemList.insert(make_pair(type, num));
+	}
 
 	UINT	getCurrentPokemonCnt() { return _currentPokemon; }
 	void	setCurrentPokemonCnt(int num) { _currentPokemon = num; }

@@ -193,9 +193,9 @@ void image::frameRender(float destX, float destY, int sourX, int sourY, int sour
 		if (!IsRnderPositionInWindow(pf, sourWidth, sourHeight))
 			return;
 
-		D2D1_RECT_F dxArea = RectF(pf.x, pf.y, pf.x + sourWidth, pf.y + sourHeight);
-		D2D1_RECT_F dxArea2 = RectF(currentFrameX * _imageInfo->frameWidth	+ sourX
-								  , currentFrameY * _imageInfo->frameHeight	+ sourY
+		D2D1_RECT_F dxArea =   RectF(pf.x, pf.y, pf.x + sourWidth, pf.y + sourHeight);
+		D2D1_RECT_F dxArea2 =  RectF(currentFrameX * _imageInfo->frameWidth	+ sourX
+								  ,  currentFrameY * _imageInfo->frameHeight	+ sourY
 								  , (currentFrameX) * _imageInfo->frameWidth  + sourX + sourWidth
 								  , (currentFrameY) * _imageInfo->frameHeight + sourY + sourHeight);
 		D2DMANAGER->_renderTarget->DrawBitmap(_imageInfo->bitmap
@@ -324,7 +324,7 @@ void image::aniRenderReverseX(int destX, int destY, animation * ani)
 
 POINTFLOAT image::GetRenderPosition(float destX, float destY)
 {
-	POINTFLOAT pf = { destX - CAMERA->getPosX() , destY - CAMERA->getPosY() };
+	POINTFLOAT pf = { destX - (int)CAMERA->getPosX() , destY - (int)CAMERA->getPosY() };
 	return pf;
 }
 

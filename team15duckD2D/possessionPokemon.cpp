@@ -149,6 +149,12 @@ void possessionPokemon::update()
 					//to do : 포켓몬바꾸기임다 
 					_changeSelecPok = _ppselect;
 
+					pokemon* temp;
+					temp = PLAYERDATA->getPlayer()->getPokemonArray(_currentSelecPok);
+					PLAYERDATA->getPlayer()->setPokemonArray(_currentSelecPok, PLAYERDATA->getPlayer()->getPokemonArray(_changeSelecPok));
+					PLAYERDATA->getPlayer()->setPokemonArray(_changeSelecPok, temp);
+
+				
 					uiInfoSet();					//데이터신규갱신
 					_isPokemonChange = false;		//불값 끄기
 				}
@@ -867,6 +873,7 @@ void possessionPokemon::pPokemonDataSet()
 		{
 			_pokemonAni[i] = KEYANIMANAGER->findAnimation("포켓몬선택", name);
 		}
+		if (_pokemonAni[i] == nullptr) return;
 		_pokemonAni[i]->start();
 	}
 

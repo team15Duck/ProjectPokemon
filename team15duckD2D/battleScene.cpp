@@ -562,9 +562,10 @@ void battleScene::keyControl()
 					//아이템사용하면됨
 					_battleUI->getCurrentPokemonNum();//현재포켓몬번호
 					_battleUI->getBagSelectNum();	//가방에서 선택한번호
-					player::mapItemIter iter;
+					player::mapItemList maplist = PLAYERDATA->getPlayer()->getItem();
+					player::mapItemIter iter = maplist.begin();
 					int ii = 0;
-					for (; iter != PLAYERDATA->getPlayer()->getItem().end(); iter++,ii++)
+					for (; iter != maplist.end(); iter++,ii++)
 					{
 						if (ii == _battleUI->getBagSelectNum()) break;
 					}
@@ -576,7 +577,7 @@ void battleScene::keyControl()
 						{
 							usePokeball = true;
 							itemUse = true;
-							_isGetPokemon = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							_isGetPokemon = RND->getInt(1) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
 							break;
 						}
 							
@@ -652,10 +653,12 @@ void battleScene::keyControl()
 						if (iter->second > 1)
 						{
 							iter->second--;
+							UIMANAGER->uiDataSetting();
 						}
 						else
 						{
-							PLAYERDATA->getPlayer()->getItem().erase(iter);
+							maplist.erase(iter);
+							UIMANAGER->uiDataSetting();
 						}
 
 						if (usePokeball)
@@ -833,7 +836,7 @@ void battleScene::battle()
 				_battleUI->pushScript(script);
 
 				// todo 플레이어 포켓몬 전투 경험치 계산
-				int value = 500; //2 * _pms[TURN_ENEMY]->getLevel();
+				int value = 50 * _pms[TURN_ENEMY]->getLevel();
 				if(_pms[TURN_PLAYER]->getLevel() < _pms[TURN_ENEMY]->getLevel())
 					value = _pms[TURN_ENEMY]->getLevel() - _pms[TURN_PLAYER]->getLevel();
 

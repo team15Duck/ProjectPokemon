@@ -51,46 +51,6 @@ void centerScene::update()
 	_centerMap->update();
 	SCRIPTMANAGER->update();
 
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
-	{
-		switch (_choice)
-		{
-			case CHOICE_YES:
-			{
-				_curPointY = 355;
-				_choice = CHOICE_NO;
-				break;
-			}
-			case CHOICE_NO:
-			{
-				_curPointY = 305;
-				_choice = CHOICE_YES;
-				break;
-			}
-			default:
-				break;
-		}
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		switch (_choice)
-		{
-			case CHOICE_YES:
-			{
-				_curPointY = 355;
-				_choice = CHOICE_NO;
-				break;
-			}
-			case CHOICE_NO:
-			{
-				_curPointY = 305;
-				_choice = CHOICE_YES;
-				break;
-			}
-			default:
-				break;
-		}
-	}
 	/*if (_isTalk && _centerTalk == CENTER_TALK_HEAL)
 	{
 		if (KEYMANAGER->isOnceKeyDown('Z'))
