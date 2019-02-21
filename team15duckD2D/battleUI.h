@@ -96,6 +96,28 @@ public:
 	void update();
 	void render();
 
+	item* getItemArray(ITEM_TYPE type) { return _item[type]; }
+
+	UINT getBagSelectNum() { return _bagSelectNum; }
+	void setBagSelectNum(int num) { _bagSelectNum = num; }
+	
+	bool getItemSubMenuOn() { return _itemSubMenuOn; }
+	void setItemSubMenuOn(bool on) { _itemSubMenuOn = on; }
+
+	UINT getSubMenuSelectNum() { return _subMenuSelectNum; }
+	void setSubMenuSelectNum(int num) { _subMenuSelectNum = num; }
+
+	UINT getBagState() { return _bagState; }
+	//void 
+
+
+
+
+
+
+
+
+
 	P_POKEMON_STATE		getPPState() { return _ppState; }
 	void				setPPState(P_POKEMON_STATE state) { _ppState = state; }
 

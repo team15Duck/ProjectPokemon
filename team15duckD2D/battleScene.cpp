@@ -550,6 +550,10 @@ void battleScene::keyControl()
 			}
 		}
 	}
+	else if (_battleUI->getCurrentMenu() == BATTLE_UI_BAG)
+	{
+		
+	}
 }
 
 void battleScene::battleStart()
