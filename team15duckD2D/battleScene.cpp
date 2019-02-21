@@ -558,109 +558,81 @@ void battleScene::keyControl()
 					{
 						if (ii == _battleUI->getBagSelectNum()) break;
 					}
-					
+					bool itemUse = false;
 					switch (_battleUI->getItemArray(iter->first)->getItemType())
 					{
 						case MONSTER_BALL:
-							_battleUI->getItemArray(iter->first)->getItemValue();
+							itemUse = true;
+							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							
 						break;
 						case SUPER_BALL:
+							itemUse = true;
 						break;
 						case HYPER_BALL:
+							itemUse = true;
 						break;
 						case MASTER_BALL:
+							itemUse = true;
 						break;
 						case NORMAL_POTION:
+						
 							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
 							{
+								itemUse = true;
 								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
 							}
 						break;
 						case SUPER_POTION:
+						
 							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
 							{
+								itemUse = true;
 								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
 							}
 						break;
 						case HYPER_POTION:
+							
 							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
 							{
+								itemUse = true;
 								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
 							}
 						break;
 						case MAX_POTION:
+							
 							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
 							{
+								itemUse = true;
 								_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
 							}
 						break;
 						case FULL_RESTORE:
+							itemUse = true;
 							_pms[TURN_PLAYER]->clearUpsetCondtion();
 							_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
-						break;
-						case NORMAL_ETHER:
-
-						break;
-						case MAX_ETHER:
-						break;
-						case NORMAL_ELIXIR:
-						break;
-						case MAX_ELIXIR:
-						break;
-						case ANTIDOTE:
-						break;
-						case PARLYZE_HEAL:
-						break;
-						case BURN_HEAL:
-						break;
-						case ICE_HEAL:
-						break;
-						case AWAKENING:
-						break;
-						case FULL_HEAL:
-						break;
-						case RARE_CANDY:
-						break;
-						case ESCAPE_ROPE:
-						break;
-						case REVIVE:
-						break;
-						case FISHING_ROD:
-						break;
-						case TOWN_MAP:
-						break;
-						case HM_CUT:
-						break;
-						case HM_FLASH:
-						break;
-						case TM_THUNDERBOLT:
-						break;
-						case TM_THUNDER:
-						break;
-						case TM_FLAMETHROWER:
-						break;
-						case CHERI_BERRY:
-						break;
-						case CHESTO_BERRY:
-						break;
-						case PECHA_BERRY:
-						break;
-						case RAWST_BERRY:
-						break;
-						case ASPEAR_BERRY:
-						break;
-						case LEPPA_BERRY:
-						break;
-						case ORAN_BERRY:
-						break;
-						case LUM_BERRY:
-						break;
-						case SITRUS_BERRY:
 						break;
 					}
 
 
+					PLAYERDATA->getPlayer()->getCurrentPokemonCnt(); //6보다작을떄
+					//PLAYERDATA->getPlayer()->setPokemonArray(PLAYERDATA->getPlayer()->getCurrentPokemonCnt(), 포켓몬);
+					PLAYERDATA->getPlayer()->setCurrentPokemonCnt(PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1);
 
+
+					//스위치문 다음에
+					if (itemUse)
+					{
+						//아이템 줄이거나 삭제
+						if (iter->second > 1)
+						{
+							iter->second--;
+						}
+						else
+						{
+							PLAYERDATA->getPlayer()->getItem().erase(iter);
+						}
+					}
 
 					_battleUI->setItemSubMenuOn(false);
 					_battleUI->setSubMenuSelectNum(false);
