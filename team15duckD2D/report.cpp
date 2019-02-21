@@ -126,7 +126,7 @@ void report::render()
 	D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getCurrentPokemonCnt()).c_str(), 50 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 34);
 	swprintf_s(report, L"플레이시간 :");
 	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
-	D2DMANAGER->drawText(to_wstring((int)PLAYERDATA->getPlayer()->getPlayTime()).c_str(), 50 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
+	D2DMANAGER->drawText(to_wstring((int)PLAYERDATA->getPlayer()->getPlayTime()).c_str(), 250 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
 
 	if (_rState == RS_CURRENT_INFO)
 	{
