@@ -19,7 +19,7 @@ HRESULT storeScene::init()
 
 	_storeMap->setPlayerMemoryAdressLink(PLAYERDATA->getPlayer());
 	PLAYERDATA->getPlayer()->setMapDataMemoryAdressLink(_storeMap);
-	
+
 	SOUNDMANAGER->addSound("storeBGM", "sound/bgm_13_Pokemon_Center.mp3", true, true);
 	//SOUNDMANAGER->play("storeBGM");
 
@@ -50,30 +50,41 @@ void storeScene::update()
 
 	//==================================
 	_storeMap->update();
-	_shop->update();
 	SCRIPTMANAGER->update();
-
 	//==================================
 
 	//테슷흐
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
+		if (_shopChoice == SHOP_CHOICE_BUY)
+			_shopChoice = SHOP_CHOICE_SELL;
+		else if (_shopChoice == SHOP_CHOICE_SELL)
+			_shopChoice = SHOP_CHOICE_NOPE;
+		else if (_shopChoice == SHOP_CHOICE_NOPE)
+			_shopChoice = SHOP_CHOICE_BUY;
 		_curPointY += 55;
 		if (_curPointY >= 166) _curPointY = 55;
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
+		if (_shopChoice == SHOP_CHOICE_BUY)
+			_shopChoice = SHOP_CHOICE_SELL;
+		else if (_shopChoice == SHOP_CHOICE_SELL)
+			_shopChoice = SHOP_CHOICE_NOPE;
+		else if (_shopChoice == SHOP_CHOICE_NOPE)
+			_shopChoice = SHOP_CHOICE_BUY;
 		_curPointY -= 55;
 		if (_curPointY <= 0) _curPointY = 165;
 	}
-
 	if (!SCRIPTMANAGER->isUpdate())return;
 
 	//==================================
-	PLAYERDATA->getPlayer()->update();
 	_npc->update();
+	if(!_shop->getIsBuy())
+		PLAYERDATA->getPlayer()->update();
 	_isTalk = PLAYERDATA->getPlayer()->getShopOn();
-	_npc->setIsTalk(PLAYERDATA->getPlayer()->getShopOn());
+	_npc->setIsTalk(_isTalk);
+	_shop->update();
 
 	//===================================
 	//				대화시작
@@ -82,13 +93,19 @@ void storeScene::update()
 	{
 		activeShopOwner();
 	}
+	else
+	{
+		_shopChoice = SHOP_CHOICE_BUY;
+		_shopTalk = SHOP_TALK_HELLO;
+		_curPointY = 55;
+	}
 
 	//===================================
 	//				카메라
 	//===================================
-	if(!_shop->getIsBuy())
+	if (!_shop->getIsBuy())
 		CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
-	else if(_shop->getIsBuy())
+	else if (_shop->getIsBuy())
 		CAMERA->move(PLAYERDATA->getPlayer()->getPosX() + 200, PLAYERDATA->getPlayer()->getPosY());
 
 	UIMANAGER->update();
@@ -96,28 +113,29 @@ void storeScene::update()
 
 void storeScene::render()
 {
-	_storeMap->render();
 
 	WCHAR str[128];
-	swprintf_s(str, L"상태: %d", _shopTalk);
-	D2DMANAGER->drawText(str, 13 * 64, 13 * 64, 20, RGB(255, 0, 255));
+	_storeMap->render();
 
 	//===================================
 	//				상점UI
 	//===================================
-	if (_isBuy && !_isSure)
+	if (_isBuy)
 	{
 		SCRIPTMANAGER->render();
 		_shop->render();
 	}
-	else if (_isBuy && _isSure)
+	else if (_isBuy && _shop->getIsNumber())
 	{
 		_shop->render();
 		SCRIPTMANAGER->render();
 	}
 	else
+	{
 		SCRIPTMANAGER->render();
-		
+		_shop->setExit(false);
+	}
+
 
 	//===================================
 	//		사러왔다/팔러왔다/아닙니다
@@ -137,6 +155,11 @@ void storeScene::render()
 	UIMANAGER->render();
 }
 
+void storeScene::keyControl()
+{
+	
+}
+
 void storeScene::activeShopOwner()
 {
 	switch (_shopTalk)
@@ -144,25 +167,27 @@ void storeScene::activeShopOwner()
 		case SHOP_TALK_HELLO:
 		{
 			_isChoice = true;
-			wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
-			SCRIPTMANAGER->pushScript(text);
+			keyControl();
+			buyItemHello();
 			_shopTalk = SHOP_TALK_BUY_UI;
-
 			break;
 		}
 		case SHOP_TALK_BUY_UI:
 		{
-			_isBuy = true;
-			_shop->setIsBuy(_isBuy);
-			_isChoice = false;
-			SCRIPTMANAGER->pushScript(L"움직이지마");
-			_shopTalk = SHOP_TALK_BUY_CHOICE;
+			_isBuy = true;									 //산다면
+			if (!_shop->getExit())
+				_shop->setIsBuy(_isBuy);					 //키동작은 UI에게 넘긴다
+			_isChoice = false;								 //예/아니오 창 사라짐
+
+			if (!_shop->getIsBuy())
+			{
+				_shopTalk = SHOP_TALK_CANCEL;
+			}
+
 			break;
 		}
 		case SHOP_TALK_BUY_CHOICE:
 		{
-			_isBuy = true;
-			_isSure = true;
 			buyItemChoice();
 			_shopTalk = SHOP_TALK_BUY;
 			break;
@@ -170,47 +195,55 @@ void storeScene::activeShopOwner()
 		case SHOP_TALK_BUY:
 		{
 			_isBuy = true;
-			_isSure = true;
 			buyItem();
 			break;
 		}
-			
+
 		case SHOP_TALK_BUY_SURE:
 		{
 			_isBuy = true;
-			_isSure = true;
 			buyItemSure();
 			_shopTalk = SHOP_TALK_BUY_UI;
 			break;
 		}
 		case SHOP_TALK_SELL_CHOICE:
 		{
-
+			//추가예정
 			break;
 		}
 		case SHOP_TALK_SELL:
 		{
-
+			//추가예정
 			break;
 		}
 		case SHOP_TALK_SELL_SURE:
 		{
-
+			//추가예정
 			break;
 		}
 		case SHOP_TALK_NOPE_OR_BYE:
 		{
-
+			nopeTalk();
+			_shopTalk = SHOP_TALK_NONE;
 			break;
 		}
 		case SHOP_TALK_CANCEL:
 		{
-
+			menuBack();
+			_isChoice = true;
+			if (_shopChoice == SHOP_CHOICE_BUY)
+				_shopTalk = SHOP_TALK_BUY_UI;
+			else if (_shopChoice == SHOP_CHOICE_SELL)
+				_shopTalk = SHOP_TALK_BUY_UI;
+			else if (_shopChoice == SHOP_CHOICE_NOPE)
+				_shopTalk = SHOP_TALK_NOPE_OR_BYE;
 			break;
 		}
 		case SHOP_TALK_NONE:
 		{
-
+			_isTalk = false;
+			PLAYERDATA->getPlayer()->setShopOn(_isTalk);
+			_isChoice = false;
 			break;
 		}
 
@@ -218,6 +251,13 @@ void storeScene::activeShopOwner()
 			break;
 	}
 	
+
+}
+
+void storeScene::buyItemHello()
+{
+	wstring text = L"어서오세요! \n무엇을 도와 드릴까요?";
+	SCRIPTMANAGER->pushScript(text);
 }
 
 void storeScene::buyItemChoice()

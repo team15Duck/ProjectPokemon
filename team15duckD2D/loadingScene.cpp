@@ -55,7 +55,14 @@ void loadingScene::update()
 	//´Ù·ÎµùÇÏ¸é ¾À¹Ù²ã
 	if (_currentCount == LOADINGMAX) 
 	{
-		SCENEMANAGER->changeScene("startScene");
+		if (MAPTOOLSCENE)
+		{
+			SCENEMANAGER->changeScene("mapToolScene");
+		}
+		else
+		{
+			SCENEMANAGER->changeScene("storeScene");
+		}
 	}
 
 }

@@ -148,6 +148,7 @@ void centerScene::update()
 					SCRIPTMANAGER->pushScript(L"오래 기다렸습니다!");
 					SCRIPTMANAGER->pushScript(L"맡아놓은 포켓몬은 \n모두 건강해졌습니다!");
 					_npc->setIsGreeting(true);												//간호사 인사
+					
 					_centerTalk = CENTER_TALK_NOPE_OR_BYE;
 				}
 				break;
@@ -187,8 +188,8 @@ void centerScene::render()
 	SCRIPTMANAGER->render();
 	if (_isTalk)
 	{
-		swprintf_s(text, L"%d", _choice);
-		D2DMANAGER->drawText(text, 500 + CAMERA->getPosX(), 360 + CAMERA->getPosY(), 30);
+		/*swprintf_s(text, L"%d", _choice);
+		D2DMANAGER->drawText(text, 500 + CAMERA->getPosX(), 360 + CAMERA->getPosY(), 30);*/
 	}
 	if (_isChoice)
 	{
@@ -239,7 +240,7 @@ void centerScene::centerNopeBye()
 {
 	{
 		_npc->setIsGreeting(false);
-		wstring text = L"다음 번에도 \n 방문하시길 기다리겠습니다!";
+		wstring text = L"다음 번에도 \n방문하시길 기다리겠습니다!";
 		SCRIPTMANAGER->pushScript(text);
 	}
 }

@@ -21,7 +21,7 @@ HRESULT object::init()
 	_count = 0;			//프레임용
 	_ballX = 0;			//프레임좌표
 	_time = 120;
-	_curPokemon = 6;	//우선 6마리있다고 치자
+	//_curPokemon = 6;	//우선 6마리있다고 치자
 	_healedPokemon = 0;
 
 	return S_OK;
@@ -34,7 +34,7 @@ void object::release()
 void object::update()
 {
 	//다되면 이거 풀면된다
-	//_curPokemon = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
+	_curPokemon = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 
 	//테슷흐 버튼
 	if (KEYMANAGER->isOnceKeyDown(VK_F9))
