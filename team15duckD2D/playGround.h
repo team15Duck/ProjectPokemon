@@ -20,6 +20,7 @@
 #include "townScene.h"
 
 #include "newGameScene.h"
+#include "endingScene.h"
 
 
 class playGround : public gameNode

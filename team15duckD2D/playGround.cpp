@@ -209,6 +209,7 @@ HRESULT playGround::init()
 	SCENEMANAGER->addScene("townScene", new townScene);
 	SCENEMANAGER->addScene("loadScene", new loadScene);
 	SCENEMANAGER->addScene("newGameScene", new newGameScene);
+	SCENEMANAGER->addScene("endingScene", new endingScene);
 
 	PLAYERDATA->init();
 	
@@ -218,7 +219,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("homeScene");
+		SCENEMANAGER->changeScene("endingScene");
 	}
 	
 	return S_OK;
