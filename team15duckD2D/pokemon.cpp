@@ -90,8 +90,8 @@ HRESULT pokemon::init( int idNo
 		_destY = 42.f;
 	}
 	
-	_frameX = idx % _img->GetMaxFrameX();
-	_frameY = idx / _img->GetMaxFrameX();
+	_frameX = idx % (_img->GetMaxFrameX() + 1);
+	_frameY = idx / (_img->GetMaxFrameX() + 1);
 
 
 	// Å×½ºÆ®
