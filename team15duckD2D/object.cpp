@@ -104,6 +104,12 @@ void object::centerHealing()
 			_count = 0;			//프레임용
 			_ballX = 0;			//프레임좌표
 			_healedPokemon = 0;
+
+			for (int ii = 0; ii < _curPokemon; ++ii)
+			{
+				PLAYERDATA->getPlayer()->getPokemon()[ii]->fillHp();
+				PLAYERDATA->getPlayer()->getPokemon()[ii]->clearUpsetCondtion();
+			}
 		}
 	}
 }
