@@ -30,6 +30,8 @@ private:
 	UI_TYPE _currentUI;
 	UI_TYPE _beforeUI;
 
+	bool _isuiopen;
+
 public:
 	uiManager();
 	~uiManager();
@@ -43,14 +45,10 @@ public:
 
 	void selectUI(UI_TYPE type) { _currentUI = type; }
 	void selecBeforeUI(UI_TYPE type) { _beforeUI = type; }
-	void moveBeforeUI() 
-	{
-		_uiMap[_currentUI]->uiClose();
-		
-		_currentUI = _beforeUI;
-		_beforeUI = UI_NONE;
-		selectUI(_currentUI);
-	}
+	void moveBeforeUI();
 	map<UI_TYPE, baseUI*> getUiMap() { return _uiMap; }
+
+	bool getUiUse() { return _isuiopen; }
+
 };
 

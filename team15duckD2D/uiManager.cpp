@@ -58,7 +58,7 @@ HRESULT uiManager::init()
 	}
 	
 	_currentUI = UI_NONE;
-
+	_isuiopen = false;
 	return S_OK;
 }
 
@@ -70,6 +70,7 @@ void uiManager::update()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
+		_isuiopen = true;
 		UIMANAGER->selectUI(UI_MAIN);
 	}
 	if (_currentUI == UI_NONE) return;
@@ -92,5 +93,14 @@ void uiManager::uiDataSetting()
 	{
 		iter->second->uiInfoSet();
 	}
+}
+
+void uiManager::moveBeforeUI()
+{
+	_uiMap[_currentUI]->uiClose();
+
+	_currentUI = _beforeUI;
+	_beforeUI = UI_NONE;
+	selectUI(_currentUI);
 }
 
