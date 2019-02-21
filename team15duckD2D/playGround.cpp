@@ -184,6 +184,10 @@ HRESULT playGround::init()
 
 	// 6. 설정 
 
+	// 7. 애니메이션 
+	IMAGEMANAGER->addFrameImage("포켓몬파닥", L"image/pokemon/pokemon_mini.png", 2304, 2176, 18, 17);	//큰사이즈 메인 포켓몬용
+	IMAGEMANAGER->addFrameImage("포켓몬파닥2", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);	//작은사이즈 서브 포켓몬용
+
 	// ========================================================================================================
 	SCENEMANAGER->addScene("치영씬", new chiyeongTestScene);
 	SCENEMANAGER->addScene("하영씬", new hayoungTestScene);
@@ -214,7 +218,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("newGameScene");
+		SCENEMANAGER->changeScene("하영씬");
 	}
 	
 	return S_OK;

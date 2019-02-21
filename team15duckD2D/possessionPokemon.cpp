@@ -814,9 +814,6 @@ void possessionPokemon::uiClose()
 
 void possessionPokemon::keyani()
 {
-	IMAGEMANAGER->addFrameImage("포켓몬파닥", L"image/pokemon/pokemon_mini.png", 2304, 2176, 18, 17);	//큰사이즈 메인 포켓몬용
-	IMAGEMANAGER->addFrameImage("포켓몬파닥2", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);	//작은사이즈 서브 포켓몬용
-
 	KEYANIMANAGER->addAnimationType("포켓몬선택");
 	KEYANIMANAGER->addAnimationType("포켓몬선택2");
 	
