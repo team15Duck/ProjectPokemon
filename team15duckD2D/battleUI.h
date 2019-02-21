@@ -73,12 +73,6 @@ private:
 
 	UINT				_subMenuSelectNum;
 
-	UINT				_bagState;						//이면 기본상태 1이면아이템 사용상태
-
-	UINT				_bagPokemonSubNum;				//서브메뉴 어떤거고름?
-	UINT				_bagPokemonSelectNum;			//어떤놈고름?
-	bool				_isBagSubMenu;					//아이템쓸때 서브메뉴온
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -106,20 +100,6 @@ public:
 
 	UINT getSubMenuSelectNum() { return _subMenuSelectNum; }
 	void setSubMenuSelectNum(int num) { _subMenuSelectNum = num; }
-
-	UINT getBagState() { return _bagState; }
-	void setBagState(int num) { _bagState = num; }
-
-	UINT getBagPokemonSubMenuNum() { return _bagPokemonSubNum; }
-	void setBagPokemonSubMenuNum(int num) { _bagPokemonSubNum = num; }
-
-	UINT getBagPokemonSelectNum() { return _bagPokemonSelectNum; }
-	void setBagPokemonSelectNum(int num) { _bagPokemonSelectNum = num; }
-
-	bool getIsBagPokemonSubMenuOn() { return _isBagSubMenu; }
-	void setIsBagPokemonSubMenuOn(bool isBagMenu) { _isBagSubMenu = isBagMenu; }
-
-
 
 
 
