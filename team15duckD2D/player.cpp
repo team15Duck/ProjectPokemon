@@ -60,6 +60,7 @@ void player::release()
 
 void player::update()
 {
+	if (UIMANAGER->getUiUse()) return;
 	_playTime += TIMEMANAGER->getElapsedTime();
 	KEYANIMANAGER->update(_key);
 	keyUpdate();
