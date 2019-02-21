@@ -445,18 +445,31 @@ void possessionPokemon::render()
 	{
 		IMAGEMANAGER->findImage("서머리배경")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 		IMAGEMANAGER->findImage("서머리포켓몬")->render(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY());
+		
 		switch (_plpokemon)
 		{
 		case LP_INFO:
 			IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
 			IMAGEMANAGER->findImage("서머리프레임")->frameRender(0 + CAMERA->getPosX(), 64 + CAMERA->getPosY(), 0, 0);
-				switch (_ppselect)
+			
+			int index;
+			int frameX;
+			int frameY;
+		
+			switch (_ppselect)
 				{
+
 				case SELECT_MAIN_POKEMON:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 					D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+
+					index = _pPokemon[0].index * 2;
+					frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+					frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+
+					IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(110 + CAMERA->getPosX(), 120 + CAMERA->getPosY(), frameX, frameY);
 
 					//오른쪽정보
 					D2DMANAGER->drawText(_pPokemon[0].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
@@ -468,6 +481,11 @@ void possessionPokemon::render()
 						break;
 				case SELECT_SUB_POKEMON1:
 					swprintf_s(possessionPokemon, L"Lv.");
+					index = _pPokemon[1].index * 2;
+					frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+					frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+
+					IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(110 + CAMERA->getPosX(), 120 + CAMERA->getPosY(), frameX, frameY);
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 					D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
@@ -481,6 +499,11 @@ void possessionPokemon::render()
 				case SELECT_SUB_POKEMON2:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
+					index = _pPokemon[2].index * 2;
+					frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+					frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+
+					IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(110 + CAMERA->getPosX(), 120 + CAMERA->getPosY(), frameX, frameY);
 					D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[2].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
@@ -492,6 +515,11 @@ void possessionPokemon::render()
 					break;
 				case SELECT_SUB_POKEMON3:
 					swprintf_s(possessionPokemon, L"Lv.");
+					index = _pPokemon[3].index * 2;
+					frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+					frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+
+					IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(110 + CAMERA->getPosX(), 120 + CAMERA->getPosY(), frameX, frameY);
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 					D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
@@ -505,6 +533,11 @@ void possessionPokemon::render()
 				case SELECT_SUB_POKEMON4:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
+					index = _pPokemon[4].index * 2;
+					frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+					frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+
+					IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(110 + CAMERA->getPosX(), 120 + CAMERA->getPosY(), frameX, frameY);
 					D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[4].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
@@ -517,6 +550,11 @@ void possessionPokemon::render()
 				case SELECT_SUB_POKEMON5:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
+					index = _pPokemon[5].index * 2;
+					frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+					frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+
+					IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(110 + CAMERA->getPosX(), 120 + CAMERA->getPosY(), frameX, frameY);
 					D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 					D2DMANAGER->drawText(_pPokemon[5].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
@@ -642,6 +680,7 @@ void possessionPokemon::render()
 		case LP_ATTK_SKILL:
 			IMAGEMANAGER->findImage("서머리상단")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 2);
 			IMAGEMANAGER->findImage("서머리스킬")->render(476 + CAMERA->getPosX(), 64 + CAMERA->getPosY());
+			
 			switch (_ppselect)
 			{
 			case SELECT_MAIN_POKEMON:
@@ -728,6 +767,8 @@ void possessionPokemon::pPokemonDataSet()
 	{
 
 		if (pokemons[i] == nullptr) continue;
+
+		_pPokemon[i].index = pokemons[i]->getPokeminIndex();
 
 		_pPokemon[i].isDataSet = false;
 		_pPokemon[i].level = to_wstring(pokemons[i]->getLevel());

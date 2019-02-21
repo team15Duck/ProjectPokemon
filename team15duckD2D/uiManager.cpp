@@ -73,7 +73,14 @@ void uiManager::update()
 		_isuiopen = true;
 		UIMANAGER->selectUI(UI_MAIN);
 	}
-
+	if (_currentUI == UI_MAIN)
+	{
+		if (KEYMANAGER->isOnceKeyDown('X'))
+		{
+			_isuiopen = false;
+			UIMANAGER->selectUI(UI_NONE);
+		}
+	}
 	if (_currentUI == UI_NONE) return;
 
 	_uiMap[_currentUI]->update();

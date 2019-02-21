@@ -34,6 +34,8 @@ enum P_LOOK_POKEMON
 };
 typedef struct tagPpokemonInfo
 {
+	int index;
+
 	wstring iD_number;
 	wstring book_number;
 	wstring name;
