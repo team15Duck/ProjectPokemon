@@ -39,6 +39,8 @@ HRESULT startScene::init()
 	_alpha = 1.f;
 	_alpha1 = 0.f;
 	_alpha2 = 0.f;
+	_alpha3 = 0.f;
+	_alpha4 = 0.5f;
 
 	//포켓몬 정보 담긴 이미지
 	IMAGEMANAGER->addImage("pokemonInfoImg", L"image/startSceneImg/startImage01.png", 960, 640);
@@ -89,7 +91,14 @@ HRESULT startScene::init()
 	IMAGEMANAGER->addImage("grass", L"image/startSceneImg/zOderGrass.png", 240, 104);
 
 	//시간이 없어서 그냥 스크린샷으로 대체함
-	IMAGEMANAGER->addImage("tempStartImg3", L"image/tempStartImg3.png", 960, 640);
+	//IMAGEMANAGER->addImage("tempStartImg3", L"image/tempStartImg3.png", 960, 640);
+	IMAGEMANAGER->addImage("startLogoBackground", L"image/startLogoBackground.png", 960, 640);
+	IMAGEMANAGER->addFrameImage("Charizard", L"image/Charizard.png", 1332, 396, 3, 1);		//리자몽 프레임
+	IMAGEMANAGER->addFrameImage("pokemonLogo", L"image/logo.png", 3984, 224, 6, 1);			//포케몬 로고
+	IMAGEMANAGER->addImage("fireRed", L"image/firered.png", 284, 152);
+	IMAGEMANAGER->addImage("c2004_game_freak", L"image/startSceneImg/c2004_game_freak.png", 592, 28);
+	IMAGEMANAGER->addImage("press_start", L"image/startSceneImg/press_start.png", 356, 28);
+
 
 	_battleStartTime = 0.f;
 	_curTime = 0.f;
@@ -112,6 +121,12 @@ HRESULT startScene::init()
 
 	_jumpPower = 40.f;
 	_gravity = 6.f;
+
+	_tempRectSpeed = 0.f;
+	_orangeRect = { 960 ,0, WINSIZEX + 960, 32 };
+	_redRect = { 960, WINSIZEY - 32, WINSIZEX + 960, WINSIZEY };
+	_textMove = 0.f;
+	_textPosX = 960.f;
 
 	return S_OK;
 }
@@ -310,7 +325,47 @@ void startScene::update()
 	//리자몽
 	if (_idx == 2)
 	{
-
+		_curTime += TIMEMANAGER->getElapsedTime();
+		if (_curTime < 1)
+		{
+			//_tempRectTop = { 0 , 0, 960, 600 };
+			//_tempRectBottom = { 0, 680, 960, 700 };
+			//_tempRectSpeed += TIMEMANAGER->getElapsedTime() * MOVE_HEIGHT_SPEED;
+			//_tempRectTop.bottom -= _tempRectSpeed;
+			//_tempRectBottom.top -= _tempRectSpeed;
+			_frameX = 0;
+			_alpha3 += 0.005f;
+		}
+		if (_curTime >= 1 && _curTime < 2)
+		{
+			_alpha3 = 0;
+			_frameX = 1;
+			_alpha4 -= 0.05f;
+		}
+		if (_curTime >= 2 && _curTime < 6)
+		{
+			_orangeRect.left -= TIMEMANAGER->getElapsedTime() * MOVE_WIDTH_SPEED;
+			_orangeRect.right -= TIMEMANAGER->getElapsedTime() * MOVE_WIDTH_SPEED;
+			_redRect.left -= TIMEMANAGER->getElapsedTime() * MOVE_WIDTH_SPEED;
+			_redRect.right -= TIMEMANAGER->getElapsedTime() * MOVE_WIDTH_SPEED;
+			if (_orangeRect.left <= 0)
+			{
+				_orangeRect.left =0;
+				_orangeRect.right = 960;
+				_redRect.left = 0;
+				_redRect.right = 960;
+			}
+		}
+		if (_curTime >= 6)
+		{
+			_frameX = 2;
+			_textMove += TIMEMANAGER->getElapsedTime() * 500.f;
+			if (_textPosX <= 220)
+			{
+				_textMove = 0;
+			}
+			_textPosX -= _textMove;
+		}
 
 	}
 
@@ -438,9 +493,44 @@ void startScene::render()
 			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _topRect);
 			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _bottomRect);
 		}
+		
 		else if (_idx == 2)
 		{
-			IMAGEMANAGER->findImage("tempStartImg3")->render(1);
+			
+			IMAGEMANAGER->findImage("startLogoBackground")->render(1);
+			IMAGEMANAGER->findImage("Charizard")->frameRender(510, 100, _frameX, 0);
+			//D2DMANAGER->fillRectangle(RGB(0, 0, 0), _tempRectTop);
+			//D2DMANAGER->fillRectangle(RGB(0, 0, 0), _tempRectBottom);
+			IMAGEMANAGER->findImage("startLogoBackground")->render(_alpha3);
+			
+			if (_curTime >= 1 && _curTime < 2)
+			{
+				IMAGEMANAGER->findImage("startLogoBackground")->render(_alpha4);
+
+			}
+			if (_curTime >= 4)
+			{
+				/*
+				IMAGEMANAGER->addFrameImage("pokemonLogo", L"image/logo.png", 3984, 224, 3, 1);			//포케몬 로고
+				IMAGEMANAGER->addImage("c2004_game_freak", L"image/startSceneImg/c2004_game_freak.png", 592, 28);
+				IMAGEMANAGER->addImage("press_start", L"image/startSceneImg/press_start.png", 356, 28);
+				*/
+				D2DMANAGER->fillRectangle(RGB(0, 88, 248), _orangeRect);
+				D2DMANAGER->fillRectangle(RGB(0, 0, 136), _redRect);
+				if (_curTime >= 5)
+				{
+					IMAGEMANAGER->findImage("c2004_game_freak")->render(_textPosX, 0);
+					IMAGEMANAGER->findImage("press_start")->render(_textPosX, WINSIZEY - 32);
+				}
+				if (_curTime >= 6)
+				{
+					IMAGEMANAGER->findImage("pokemonLogo")->frameRender(150, WINSIZEY / 2 - 110, 0, 0);
+					IMAGEMANAGER->findImage("fireRed")->render(350, WINSIZEY / 2 + 80);
+				}
+			}
+			
+
 		}
+
 	}
 }

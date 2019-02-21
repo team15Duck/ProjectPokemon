@@ -5,7 +5,7 @@
 
 
 #define MOVE_WIDTH_SPEED		800.f
-#define MOVE_HEIGHT_SPEED		20.f
+#define MOVE_HEIGHT_SPEED		10.f
 
 #define OPEN_SPEED				400.f
 #define POKEMON_NUM				30
@@ -41,7 +41,7 @@ private:
 	float				_pokemonMoveWidthSpeed;
 	float				_pokemonMoveHeightSpeed;
 	float				_openSpeed;
-	float				_alpha, _alpha1, _alpha2;
+	float				_alpha, _alpha1, _alpha2, _alpha3, _alpha4;
 
 	bool				_isStop;
 	bool				_isPresent;
@@ -74,9 +74,12 @@ private:
 	float				_gravity;			//니드런이 점프했을 때 중력값
 	float				_jumpPower;			//니드런의 점프력
 	int					_nidrunFrame;		//니드런 frame번호
-
-
-
+	
+	float				_tempRectSpeed;
+	D2D1_RECT_F			_orangeRect;		//루프돌 범위 rect
+	D2D1_RECT_F			_redRect;	//루프돌 범위 rect
+	float				_textMove;
+	float				_textPosX;
 public:
 	startScene();
 	~startScene();
