@@ -69,6 +69,15 @@ private:
 	UINT				_money;
 
 	bool				_isShopOn;
+
+	D2D1_RECT_F _rc[9];
+	int _count;
+	bool _start;
+	float _angle[9];
+	float _scale;
+	D2D1_RECT_F _rc2;
+	bool _boss;
+
 public:
 	player();
 	~player();
@@ -79,8 +88,9 @@ public:
 	//얘는 맵에 끼워넣어서 그려야함
 	void render();	
 	void shadowRender();
-
+	void rectSet();
 	void dataLoad();
+	void rectRender();
 private:
 	//내부함수
 	void aniSetUp();

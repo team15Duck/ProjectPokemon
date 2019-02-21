@@ -48,4 +48,5 @@ void fieldScene::render()
 	_fieldMap->render();
 	SCRIPTMANAGER->render();
 	UIMANAGER->render();
+	PLAYERDATA->getPlayer()->rectRender();
 }

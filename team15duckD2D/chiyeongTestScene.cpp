@@ -14,27 +14,6 @@ chiyeongTestScene::~chiyeongTestScene()
 HRESULT chiyeongTestScene::init()
 {
 	
-
-	_map = new mapData;
-	_rc[0] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
-	_rc[1] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
-	_rc[2] = { 600, -WINSIZEY, 1200, WINSIZEY * 2};
-	_rc[3] = {  600, -WINSIZEY, 1200, WINSIZEY * 2};
-
-	_rc[4] = { -200, -300, WINSIZEX + 200, 200 };
-	_rc[5] = { -300, -WINSIZEY, 300, WINSIZEY * 2};
-	_rc[6] = { -200, 400, WINSIZEX + 200, 900 };
-	_rc[7] = { 500, -WINSIZEY, 1200, WINSIZEY * 2};
-
-	_rc[8] = { 0, 0, WINSIZEX, WINSIZEY };
-	_count = 0;
-	_start = 0;
-
-	_rc2 = { 0, 0, WINSIZEX, WINSIZEY };
-
-
-	_player = new player;
-	_player->init();
 	return S_OK;
 }
 

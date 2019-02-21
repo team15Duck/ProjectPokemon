@@ -81,6 +81,9 @@ HRESULT battleUI::init()
 	_itemSubMenuOn = false;
 	_subMenuSelectNum = 0;
 
+	CAMERA->setPosX(0);
+	CAMERA->setPosY(0);
+
 	return S_OK;
 }
 
@@ -112,7 +115,7 @@ void battleUI::update()
 					if (_isEscape)
 					{
 						//원래있던씬으로
-						SCENEMANAGER->changeScene(PLAYERDATA->getPlayer()->getSceneName());
+						//SCENEMANAGER->changeScene(PLAYERDATA->getPlayer()->getSceneName());
 					}
 				}
 			}
@@ -233,7 +236,7 @@ void battleUI::render()
 
 	if (_isBattle)
 	{
-		IMAGEMANAGER->findImage("playerUI")->render(544, 300);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
+		IMAGEMANAGER->findImage("playerUI")->render( 544, 300);// , L"image/battle_UI/battle_UI_Player.png", 416, 148);
 		if (_myPokemon)
 		{
 			D2DMANAGER->drawText(string2wstring(_myPokemon->getName()).c_str(), 600, 320, 35);

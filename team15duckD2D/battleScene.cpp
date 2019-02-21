@@ -31,13 +31,8 @@ HRESULT battleScene::init()
 		_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
 	}
 
-	// 테스트용 삭제 될 것
-	{
-		_pokemon = new pokemon;
-		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
 
-	}
-
+	_isEvolution = false;
 	_turn = TURN_PLAYER;
 	_phase = PHASE_START;
 	_active = PA_NONE;
@@ -105,9 +100,15 @@ void battleScene::release()
 
 void battleScene::update()
 {
+	if (_battleUI == nullptr) return;
+	if (_battleUI->getEscape())
+	{
+		SCENEMANAGER->changeScene(PLAYERDATA->getPlayer()->getSceneName());
+		return;
+	}
+	CAMERA->init(0, 0, 0, 0);
 	//유아이는 실시간업뎃해야됨
 	_battleUI->update();
-
 	//스크립트가 실행중이다? 그럼 아무것도못해
 	if (!_battleUI->battleSceneUpdate()) return;
 	

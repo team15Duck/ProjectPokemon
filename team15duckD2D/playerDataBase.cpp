@@ -117,6 +117,7 @@ void playerDataBase::currentPokemonLoad(DATA data)
 				DWORD read2;
 				string fileName2 = "data/saveData" + to_string(data) + "/currentPokemon/pokemon" + to_string(ii) + ".txt";
 				pmPack* loadPokemon = new pmPack;
+				
 				file2 = CreateFile(fileName2.c_str(), GENERIC_READ, NULL, NULL,
 					OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -125,6 +126,7 @@ void playerDataBase::currentPokemonLoad(DATA data)
 				CloseHandle(file2);
 				
 				_currentPlayer->setPokemonArray(ii, new pokemon);
+				_currentPlayer->getPokemonArray(ii)->init(0, (POKEMON)loadPokemon->index, loadPokemon->level, true);
 				_currentPlayer->getPokemonArray(ii)->loadSavePack(loadPokemon);
 			}
 

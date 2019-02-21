@@ -49,4 +49,5 @@ void townScene::render()
 	_townMap->render();
 	SCRIPTMANAGER->render();
 	UIMANAGER->render();
+	PLAYERDATA->getPlayer()->rectRender();
 }

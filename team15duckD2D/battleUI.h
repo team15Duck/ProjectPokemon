@@ -102,7 +102,7 @@ public:
 	void setSubMenuSelectNum(int num) { _subMenuSelectNum = num; }
 
 
-
+	bool getEscape() { return _isEscape; }
 
 	P_POKEMON_STATE		getPPState() { return _ppState; }
 	void				setPPState(P_POKEMON_STATE state) { _ppState = state; }

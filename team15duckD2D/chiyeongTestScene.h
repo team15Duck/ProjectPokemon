@@ -10,11 +10,6 @@ private:
 	int _count;
 	bool _start;
 	float _angle[9];
-
-
-
-	mapData* _map;
-	player* _player;
 	float _scale;
 	D2D1_RECT_F _rc2;
 public:

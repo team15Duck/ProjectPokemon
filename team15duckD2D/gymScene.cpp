@@ -54,4 +54,5 @@ void gymScene::render()
 	_gymMap->render();
 	SCRIPTMANAGER->render();
 	UIMANAGER->render();
+	PLAYERDATA->getPlayer()->rectRender();
 }

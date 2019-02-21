@@ -190,14 +190,14 @@
     <Filter Include="PlayGround\mapScene\storeScene">
       <UniqueIdentifier>{6b1c60ee-fc87-4939-9aac-cbe8dfb93109}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PlayGround\mapScene\townScene">
-      <UniqueIdentifier>{5218a358-dc00-4150-9687-8594012e9bdd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PlayGround\ui\hpBar">
       <UniqueIdentifier>{9f6a3cb0-d284-4408-91eb-91e1b6ce1b55}</UniqueIdentifier>
     </Filter>
     <Filter Include="PlayGround\endingScene">
       <UniqueIdentifier>{de29126b-a1d4-432f-87c0-a66e2e812475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayGround\mapScene\townScene">
+      <UniqueIdentifier>{5218a358-dc00-4150-9687-8594012e9bdd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -49,4 +49,5 @@ void caveScene::render()
 	_caveMap->render();
 	SCRIPTMANAGER->render();
 	UIMANAGER->render();
+	PLAYERDATA->getPlayer()->rectRender();
 }
