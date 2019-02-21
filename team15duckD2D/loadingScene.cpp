@@ -55,7 +55,7 @@ void loadingScene::update()
 	//´Ù·ÎµùÇÏ¸é ¾À¹Ù²ã
 	if (_currentCount == LOADINGMAX) 
 	{
-		SCENEMANAGER->changeScene("startScene");
+		SCENEMANAGER->changeScene("storeScene");
 	}
 
 }

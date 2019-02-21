@@ -29,6 +29,15 @@ enum SHOP_TALK
 	SHOP_TALK_COUNT = SHOP_TALK_NONE
 };
 
+enum SHOP_CHOICE
+{
+	SHOP_CHOICE_BUY,
+	SHOP_CHOICE_SELL,
+	SHOP_CHOICE_NOPE,
+
+	SHOP_CHOICE_NONE,
+	SHOP_CHOICE_COUNY = SHOP_CHOICE_NONE
+};
 
 class storeScene : public gameNode
 {
@@ -40,11 +49,11 @@ private:
 	float		_curPointY;						//선택창에서의 화살표 Y위치
 	
 	bool		_isTalk;						//NPC랑 얘기하니
-	bool		_isChoice;						//사러왔니 팔러왔니 뭐하러왔니
-	bool		_isBuy;							//사러왔니?(아이템UI)
-	bool		_isSure;						//골랐니?
+	bool		_isChoice;						//뭐 선택할거니?(사러왔다/팔러왔다/아닙니다)
+	bool		_isBuy;							//사러왔니?(아이템UI창)
 	
 	SHOP_TALK	_shopTalk;						//상태
+	SHOP_CHOICE _shopChoice;					//선택
 
 public:
 	storeScene();
@@ -55,9 +64,14 @@ public:
 	void update();
 	void render();
 
+	void keyControl();
+
+
 	//상점주인 대화 정리용
 	void activeShopOwner();
 
+	//0. 인사
+	void buyItemHello();
 
 	//1. 사러왔다
 	void buyItemChoice();						//구입할 아이템을 선택하고 개수 물어볼때
