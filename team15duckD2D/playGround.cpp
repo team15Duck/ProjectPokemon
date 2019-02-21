@@ -148,7 +148,7 @@ HRESULT playGround::init()
 	IMAGEMANAGER->addFrameImage("items", L"image/items.png", 3900, 100, 39, 1);
 
 	// 포켓몬 이미지 
-	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon/pokemon.png", 5120, 4696, 20, 16);
+	IMAGEMANAGER->addFrameImage("pokemon_ingame", L"image/pokemon/pokemon.png", 5120, 4096, 20, 16);
 
 	// 상점주인 이미지
 	IMAGEMANAGER->addFrameImage("shopOwner", L"image/shopOwner.png", 240, 80, 4, 1);
@@ -218,7 +218,7 @@ HRESULT playGround::init()
 	}
 	else
 	{
-		SCENEMANAGER->changeScene("하영씬");
+		SCENEMANAGER->changeScene("battleScene");
 	}
 	
 	return S_OK;
