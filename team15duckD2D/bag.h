@@ -76,6 +76,8 @@ private:
 
 	int _pokemonCnt; // 보유하고 있는 포켓몬의 수
 
+	// 애니메이션
+	animation* _pkAni[6];
 
 public:
 	bag();
@@ -92,6 +94,7 @@ public:
 	void uiInfoSet();
 	void itemDataSet();
 
+	void keyAni();
 	//=====아이템사용을 위한 화면
 	void itemUseScreen();
 

@@ -28,6 +28,7 @@ HRESULT bag::init()
 
 	MENUMANAGER->addFrame("아이템사용", 700, 300, 8, 10);
 	IMAGEMANAGER->addFrameImage("남여가방", L"image/common_menu/bag/item_bag.png", 472, 257, 2, 1);
+
 	return S_OK;
 }
 
@@ -503,6 +504,7 @@ void bag::uiClose()
 
 void bag::uiInfoSet()
 {
+	keyAni();
 	itemDataSet();
 }
 
@@ -584,6 +586,41 @@ void bag::itemDataSet()
 		_iuPokemon[i].currentHp = to_wstring(pokemons[i]->getHp()); // 현재?
 		_iuPokemon[i].maxHp = to_wstring(pokemons[i]->getMaxHp()); // 전체?
 
+		char name[128] = "";
+		sprintf_s(name, "ui_pokemons_%d", pokemons[i]->getPokeminIndex());
+		if (0 < i)
+			_pkAni[i] = KEYANIMANAGER->findAnimation("선택2", name);
+		else
+		{
+			_pkAni[i] = KEYANIMANAGER->findAnimation("선택", name);
+		}
+		_pkAni[i]->start();
+
+	}
+}
+
+void bag::keyAni()
+{
+	KEYANIMANAGER->addAnimationType("선택");
+	KEYANIMANAGER->addAnimationType("선택2");
+
+	//큰 포켓몬용
+	for (int i = 0; i < 151; ++i)
+	{
+		int mainpoke[] = { i * 2, i * 2 + 1 };
+		char pkName[128] = "";
+		sprintf_s(pkName, "ui_pokemons_%d", i);
+
+		KEYANIMANAGER->addArrayFrameAnimation("선택", pkName, "포켓몬파닥", mainpoke, 2, 10, true);
+	}
+	//작은포켓몬용
+	for (int i = 0; i < 151; ++i)
+	{
+		int subpoke[] = { i * 2, i * 2 + 1 };
+		char pkName2[128] = "";
+		sprintf_s(pkName2, "ui_pokemons_%d", i);
+
+		KEYANIMANAGER->addArrayFrameAnimation("선택2", pkName2, "포켓몬파닥2", subpoke, 2, 10, true);
 	}
 }
 
@@ -663,8 +700,21 @@ void bag::itemUseScreen()
 						// 파란색
 						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i - 1) * 90) + CAMERA->getPosY(), 0, 0);
 					}
-					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 553, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 550, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
+
+					//======== 애니 
+
+					//메인 포켓몬 애니
+					IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100, 100, _pkAni[0]);
+
+					//서브 포켓몬 애니
+					for (int i = 1; i < _pokemonCnt; ++i)
+					{
+						IMAGEMANAGER->findImage("포켓몬파닥2")->aniRender(510, 60 + ((i - 1) * 85), _pkAni[i]);
+					}
+
+					//=============
+					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 583, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_iuPokemon[i].name.c_str(), 580, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
 					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
 					D2DMANAGER->drawText(_iuPokemon[i].level.c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
 					D2DMANAGER->drawText(_iuPokemon[i].currentHp.c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));

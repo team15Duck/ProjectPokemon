@@ -42,10 +42,6 @@ HRESULT possessionPokemon::init()
 	_isSubMenu = false;
 	_isPokemonChange = false;
 
-
-	//================================ 애니 테스트
-	keyani();
-
 	return S_OK;
 }
 
@@ -731,6 +727,7 @@ void possessionPokemon::render()
 
 void possessionPokemon::uiInfoSet()
 {
+	keyani();
 	pPokemonDataSet();
 }
 
@@ -780,11 +777,6 @@ void possessionPokemon::pPokemonDataSet()
 
 		_pPokemon[i].currentExp = to_wstring(pokemons[i]->getCurrentExp());
 		_pPokemon[i].nextLvExp = to_wstring(pokemons[i]->getNextExp());
-
-
-
-
-
 
 		char name[128] = "";
 		sprintf_s(name, "ui_pokemons_%d", pokemons[i]->getPokeminIndex());
