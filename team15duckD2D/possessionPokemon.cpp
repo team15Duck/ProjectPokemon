@@ -30,13 +30,6 @@ HRESULT possessionPokemon::init()
 		_pPokemon[i].name.clear();
 	}
 
-	IMAGEMANAGER->addFrameImage("서머리상단", L"image/Summary Menu/summary_top_bar.png", 960, 192, 1, 3);
-	IMAGEMANAGER->addImage("서머리배경", L"image/Summary Menu/summary_base.png", 960, 640);
-	IMAGEMANAGER->addFrameImage("서머리프레임", L"image/Summary Menu/summary_pokemon_info.png", 1920, 576, 2, 1);
-	IMAGEMANAGER->addImage("서머리포켓몬", L"image/Summary Menu/summary_pokemon_base.png", 484, 336);
-	IMAGEMANAGER->addImage("서머리스킬", L"image/Summary Menu/summary_pokemon_skill.png", 484, 576);
-	IMAGEMANAGER->addImage("체력베이스", L"image/battle_UI/battle_UI_HP_base.png", 36, 12);
-	IMAGEMANAGER->addFrameImage("체력게이지", L"image/pokemonMenu_gauge.png", 192, 12, 3, 1);
 	_isMainpokemon = true;
 	_isSubpokemon = false;
 	_isSubMenu = false;

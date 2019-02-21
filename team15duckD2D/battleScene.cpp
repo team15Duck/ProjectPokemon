@@ -535,7 +535,171 @@ void battleScene::keyControl()
 	}
 	else if (_battleUI->getCurrentMenu() == BATTLE_UI_BAG)
 	{
-		
+		if (_battleUI->getItemSubMenuOn())
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_battleUI->setSubMenuSelectNum(!_battleUI->getSubMenuSelectNum());
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_battleUI->setSubMenuSelectNum(!_battleUI->getSubMenuSelectNum());
+			}
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				if (_battleUI->getSubMenuSelectNum() == 0)
+				{
+					//아이템사용하면됨
+					_battleUI->getCurrentPokemonNum();//현재포켓몬번호
+					_battleUI->getBagSelectNum();	//가방에서 선택한번호
+					player::mapItemIter iter;
+					int ii = 0;
+					for (; iter != PLAYERDATA->getPlayer()->getItem().end; iter++,ii++)
+					{
+						if (ii == _battleUI->getBagSelectNum()) break;
+					}
+					
+					switch (_battleUI->getItemArray(iter->first)->getItemType())
+					{
+						case MONSTER_BALL:
+						break;
+						case SUPER_BALL:
+						break;
+						case HYPER_BALL:
+						break;
+						case MASTER_BALL:
+						break;
+						case NORMAL_POTION:
+						break;
+						case SUPER_POTION:
+						break;
+						case HYPER_POTION:
+						break;
+						case MAX_POTION:
+						break;
+						case FULL_RESTORE:
+						break;
+						case NORMAL_ETHER:
+						break;
+						case MAX_ETHER:
+						break;
+						case NORMAL_ELIXIR:
+						break;
+						case MAX_ELIXIR:
+						break;
+						case ANTIDOTE:
+						break;
+						case PARLYZE_HEAL:
+						break;
+						case BURN_HEAL:
+						break;
+						case ICE_HEAL:
+						break;
+						case AWAKENING:
+						break;
+						case FULL_HEAL:
+						break;
+						case RARE_CANDY:
+						break;
+						case ESCAPE_ROPE:
+						break;
+						case REVIVE:
+						break;
+						case FISHING_ROD:
+						break;
+						case TOWN_MAP:
+						break;
+						case HM_CUT:
+						break;
+						case HM_FLASH:
+						break;
+						case TM_THUNDERBOLT:
+						break;
+						case TM_THUNDER:
+						break;
+						case TM_FLAMETHROWER:
+						break;
+						case CHERI_BERRY:
+						break;
+						case CHESTO_BERRY:
+						break;
+						case PECHA_BERRY:
+						break;
+						case RAWST_BERRY:
+						break;
+						case ASPEAR_BERRY:
+						break;
+						case LEPPA_BERRY:
+						break;
+						case ORAN_BERRY:
+						break;
+						case LUM_BERRY:
+						break;
+						case SITRUS_BERRY:
+						break;
+					}
+
+
+
+
+					_battleUI->setItemSubMenuOn(false);
+					_battleUI->setSubMenuSelectNum(false);
+					_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+					_battleUI->setBagSelectNum(0);
+				}
+				else
+				{
+					_battleUI->setItemSubMenuOn(false);
+					_battleUI->setSubMenuSelectNum(false);
+				}
+			}
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_battleUI->setItemSubMenuOn(false);
+				_battleUI->setSubMenuSelectNum(false);
+				
+			}
+			
+		}
+		else
+		{
+			if (PLAYERDATA->getPlayer()->getItem().size())
+			{
+				if (KEYMANAGER->isOnceKeyDown(VK_UP))
+				{
+					if (_battleUI->getBagSelectNum() == 0)
+					{
+						_battleUI->setBagSelectNum(PLAYERDATA->getPlayer()->getItem().size() - 1);
+					}
+					else
+					{
+						_battleUI->setBagSelectNum(_battleUI->getBagSelectNum() - 1);
+					}
+				}
+				if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+				{
+					if (_battleUI->getBagSelectNum() == PLAYERDATA->getPlayer()->getItem().size() - 1)
+					{
+						_battleUI->setBagSelectNum(0);
+					}
+					else
+					{
+						_battleUI->setBagSelectNum(_battleUI->getBagSelectNum() + 1);
+					}
+				}
+
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					_battleUI->setItemSubMenuOn(true);
+				}
+
+			}
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+				_battleUI->setBagSelectNum(0);
+			}
+		}
 	}
 }
 
