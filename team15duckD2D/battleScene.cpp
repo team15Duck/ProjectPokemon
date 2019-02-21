@@ -268,7 +268,7 @@ void battleScene::render()
 
 		if(_isAwakeMyPokemon)
 			_pms[TURN_PLAYER]->render();
-		if(_isAwakeEnemyPokemon)
+		if(_isAwakeEnemyPokemon && !_isGetPokemon) // 적 포켓몬이 깨어있다 && 포켓몬 잡히지 않았다
 			_pms[TURN_ENEMY]->render();
 	}
 
