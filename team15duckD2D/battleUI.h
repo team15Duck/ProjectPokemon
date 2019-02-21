@@ -25,7 +25,9 @@ class battleUI
 {
 private:
 
-	queue<wstring>		_script;						//스크립트를 저장하는 큐! 여기에 정보가 들어있으면 다른녀석은 아무것도 할수가없지 
+
+	//////////////////////////////////////////////////스크립트///////////////////////////////////////////////////////////////
+	queue<wstring>		_script;						//스크립트를 저장하는 큐! 여기에 정보가 들어있으면 다른업데이트막음
 	UINT				_scriptLength;					//현재 재생중인 스크립트의 길이 글자를 순서대로 보여주기 위함
 	wstring				_viewScript;					//보여줄 스크립트만큼 여기 복사해와서 적을거다
 	float				_scriptCount;					//스크립트 재생속도를 체크
@@ -33,33 +35,57 @@ private:
 	bool				_isSkip;						//이스크립트 스킵가능해?
 	wstring				_pokemonName;					//내포켓몬의 이름
 	wstring				_enemyName;						//적포켓몬의 이름
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 	UINT				_currentSelectMenu;				//현재 선택한 메뉴의 숫자는?
-
-	vector<SKILLUI>		_skillUI;						//스킬의정보를담고있는 구조체의 벡터  최대사이즈는 4로 제한한다
-	UINT				_currentSelectSkill;			//현재 어떤스킬을 선택하고 있니?
-
-
 	bool				_isEscape;						//도망?
 	bool				_isPlayerTurn;					//플레이어 행동 턴?
+
+
+
+
+	///////////////////////////////////////////////////////스킬///////////////////////////////////////////////////////////////
+	vector<SKILLUI>		_skillUI;						//스킬의정보를담고있는 구조체의 벡터  최대사이즈는 4로 제한한다
+	UINT				_currentSelectSkill;			//현재 어떤스킬을 선택하고 있니?
 	bool				_isBattle;						//배틀중인가
 	bool				_isKeyDownZ;					//Z키가 눌렸는가
 	BATTLE_UI			_currentMenu;					//현재 메뉴 상태
-
 	pokemon*			_myPokemon;						//정보를 출력하기 위함
 	pokemon*			_enemyPokemon;					//정보를 출력하기 위함
-	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////포켓몬/////////////////////////////////////////////////
+	UINT				_pokemonSelectNum;				//내가 고른 숫자
+	P_POKEMON_STATE		_ppState;						//어떤 메뉴	보여주니
+	P_POKEMON_SELECT	_ppselect;						//어떤놈골랏니
+	P_SUB_MENU_SELECT	_psmselect;						//서브메뉴목록
+	P_LOOK_POKEMON		_plpokemon;						//인포목록
+	bool				_isSubMenu;						//서브메뉴 켰어?
+	UINT				_currentPokemonNum;				//현재 밖에있는 포켓몬 숫자
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////가방//////////////////////////////////////////////////
 
-	UINT				_pokemonSelectNum;
+	UINT				_bagSelectNum;					//가방 몇번째꺼 선택함?
+	item*				_item[39];
+	bool				_itemSubMenuOn;	
+
+	UINT				_subMenuSelectNum;
+
+	UINT				_bagState;						//이면 기본상태 1이면아이템 사용상태
+
+	UINT				_bagPokemonSubNum;				//서브메뉴 어떤거고름?
+	UINT				_bagPokemonSelectNum;			//어떤놈고름?
+	UINT				_isBagSubMenu;					//아이템쓸때 서브메뉴온
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	P_POKEMON_STATE		_ppState;
-	P_POKEMON_SELECT	_ppselect;
-	P_SUB_MENU_SELECT	_psmselect;
-	P_LOOK_POKEMON		_plpokemon;
 
-	bool				_isSubMenu;
 
-	UINT				_currentPokemonNum;
+
+
 
 public:
 	battleUI();

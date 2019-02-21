@@ -33,6 +33,7 @@ HRESULT player::init()
 	_maxFishingTime = 0.0f;
 	_currentPokemon = 4;
 	_currentPokemon = 0;
+	_money = 10000;
 	//////////////////////////////////////
 
 	_isShopOn = false;

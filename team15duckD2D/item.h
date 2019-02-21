@@ -266,7 +266,7 @@ public:
 	void update();
 	void render();
 
-
+	string makeName(ITEM_TYPE type);
 
 	// ========== GET & SET ==========
 	//¿Ã∏ß

@@ -436,6 +436,132 @@ void item::render()
 	//_img->frameRender(_imgPos.x + CAMERA->getPosX(), _imgPos.y + CAMERA->getPosY(), _itemType, 0, 1.0f);
 }
 
+string item::makeName(ITEM_TYPE type)
+{
+	string name;
+	switch (type)
+	{
+		case MONSTER_BALL:
+			name = "몬스터볼";
+		break;	
+		case SUPER_BALL:	
+			name = "슈퍼볼";
+		break;	
+		case HYPER_BALL:	
+			name = "하이퍼볼";
+		break;	
+		case MASTER_BALL:	
+			name = "마스터볼";
+		break;	
+		case NORMAL_POTION:	
+			name = "상처약";
+		break;	
+		case SUPER_POTION:	
+			name = "좋은상처약";
+		break;	
+		case HYPER_POTION:	
+			name = "고급상처약";
+		break;	
+		case MAX_POTION:	
+			name = "풀회복약";
+		break;	
+		case FULL_RESTORE:	
+			name = "회복약";
+		break;	
+		case NORMAL_ETHER:	
+			name = "PP에이드";
+		break;	
+		case MAX_ETHER:
+			name = "PP회복";
+		break;	
+		case NORMAL_ELIXIR:	
+			name = "PP에이더";
+		break;	
+		case MAX_ELIXIR:		
+			name = "PP맥스";
+		break;		
+		case ANTIDOTE:		
+			name = "해독제";
+		break;		
+		case PARLYZE_HEAL:		
+			name = "마비해독제";
+		break;		
+		case BURN_HEAL:		
+			name = "화상치료제";
+		break;		
+		case ICE_HEAL:
+			name = "얼음상태치료제";
+		break;		
+		case AWAKENING:		
+			name = "잠깨는약";
+		break;		
+		case FULL_HEAL:		
+			name = "만병통치제";
+		break;		
+		case RARE_CANDY:		
+			name = "이상한사탕";
+		break;		
+		case ESCAPE_ROPE:		
+			name = "동굴탈출로프";
+		break;		
+		case REVIVE:		
+			name = "기력의 조각";
+		break;		
+		case BICYCLE:		
+			name = "자전거";
+		break;		
+		case FISHING_ROD:		
+			name = "낚시대";
+		break;		
+		case TOWN_MAP:		
+			name = "타운맵";
+		break;
+		case HM_CUT:		
+			name = "풀베기";
+		break;		
+		case HM_FLASH:		
+			name = "플래시";
+		break;		
+		case TM_THUNDERBOLT:		
+			name = "10만볼트";
+		break;		
+		case TM_THUNDER:		
+			name = "번개";
+		break;		
+		case TM_FLAMETHROWER:		
+			name = "화염방사";
+		break;
+		case CHERI_BERRY:		
+			name = "버치열매";
+		break;		
+		case CHESTO_BERRY:		
+			name = "유루열매";
+		break;		
+		case PECHA_BERRY:		
+			name = "복슝열매";
+		break;		
+		case RAWST_BERRY:		
+			name = "복분열매";
+		break;		
+		case ASPEAR_BERRY:		
+			name = "배리열매";
+		break;		
+		case LEPPA_BERRY:		
+			name = "과사열매";
+		break;		
+		case ORAN_BERRY:		
+			name = "오랭열매";
+		break;		
+		case LUM_BERRY:		
+			name = "리샘열매";
+		break;		
+		case SITRUS_BERRY:		
+			name = "자뭉열매";
+		break;	
+	}
+	return name;
+}
+
 
 
 item * item::settingItemInfo(ITEM_TYPE type)
