@@ -132,17 +132,17 @@ void loadScene::render()
 
 
 	wstring saveName;
-	saveName = L"save1 : ";
+	saveName = L"save1 : " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_1)[0]);
 	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY, 30);
-	saveName = L"save2 : ";
+	saveName = L"save2 : " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_2)[0]);
 	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 1),30);
-	saveName = L"save3 : ";											   
+	saveName = L"save3 : " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_3)[0]);
 	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 2),30);
-	saveName = L"save4 : ";											   
+	saveName = L"save4 : " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_4)[0]);
 	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 3),30);
-	saveName = L"save5 : ";											   
+	saveName = L"save5 : " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_5)[0]);
 	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 4),30);
-	saveName = L"save6 : ";											   
+	saveName = L"save6 : " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_6)[0]);
 	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 5),30);
 
 

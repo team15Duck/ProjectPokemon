@@ -177,19 +177,18 @@ void report::render()
 			break;
 		}
 
-
-		swprintf_s(report, L"1.");
-		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 230 + CAMERA->getPosY(), 40);
-		swprintf_s(report, L"2.");
-		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 290 + CAMERA->getPosY(), 40);
-		swprintf_s(report, L"3.");
-		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 350 + CAMERA->getPosY(), 40);
-		swprintf_s(report, L"4.");
-		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 410 + CAMERA->getPosY(), 40);
-		swprintf_s(report, L"5.");
-		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
-		swprintf_s(report, L"6.");
-		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 40);
+		wstring rstr = L"1. " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_1)[0]);
+		D2DMANAGER->drawText(rstr.c_str(), 55 + CAMERA->getPosX(), 230 + CAMERA->getPosY(), 40);
+		rstr = L"2. " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_2)[0]);
+		D2DMANAGER->drawText(rstr.c_str(), 55 + CAMERA->getPosX(), 290 + CAMERA->getPosY(), 40);
+		rstr = L"3. " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_3)[0]);
+		D2DMANAGER->drawText(rstr.c_str(), 55 + CAMERA->getPosX(), 350 + CAMERA->getPosY(), 40);
+		rstr = L"4. " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_4)[0]);
+		D2DMANAGER->drawText(rstr.c_str(), 55 + CAMERA->getPosX(), 410 + CAMERA->getPosY(), 40);
+		rstr = L"5. " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_5)[0]);
+		D2DMANAGER->drawText(rstr.c_str(), 55 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
+		rstr = L"6. " + string2wstring(PLAYERDATA->playerDataLoad(playerDataBase::DATA::DATA_6)[0]);
+		D2DMANAGER->drawText(rstr.c_str(), 55 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 40);
 	}
 }
 
