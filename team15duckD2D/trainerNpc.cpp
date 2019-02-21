@@ -41,7 +41,7 @@ void trainerNPC::update()
 {
 }
 
-void trainerNPC::pushbackPokemon(pokemon pm)
+void trainerNPC::pushbackPokemon(pokemon* pm)
 {
 	if (_pokemonCnt < 6)
 	{
@@ -66,7 +66,7 @@ bool trainerNPC::isChangePokemon()
 		return false;
 
 	int rate = 10;
-	if (_pokemons[_enterPokemon].getHp() < _pokemons[_enterPokemon].getMaxHp() * 0.5f)
+	if (_pokemons[_enterPokemon]->getHp() < _pokemons[_enterPokemon]->getMaxHp() * 0.5f)
 	{
 		rate - 50;
 	}
@@ -88,7 +88,7 @@ void trainerNPC::changePokemon()
 		if (_enterPokemon == value)
 			continue;
 
-		if (!_pokemons[value].isAwake())
+		if (!_pokemons[value]->isAwake())
 			continue;
 
 		_enterPokemon = value;
@@ -107,14 +107,10 @@ bool trainerNPC::isPossibleChangePokemon()
 		if (ii == _enterPokemon)
 			continue;
 
-		isAwake = _pokemons[ii].isAwake();
+		isAwake = _pokemons[ii]->isAwake();
 		if (isAwake)
 			break;
 	}
 
-	// 교체 가능한 포켓몬이 없음
-	if (!isAwake)
-		return false;
-
-	return false;
+	return isAwake;
 }

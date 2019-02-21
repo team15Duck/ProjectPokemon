@@ -627,6 +627,7 @@ void pokemon::hillHp(int value)
 
 void pokemon::gainExp(int exp)
 {
+	_isLevelUp = false;
 	_displayValue = exp;
 	_displayExp = _currentExp;
 	_currentExp += exp;
@@ -643,6 +644,7 @@ void pokemon::gainExp(int exp)
 
 void pokemon::gainExpEnterBattle(int exp)
 {
+	_isLevelUp = false;
 	_displayValue = exp;
 	_displayExp = _currentExp;
 	_currentExp += exp;
@@ -848,6 +850,8 @@ void pokemon::endProgressing()
 
 	if (_isLevelUp)
 	{
+		_isPossibleEvolution = checkPossibleEvolution();
+
 		wstring script = L"레벨업을 하였다!";
 		sendScriptToUI(script);
 
@@ -890,9 +894,6 @@ void pokemon::progressingIncreseExp(void)
 		if (_nextLvExp <= _displayExp)
 		{
 			levelUp();
-			if(!_isPossibleEvolution)
-				_isPossibleEvolution = checkPossibleEvolution();
-
 			if (POKEMON_MAX_LEVEL == _level)
 				endProgressing();
 		}
@@ -1067,18 +1068,6 @@ int pokemon::calculateAttkValue(int skillIdx)
 	damage = ((((float)_level * 2.f / 5.f) + 2.f) * power * attk / 50.f / dex + 2.f) * (vitalPoint * 1.f) * conflictValue * randValue / 100.f;
 
 	return static_cast<int>(damage);
-}
-
-void pokemon::progressingEvolution()
-{
-	if(10 < _displayValue)
-	{
-		endProgressing();
-	}
-	else
-	{
-		
-	}
 }
 
 void pokemon::faint()

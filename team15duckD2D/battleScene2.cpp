@@ -26,11 +26,11 @@ HRESULT battleScene2::init()
 	//_npc = 
 
 	// 플레이어 포켓몬 todo
-	//int pmCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
-	for (int ii = 0; ii < 6; ++ii)
+	int pmCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
+	for (int ii = 0; ii < pmCnt; ++ii)
 	{
 		// todo
-		//_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
+		_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
 	}
 
 	// 테스트용 삭제 될 것
@@ -59,26 +59,8 @@ HRESULT battleScene2::init()
 			_emPms[5]->init(NULL, PM_CHARIZARD, 30, false);
 
 			for(int ii = 0 ; ii < 6; ++ii)
-				_npc->pushbackPokemon(*_emPms[ii]);
+				_npc->pushbackPokemon(_emPms[ii]);
 		}
-
-		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 5, true);
-
-		_myPms[1] = new pokemon;
-		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
-
-		_myPms[2] = new pokemon;
-		_myPms[2]->init(NULL, PM_SQUIRTLE, 15, true);
-
-		_myPms[3] = new pokemon;
-		_myPms[3]->init(NULL, PM_MAGIKARP, 20, true);
-
-		_myPms[4] = new pokemon;
-		_myPms[4]->init(NULL, PM_PIKACHU, 25, true);
-
-		_myPms[5] = new pokemon;
-		_myPms[5]->init(NULL, PM_CHARIZARD, 30, true);
 	}
 
 	_turn = TURN_PLAYER;
@@ -459,14 +441,13 @@ void battleScene2::keyControl()
 									if (_battleUI->getPPSelect() > _battleUI->getCurrentPokemonNum())
 									{
 										_phase = PHASE_CHANGE;
-										//_selPokemon = _battleUI->getPPSelect();
-										++_selPokemon;
+										_selPokemon = _battleUI->getPPSelect();
 										_battleUI->setCurrentPokemonNum(_battleUI->getPPSelect());
 									}
 									else
 									{
 										_phase = PHASE_CHANGE;
-										++_selPokemon;
+										_selPokemon = _battleUI->getPPSelect() - 1;
 										_battleUI->setCurrentPokemonNum(_battleUI->getPPSelect() - 1);
 									}
 
@@ -586,9 +567,14 @@ void battleScene2::keyControl()
 void battleScene2::battleStart()
 {
 	// todo
+	if (TURN_PLAYER == _turn)
+	{
+		wstring script = L"가랏!\n";
+		script.append(string2wstring(_pms[TURN_PLAYER]->getName()));
+		script.append(L"!! 너로 정했다!");
 
-	wstring script = L"배틀 시작!";
-	_battleUI->pushScript(script);
+		_battleUI->pushScript(script);
+	}
 
 	pokemonSkill* skills = _pms[TURN_PLAYER]->getPokemonSkills();
 
@@ -620,7 +606,9 @@ void battleScene2::battleStart()
 	_selectSkillIdx = 0;
 
 	_isAwakeMyPokemon = true;
+	_isAwakeEnemyPokemon = true;
 	_phase = PHASE_BATTLE;
+
 
 	if (_expList.find(_selPokemon) == _expList.end())
 	{
@@ -654,7 +642,15 @@ void battleScene2::battle()
 						_battleUI->pushScript(script);
 
 						_npc->changePokemon();
-						_pms[TURN_ENEMY] = _pmsEm[_npc->getEnterPokemonSlotIndex()];
+						_pms[TURN_ENEMY]->battleEnd();
+						_pms[TURN_ENEMY] = _emPms[_npc->getEnterPokemonSlotIndex()];
+
+						_pms[TURN_ENEMY]->setBattleUILink(_battleUI);
+						_pms[TURN_ENEMY]->battelStart();
+						_pms[TURN_ENEMY]->setTargetPokemon(_pms[TURN_PLAYER]);
+						_pms[TURN_PLAYER]->setTargetPokemon(_pms[TURN_ENEMY]);
+						_battleUI->setEnemyPokemonMemoryAdressLink(_pms[TURN_ENEMY]);
+
 						isChange = true;
 					}
 				}
@@ -718,7 +714,6 @@ void battleScene2::battle()
 
 				// 적 포켓몬 변경
 				_turn = TURN_ENEMY;
-
 				_phase = PHASE_EVOLUTION;
 			}
 			else
@@ -737,8 +732,7 @@ void battleScene2::battle()
 
 				// 교체 할 포켓몬이 있는지 없는지 확인
 				// todo 데이터 연결 후 
-				//int cnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
-				int cnt = 6;
+				int cnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 				bool isAwake = false;
 				for (int ii = 0; ii < cnt; ++ii)
 				{
@@ -772,14 +766,16 @@ void battleScene2::battleChange()
 
 	if (_turn == TURN_ENEMY)
 	{
-		if (_npc->isChangePokemon())
+		if (_npc->isPossibleChangePokemon())
 		{
 			wstring script = string2wstring(_npc->getName());
 			script.append(L"가 포켓몬을 교체하였다.");
 			_battleUI->pushScript(script);
 
+			_pms[TURN_ENEMY]->battleEnd();
 			_npc->changePokemon();
-			_pms[TURN_ENEMY] = _pmsEm[_npc->getEnterPokemonSlotIndex()];
+			_pms[TURN_ENEMY] = _emPms[_npc->getEnterPokemonSlotIndex()];
+			_phase = PHASE_START;
 		}
 		else
 		{
@@ -792,6 +788,7 @@ void battleScene2::battleChange()
 			_phase = PHASE_END;
 		else
 		{
+			_pms[TURN_PLAYER]->battleEnd();
 			_pms[TURN_PLAYER] = _myPms[_selPokemon];
 			_phase = PHASE_START;
 		}

@@ -305,8 +305,6 @@ private:
 	// 데미지 계산
 	int calculateAttkValue(int skillIdx);
 
-	void progressingEvolution();
-
 
 
 

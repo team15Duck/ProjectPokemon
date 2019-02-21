@@ -22,7 +22,6 @@ private:
 	PlayerActive _active;			// 플레이어 행동
 
 	pokemon* _pms[TURN_MAX + 1];	// 출전중인 포켓몬
-	pokemon* _pmsEm[TURN_MAX + 1];	// 출전중인 포켓몬 적
 
 	battleUI* _battleUI;	// ui
 	image* _background;		// 배경

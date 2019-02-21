@@ -24,35 +24,18 @@ HRESULT battleScene::init()
 	PLAYERDATA->setPokemon(nullptr);
 
 	// 플레이어 포켓몬 todo
-	//int pmCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
+	int pmCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 	for (int ii = 0; ii < 6; ++ii)
 	{
 		// todo
-		//_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
+		_myPms[ii] = PLAYERDATA->getPlayer()->getPokemon()[ii];
 	}
 
 	// 테스트용 삭제 될 것
 	{
 		_pokemon = new pokemon;
 		_pokemon->init(NULL, PM_VENUSAUR, 5, false);
-		
-		_myPms[0] = new pokemon;
-		_myPms[0]->init(NULL, PM_BULBASAUR, 100, true);
 
-		_myPms[1] = new pokemon;
-		_myPms[1]->init(NULL, PM_CHARMANDER, 10, true);
-
-		_myPms[2] = new pokemon;
-		_myPms[2]->init(NULL, PM_SQUIRTLE, 15, true);
-
-		_myPms[3] = new pokemon;
-		_myPms[3]->init(NULL, PM_MAGIKARP, 20, true);
-
-		_myPms[4] = new pokemon;
-		_myPms[4]->init(NULL, PM_PIKACHU, 25, true);
-
-		_myPms[5] = new pokemon;
-		_myPms[5]->init(NULL, PM_CHARIZARD, 30, true);
 	}
 
 	_turn = TURN_PLAYER;
@@ -558,10 +541,20 @@ void battleScene::keyControl()
 
 void battleScene::battleStart()
 {
-	// todo
+	if (TURN_PLAYER == _turn)
+	{
+		wstring script = L"야생의 ";
+		script.append(string2wstring(_pms[TURN_ENEMY]->getName()));
+		script.append(L"(이)가 나타났다.");
+		_battleUI->pushScript(script);
 
-	wstring script = L"배틀 시작!";
-	_battleUI->pushScript(script);
+		script.clear();
+		script = L"가랏!\n";
+		script.append(string2wstring(_pms[TURN_PLAYER]->getName()));
+		script.append(L"!! 너로 정했다!");
+
+		_battleUI->pushScript(script);
+	}
 
 	pokemonSkill* skills = _pms[TURN_PLAYER]->getPokemonSkills();
 	
@@ -593,6 +586,7 @@ void battleScene::battleStart()
 	_selectSkillIdx = 0;
 
 	_isAwakeMyPokemon = true;
+	_isAwakeEnemyPokemon = true;
 	_phase = PHASE_BATTLE;
 
 	if (_expList.find(_selPokemon) == _expList.end())
