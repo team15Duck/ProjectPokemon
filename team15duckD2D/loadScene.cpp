@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "loadScene.h"
-
+#include "newGameScene.h"
 
 loadScene::loadScene()
 {
@@ -112,8 +112,16 @@ void loadScene::update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
-		//나중에 로드 할수 있게 되면 주석을 풀어보아요
-		//loadPlayData();
+		int loadData = _pointPosY / 60;
+		if (_pointPosX == 688)
+		{
+			//새로하기
+			SCENEMANAGER->changeScene("newGameScene");
+		}
+		else
+		{
+			PLAYERDATA->dataLoad(playerDataBase::DATA(loadData));
+		}
 	}
 }
 
@@ -142,9 +150,7 @@ void loadScene::render()
 	{
 		MENUMANAGER->findMenuFrame("textFrame")->render();
 		
-		wstring str;
-		str = L"저장된 데이터가 없습니다.";
-		SCRIPTMANAGER->pushScript(str);
+
 		SCRIPTMANAGER->render();
 		//D2DMANAGER->drawText(str.c_str(), 64, 525, 30);
 	}

@@ -130,6 +130,7 @@ void playerDataBase::currentPokemonLoad(DATA data)
 			while (str[i] != '/')
 			{
 				loadData += str[i];
+				i++;
 			}
 			
 
@@ -138,7 +139,7 @@ void playerDataBase::currentPokemonLoad(DATA data)
 				HANDLE file2;
 				DWORD read2;
 				string fileName2 = "data/saveData" + to_string(data) + "/currentPokemon/pokemon" + to_string(ii) + ".txt";
-				pmPack* loadPokemon = nullptr;
+				pmPack* loadPokemon = new pmPack;
 				file2 = CreateFile(fileName2.c_str(), GENERIC_READ, NULL, NULL,
 					OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -435,6 +436,7 @@ void playerDataBase::npcDataSave(DATA data)
 
 void playerDataBase::itemDataSave(DATA data)
 {
+	
 	switch (data)
 	{
 		case playerDataBase::DATA_DEFAULT:
@@ -446,17 +448,20 @@ void playerDataBase::itemDataSave(DATA data)
 			DWORD write;
 
 			string saveData = "";
-
-			for (player::mapItemIter iter = _currentPlayer->getItem().begin(); iter != _currentPlayer->getItem().end(); iter++)
+			if (_currentPlayer->getItem().size() != 0)
 			{
-				saveData += "/";
-				saveData += to_string(iter->first);
-				saveData += ",";
-				saveData += to_string(iter->second);
-			}
-			saveData += "#";
-			string fileName = "data/saveData" + to_string(data) + "/itemData.txt";
+				for (player::mapItemIter iter = _currentPlayer->getItem().begin(); iter != _currentPlayer->getItem().end(); iter++)
+				{
+					saveData += "/";
+					saveData += to_string(iter->first);
+					saveData += ",";
+					saveData += to_string(iter->second);
+				}
+				saveData += "#";
+				
 
+			}
+			string fileName = "data/saveData" + to_string(data) + "/itemData.txt";
 			file = CreateFile(fileName.c_str(), GENERIC_WRITE, NULL, NULL,
 				CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
