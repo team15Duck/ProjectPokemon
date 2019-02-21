@@ -27,7 +27,7 @@ HRESULT oLabScene::init()
 	_npc->init(NPC_TYPE_OAK);
 	_oLabMap->pushNpc(_npc);
 
-	UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 
 	return S_OK;
 }

@@ -22,7 +22,7 @@ HRESULT townScene::init()
 	PLAYERDATA->getPlayer()->setSceneName("townScene");
 	SOUNDMANAGER->addSound("townBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
 	SOUNDMANAGER->play("townBGM");
-	UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 	return S_OK;
 }
 

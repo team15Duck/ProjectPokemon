@@ -36,7 +36,7 @@ HRESULT centerScene::init()
 
 	MENUMANAGER->addFrame("choiceFrame", 960 - 290, 640 - 370, 8, 5);
 
-	UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 
 	return S_OK;
 }

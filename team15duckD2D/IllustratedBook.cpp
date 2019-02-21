@@ -167,19 +167,19 @@ void IllustratedBook::render()
 		int height = 70;
 		for (; i < iMax; i++, height += 48)
 		{
-			D2DMANAGER->drawText(_book[i].number.c_str(), 100, height, 50);
+			D2DMANAGER->drawText(_book[i].number.c_str(), 100 + CAMERA->getPosX(), height + CAMERA->getPosY(), 50);
 
 			if (!_isdataexist)
 			{
-				D2DMANAGER->drawText(_book[i].name.c_str(), 300, height, 50);
+				D2DMANAGER->drawText(_book[i].name.c_str(), 300 + CAMERA->getPosX(), height + CAMERA->getPosY() , 50);
 			}
 			else
 			{
-				D2DMANAGER->drawText(_book[i].name.c_str(), 300, height, 50);
+				D2DMANAGER->drawText(_book[i].name.c_str(), 300 + CAMERA->getPosX(), height + CAMERA->getPosY() , 50);
 				if (_book[i].isDataSet)
 				{
 					IMAGEMANAGER->findImage("포켓몬속성")->frameRender(600 + CAMERA->getPosX(), height + CAMERA->getPosY(), _book[i].attrframeX, _book[i].attrframeY);
-					D2DMANAGER->drawText(_book[i].attr.c_str(), 640, height, 45);
+					D2DMANAGER->drawText(_book[i].attr.c_str(), 640 + CAMERA->getPosX(), height + CAMERA->getPosY(), 45);
 				}
 
 			}
@@ -202,22 +202,22 @@ void IllustratedBook::render()
 		int frameY;
 
 		index = _currentSelectNum * 2;
-		frameX = index % IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX();
-		frameY = index / IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX();
+		frameX = index % (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
+		frameY = index / (IMAGEMANAGER->findImage("pokemon_ingame")->GetMaxFrameX() + 1);
 
 		IMAGEMANAGER->findImage("pokemon_ingame")->frameRender(650 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), frameX, frameY);
 
-		D2DMANAGER->drawText(_book[i].number.c_str(), 50, 100, 38); 
-		D2DMANAGER->drawText(_book[i].name.c_str(), 200, 100, 38);
+		D2DMANAGER->drawText(_book[i].number.c_str(), 50 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 38);
+		D2DMANAGER->drawText(_book[i].name.c_str(), 200 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 38);
 
-		D2DMANAGER->drawText(_book[i].tagheight.c_str(), 50, 200, 38);
-		D2DMANAGER->drawText(_book[i].height.c_str(), 150, 200, 38);
-		D2DMANAGER->drawText(_book[i].tagcm.c_str(), 300, 200, 38);
-		D2DMANAGER->drawText(_book[i].tagweight.c_str(), 50, 250, 38);
-		D2DMANAGER->drawText(_book[i].weight.c_str(), 200, 250, 38);
-		D2DMANAGER->drawText(_book[i].tagkg.c_str(), 400, 250, 38);
+		D2DMANAGER->drawText(_book[i].tagheight.c_str(), 50 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 38);
+		D2DMANAGER->drawText(_book[i].height.c_str(), 150 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 38);
+		D2DMANAGER->drawText(_book[i].tagcm.c_str(), 300 + CAMERA->getPosX(), 200 + CAMERA->getPosY(), 38);
+		D2DMANAGER->drawText(_book[i].tagweight.c_str(), 50 + CAMERA->getPosX(), 250 + CAMERA->getPosY(), 38);
+		D2DMANAGER->drawText(_book[i].weight.c_str(), 200 + CAMERA->getPosX(), 250 + CAMERA->getPosY(), 38);
+		D2DMANAGER->drawText(_book[i].tagkg.c_str(), 400 + CAMERA->getPosX(), 250 + CAMERA->getPosY(), 38);
 
-		D2DMANAGER->drawText(_book[i].info.c_str(), 50, 400, 22);
+		D2DMANAGER->drawText(_book[i].info.c_str(), 50 + CAMERA->getPosX(), 400 + CAMERA->getPosY(), 22);
 
 	}
 

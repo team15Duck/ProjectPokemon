@@ -28,7 +28,7 @@ HRESULT gymScene::init()
 	_npc->init(NPC_TYPE_BOSS);
 	_gymMap->pushNpc(_npc);
 
-	UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 
 	return S_OK;
 }

@@ -24,7 +24,7 @@ HRESULT caveScene::init()
 	SOUNDMANAGER->addSound("caveBGM", "sound/bgm_15_Caves_of_Mt_Moon.mp3", true, true);
 	SOUNDMANAGER->play("caveBGM");
 
-	UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 	return S_OK;
 }
 

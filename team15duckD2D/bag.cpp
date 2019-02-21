@@ -533,7 +533,7 @@ void bag::itemDataSet()
 	//=============================================================== 아이템세팅 및 건네주기용 데이터 세팅
 
 	pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
-	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 
 	for (int i = 0; i < _pokemonCnt; ++i)
 	{

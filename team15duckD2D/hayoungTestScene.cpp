@@ -13,53 +13,6 @@ hayoungTestScene::~hayoungTestScene()
 
 HRESULT hayoungTestScene::init()
 {
-	/*
-	_book = new IllustratedBook;
-	_book->init();
-	_book->pokemonDataSet();
-
-	_bag = new bag;
-	_bag->init();
-	_bag->itemDataSet();
-
-	_setting = new setting;
-	_setting->init();
-
-	_ppokemon = new possessionPokemon;
-	_ppokemon->init();
-
-	frameImageinit();
-
-	_isFemale = true;
-	_isMale = false;
-
-	//메인메뉴 초기화 
-	MENUMANAGER->addFrame("메인메뉴", 670, 1, 9, 15);
-
-
-	//메인메뉴 선택했나요? 아니요
-	_mmselect = MMS_NO;
-	//서브메뉴 선택했나요? 아니오
-	_smselect = SMS_NO;
-	//커서는 처음에는 도감을 가르킵니다
-	_cselect = POKEMON_BOOK;
-
-	_cmpm._pcs = MAIN_POKEMON;
-
-
-	//서브포켓몬 슬롯 
-	for (int i = 0; i < 5; ++i)
-	{
-		float top = 35 + (i * 95);
-		float bottom = 115 + (i * 95);
-
-		_cmpm._subPokemon[i] = { 450, top, 950 , bottom };
-	}
-
-	MENUMANAGER->addFrame("포켓몬프레임1", 0, 512, 23, 4);
-
-	*/
-	//UIMANAGER->init();
 	UIMANAGER->uiDataSetting();
 	return S_OK;
 }

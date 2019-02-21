@@ -36,7 +36,7 @@ HRESULT storeScene::init()
 
 	MENUMANAGER->addFrame("choiceFrame_shop", 35, 5, 10, 8);
 
-	UIMANAGER->init();
+	UIMANAGER->uiDataSetting();
 	return S_OK;
 }
 

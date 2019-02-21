@@ -332,14 +332,14 @@ void possessionPokemon::render()
 					IMAGEMANAGER->findImage("체력게이지")->frameRender(200 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), hpPercent * 192, 12, 0, 0);
 				}
 
-				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 228, 115, 34, RGB(114,114,114));
-				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 225, 115, 34, RGB(255, 255, 255));
-				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 353, 170, 34, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 350, 170, 34, RGB(255, 255, 255));
-				D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 263, 228, 48, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 260, 225, 48, RGB(255, 255, 255));
-				D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 343, 228, 48, RGB(114, 114, 114));
-				D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 340, 225, 48, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 228 + CAMERA->getPosX(), 115 + CAMERA->getPosY(), 34, RGB(114,114,114));
+				D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 225 + CAMERA->getPosX(), 115 + CAMERA->getPosY(), 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 353 + CAMERA->getPosX(), 170 + CAMERA->getPosY(), 34, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 350 + CAMERA->getPosX(), 170 + CAMERA->getPosY(), 34, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 263 + CAMERA->getPosX(), 228 + CAMERA->getPosY(), 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 260 + CAMERA->getPosX(), 225 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
+				D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 343 + CAMERA->getPosX(), 228 + CAMERA->getPosY(), 48, RGB(114, 114, 114));
+				D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 340 + CAMERA->getPosX(), 225 + CAMERA->getPosY(), 48, RGB(255, 255, 255));
 			}
 			else
 			{
@@ -355,14 +355,14 @@ void possessionPokemon::render()
 						// 파란색
 						IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((i-1) * 90) + CAMERA->getPosY(), 0, 0);
 					}
-					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 583, 60 + ((i - 1) * 90), 30, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 580, 60 + ((i - 1) * 90), 30, RGB(255, 255, 255));
-					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 623, 98 + ((i - 1) * 90), 38, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 620, 95 + ((i - 1) * 90), 38, RGB(255, 255, 255));
-					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 813, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 810, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
-					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 883, 98 + ((i - 1) * 90), 40, RGB(114, 114, 114));
-					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 880, 95 + ((i - 1) * 90), 40, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 583 + CAMERA->getPosX(), 60 + ((i - 1) * 90) + CAMERA->getPosY(), 30, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].name.c_str(), 580 + CAMERA->getPosX(), 60 + ((i - 1) * 90) + CAMERA->getPosY(), 30, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 623 + CAMERA->getPosX(), 98 + ((i - 1) * 90) + CAMERA->getPosY(), 38, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].level.c_str(), 620 + CAMERA->getPosX(), 95 + ((i - 1) * 90) + CAMERA->getPosY(), 38, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 813 + CAMERA->getPosX(), 98 + ((i - 1) * 90) + CAMERA->getPosY(), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].currentHp.c_str(), 810 + CAMERA->getPosX(), 95 + ((i - 1) * 90) + CAMERA->getPosY(), 40, RGB(255, 255, 255));
+					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 883 + CAMERA->getPosX(), 98 + ((i - 1) * 90) + CAMERA->getPosY(), 40, RGB(114, 114, 114));
+					D2DMANAGER->drawText(_pPokemon[i].maxHp.c_str(), 880 + CAMERA->getPosX(), 95 + ((i - 1) * 90) + CAMERA->getPosY(), 40, RGB(255, 255, 255));
 				
 					//hp
 					float currentHp = stof(_pPokemon[i].currentHp);
@@ -396,12 +396,12 @@ void possessionPokemon::render()
 			//===================================================================================== 애니메이션
 			
 			//메인 포켓몬 애니
-			IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100,100, _pokemonAni[0]);
+			IMAGEMANAGER->findImage("포켓몬파닥")->aniRender(100 + CAMERA->getPosX(),100 + CAMERA->getPosY(), _pokemonAni[0]);
 
 			//서브 포켓몬 애니
 			for (int i = 1; i < _pokemonCnt; ++i)
 			{
-				IMAGEMANAGER->findImage("포켓몬파닥2")->aniRender(510, 60 + ((i - 1) * 85), _pokemonAni[i]);
+				IMAGEMANAGER->findImage("포켓몬파닥2")->aniRender(510 + CAMERA->getPosX(), 60 + ((i - 1) * 85) + CAMERA->getPosY(), _pokemonAni[i]);
 			}
 			//===============================================================================================
 
@@ -455,76 +455,76 @@ void possessionPokemon::render()
 				case SELECT_MAIN_POKEMON:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-					D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230, 70, 58);
+					D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
 					//오른쪽정보
-					D2DMANAGER->drawText(_pPokemon[0].book_number.c_str(), 670, 85, 40);
-					D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 670, 145, 40);
-					D2DMANAGER->drawText(_pPokemon[0].type.c_str(), 670, 205, 40);
-					D2DMANAGER->drawText(_pPokemon[0].iD_number.c_str(), 670, 325, 40);
-					D2DMANAGER->drawText(_pPokemon[0].item.c_str(), 670, 385, 40);
-					D2DMANAGER->drawText(_pPokemon[0].memo.c_str(), 50, 500, 40);
+					D2DMANAGER->drawText(_pPokemon[0].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[0].type.c_str(), 670 + CAMERA->getPosX(), 205 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[0].iD_number.c_str(), 670 + CAMERA->getPosX(), 325 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[0].item.c_str(), 670 + CAMERA->getPosX(), 385 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[0].memo.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
 						break;
 				case SELECT_SUB_POKEMON1:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-					D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[1].book_number.c_str(), 670, 85, 40);
-					D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 670, 145, 40);
-					D2DMANAGER->drawText(_pPokemon[1].type.c_str(), 670, 205, 40);
-					D2DMANAGER->drawText(_pPokemon[1].iD_number.c_str(), 670, 325, 40);
-					D2DMANAGER->drawText(_pPokemon[1].item.c_str(), 670, 385, 40);
-					D2DMANAGER->drawText(_pPokemon[1].memo.c_str(), 50, 500, 40);
+					D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[1].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[1].type.c_str(), 670 + CAMERA->getPosX(), 205 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[1].iD_number.c_str(), 670 + CAMERA->getPosX(), 325 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[1].item.c_str(), 670 + CAMERA->getPosX(), 385 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[1].memo.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
 					break;
 				case SELECT_SUB_POKEMON2:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-					D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[2].book_number.c_str(), 670, 85, 40);
-					D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 670, 145, 40);
-					D2DMANAGER->drawText(_pPokemon[2].type.c_str(), 670, 205, 40);
-					D2DMANAGER->drawText(_pPokemon[2].iD_number.c_str(), 670, 325, 40);
-					D2DMANAGER->drawText(_pPokemon[2].item.c_str(), 670, 385, 40);
-					D2DMANAGER->drawText(_pPokemon[2].memo.c_str(), 50, 500, 40);
+					D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[2].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[2].type.c_str(), 670 + CAMERA->getPosX(), 205 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[2].iD_number.c_str(), 670 + CAMERA->getPosX(), 325 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[2].item.c_str(), 670 + CAMERA->getPosX(), 385 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[2].memo.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
 					break;
 				case SELECT_SUB_POKEMON3:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-					D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[3].book_number.c_str(), 670, 85, 40);
-					D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 670, 145, 40);
-					D2DMANAGER->drawText(_pPokemon[3].type.c_str(), 670, 205, 40);
-					D2DMANAGER->drawText(_pPokemon[3].iD_number.c_str(), 670, 325, 40);
-					D2DMANAGER->drawText(_pPokemon[3].item.c_str(), 670, 385, 40);
-					D2DMANAGER->drawText(_pPokemon[3].memo.c_str(), 50, 500, 40);
+					D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[3].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[3].type.c_str(), 670 + CAMERA->getPosX(), 205 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[3].iD_number.c_str(), 670 + CAMERA->getPosX(), 325 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[3].item.c_str(), 670 + CAMERA->getPosX(), 385 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[3].memo.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
 					break;
 				case SELECT_SUB_POKEMON4:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-					D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[4].book_number.c_str(), 670, 85, 40);
-					D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 670, 145, 40);
-					D2DMANAGER->drawText(_pPokemon[4].type.c_str(), 670, 205, 40);
-					D2DMANAGER->drawText(_pPokemon[4].iD_number.c_str(), 670, 325, 40);
-					D2DMANAGER->drawText(_pPokemon[4].item.c_str(), 670, 385, 40);
-					D2DMANAGER->drawText(_pPokemon[4].memo.c_str(), 50, 500, 40);
+					D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[4].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[4].type.c_str(), 670 + CAMERA->getPosX(), 205 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[4].iD_number.c_str(), 670 + CAMERA->getPosX(), 325 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[4].item.c_str(), 670 + CAMERA->getPosX(), 385 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[4].memo.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
 					break;
 				case SELECT_SUB_POKEMON5:
 					swprintf_s(possessionPokemon, L"Lv.");
 					D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-					D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230, 70, 58);
-					D2DMANAGER->drawText(_pPokemon[5].book_number.c_str(), 670, 85, 40);
-					D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 670, 145, 40);
-					D2DMANAGER->drawText(_pPokemon[5].type.c_str(), 670, 205, 40);
-					D2DMANAGER->drawText(_pPokemon[5].iD_number.c_str(), 670, 325, 40);
-					D2DMANAGER->drawText(_pPokemon[5].item.c_str(), 670, 385, 40);
-					D2DMANAGER->drawText(_pPokemon[5].memo.c_str(), 50, 500, 40);
+					D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+					D2DMANAGER->drawText(_pPokemon[5].book_number.c_str(), 670 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[5].type.c_str(), 670 + CAMERA->getPosX(), 205 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[5].iD_number.c_str(), 670 + CAMERA->getPosX(), 325 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[5].item.c_str(), 670 + CAMERA->getPosX(), 385 + CAMERA->getPosY(), 40);
+					D2DMANAGER->drawText(_pPokemon[5].memo.c_str(), 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40);
 					break;
 				}
 			
@@ -540,102 +540,102 @@ void possessionPokemon::render()
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 				swprintf_s(possessionPokemon, L" / ");
 				D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[0].currentHp.c_str(), 740, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[0].maxHp.c_str(), 860, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[0].attk.c_str(), 860, 155, 40);
-				D2DMANAGER->drawText(_pPokemon[0].def.c_str(), 860, 210, 40);
-				D2DMANAGER->drawText(_pPokemon[0].s_attk.c_str(), 860, 260, 40);
-				D2DMANAGER->drawText(_pPokemon[0].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[0].speed.c_str(), 860, 365, 40);
-				D2DMANAGER->drawText(_pPokemon[0].currentExp.c_str(), 860, 420, 40);
-				D2DMANAGER->drawText(_pPokemon[0].nextLvExp.c_str(), 860, 470, 40);
+				D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[0].currentHp.c_str(), 740 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].maxHp.c_str(), 860 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].attk.c_str(), 860 + CAMERA->getPosX(), 155 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].def.c_str(), 860 + CAMERA->getPosX(), 210 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].s_attk.c_str(), 860 + CAMERA->getPosX(), 260 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].s_def.c_str(), 860 + CAMERA->getPosX(), 310 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].speed.c_str(), 860 + CAMERA->getPosX(), 365 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].currentExp.c_str(), 860 + CAMERA->getPosX(), 420 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[0].nextLvExp.c_str(), 860 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 				break;
 			case SELECT_SUB_POKEMON1:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 				swprintf_s(possessionPokemon, L" / ");
 				D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[1].currentHp.c_str(), 740, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[1].maxHp.c_str(), 860, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[1].attk.c_str(), 860, 155, 40);
-				D2DMANAGER->drawText(_pPokemon[1].def.c_str(), 860, 210, 40);
-				D2DMANAGER->drawText(_pPokemon[1].s_attk.c_str(), 860, 260, 40);
-				D2DMANAGER->drawText(_pPokemon[1].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[1].speed.c_str(), 860, 365, 40);
-				D2DMANAGER->drawText(_pPokemon[1].currentExp.c_str(), 860, 420, 40);
-				D2DMANAGER->drawText(_pPokemon[1].nextLvExp.c_str(), 860, 470, 40);
+				D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[1].currentHp.c_str(), 740 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].maxHp.c_str(), 860 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].attk.c_str(), 860 + CAMERA->getPosX(), 155 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].def.c_str(), 860 + CAMERA->getPosX(), 210 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].s_attk.c_str(), 860 + CAMERA->getPosX(), 260 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].s_def.c_str(), 860 + CAMERA->getPosX(), 310 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].speed.c_str(), 860 + CAMERA->getPosX(), 365 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].currentExp.c_str(), 860 + CAMERA->getPosX(), 420 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[1].nextLvExp.c_str(), 860 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 				break;
 			case SELECT_SUB_POKEMON2:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 				swprintf_s(possessionPokemon, L" / ");
 				D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[2].currentHp.c_str(), 740, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[2].maxHp.c_str(), 860, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[2].attk.c_str(), 860, 155, 40);
-				D2DMANAGER->drawText(_pPokemon[2].def.c_str(), 860, 210, 40);
-				D2DMANAGER->drawText(_pPokemon[2].s_attk.c_str(), 860, 260, 40);
-				D2DMANAGER->drawText(_pPokemon[2].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[2].speed.c_str(), 860, 365, 40);
-				D2DMANAGER->drawText(_pPokemon[2].currentExp.c_str(), 860, 420, 40);
-				D2DMANAGER->drawText(_pPokemon[2].nextLvExp.c_str(), 860, 470, 40);
+				D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[2].currentHp.c_str(), 740 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].maxHp.c_str(), 860 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].attk.c_str(), 860 + CAMERA->getPosX(), 155 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].def.c_str(), 860 + CAMERA->getPosX(), 210 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].s_attk.c_str(), 860 + CAMERA->getPosX(), 260 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].s_def.c_str(), 860 + CAMERA->getPosX(), 310 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].speed.c_str(), 860 + CAMERA->getPosX(), 365 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].currentExp.c_str(), 860 + CAMERA->getPosX(), 420 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[2].nextLvExp.c_str(), 860 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 				break;
 			case SELECT_SUB_POKEMON3:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 				swprintf_s(possessionPokemon, L" / ");
 				D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[3].currentHp.c_str(), 740, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[3].maxHp.c_str(), 860, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[3].attk.c_str(), 860, 155, 40);
-				D2DMANAGER->drawText(_pPokemon[3].def.c_str(), 860, 210, 40);
-				D2DMANAGER->drawText(_pPokemon[3].s_attk.c_str(), 860, 260, 40);
-				D2DMANAGER->drawText(_pPokemon[3].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[3].speed.c_str(), 860, 365, 40);
-				D2DMANAGER->drawText(_pPokemon[3].currentExp.c_str(), 860, 420, 40);
-				D2DMANAGER->drawText(_pPokemon[3].nextLvExp.c_str(), 860, 470, 40);
+				D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[3].currentHp.c_str(), 740 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].maxHp.c_str(), 860 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].attk.c_str(), 860 + CAMERA->getPosX(), 155 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].def.c_str(), 860 + CAMERA->getPosX(), 210 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].s_attk.c_str(), 860 + CAMERA->getPosX(), 260 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].s_def.c_str(), 860 + CAMERA->getPosX(), 310 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].speed.c_str(), 860 + CAMERA->getPosX(), 365 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].currentExp.c_str(), 860 + CAMERA->getPosX(), 420 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[3].nextLvExp.c_str(), 860 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 				break;
 			case SELECT_SUB_POKEMON4:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 				swprintf_s(possessionPokemon, L" / ");
 				D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[4].currentHp.c_str(), 740, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[4].maxHp.c_str(), 860, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[4].attk.c_str(), 860, 155, 40);
-				D2DMANAGER->drawText(_pPokemon[4].def.c_str(), 860, 210, 40);
-				D2DMANAGER->drawText(_pPokemon[4].s_attk.c_str(), 860, 260, 40);
-				D2DMANAGER->drawText(_pPokemon[4].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[4].speed.c_str(), 860, 365, 40);
-				D2DMANAGER->drawText(_pPokemon[4].currentExp.c_str(), 860, 420, 40);
-				D2DMANAGER->drawText(_pPokemon[4].nextLvExp.c_str(), 860, 470, 40);
+				D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[4].currentHp.c_str(), 740 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].maxHp.c_str(), 860 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].attk.c_str(), 860 + CAMERA->getPosX(), 155 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].def.c_str(), 860 + CAMERA->getPosX(), 210 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].s_attk.c_str(), 860 + CAMERA->getPosX(), 260 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].s_def.c_str(), 860 + CAMERA->getPosX(), 310 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].speed.c_str(), 860 + CAMERA->getPosX(), 365 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].currentExp.c_str(), 860 + CAMERA->getPosX(), 420 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[4].nextLvExp.c_str(), 860 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 				break;
 			case SELECT_SUB_POKEMON5:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
 				swprintf_s(possessionPokemon, L" / ");
 				D2DMANAGER->drawText(possessionPokemon, 780 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[5].currentHp.c_str(), 740, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[5].maxHp.c_str(), 860, 85, 40);
-				D2DMANAGER->drawText(_pPokemon[5].attk.c_str(), 860, 155, 40);
-				D2DMANAGER->drawText(_pPokemon[5].def.c_str(), 860, 210, 40);
-				D2DMANAGER->drawText(_pPokemon[5].s_attk.c_str(), 860, 260, 40);
-				D2DMANAGER->drawText(_pPokemon[5].s_def.c_str(), 860, 310, 40);
-				D2DMANAGER->drawText(_pPokemon[5].speed.c_str(), 860, 365, 40);
-				D2DMANAGER->drawText(_pPokemon[5].currentExp.c_str(), 860, 420, 40);
-				D2DMANAGER->drawText(_pPokemon[5].nextLvExp.c_str(), 860, 470, 40);
+				D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[5].currentHp.c_str(), 740 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].maxHp.c_str(), 860 + CAMERA->getPosX(), 85 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].attk.c_str(), 860 + CAMERA->getPosX(), 155 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].def.c_str(), 860 + CAMERA->getPosX(), 210 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].s_attk.c_str(), 860 + CAMERA->getPosX(), 260 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].s_def.c_str(), 860 + CAMERA->getPosX(), 310 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].speed.c_str(), 860 + CAMERA->getPosX(), 365 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].currentExp.c_str(), 860 + CAMERA->getPosX(), 420 + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].nextLvExp.c_str(), 860 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 				break;
 			}
 			break;
@@ -647,62 +647,62 @@ void possessionPokemon::render()
 			case SELECT_MAIN_POKEMON:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230, 70, 58);
+				D2DMANAGER->drawText(_pPokemon[0].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[0].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
 				//스킬정보 출력
-				D2DMANAGER->drawText(_pPokemon[0].skill_type.c_str(), 670, 65, 34);
-				D2DMANAGER->drawText(_pPokemon[0].skill_name.c_str(), 670, 145, 34);
+				D2DMANAGER->drawText(_pPokemon[0].skill_type.c_str(), 670 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 34);
+				D2DMANAGER->drawText(_pPokemon[0].skill_name.c_str(), 580 + CAMERA->getPosX(), 115 + CAMERA->getPosY(), 34);
 				break;
 			case SELECT_SUB_POKEMON1:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230, 70, 58);
+				D2DMANAGER->drawText(_pPokemon[1].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
-				//오른쪽정보
-				D2DMANAGER->drawText(_pPokemon[1].name.c_str(), 670, 145, 40);
-				D2DMANAGER->drawText(_pPokemon[1].iD_number.c_str(), 670, 325, 40);
+				//스킬정보 출력
+				D2DMANAGER->drawText(_pPokemon[1].skill_type.c_str(), 670 + CAMERA->getPosX() + CAMERA->getPosY(), 65, 34);
+				D2DMANAGER->drawText(_pPokemon[1].skill_name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 34);
 				break;
 			case SELECT_SUB_POKEMON2:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230, 70, 58);
+				D2DMANAGER->drawText(_pPokemon[2].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
-				//오른쪽정보
-				D2DMANAGER->drawText(_pPokemon[2].name.c_str(), 670, 145, 40);
-				D2DMANAGER->drawText(_pPokemon[2].iD_number.c_str(), 670, 325, 40);
+				//스킬정보 출력
+				D2DMANAGER->drawText(_pPokemon[2].skill_type.c_str(), 670 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 34);
+				D2DMANAGER->drawText(_pPokemon[2].skill_name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 34);
 				break;
 			case SELECT_SUB_POKEMON3:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230, 70, 58);
+				D2DMANAGER->drawText(_pPokemon[3].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
-				//오른쪽정보
-				D2DMANAGER->drawText(_pPokemon[3].name.c_str(), 670, 145, 40);
-				D2DMANAGER->drawText(_pPokemon[3].iD_number.c_str(), 670, 325, 40);
+				//스킬정보 출력
+				D2DMANAGER->drawText(_pPokemon[3].skill_type.c_str(), 670 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 34);
+				D2DMANAGER->drawText(_pPokemon[3].skill_name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 34);
 				break;
 			case SELECT_SUB_POKEMON4:
 				swprintf_s(possessionPokemon, L"Lv.");
 				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230, 70, 58);
+				D2DMANAGER->drawText(_pPokemon[4].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
-				//오른쪽정보
-				D2DMANAGER->drawText(_pPokemon[4].name.c_str(), 670, 145, 40);
-				D2DMANAGER->drawText(_pPokemon[4].iD_number.c_str(), 670, 325, 40);
+				//스킬정보 출력
+				D2DMANAGER->drawText(_pPokemon[4].skill_type.c_str(), 670 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 34);
+				D2DMANAGER->drawText(_pPokemon[4].skill_name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 34);
 				break;
 			case SELECT_SUB_POKEMON5:
 				swprintf_s(possessionPokemon, L"Lv.");
-				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY(), 40);
-				D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100, 70, 58);
-				D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230, 70, 58);
+				D2DMANAGER->drawText(possessionPokemon, 20 + CAMERA->getPosX(), 80 + CAMERA->getPosY() + CAMERA->getPosY(), 40);
+				D2DMANAGER->drawText(_pPokemon[5].level.c_str(), 100 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
+				D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 230 + CAMERA->getPosX(), 70 + CAMERA->getPosY(), 58);
 
-				//오른쪽정보
-				D2DMANAGER->drawText(_pPokemon[5].name.c_str(), 670, 145, 40);
-				D2DMANAGER->drawText(_pPokemon[5].iD_number.c_str(), 670, 325, 40);
+				//스킬정보 출력
+				D2DMANAGER->drawText(_pPokemon[5].skill_type.c_str(), 670 + CAMERA->getPosX(), 65 + CAMERA->getPosY(), 34);
+				D2DMANAGER->drawText(_pPokemon[5].skill_name.c_str(), 670 + CAMERA->getPosX(), 145 + CAMERA->getPosY(), 34);
 				break;
 			}
 		break;
@@ -722,7 +722,7 @@ void possessionPokemon::pPokemonDataSet()
 {
 	locale("kor");
 	pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
-	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt();
 
 	for (int i = 0; i < _pokemonCnt; ++i)
 	{

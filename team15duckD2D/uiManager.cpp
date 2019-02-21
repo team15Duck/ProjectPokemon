@@ -73,6 +73,7 @@ void uiManager::update()
 		_isuiopen = true;
 		UIMANAGER->selectUI(UI_MAIN);
 	}
+
 	if (_currentUI == UI_NONE) return;
 
 	_uiMap[_currentUI]->update();
