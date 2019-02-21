@@ -48,6 +48,54 @@ void pokemonSkillInfo::release()
 {
 }
 
+wstring pokemonSkillInfo::getSkillTypestring()
+{
+	switch (_skillId)
+	{
+	case TACLE:
+		return L"몸통박치기";
+	case LEECH_SEEd:
+		return L"씨뿌리기";
+	case VINE_WHIP:
+		return L"덩쿨채찍";
+	case POISON_POWDER:
+		return L"독가루";
+	case SLEEP_POWDER:
+		return L"수면가루";
+	case RAZOR_LEAF:
+		return L"잎날 가르기";
+	case SCRATCH:
+		return L"할퀴기";
+	case EMBER:
+		return L"불꽃세례";
+	case FLAMETHROWER:
+		return L"화염방사";
+	case DRAGON_RAGE:
+		return L"용의 분노";
+	case BUBBLE:
+		return L"거품";
+	case WATER_GUN:
+		return L"물대포";
+	case HYDRO_PUMP:
+		return L"하이드로 펌프";
+	case QUICK_ATTACK:
+		return L"전광석화";
+	case THUNDERSHOCK:
+		return L"전기쇼크";
+	case THUNDERBOLT:
+		return L"10만볼트";
+	case THUNDER:
+		return L"번개";
+	case THNDER_WAVE:
+		return L"전기자석파";
+	case SPLASH:
+		return L"튀어오르기";
+	case SKILL_INDEX_NONE:
+		return L"-";
+	}
+	return L" ";
+}
+
 wstring pokemonSkillInfo::getSkillTypeName()
 {
 	switch (_type)

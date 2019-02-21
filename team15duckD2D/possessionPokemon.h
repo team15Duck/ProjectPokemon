@@ -35,10 +35,12 @@ enum P_LOOK_POKEMON
 typedef struct tagPpokemonInfo
 {
 	wstring iD_number;
+	wstring book_number;
 	wstring name;
 	wstring level;
 	wstring type;
 	wstring item;
+	wstring memo;
 
 	wstring currentHp;
 	wstring maxHp;
@@ -50,6 +52,10 @@ typedef struct tagPpokemonInfo
 	wstring speed;
 	wstring currentExp;
 	wstring nextLvExp;
+
+	//스킬출력
+	wstring skill_name;
+	wstring skill_type;
 
 	bool isDataSet;
 

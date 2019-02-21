@@ -84,6 +84,8 @@ public:
 	int						getSkillID() { return _skillId; }
 	// 타입
 	POKEMON_TYPE			getSkillType() { return _type; }
+
+	wstring getSkillTypestring();
 	// 분류
 	POKEMON_SKILL_CATEGORY	getSkillCategory() { return _category; }
 	// 설명

@@ -396,12 +396,8 @@ void bag::render()
 		{
 			IMAGEMANAGER->findImage("남여가방")->frameRender(45 + CAMERA->getPosX(), 160 + CAMERA->getPosY(), 1, 0);
 		}
-		
-		//실제 게임으로 들어가면 이걸로바꿔야뎀
-		//unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayet()->getItem();
-		//imax 비교연산 녀석 size로 변경해야됨 
-		//이거 사이즈이상하게나옴 ㅠ 수정필요 
-	
+
+		unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayer()->getItem();
 
 		int i = _currentSelectNum - 3;
 		int iMax = _currentSelectNum + 3;
@@ -414,11 +410,11 @@ void bag::render()
 		{
 			iMax = 6;
 		}
-		if (iMax > 39)
+		if (iMax > itemList.max_size())
 		{
 			iMax = 39;
 		}
-		if (iMax == 39)
+		if (iMax == itemList.max_size())
 		{
 			i = 33;
 		}
@@ -512,27 +508,7 @@ void bag::itemDataSet()
 {
 	locale("kor");
 
-	//unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayet()->getItem();
-
-	//=====================================================================테스트용 삭제할거임
-	unordered_map<ITEM_TYPE, UINT> itemList;
-
-	itemList.insert(make_pair((ITEM_TYPE)0, 1));
-	itemList.insert(make_pair((ITEM_TYPE)1, 1));
-	itemList.insert(make_pair((ITEM_TYPE)2, 1));
-	itemList.insert(make_pair((ITEM_TYPE)3, 1));
-	itemList.insert(make_pair((ITEM_TYPE)4, 1));
-	itemList.insert(make_pair((ITEM_TYPE)5, 1));
-	itemList.insert(make_pair((ITEM_TYPE)6, 1));
-	itemList.insert(make_pair((ITEM_TYPE)7, 1));
-	itemList.insert(make_pair((ITEM_TYPE)8, 1));
-	itemList.insert(make_pair((ITEM_TYPE)9, 1));
-	itemList.insert(make_pair((ITEM_TYPE)10, 1));
-	itemList.insert(make_pair((ITEM_TYPE)11, 1));
-	itemList.insert(make_pair((ITEM_TYPE)12, 1));
-
-	//======================================================================================
-
+	unordered_map<ITEM_TYPE, UINT> itemList = PLAYERDATA->getPlayer()->getItem();
 
 	unordered_map<ITEM_TYPE, UINT>::iterator iter = itemList.begin();
 	unordered_map<ITEM_TYPE, UINT>::iterator end = itemList.end();
@@ -556,25 +532,9 @@ void bag::itemDataSet()
 
 	//=============================================================== 아이템세팅 및 건네주기용 데이터 세팅
 
-	//pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
-	//_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
+	pokemon** pokemons = PLAYERDATA->getPlayer()->getPokemon();
+	_pokemonCnt = PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1;
 
-	//=============================================================임시데이터 지울꺼임
-	pokemon** pokemons = new pokemon*[5];
-	_pokemonCnt = 5;
-
-	for (int i = 0; i < 5; ++i)
-	{
-		pokemons[i] = new pokemon;
-	}
-	pokemons[0]->init(0, (POKEMON)0, 5, true);
-	pokemons[1]->init(0, (POKEMON)1, 10, true);
-	pokemons[2]->init(0, (POKEMON)2, 15, true);
-	pokemons[3]->init(0, (POKEMON)3, 20, true);
-	pokemons[4]->init(0, (POKEMON)4, 15, true);
-	//pokemons[5]->init(0, (POKEMON)5, 30, true);
-
-	//===============================================================================
 	for (int i = 0; i < _pokemonCnt; ++i)
 	{
 
