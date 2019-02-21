@@ -118,15 +118,16 @@ void report::render()
 	WCHAR report[128];
 
 	MENUMANAGER->findMenuFrame("현재정보")->render();
-	swprintf_s(report, L"%d", _report.currencity);
-	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 32 + CAMERA->getPosY(), 34);
-	swprintf_s(report, L"이름 : %d", _report.name);
-	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 66 + CAMERA->getPosY(), 34);
-	swprintf_s(report, L"포켓몬도감 : %d", _report.IllustratedBook);
+	swprintf_s(report, L"");
+	D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getSceneName()).c_str(), 32 + CAMERA->getPosX(), 32 + CAMERA->getPosY(), 34);
+	swprintf_s(report, L"");
+	D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getName()).c_str(), 32 + CAMERA->getPosX(), 66 + CAMERA->getPosY(), 34);
+	swprintf_s(report, L"포켓몬도감 : ");
 	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 34);
+	D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getCurrentPokemonCnt()).c_str(), 80 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 34);
 	swprintf_s(report, L"플레이시간 : %d", _report.playTime);
 	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
-
+	D2DMANAGER->drawText(to_wstring((int)PLAYERDATA->getPlayer()->getPlayTime()).c_str(), 50 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
 
 	if (_rState == RS_CURRENT_INFO)
 	{

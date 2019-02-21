@@ -157,7 +157,14 @@ void possessionPokemon::update()
 			//exit
 			if (KEYMANAGER->isOnceKeyDown('X'))
 			{
-				UIMANAGER->moveBeforeUI();
+				if (!_isPokemonChange)
+				{
+					UIMANAGER->moveBeforeUI();
+				}
+				else
+				{
+					_isPokemonChange = false;
+				}
 			}
 		}
 
