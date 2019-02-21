@@ -130,7 +130,7 @@ void report::render()
 
 	if (_rState == RS_CURRENT_INFO)
 	{
-		IMAGEMANAGER->findImage("기본하단")->render(0, 480);
+		IMAGEMANAGER->findImage("기본하단")->render(0 + CAMERA->getPosX(), 480 + CAMERA->getPosY());
 		swprintf_s(report, L"지금까지의 활약을 리포트에 저장하시겠습니까?");
 		D2DMANAGER->drawText(report, 50 + CAMERA->getPosX(), 500 + CAMERA->getPosY(), 40, RGB(255,255,255));
 		

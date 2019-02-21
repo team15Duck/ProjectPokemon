@@ -24,6 +24,7 @@ HRESULT caveScene::init()
 	SOUNDMANAGER->addSound("caveBGM", "sound/bgm_15_Caves_of_Mt_Moon.mp3", true, true);
 	SOUNDMANAGER->play("caveBGM");
 
+	UIMANAGER->init();
 	return S_OK;
 }
 
@@ -40,10 +41,12 @@ void caveScene::update()
 	_caveMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+	UIMANAGER->update();
 }
 
 void caveScene::render()
 {
 	_caveMap->render();
 	SCRIPTMANAGER->render();
+	UIMANAGER->render();
 }

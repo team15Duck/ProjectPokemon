@@ -22,7 +22,7 @@ HRESULT townScene::init()
 	PLAYERDATA->getPlayer()->setSceneName("townScene");
 	SOUNDMANAGER->addSound("townBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
 	SOUNDMANAGER->play("townBGM");
-
+	UIMANAGER->init();
 	return S_OK;
 }
 
@@ -37,13 +37,16 @@ void townScene::update()
 	SCRIPTMANAGER->update();
 	if (!SCRIPTMANAGER->isUpdate())return;
 	_townMap->update();
+
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
 	
+	UIMANAGER->update();
 }
 
 void townScene::render()
 {
 	_townMap->render();
 	SCRIPTMANAGER->render();
+	UIMANAGER->render();
 }

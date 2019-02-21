@@ -24,6 +24,7 @@ HRESULT fieldScene::init()
 	SOUNDMANAGER->addSound("fieldBGM", "sound/bgm_10_Road_to_Viridian_City.mp3", true, true);
 	SOUNDMANAGER->play("fieldBGM");
 
+	UIMANAGER->init();
 	return S_OK;
 }
 
@@ -39,10 +40,12 @@ void fieldScene::update()
 	_fieldMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+	UIMANAGER->update();
 }
 
 void fieldScene::render()
 {
 	_fieldMap->render();
 	SCRIPTMANAGER->render();
+	UIMANAGER->render();
 }

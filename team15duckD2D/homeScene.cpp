@@ -25,6 +25,7 @@ HRESULT homeScene::init()
 	SOUNDMANAGER->addSound("homeBGM", "sound/bgm_11_City_Theme_Pallet_Town.mp3", true, true);
 	SOUNDMANAGER->play("homeBGM");
 	
+	UIMANAGER->init();
 
 	return S_OK;
 }
@@ -41,10 +42,13 @@ void homeScene::update()
 	_homeMap->update();
 	PLAYERDATA->getPlayer()->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+
+	UIMANAGER->update();
 }
 
 void homeScene::render()
 {
 	_homeMap->render();
 	SCRIPTMANAGER->render();
+	UIMANAGER->render();
 }

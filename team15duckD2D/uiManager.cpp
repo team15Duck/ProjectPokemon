@@ -68,7 +68,10 @@ void uiManager::release()
 
 void uiManager::update()
 {
-
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
+	{
+		UIMANAGER->selectUI(UI_MAIN);
+	}
 	if (_currentUI == UI_NONE) return;
 
 	_uiMap[_currentUI]->update();

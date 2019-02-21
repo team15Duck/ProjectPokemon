@@ -27,6 +27,8 @@ HRESULT oLabScene::init()
 	_npc->init(NPC_TYPE_OAK);
 	_oLabMap->pushNpc(_npc);
 
+	UIMANAGER->init();
+
 	return S_OK;
 }
 
@@ -43,10 +45,12 @@ void oLabScene::update()
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+	UIMANAGER->update();
 }
 
 void oLabScene::render()
 {
 	_oLabMap->render();
 	SCRIPTMANAGER->render();
+	UIMANAGER->render();
 }

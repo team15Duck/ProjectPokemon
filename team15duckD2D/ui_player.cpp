@@ -42,6 +42,7 @@ void ui_player::render()
 	{
 		IMAGEMANAGER->findImage("트레이너카드")->frameRender(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY(), 0, 0);
 	}
+
 	D2DMANAGER->drawText(_uiplayer.name.c_str(), 50, 50);
 	D2DMANAGER->drawText(_uiplayer.money.c_str(), 100, 150);
 	D2DMANAGER->drawText(_uiplayer.time.c_str(), 100, 350);

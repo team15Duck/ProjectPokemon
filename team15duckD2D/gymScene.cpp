@@ -28,6 +28,8 @@ HRESULT gymScene::init()
 	_npc->init(NPC_TYPE_BOSS);
 	_gymMap->pushNpc(_npc);
 
+	UIMANAGER->init();
+
 	return S_OK;
 }
 
@@ -44,10 +46,12 @@ void gymScene::update()
 	PLAYERDATA->getPlayer()->update();
 	_npc->update();
 	CAMERA->move(PLAYERDATA->getPlayer()->getPosX(), PLAYERDATA->getPlayer()->getPosY());
+	UIMANAGER->update();
 }
 
 void gymScene::render()
 {
 	_gymMap->render();
 	SCRIPTMANAGER->render();
+	UIMANAGER->render();
 }

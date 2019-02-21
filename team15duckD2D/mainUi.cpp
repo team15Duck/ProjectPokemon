@@ -137,8 +137,6 @@ void mainUi::render()
 
 	//텍스트 출력-
 	WCHAR str[1024];
-	swprintf_s(str, L"메뉴선택상태:");
-	D2DMANAGER->drawText(str, 100 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 40);
 
 	swprintf_s(str, L"도감");
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 33 + CAMERA->getPosY(), 40);
@@ -146,7 +144,7 @@ void mainUi::render()
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 93 + CAMERA->getPosY(), 40);
 	swprintf_s(str, L"가방");
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 153 + CAMERA->getPosY(), 40);
-	swprintf_s(str, L"닉네임출력");
+	swprintf_s(str, L"정보");
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), 40);
 	swprintf_s(str, L"리포트");
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 273 + CAMERA->getPosY(), 40);
