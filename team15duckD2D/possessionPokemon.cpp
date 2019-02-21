@@ -766,7 +766,7 @@ void possessionPokemon::pPokemonDataSet()
 
 		_pPokemon[i].iD_number = to_wstring(pokemons[i]->getIdNo());
 		_pPokemon[i].name = string2wstring(pokemons[i]->getName());
-		//_pPokemon[i].type = string2wstring(pokemons[i]->getPokemonType()); 이뇨속 스위치로해서 가져와야하나욥?
+		_pPokemon[i].type = pokemons[i]->getPokemonTypeString();
 		_pPokemon[i].currentHp = to_wstring(pokemons[i]->getHp()); // 현재?
 		_pPokemon[i].maxHp = to_wstring(pokemons[i]->getMaxHp()); // 전체?
 		
@@ -788,7 +788,12 @@ void possessionPokemon::pPokemonDataSet()
 
 		char name[128] = "";
 		sprintf_s(name, "ui_pokemons_%d", pokemons[i]->getPokeminIndex());
-		_pokemonAni[i] = KEYANIMANAGER->findAnimation("포켓몬선택", name);
+		if(0 < i)
+			_pokemonAni[i] = KEYANIMANAGER->findAnimation("포켓몬선택2", name);
+		else
+		{
+			_pokemonAni[i] = KEYANIMANAGER->findAnimation("포켓몬선택", name);
+		}
 		_pokemonAni[i]->start();
 	}
 
@@ -813,6 +818,7 @@ void possessionPokemon::keyani()
 	IMAGEMANAGER->addFrameImage("포켓몬파닥2", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);	//작은사이즈 서브 포켓몬용
 
 	KEYANIMANAGER->addAnimationType("포켓몬선택");
+	KEYANIMANAGER->addAnimationType("포켓몬선택2");
 	
 	//큰 포켓몬용
 	for (int i = 0; i < 151; ++i)
@@ -830,6 +836,6 @@ void possessionPokemon::keyani()
 		char keyName2[128] = "";
 		sprintf_s(keyName2, "ui_pokemons_%d", i);
 		
-		KEYANIMANAGER->addArrayFrameAnimation("포켓몬선택", keyName2, "포켓몬파닥2", pokemons_mini2, 2, 10, true);
+		KEYANIMANAGER->addArrayFrameAnimation("포켓몬선택2", keyName2, "포켓몬파닥2", pokemons_mini2, 2, 10, true);
 	}
 }

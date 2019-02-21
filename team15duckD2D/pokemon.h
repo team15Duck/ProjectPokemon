@@ -220,6 +220,8 @@ public:
 	// 포켓몬 타입
 	POKEMON_TYPE getPokemonType() { return _type; }
 
+	wstring getPokemonTypeString();
+
 	// 트레이너 노트
 	string getTrainerNote()		{ return _trainerNote; }
 	// 소지하고 있는 아이템 타입
