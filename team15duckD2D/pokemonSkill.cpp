@@ -136,10 +136,16 @@ pokemonSkill::~pokemonSkill()
 HRESULT pokemonSkill::init(int skillid)
 {
 	_skillId = skillid;
-	_info = *SKILLDATA->getPokemonSkillinfo(skillid);
-	if(_info.getSkillID() != SKILL_INDEX_NONE)
-		_currentPP = _info.getDefaultPP();
 
+	pokemonSkillInfo* info = SKILLDATA->getPokemonSkillinfo(skillid);
+	if (info)
+	{
+		_info = *info;
+
+		if(_info.getSkillID() != SKILL_INDEX_NONE)
+			_currentPP = _info.getDefaultPP();
+	}
+	
 	return S_OK;
 }
 
