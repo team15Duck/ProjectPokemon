@@ -22,33 +22,9 @@ HRESULT playerDataBase::init()
 		pm->init(NULL, PM_BULBASAUR, 100, true);
 		_currentPlayer->setPokemonArray(0, pm);
 	}
-	{
-		pokemon* pm = new pokemon;
-		pm->init(NULL, PM_CHARMANDER, 10, true);
-		_currentPlayer->setPokemonArray(1, pm);
-	}
-	{
-		pokemon* pm = new pokemon;
-		pm->init(NULL, PM_SQUIRTLE, 15, true);
-		_currentPlayer->setPokemonArray(2, pm);
-	}
-	{
-		pokemon* pm = new pokemon;
-		pm->init(NULL, PM_MAGIKARP, 20, true);
-		_currentPlayer->setPokemonArray(3, pm);
-	}
-	{
-		pokemon* pm = new pokemon;
-		pm->init(NULL, PM_PIKACHU, 25, true);
-		_currentPlayer->setPokemonArray(4, pm);
-	}
-	{
-		pokemon* pm = new pokemon;
-		pm->init(NULL, PM_CHARIZARD, 53, true);
-		_currentPlayer->setPokemonArray(5, pm);
-	}
+
 	
-	_currentPlayer->setCurrentPokemonCnt(6);
+	_currentPlayer->setCurrentPokemonCnt(1);
 
 
 	return S_OK;
@@ -87,6 +63,7 @@ void playerDataBase::dataLoad(DATA data)
 	_currentPlayer->setMoney(stoi(vData[5]));
 	_currentPlayer->setIsMan(stoi(vData[6]));
 	_currentPlayer->setPos();
+	SCENEMANAGER->changeScene(_currentPlayer->getSceneName());
 }
 
 void playerDataBase::dataSave(DATA data)

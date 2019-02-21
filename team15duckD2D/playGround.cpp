@@ -18,10 +18,9 @@ HRESULT playGround::init()
 	
 	SCENEMANAGER->addScene("loadingScene", new loadingScene);
 
-	if(!MAPTOOLSCENE)
-	{
-		SCENEMANAGER->changeScene("loadingScene");
-	}
+
+	SCENEMANAGER->changeScene("loadingScene");
+	
 
 	//SOUNDMANAGER->addSound("테스트용", "sound/bgm_01_Game_Freak_Logo.mp3", true, true);
 	//
@@ -205,37 +204,10 @@ HRESULT playGround::init()
 	//IMAGEMANAGER->addFrameImage("포켓몬파닥2", L"image/pokemon/pokemon_mini_start.png", 2304 / 2, 2176 / 2, 18, 17);	//작은사이즈 서브 포켓몬용
 	//
 	//// ========================================================================================================
-	SCENEMANAGER->addScene("치영씬", new chiyeongTestScene);
-	SCENEMANAGER->addScene("하영씬", new hayoungTestScene);
-	SCENEMANAGER->addScene("mapToolScene", new mapToolScene);
-	SCENEMANAGER->addScene("mapTestScene", new mapTestScene);
-	SCENEMANAGER->addScene("objectToolScene", new objectToolScene);
-	SCENEMANAGER->addScene("startScene", new startScene);
 
-	SCENEMANAGER->addScene("battleScene", new battleScene);
-	SCENEMANAGER->addScene("battleScene2", new battleScene2);
-
-	SCENEMANAGER->addScene("caveScene", new caveScene);
-	SCENEMANAGER->addScene("centerScene", new centerScene);
-	SCENEMANAGER->addScene("fieldScene", new fieldScene);
-	SCENEMANAGER->addScene("gymScene", new gymScene);
-	SCENEMANAGER->addScene("homeScene", new homeScene);
-	SCENEMANAGER->addScene("oLabScene", new oLabScene);
-	SCENEMANAGER->addScene("storeScene", new storeScene);
-	SCENEMANAGER->addScene("townScene", new townScene);
-	SCENEMANAGER->addScene("loadScene", new loadScene);
-	SCENEMANAGER->addScene("newGameScene", new newGameScene);
-	SCENEMANAGER->addScene("endingScene", new endingScene);
 
 	
-	if (MAPTOOLSCENE)
-	{
-		SCENEMANAGER->changeScene("homeScene");
-	}
-	else
-	{
-		//SCENEMANAGER->changeScene("endingScene");
-	}
+
 	
 	return S_OK;
 }
