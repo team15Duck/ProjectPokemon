@@ -40,7 +40,8 @@ private:
 	float _evolutionDisTime;	// 진화 연출용 시간
 	int _evolutionDisCount;		// 진화 연출 용 카운트
 
-	bool _isEvolution;
+	bool _isEvolution;			// 
+	bool _isGetPokemon;			// 포멧몬을 잡음
 	
 	float _delayTime;
 

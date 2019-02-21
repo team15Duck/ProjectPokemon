@@ -565,7 +565,159 @@ void battleScene2::keyControl()
 	}
 	else if (_battleUI->getCurrentMenu() == BATTLE_UI_BAG)
 	{
+		if (_battleUI->getItemSubMenuOn())
+		{
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_battleUI->setSubMenuSelectNum(!_battleUI->getSubMenuSelectNum());
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_battleUI->setSubMenuSelectNum(!_battleUI->getSubMenuSelectNum());
+			}
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				if (_battleUI->getSubMenuSelectNum() == 0)
+				{
+					//아이템사용하면됨
+					_battleUI->getCurrentPokemonNum();//현재포켓몬번호
+					_battleUI->getBagSelectNum();	//가방에서 선택한번호
+					player::mapItemIter iter;
+					int ii = 0;
+					for (; iter != PLAYERDATA->getPlayer()->getItem().end(); iter++, ii++)
+					{
+						if (ii == _battleUI->getBagSelectNum()) break;
+					}
+					bool itemUse = false;
+					bool usePokeball = false;
+					switch (_battleUI->getItemArray(iter->first)->getItemType())
+					{
+						case MONSTER_BALL:
+						case SUPER_BALL:
+						case MASTER_BALL:
+						{
+							usePokeball = true;
+							break;
+						}
+						break;
+						case NORMAL_POTION:
 
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								itemUse = true;
+								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
+							}
+							break;
+						case SUPER_POTION:
+
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								itemUse = true;
+								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
+							}
+							break;
+						case HYPER_POTION:
+
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								itemUse = true;
+								_pms[TURN_PLAYER]->hillHp(_battleUI->getItemArray(iter->first)->getItemValue());
+							}
+							break;
+						case MAX_POTION:
+
+							if (_pms[TURN_PLAYER]->getHp() < _pms[TURN_PLAYER]->getMaxHp())
+							{
+								itemUse = true;
+								_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
+							}
+							break;
+						case FULL_RESTORE:
+							itemUse = true;
+							_pms[TURN_PLAYER]->clearUpsetCondtion();
+							_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
+							break;
+					}
+
+
+
+					//스위치문 다음에
+					if (itemUse)
+					{
+						//아이템 줄이거나 삭제
+						if (iter->second > 1)
+						{
+							iter->second--;
+						}
+						else
+						{
+							PLAYERDATA->getPlayer()->getItem().erase(iter);
+						}
+					}
+					else if (usePokeball)			// 포켓볼은 사용 못함
+					{
+						wstring script = L"사용 할 수 없다!";
+						_battleUI->pushScript(script);
+					}
+
+					_battleUI->setItemSubMenuOn(false);
+					_battleUI->setSubMenuSelectNum(false);
+					_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+					_battleUI->setBagSelectNum(0);
+				}
+				else
+				{
+					_battleUI->setItemSubMenuOn(false);
+					_battleUI->setSubMenuSelectNum(false);
+				}
+			}
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_battleUI->setItemSubMenuOn(false);
+				_battleUI->setSubMenuSelectNum(false);
+
+			}
+
+		}
+		else
+		{
+			if (PLAYERDATA->getPlayer()->getItem().size())
+			{
+				if (KEYMANAGER->isOnceKeyDown(VK_UP))
+				{
+					if (_battleUI->getBagSelectNum() == 0)
+					{
+						_battleUI->setBagSelectNum(PLAYERDATA->getPlayer()->getItem().size() - 1);
+					}
+					else
+					{
+						_battleUI->setBagSelectNum(_battleUI->getBagSelectNum() - 1);
+					}
+				}
+				if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+				{
+					if (_battleUI->getBagSelectNum() == PLAYERDATA->getPlayer()->getItem().size() - 1)
+					{
+						_battleUI->setBagSelectNum(0);
+					}
+					else
+					{
+						_battleUI->setBagSelectNum(_battleUI->getBagSelectNum() + 1);
+					}
+				}
+
+				if (KEYMANAGER->isOnceKeyDown('Z'))
+				{
+					_battleUI->setItemSubMenuOn(true);
+				}
+
+			}
+			if (KEYMANAGER->isOnceKeyDown('X'))
+			{
+				_battleUI->setCurrentMenu(BATTLE_UI_NONE);
+				_battleUI->setBagSelectNum(0);
+			}
+		}
 	}
 }
 
