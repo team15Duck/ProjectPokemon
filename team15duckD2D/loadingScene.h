@@ -1,16 +1,16 @@
 #pragma once
 #include "gameNode.h"
 
-#define LOADINGMAX 1000
+#define LOADINGMAX 236
 
 //모든데이터 로딩하고 스타트씬으로 넘어감
 class loadingScene : public gameNode
 {
 private:
 	image* _backGround;
+	animation* _ani;
 
-
-
+	float _loadingBar;
 
 
 public:

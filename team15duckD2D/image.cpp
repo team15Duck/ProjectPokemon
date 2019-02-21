@@ -43,15 +43,19 @@ HRESULT image::init(LPCWSTR fileName, int width, int height, int frameNumX, int 
 	_fileName = new WCHAR[len + 1];
 	lstrcpyW(_fileName, fileName);
 
-
-
+	
+	//CLSCTX_LOCAL_SERVER
 	// WIC를 사용하기 위한 Factory 객체 생성
-	hr = CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER,
-		IID_PPV_ARGS(&_imageInfo->WICImagingFactory));
-	assert(hr == S_OK);
-
+	// CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER,
+	//	IID_PPV_ARGS(&_imageInfo->WICImagingFactory));
+	//if (_imageInfo->WICImagingFactory == nullptr)
+	//{
+	//	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_HANDLER,
+	//	IID_PPV_ARGS(&_imageInfo->WICImagingFactory));
+	//}
+	//
 	// 디코더 생성
-	hr = _imageInfo->WICImagingFactory->CreateDecoderFromFilename(_fileName, NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand,
+	hr = D2DMANAGER->WICImagingFactory->CreateDecoderFromFilename(_fileName, NULL, GENERIC_READ, WICDecodeMetadataCacheOnDemand,
 		&(_imageInfo->WICDecoder));
 	assert(hr == S_OK);
 
@@ -60,7 +64,7 @@ HRESULT image::init(LPCWSTR fileName, int width, int height, int frameNumX, int 
 	assert(hr == S_OK);
 
 	// 포맷 컨버터 생성
-	hr = _imageInfo->WICImagingFactory->CreateFormatConverter(&_imageInfo->WICFormatConverter);
+	hr = D2DMANAGER->WICImagingFactory->CreateFormatConverter(&_imageInfo->WICFormatConverter);
 	assert(hr == S_OK);
 
 	// 비트맵으로 변환

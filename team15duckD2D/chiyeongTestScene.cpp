@@ -13,13 +13,7 @@ chiyeongTestScene::~chiyeongTestScene()
 
 HRESULT chiyeongTestScene::init()
 {
-	IMAGEMANAGER->addFrameImage("loadingBackGround", L"image/loadingBackGround.png", WINSIZEX * 4, WINSIZEY, 4, 1);
-	KEYANIMANAGER->addAnimationType("loading");
-	//가만히서있기
-	int loading[4] = { 0,1,2,3 };
-	KEYANIMANAGER->addArrayFrameAnimation("loading", "loadingBackGround","loadingBackGround", loading, 4, 14, true);
-	_ani = KEYANIMANAGER->findAnimation("loading", "loadingBackGround");
-	_ani->start();
+	
 
 	_map = new mapData;
 	_rc[0] = { -500, -WINSIZEY, 200, WINSIZEY * 2};
@@ -92,7 +86,7 @@ void chiyeongTestScene::render()
 			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
 		}
 	}
-	IMAGEMANAGER->findImage("loadingBackGround")->aniRender(0, 0, _ani);
+	
 
 
 	//if (_start)

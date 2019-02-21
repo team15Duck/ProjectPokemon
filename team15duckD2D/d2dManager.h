@@ -15,6 +15,7 @@ public:
 
 	IDWriteFontCollection*		_collection;			//폰트들이 모여있는곳~ 커스텀폰트 쓸때 씀ㅋ
 	
+	IWICImagingFactory*		WICImagingFactory;
 
 public:
 	d2dManager();

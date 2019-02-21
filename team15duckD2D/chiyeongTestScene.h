@@ -11,7 +11,7 @@ private:
 	bool _start;
 	float _angle[9];
 
-	animation* _ani;
+
 
 	mapData* _map;
 	player* _player;

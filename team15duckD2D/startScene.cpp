@@ -21,9 +21,9 @@ HRESULT startScene::init()
 	SOUNDMANAGER->addSound("startBattleBgm", _vBgmString[2], true, false);
 	SOUNDMANAGER->addSound("titleBgm", _vBgmString[3], true, false);
 
-	_soundKeys[0] = "startSceneBgm";
-	_soundKeys[1] = "startBattleBgm";
-	_soundKeys[2] = "titleBgm";
+	_soundKeys[0] = "startSceneBgm"    ;
+	_soundKeys[1] = "startBattleBgm"     ;
+	_soundKeys[2] = "titleBgm"          ;
 
 	_idx = 0;
 	_gameTime = 0.f;

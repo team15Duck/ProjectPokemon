@@ -21,6 +21,7 @@
 
 #include "newGameScene.h"
 #include "endingScene.h"
+#include "loadingScene.h"
 
 
 class playGround : public gameNode

@@ -16,6 +16,9 @@ HRESULT d2dManager::init()
 	_d2dFactory = nullptr;
 	_renderTarget = nullptr;
 
+	CoCreateInstance(CLSID_WICImagingFactory, NULL, CLSCTX_INPROC_SERVER,
+		IID_PPV_ARGS(&WICImagingFactory));
+
 	HRESULT hr = E_FAIL;
 
 	//---------------------------------------------------------------------------
