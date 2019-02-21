@@ -144,8 +144,9 @@ void mainUi::render()
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 93 + CAMERA->getPosY(), 40);
 	swprintf_s(str, L"가방");
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 153 + CAMERA->getPosY(), 40);
+
 	swprintf_s(str, L"정보");
-	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), 40);
+	D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getName()).c_str(), 726 + CAMERA->getPosX(), 213 + CAMERA->getPosY(), 40);
 	swprintf_s(str, L"리포트");
 	D2DMANAGER->drawText(str, 726 + CAMERA->getPosX(), 273 + CAMERA->getPosY(), 40);
 	swprintf_s(str, L"설정");
