@@ -562,18 +562,33 @@ void battleScene::keyControl()
 					switch (_battleUI->getItemArray(iter->first)->getItemType())
 					{
 						case MONSTER_BALL:
+						{
 							itemUse = true;
 							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							break;
+						}
 							
-						break;
 						case SUPER_BALL:
+						{
 							itemUse = true;
+							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							break;
+						}
 						break;
 						case HYPER_BALL:
+						{
 							itemUse = true;
+							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							break;
+						}
+
 						break;
 						case MASTER_BALL:
+						{
 							itemUse = true;
+							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							break;
+						}
 						break;
 						case NORMAL_POTION:
 						
