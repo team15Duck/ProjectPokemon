@@ -210,11 +210,11 @@ void pokemon::loadSavePack(pmPack* pack)
 	_idNo = pack->idNo;
 	_index = (POKEMON)pack->index;
 
-	_nickName.clear();
-	_nickName.append(pack->nickName);
-
-	_trainerNote.clear();
-	_trainerNote.append(pack->trainerNote);
+	//_nickName.clear();
+	//_nickName.append(pack->nickName);
+	//
+	//_trainerNote.clear();
+	//_trainerNote.append(pack->trainerNote);
 
 	_ownerItemType = static_cast<ITEM_TYPE>(pack->itemType);
 

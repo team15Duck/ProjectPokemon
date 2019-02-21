@@ -75,12 +75,21 @@ HRESULT battleScene::init()
 	_isAwakeMyPokemon = true;
 	_isAwakeEnemyPokemon = true;
 
+	wstring script = L"야생의 ";
+	script.append(string2wstring(_pms[TURN_ENEMY]->getName()));
+	script.append(L"(이)가 나타났다.");
+	_battleUI->pushScript(script);
+
 	return S_OK;
 }
 
 void battleScene::release()
 {
-	SAFE_DELETE(_pokemon);
+	if(_isGetPokemon)
+		_pokemon = nullptr;
+	else
+		SAFE_DELETE(_pokemon);
+
 	SAFE_RELEASE(_battleUI);
 	SAFE_DELETE(_battleUI);
 
@@ -259,7 +268,7 @@ void battleScene::render()
 
 		if(_isAwakeMyPokemon)
 			_pms[TURN_PLAYER]->render();
-		if(_isAwakeEnemyPokemon)
+		if(_isAwakeEnemyPokemon && !_isGetPokemon) // 적 포켓몬이 깨어있다 && 포켓몬 잡히지 않았다
 			_pms[TURN_ENEMY]->render();
 	}
 
@@ -559,34 +568,39 @@ void battleScene::keyControl()
 						if (ii == _battleUI->getBagSelectNum()) break;
 					}
 					bool itemUse = false;
+					bool usePokeball = false;
 					switch (_battleUI->getItemArray(iter->first)->getItemType())
 					{
 						case MONSTER_BALL:
 						{
+							usePokeball = true;
 							itemUse = true;
-							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							_isGetPokemon = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
 							break;
 						}
 							
 						case SUPER_BALL:
 						{
+							usePokeball = true;
 							itemUse = true;
-							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							_isGetPokemon = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
 							break;
 						}
 						break;
 						case HYPER_BALL:
 						{
+							usePokeball = true;
 							itemUse = true;
-							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							_isGetPokemon = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
 							break;
 						}
 
 						break;
 						case MASTER_BALL:
 						{
+							usePokeball = true;
 							itemUse = true;
-							bool pokemonGet = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
+							_isGetPokemon = RND->getInt(11) < _battleUI->getItemArray(iter->first)->getItemValue() ? true : false;
 							break;
 						}
 						break;
@@ -628,13 +642,8 @@ void battleScene::keyControl()
 							_pms[TURN_PLAYER]->hillHp(_pms[TURN_PLAYER]->getMaxHp());
 						break;
 					}
-
-
-					PLAYERDATA->getPlayer()->getCurrentPokemonCnt(); //6보다작을떄
-					//PLAYERDATA->getPlayer()->setPokemonArray(PLAYERDATA->getPlayer()->getCurrentPokemonCnt(), 포켓몬);
-					PLAYERDATA->getPlayer()->setCurrentPokemonCnt(PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1);
-
-
+					
+					
 					//스위치문 다음에
 					if (itemUse)
 					{
@@ -646,6 +655,25 @@ void battleScene::keyControl()
 						else
 						{
 							PLAYERDATA->getPlayer()->getItem().erase(iter);
+						}
+
+						if (usePokeball)
+						{
+							if (_isGetPokemon)
+							{
+								if (PLAYERDATA->getPlayer()->getCurrentPokemonCnt() < 6)
+								{
+									PLAYERDATA->getPlayer()->setPokemonArray(PLAYERDATA->getPlayer()->getCurrentPokemonCnt(), _pms[TURN_ENEMY]);
+									PLAYERDATA->getPlayer()->setCurrentPokemonCnt(PLAYERDATA->getPlayer()->getCurrentPokemonCnt() + 1);
+								}
+								
+								_phase = PHASE_END;
+							}
+							else
+							{
+								wstring script = L"아 잡을 수 있었는데...";
+								_battleUI->pushScript(script);
+							}
 						}
 					}
 
@@ -714,13 +742,7 @@ void battleScene::battleStart()
 {
 	if (TURN_PLAYER == _turn)
 	{
-		wstring script = L"야생의 ";
-		script.append(string2wstring(_pms[TURN_ENEMY]->getName()));
-		script.append(L"(이)가 나타났다.");
-		_battleUI->pushScript(script);
-
-		script.clear();
-		script = L"가랏!\n";
+		wstring script = L"가랏!\n";
 		script.append(string2wstring(_pms[TURN_PLAYER]->getName()));
 		script.append(L"!! 너로 정했다!");
 
@@ -887,28 +909,37 @@ void battleScene::battleEnd()
 	}
 	else
 	{
-		if (_pms[TURN_PLAYER]->isAwake())
+		if (_isGetPokemon)
 		{
-			wstring script = L"승리하였다.";
-			_battleUI->pushScript(script);
-
-			int value = RND->getFromIntTo(1, 1000);
-			
-			script.clear();
-			script = L"상금 ";
-
-			script.append(to_wstring(value));
-			script.append(L" GOLD를 획득하였다.");
-
-			// 돈 획득
-			PLAYERDATA->getPlayer()->setMoney(PLAYERDATA->getPlayer()->getMoney() + value);
-
+			wstring script = string2wstring(_pms[TURN_ENEMY]->getName());
+			script.append(L"을(를) 잡았다!");
 			_battleUI->pushScript(script);
 		}
 		else
 		{
-			wstring script = L"정신이 아득해졌다...!";
-			_battleUI->pushScript(script);
+			if (_pms[TURN_PLAYER]->isAwake())
+			{
+				wstring script = L"승리하였다.";
+				_battleUI->pushScript(script);
+
+				int value = RND->getFromIntTo(1, 1000);
+
+				script.clear();
+				script = L"상금 ";
+
+				script.append(to_wstring(value));
+				script.append(L" GOLD를 획득하였다.");
+
+				// 돈 획득
+				PLAYERDATA->getPlayer()->setMoney(PLAYERDATA->getPlayer()->getMoney() + value);
+
+				_battleUI->pushScript(script);
+			}
+			else
+			{
+				wstring script = L"정신이 아득해졌다...!";
+				_battleUI->pushScript(script);
+			}
 		}
 
 		_isBattleFin = true;
