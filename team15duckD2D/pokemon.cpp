@@ -141,31 +141,31 @@ void pokemon::render()
 {
 	_img->frameRender(CAMERA->getPosX() + _destX, CAMERA->getPosY() + _destY, _frameX, _frameY);
 
-	WCHAR str[256];
-	swprintf_s(str, L"Hp : %d / %d", getDisplayHp(), getMaxHp());
-	D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 100);
-	swprintf_s(str, L"Get Damage : %d", _damage);
-	D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 120);
-	
-	if (_isIdle)
-	{
-		swprintf_s(str, L" IDLE ");
-		D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 140);
-	}
-
-	D2DMANAGER->drawText(_state.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 160);
-
-
-	for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
-	{
-		pokemonSkillInfo info = *_skills[ii].getSkillInfomation();
-		wstring s;
-		s = string2wstring(info.getSkillName());
-		s.append(to_wstring(_skills[ii].getCurrentPP()));
-		s.append(L" / ");
-		s.append(to_wstring(_skills[ii].getMaxPP()));
-		D2DMANAGER->drawText(s.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 200 + ii * 20);
-	}
+	//WCHAR str[256];
+	//swprintf_s(str, L"Hp : %d / %d", getDisplayHp(), getMaxHp());
+	//D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 100);
+	//swprintf_s(str, L"Get Damage : %d", _damage);
+	//D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 120);
+	//
+	//if (_isIdle)
+	//{
+	//	swprintf_s(str, L" IDLE ");
+	//	D2DMANAGER->drawText(str, CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 140);
+	//}
+	//
+	//D2DMANAGER->drawText(_state.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 160);
+	//
+	//
+	//for (int ii = 0; ii < POKEMON_SKILL_MAX_COUNT; ++ii)
+	//{
+	//	pokemonSkillInfo info = *_skills[ii].getSkillInfomation();
+	//	wstring s;
+	//	s = string2wstring(info.getSkillName());
+	//	s.append(to_wstring(_skills[ii].getCurrentPP()));
+	//	s.append(L" / ");
+	//	s.append(to_wstring(_skills[ii].getMaxPP()));
+	//	D2DMANAGER->drawText(s.c_str(), CAMERA->getPosX() + _destX - 150, CAMERA->getPosY() + _destY + 200 + ii * 20);
+	//}
 
 }
 

@@ -35,12 +35,12 @@ void timeManager::update(float lockFPS)
 
 void timeManager::render()
 {
-	
+	WCHAR str[128];
 
 	//디버그 상태면
 #ifdef _DEBUG
 	{
-		WCHAR str[128];
+		
 
 		swprintf_s(str, L"framePerSec(FPS) : %d", _timer->getFrameRate(), (float)(MAPSIZEX - WINSIZEX));
 		D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY());
@@ -52,8 +52,9 @@ void timeManager::render()
 #else
 	//릴리즈 상태면
 	{
-		wsprintf(str, "framePerSec(FPS) : %d", _timer->getFrameRate());
-		TextOut(hdc, 0, 0, str, strlen(str));
+
+		swprintf_s(str, L"framePerSec(FPS) : %d", _timer->getFrameRate(), (float)(MAPSIZEX - WINSIZEX));
+		D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY());
 	}
 #endif
 }

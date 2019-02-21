@@ -23,6 +23,7 @@ HRESULT player::init()
 	_posY = (float)_tileY * 64 + 32;
 	_isMan = true;
 	_state = PS_IDLE_DOWN;
+	_start = false;
 	_playTime = 0;
 	_isRight = false;
 	_posZ = 0;
@@ -42,7 +43,7 @@ HRESULT player::init()
 		_key = "playerM";
 	else
 		_key = "playerF";
-
+	_boss = false;
 
 	aniSetUp();
 
@@ -60,24 +61,43 @@ void player::release()
 
 void player::update()
 {
+	if (_start && _count < 500)
+	{
+		_count++;
+		if (_scale > 0)
+		{
+			_scale -= 0.005f;
+		}
+	}
+	if (_count > 150)
+	{
+		_count = 0;
+		_start = false;
+		if (_boss)
+		{
+			_boss = false;
+			SCENEMANAGER->changeScene("battleScene2");
+		}
+		else
+		{
+			SCENEMANAGER->changeScene("battleScene");
+
+		}
+	}
+	
 	if (UIMANAGER->getUiUse()) return;
 	_playTime += TIMEMANAGER->getElapsedTime();
 	KEYANIMANAGER->update(_key);
-	keyUpdate();
 	stateUpdate();
+	if (_count > 1) return;
+	keyUpdate();
 	EFFECTMANAGER->update();
+	
 }
 
 void player::render()
 {
-	for (int i = 0; i < 10; i++)
-	{
-		for (int j = 0; j < 15; j++)
-		{
-			D2D_RECT_F tile = { j * 64, i * 64, j * 64 + 64, i * 64 + 64 };
-			D2DMANAGER->drawRectangle(tile);
-		}
-	}
+
 
 
 	if (_state != PS_JUMP_DOWN || _state != PS_JUMP_RIGHT || _state != PS_JUMP_LEFT)
@@ -89,7 +109,7 @@ void player::render()
 	}
 
 
-
+	/*
 	WCHAR str[128];
 	int min =  ((int)_playTime * 10) % 3600 / 60;
 	int hour = ((int)_playTime * 10) / 3600;
@@ -156,6 +176,7 @@ void player::render()
 	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 75 + CAMERA->getPosY());
 	swprintf_s(str, L"Z : %.1f", _posZ);
 	D2DMANAGER->drawText(str, 700 + CAMERA->getPosX(), 90 + CAMERA->getPosY());
+	*/
 }
 
 void player::shadowRender()
@@ -168,6 +189,24 @@ void player::shadowRender()
 		else
 			IMAGEMANAGER->findImage(_key)->aniRender(_posX - 75, _posY - 68 + _posZ, _playerAni);
 	}
+}
+
+void player::rectSet()
+{
+	_rc[0] = { CAMERA->getPosX() + -500, CAMERA->getPosY() + -WINSIZEY,CAMERA->getPosX() +  200,  CAMERA->getPosY() +WINSIZEY * 2 };
+	_rc[1] = { CAMERA->getPosX() + -500, CAMERA->getPosY() + -WINSIZEY,CAMERA->getPosX() +  200,  CAMERA->getPosY() +WINSIZEY * 2 };
+	_rc[2] = { CAMERA->getPosX() + 600,  CAMERA->getPosY() + -WINSIZEY, CAMERA->getPosX() + 1200, CAMERA->getPosY() +WINSIZEY * 2 };
+	_rc[3] = { CAMERA->getPosX() + 600,  CAMERA->getPosY() + -WINSIZEY, CAMERA->getPosX() + 1200, CAMERA->getPosY() +WINSIZEY * 2 };
+
+	_rc[4] = { CAMERA->getPosX() + -200, CAMERA->getPosY() + -300,		CAMERA->getPosX() + WINSIZEX + 200,	CAMERA->getPosY() +	 200 };
+	_rc[5] = { CAMERA->getPosX() + -300, CAMERA->getPosY() + -WINSIZEY, CAMERA->getPosX() + 300,			CAMERA->getPosY() +	WINSIZEY * 2 };
+	_rc[6] = { CAMERA->getPosX() + -200, CAMERA->getPosY() + 400,		CAMERA->getPosX() + WINSIZEX + 200,	CAMERA->getPosY() +	900 };
+	_rc[7] = { CAMERA->getPosX() + 500,  CAMERA->getPosY() + -WINSIZEY,	CAMERA->getPosX() + 1200,			CAMERA->getPosY() +	 WINSIZEY * 2 };
+
+	_rc[8] = { CAMERA->getPosX(),  CAMERA->getPosY(), WINSIZEX + CAMERA->getPosX(), WINSIZEY + CAMERA->getPosY() };
+
+	_rc2 = { CAMERA->getPosX(),  CAMERA->getPosY(), WINSIZEX + CAMERA->getPosX(), WINSIZEY + CAMERA->getPosY() };
+
 }
 
 void player::aniSetUp()
@@ -235,6 +274,23 @@ void player::aniSetUp()
 
 void player::dataLoad()
 {
+
+}
+
+void player::rectRender()
+{
+	if (!_start) return;
+
+	for (int i = 0; i < 9; i++)
+	{
+		if (_count > i * 10 + 10)
+		{
+			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Rotation(_angle[i], Point2F(400, 300)));
+			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _rc[i]);
+			D2DMANAGER->_renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
+		}
+	}
+	
 
 }
 
@@ -331,6 +387,7 @@ void player::stateUpdate()
 							}
 							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_ITEM;
 							_map->getTile(_tileX - 1, _tileY)->attr ^= ATTR_UNMOVE;
+							UIMANAGER->uiDataSetting();
 							break;
 						}
 					}
@@ -371,6 +428,19 @@ void player::stateUpdate()
 				if (KEYMANAGER->isOnceKeyDown('Z'))
 				{
 					//보스씬으로 넘어가자
+					_start = true;
+					_count = 0;
+					_angle[0] = RND->getFromIntTo(30, 60);
+					_angle[1] = -RND->getFromIntTo(30, 60);
+					_angle[2] = -RND->getFromIntTo(30, 60);
+					_angle[3] = RND->getFromIntTo(30, 60);
+					_angle[4] = RND->getFromIntTo(-15, 15);
+					_angle[5] = RND->getFromIntTo(-15, 15);
+					_angle[6] = RND->getFromIntTo(-15, 15);
+					_angle[7] = RND->getFromIntTo(-15, 15);
+					_angle[8] = 0;
+					_scale = 1;
+					_boss = true;
 				}
 			}
 		break;
@@ -388,6 +458,7 @@ void player::stateUpdate()
 							if (iter == _mItemList.end())
 							{
 								_mItemList.insert(make_pair(_map->getFieldItems()[i].itemType, 1));
+								
 								_map->erase(i);
 							}
 							else
@@ -396,6 +467,7 @@ void player::stateUpdate()
 							}
 							_map->getTile(_tileX, _tileY - 1)->attr ^= ATTR_ITEM;
 							_map->getTile(_tileX, _tileY - 1)->attr ^= ATTR_UNMOVE;
+							UIMANAGER->uiDataSetting();
 							break;
 						}
 
@@ -435,6 +507,19 @@ void player::stateUpdate()
 				if (KEYMANAGER->isOnceKeyDown('Z'))
 				{
 					//보스씬으로 넘어가자
+					_start = true;
+					_count = 0;
+					_angle[0] = RND->getFromIntTo(30, 60);
+					_angle[1] = -RND->getFromIntTo(30, 60);
+					_angle[2] = -RND->getFromIntTo(30, 60);
+					_angle[3] = RND->getFromIntTo(30, 60);
+					_angle[4] = RND->getFromIntTo(-15, 15);
+					_angle[5] = RND->getFromIntTo(-15, 15);
+					_angle[6] = RND->getFromIntTo(-15, 15);
+					_angle[7] = RND->getFromIntTo(-15, 15);
+					_angle[8] = 0;
+					_scale = 1;
+					_boss = true;
 				}
 			}
 		break;
@@ -460,6 +545,7 @@ void player::stateUpdate()
 							}
 							_map->getTile(_tileX + 1, _tileY)->attr ^= ATTR_ITEM;
 							_map->getTile(_tileX + 1, _tileY)->attr ^= ATTR_UNMOVE;
+							UIMANAGER->uiDataSetting();
 							break;
 						}
 					}
@@ -497,6 +583,19 @@ void player::stateUpdate()
 				if (KEYMANAGER->isOnceKeyDown('Z'))
 				{
 					//보스씬으로 넘어가자
+					_start = true;
+					_count = 0;
+					_angle[0] = RND->getFromIntTo(30, 60);
+					_angle[1] = -RND->getFromIntTo(30, 60);
+					_angle[2] = -RND->getFromIntTo(30, 60);
+					_angle[3] = RND->getFromIntTo(30, 60);
+					_angle[4] = RND->getFromIntTo(-15, 15);
+					_angle[5] = RND->getFromIntTo(-15, 15);
+					_angle[6] = RND->getFromIntTo(-15, 15);
+					_angle[7] = RND->getFromIntTo(-15, 15);
+					_angle[8] = 0;
+					_scale = 1;
+					_boss = true;
 				}
 			}
 		break;
@@ -522,6 +621,7 @@ void player::stateUpdate()
 							}
 							_map->getTile(_tileX, _tileY + 1)->attr ^= ATTR_ITEM;
 							_map->getTile(_tileX, _tileY + 1)->attr ^= ATTR_UNMOVE;
+							UIMANAGER->uiDataSetting();
 							break;
 						}
 					}
@@ -559,6 +659,19 @@ void player::stateUpdate()
 				if (KEYMANAGER->isOnceKeyDown('Z'))
 				{
 					//보스씬으로 넘어가자
+					_start = true;
+					_count = 0;
+					_angle[0] = RND->getFromIntTo(30, 60);
+					_angle[1] = -RND->getFromIntTo(30, 60);
+					_angle[2] = -RND->getFromIntTo(30, 60);
+					_angle[3] = RND->getFromIntTo(30, 60);
+					_angle[4] = RND->getFromIntTo(-15, 15);
+					_angle[5] = RND->getFromIntTo(-15, 15);
+					_angle[6] = RND->getFromIntTo(-15, 15);
+					_angle[7] = RND->getFromIntTo(-15, 15);
+					_angle[8] = 0;
+					_scale = 1;
+					_boss = true;
 				}
 			}
 		break;
@@ -828,13 +941,30 @@ void player::appearTileCheck()
 		{
 			EFFECTMANAGER->play("grassEffect", _posX, _posY + 5);
 		}
-		bool meet = RND->getInt(10) < 0 ? true : false;
+		int num = RND->getInt(10);
+		bool meet = num < 3 ? true : false;
+
+		
+		
 		if (meet)
 		{
 			pokemon* enemy = new pokemon;
 			enemy->init(NULL, _map->getPokemon(), _map->getLevel(), false);
 			PLAYERDATA->setPokemon(enemy);
-			SCENEMANAGER->changeScene("battleScene");
+			//SCENEMANAGER->changeScene("battleScene");
+			_start = true;
+			_count = 0;
+			_angle[0] = RND->getFromIntTo(30, 60);
+			_angle[1] = -RND->getFromIntTo(30, 60);
+			_angle[2] = -RND->getFromIntTo(30, 60);
+			_angle[3] = RND->getFromIntTo(30, 60);
+			_angle[4] = RND->getFromIntTo(-15, 15);
+			_angle[5] = RND->getFromIntTo(-15, 15);
+			_angle[6] = RND->getFromIntTo(-15, 15);
+			_angle[7] = RND->getFromIntTo(-15, 15);
+			_angle[8] = 0;
+			_scale = 1;
+			rectSet();
 		}
 	}
 	
