@@ -87,39 +87,31 @@ HRESULT startScene::init()
 	IMAGEMANAGER->addFrameImage("nidrunFrame", L"image/startSceneImg/nidrunFrame.png", 1350, 270, 5, 1);
 	IMAGEMANAGER->addImage("attack", L"image/startSceneImg/attackEffect.png", 88, 304);
 	IMAGEMANAGER->addImage("grass", L"image/startSceneImg/zOderGrass.png", 240, 104);
-	
+
 	//시간이 없어서 그냥 스크린샷으로 대체함
 	IMAGEMANAGER->addImage("tempStartImg3", L"image/tempStartImg3.png", 960, 640);
 
-
+	_battleStartTime = 0.f;
+	_curTime = 0.f;
 	_frameX = 0;
 	_nidrunFrame = 0;
 	_frameCount = 0;
+	_grassFrameX = 0;
 
 	_moveUp = 225.f;
-	_moveDown = 95.f;
+	_moveDown = 106.f;
 
 	_loopRange = { 0, 0, 960, 640 };
 	_loopX = 0;
-	_loopY = 0;
-	
+
 	_moveWidth = 0.f;
 	_phantomPosX = WINSIZEX - 400;
 	_phantomPosY = 130;
 	_nidrunPosX = 50;
 	_nidrunPosY = 240;
 
-	_zoomImgLeft = 0.f;
-	_zoomImgTop = 0.f;
-
-	_zoomImgWidthSize = 0.f;
-	_zoomImgHeightSize = 0.f;
-
-	_isPhantomAtk = false;
-	_isNidrunAtk = false;
-	_frameInd = 0;
-
-
+	_jumpPower = 40.f;
+	_gravity = 6.f;
 
 	return S_OK;
 }
@@ -130,7 +122,7 @@ void startScene::release()
 
 void startScene::update()
 {
-	_gameTime += TIMEMANAGER->getElapsedTime();
+	_gameTime = TIMEMANAGER->getWorldTime();
 	if (_gameTime < 2.f)
 		return;
 
@@ -145,6 +137,7 @@ void startScene::update()
 	//뾰로롱 부분
 	if (_idx == 0)
 	{
+		_curTime += TIMEMANAGER->getElapsedTime();
 		_openSpeed += TIMEMANAGER->getElapsedTime() * OPEN_SPEED;
 
 		_starMoveWidthSpeed += TIMEMANAGER->getElapsedTime() * MOVE_WIDTH_SPEED;
@@ -189,114 +182,146 @@ void startScene::update()
 			}
 		}
 	}
+
 	//팬텀 vs 니드런
 	if (_idx == 1)
 	{
+		_curTime += TIMEMANAGER->getElapsedTime();
+		++_frameCount;
+		if (_frameCount % 5 == 0)
+		{
+			_grassFrameX++;
+			if (_grassFrameX >= 3)
+			{
+				_grassFrameX = 0;
+			}
+		}
 		//까만색으로 삐져나가는 포켓몬 가리기 위해서 까만 렉트 깔아줌
 		_topRect.bottom = 130;
 		_bottomRect.top = WINSIZEY - 130;
-	
+		//루프
+		if (_curTime >= 2 && _curTime < 3.5)
+		{
+			_loopX += 3;
+		}
+
 		//주황색 배경
-		_moveUp -=  TIMEMANAGER->getElapsedTime() * NIDRUN_MOVE_SPEED;
-		_moveDown += TIMEMANAGER->getElapsedTime() * NIDRUN_MOVE_SPEED;
-		
-		_ground = { 0, 0, 960, 640 };
-		_loopX += 3;
-		//++_loopY;
-		++_frameCount;
-		//팬텀 아이들 프레임
-		if ( _frameCount % 5== 0)
+		if (_curTime >= 3.5 && _curTime < 4.7)
 		{
-			_frameX++;
-			if (_frameX >= 2)
-			{
-				_frameX = 0;
-			}
+			_ground = { 0, 0, 960, 640 };
+			_moveUp -= TIMEMANAGER->getElapsedTime() * NIDRUN_MOVE_SPEED;
+			_moveDown += TIMEMANAGER->getElapsedTime() * NIDRUN_MOVE_SPEED;
 		}
-		//줌인 하는 부분
-		_zoomImgWidthSize = IMAGEMANAGER->findImage("background")->GetWidth();
-		_zoomImgHeightSize = IMAGEMANAGER->findImage("background")->GetHeight();
-		//줌일하고싶다고오오오....//todo
-		if (_frameCount > 80 && _frameCount < 90)
+
+		//프레임이 바뀔 간격을 지정하기 위한 변수
+		if (_curTime >= 4.7 && _curTime < 11)
 		{
-			_zoomIn = TIMEMANAGER->getElapsedTime() * ZOOM_IN;
-			_zoomImgLeft -= _zoomIn;
-			_zoomImgTop -= _zoomIn;
-			//todo
-			_zoomImgWidthSize += _zoomIn;
-			_zoomImgHeightSize += _zoomIn;
-		}
-		//두마리 대전이 시작되는 시간 : _frameCount = 200
-		else if (_frameCount >= 200 && _frameCount < 280)
-		{
-			//각 포켓몬이 양끝에서 자기위치로 이동함
-			_moveWidth = TIMEMANAGER->getElapsedTime() * POKEMON_MATCH_SPEED;
-			if (_phantomPosX <= 40)
+			_loopX += 3;
+
+			if (_frameCount % 5 == 0)
 			{
-				//위치로 오면 스탑!
-				_moveWidth = 0;
-			}
-			//위치로 이동
-			_phantomPosX -= _moveWidth;
-			_nidrunPosX += _moveWidth;
-			//조금 대기하다가 팬텀의 공격 시작
-			if (_frameCount >= 260)
-			{
-				_phantomPosX += 5;
-				if (_phantomPosX <= 150)
-				{
-					_phantomPosX -= 5;
-				}
-				//이때 팔들고!
-				if(_frameCount >= 261  && _frameCount < 270)
-				{	
-					_frameX = 2;
-					_isPhantomAtk = true;
-				}
-				//팔 내리고!!
-				else if (_frameCount >= 270)
-				{
-					_frameX = 3;
-					//이때 니드런이 피해여
-					_nidrunFrame = 1;
-				}
-				//공격 끝나면 아이들로 되돌리고!
-				if (_frameX == 3)
+				//팬텀 아이들 프레임
+				_frameX++;
+				if (_frameX >= 2)
 				{
 					_frameX = 0;
 				}
-				
 			}
-		}
-		else if (_frameCount >= 280)
-		{
-			_isPhantomAtk = false;
-			int jumpRange = 20;
 
-			_nidrunPosY -= 5;
-			_nidrunPosX += 5; 
-			jumpRange -= 5;
-			if (_nidrunPosY <= 150)
+			//두마리 대전이 시작되는 시간
+			if (_curTime >= 4.7 && _curTime < 9)
 			{
-				//_nidrunPosY += 5;
-				if (_nidrunPosY >= 240)
+				//각 포켓몬이 양끝에서 자기위치로 이동함
+				_phantomPosX -= _moveWidth;
+				_nidrunPosX += _moveWidth;
+				_moveWidth = TIMEMANAGER->getElapsedTime() * POKEMON_MATCH_SPEED;
+				if (_phantomPosX <= 40)
 				{
-					_nidrunPosY = 240;
-					
+					//위치로 오면 스탑!
+					_moveWidth = 0;
+				}
+				//위치로 이동
+				//조금 대기하다가 팬텀의 공격 시작
+				if (_curTime >= 6)
+				{
+					//이때 팔들고!
+					if (_curTime < 6.5)
+					{
+						_frameX = 2;
+					}
+					//팔 내리고!!
+					if (_curTime >= 6.6 && _curTime < 7.2)
+					{
+						_frameX = 3;
+						//이때 니드런이 피해여
+						_nidrunFrame = 1;
+						if (_curTime >= 7.0)
+						{
+							_nidrunFrame = 3;
+						}
+						_nidrunPosX += 5;
+						_jumpPower -= _gravity;
+						_nidrunPosY -= _jumpPower;
+						_nidrunFrame = 3;
+						//땅에 닿으면
+						if (_nidrunPosY >= 200)
+						{
+							_nidrunPosY = 200;
+							_nidrunFrame = 1;
+						}
+					}
+					//공격 끝나면 아이들로 되돌리고!
+					if (_curTime >= 7.0 && _curTime < 9)
+					{
+						_frameX = 0;
+					}
 				}
 			}
-			
-			_nidrunFrame = 3;
 		}
+		if (_curTime >= 9 && _curTime < 12)
+		{
+			_jumpPower -= _gravity;
+			_nidrunPosY -= _jumpPower;
+			_nidrunFrame = 3;
+			//땅에 닿으면
+			_nidrunPosX += 5;
+			if (_nidrunPosY >= 200)
+			{
+				_nidrunPosY = 200;
+				_nidrunFrame = 1;
+				//내뱉는 숨
+
+			}
+
+		}
+		else if (_curTime >= 12 && _battleStartTime < 16)
+		{
+			_nidrunFrame = 0;
+			if (_frameCount % 20 == 13)
+			{
+				_nidrunFrame = 1;
+			}
+			else if (_frameCount % 20 == 0)
+				_nidrunFrame = 0;
+
+		}
+	}
+
+	//리자몽
+	if (_idx == 2)
+	{
+
+
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('Z') || !SOUNDMANAGER->isPlaySound(_soundKeys[_idx]))
 	{
 		SOUNDMANAGER->stop(_soundKeys[_idx]);
 		++_idx;
+		_curTime = 0.f;
 		if (3 <= _idx)
 		{
-			SCENEMANAGER->changeScene("mapTestScene");
+			SCENEMANAGER->changeScene("loadScene");
 			return;
 		}
 		SOUNDMANAGER->play(_soundKeys[_idx]);
@@ -352,66 +377,62 @@ void startScene::render()
 				D2DMANAGER->fillRectangle(RGB(0, 0, 0), _bottomRect);
 			}
 		}
-		//팬텀 vs 니드럼
+		//팬텀 vs 니드런
 		else if (_idx == 1)
 		{
-			if (_frameCount <= 80)
+			if (_curTime <= 4)
 			{
 				//움직이는 풀
 				IMAGEMANAGER->findImage("background")->render(1);
-				IMAGEMANAGER->findImage("introForest")->frameRender(0, 0, _frameX, 0);
+				IMAGEMANAGER->findImage("introForest")->frameRender(0, 0, _grassFrameX, 0);
 			}
-			else if (_frameCount > 80 && _frameCount < 90)
-			{
-				//줌 땡기는 부분
+			//else if (_curTime < 4)
+			//{
+			//	//줌 땡기는 부분
 				//todo
 				//변형 크기 출력 - 그려줄 x좌표, y좌표, 출력할 너비, 출력할 높이, 투명도
 				//void render(float destX, float destY, int showWidth, int showHeight, float alpha = 1.0f);
 				//IMAGEMANAGER->findImage("background")->render(_zoomImgLeft, _zoomImgTop,
 				//											  _zoomImgWidthSize, _zoomImgHeightSize);
-				IMAGEMANAGER->findImage("background")->render(0, 0,
-															  WINSIZEX, WINSIZEY);
-				IMAGEMANAGER->findImage("introForest")->frameRender(0, 0, _frameX, 0);
-			}
+			//	IMAGEMANAGER->findImage("background")->render(0, 0,
+			//												  WINSIZEX, WINSIZEY);
+			//	IMAGEMANAGER->findImage("introForest")->frameRender(0, 0, _frameX, 0);
+			//}
+
 			//팬텀과 니드런이 조우한 장면
-			else if (_frameCount >= 90 && _frameCount < 135)
+			if (_curTime >= 2 && _curTime < 3.5)
 			{
 				//IMAGEMANAGER->findImage("meeting")->render(1);
-				IMAGEMANAGER->findImage("meeting")->loopRender(_loopRange, _loopX, _loopY);
+				IMAGEMANAGER->findImage("meeting")->loopRender(_loopRange, _loopX, 0);
 
-				
+
 				IMAGEMANAGER->findImage("phantom1")->render(130, 130);
 				IMAGEMANAGER->findImage("nidrun1")->render(500, 200);
-				
+
 				IMAGEMANAGER->findImage("startBattleGrass")->loopRender(_loopRange, _loopX, 0);
-					//if(IMAGEMANAGER->findImage("startBattleGrass"))
-				
+				//if(IMAGEMANAGER->findImage("startBattleGrass"))
+
 			}
 			//주황색배경에서 서로 째려보기
-			else if (_frameCount >= 135 && _frameCount <200)
+			else if (_curTime >= 3.5 && _curTime < 4.7)
 			{
 				D2DMANAGER->fillRectangle(RGB(0, 144, 248), _ground);
-				IMAGEMANAGER->findImage("nidrun2")->render(WINSIZEX - 440, _moveDown );
+				IMAGEMANAGER->findImage("nidrun2")->render(WINSIZEX - 440, _moveDown);
 				IMAGEMANAGER->findImage("phantom2")->render(20, _moveUp);
 			}
 			//서로 마주보고 서서 공격 기다림
-			else if(_frameCount >= 200 < _frameCount < 400)
+			if (_curTime >= 4.7 && _curTime < 16)
 			{
-				IMAGEMANAGER->findImage("battleBackground2nd")->loopRender(_loopRange, _loopX, _loopY);
+				IMAGEMANAGER->findImage("battleBackground2nd")->loopRender(_loopRange, _loopX, 0);
 				IMAGEMANAGER->findImage("nidrunFrame")->frameRender(_nidrunPosX, _nidrunPosY, _nidrunFrame, 0);
 				IMAGEMANAGER->findImage("phantomIdle")->frameRender(_phantomPosX, _phantomPosY, _frameX, 0);
 				IMAGEMANAGER->findImage("grass")->render(WINSIZEX - _loopX, 410);
-				if (_isPhantomAtk && _frameCount >= 270)
+				if (_curTime >= 6.6 && _curTime < 7.2)
 				{
 					IMAGEMANAGER->findImage("attack")->render(400, 190);
 
 				}
-
 			}
-			//else if (_frameCount >= 400)
-			//{
-			//	
-			//}
 
 			//화면 위, 아래 까만 렉트
 			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _topRect);

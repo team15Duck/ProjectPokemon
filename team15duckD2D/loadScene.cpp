@@ -13,15 +13,20 @@ loadScene::~loadScene()
 
 HRESULT loadScene::init()
 {
-	MENUMANAGER->addFrame("loadFrame", 10, 1, 29, 15);
-	MENUMANAGER->addFrame("textFrame", 10, 481, 29, 5);
+	IMAGEMANAGER->addImage("loadBackground", L"image/load.png", 960, 640);
+	MENUMANAGER->addFrame("loadFrame", 1, 1, 30, 14);
+	MENUMANAGER->addFrame("textFrame", 1, 481, 30, 5);
+	MENUMANAGER->addFrame("newGameFrame", 640, 320, 10, 4);
 	_select = 0;
 	_startPointX = 64;
-	_startPointY = 64;
+	_startPointY = 60;
 
 	_pointPosX = _startPointX;
 	_pointPosY = _startPointY;
 
+	_storePosX = _storePosY = 0;
+
+	_isSaveLocation = true;
 	_isData = false;
 
 	return S_OK;
@@ -33,70 +38,122 @@ void loadScene::release()
 
 void loadScene::update()
 {
+	SCRIPTMANAGER->update();
+
 	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 	{
 		_select++;
-		_pointPosY += 64;
+		_pointPosY += _startPointY;
 		if (_select >= 6)
 		{
 			_select = 0;
 			_pointPosY = _startPointY;
 		}
+		//화살표가 새로하기 버튼 쪽에 있으면 위로 못가게 해야죱
+		if (_pointPosX >= 600)
+		{
+			_pointPosY = _startPointY * 6;
+			return;
+		}
 	}
 	if (KEYMANAGER->isOnceKeyDown(VK_UP))
 	{
 		_select--;
-		_pointPosY -= 64;
+		_pointPosY -= _startPointY;
 		if (_select < 0)
 		{
 			_select = 5;
 			_pointPosY = _startPointY  * 6;
 		}
+		//화살표가 새로하기 버튼 쪽에 있으면 위로 못가게 해야죱
+		if (_pointPosX >= 600)
+		{
+			_pointPosY = _startPointY * 6;
+			return;
+
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		//save 쪽에 화살표가 있으면 새로하기쪽으로 옮겨갑시다
+		if (_pointPosX >= 0 && _pointPosX < 600)
+		{
+			_pointPosX = 688;
+			_pointPosY = _startPointY * 6;
+		}
+		//새로하기 쪽에 화살표가 있으면 save쪽으로 옮겨갑시다
+		else if (_pointPosX >= 600)
+		{
+			_pointPosX = _startPointX;
+			_pointPosY = _startPointY * 6;
+		}
+		//save쪽을 돌아갔을 때를 위해서 _select 번호는 새로하기 의 Y축 좌표와 일치하는 번호로 바꿔줘야 해영
+		//(그래야 새로하기에서 save로 돌아왔을 때 프레임 밖으로 나가지 않아욥)
+		_select = 5;
+
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		//save 쪽에 화살표가 있으면 새로하기쪽으로 옮겨갑시다
+		if (_pointPosX >= 0 && _pointPosX < 600)
+		{
+			_pointPosX = 688;
+			_pointPosY = _startPointY * 6;
+		}
+		//새로하기 쪽에 화살표가 있으면 save쪽으로 옮겨갑시다
+		else if (_pointPosX >= 600)
+		{
+			_pointPosX = _startPointX;
+			_pointPosY = _startPointY * 6;
+		}
+		_select = 5;
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
+		//나중에 로드 할수 있게 되면 주석을 풀어보아요
 		//loadPlayData();
 	}
 }
 
 void loadScene::render()
 {
+	IMAGEMANAGER->render("loadBackground");
 	MENUMANAGER->findMenuFrame("loadFrame")->render();
-	IMAGEMANAGER->findImage("화살표")->render(_pointPosX, _pointPosY);
-	
-		wstring saveName;
-		saveName = L"save1 : ";
-		D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY, 30);
-		saveName = L"save2 : ";
-		D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (64 * 1),30);
-		saveName = L"save3 : ";											   
-		D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (64 * 2),30);
-		saveName = L"save4 : ";											   
-		D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (64 * 3),30);
-		saveName = L"save5 : ";											   
-		D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (64 * 4),30);
-		saveName = L"save6 : ";											   
-		D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (64 * 5),30);
-		
 
 
-	
-
+	wstring saveName;
+	saveName = L"save1 : ";
+	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY, 30);
+	saveName = L"save2 : ";
+	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 1),30);
+	saveName = L"save3 : ";											   
+	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 2),30);
+	saveName = L"save4 : ";											   
+	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 3),30);
+	saveName = L"save5 : ";											   
+	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 4),30);
+	saveName = L"save6 : ";											   
+	D2DMANAGER->drawText(saveName.c_str(), 110, _startPointY + (_startPointY * 5),30);
 
 
 	if (!_isData)
 	{
 		MENUMANAGER->findMenuFrame("textFrame")->render();
-		//IMAGEMANAGER->findImage("battleScript")->render(0, 640 - 192);
+		
 		wstring str;
 		str = L"저장된 데이터가 없습니다.";
-		D2DMANAGER->drawText(str.c_str(), 64, 525, 30);
-
-
-
-		
+		SCRIPTMANAGER->pushScript(str);
+		SCRIPTMANAGER->render();
+		//D2DMANAGER->drawText(str.c_str(), 64, 525, 30);
 	}
+	MENUMANAGER->findMenuFrame("newGameFrame")->render();
+	IMAGEMANAGER->findImage("화살표")->render(_pointPosX, _pointPosY);
+
+	saveName = L"새로하기";
+	D2DMANAGER->drawText(saveName.c_str(), 736, _startPointY + (_startPointY * 5) + 10, 30);
+
 
 }
 
