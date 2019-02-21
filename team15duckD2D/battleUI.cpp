@@ -400,12 +400,13 @@ void battleUI::render()
 					IMAGEMANAGER->findImage("보유중포켓몬")->render(0 + CAMERA->getPosX(), 0 + CAMERA->getPosY());
 
 					int j = 1;
+					bool selectOn = false;
 					for (int i = 0; i < 6; ++i)
 					{
 						// 메인 포켓몬
 						if (i == _currentPokemonNum && i < PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
 						{
-							if (_bagPokemonSelectNum == SELECT_MAIN_POKEMON)
+							if (_bagPokemonSelectNum == 0)
 							{
 								IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 2);
 							}
@@ -450,7 +451,7 @@ void battleUI::render()
 						{
 							if (i < PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
 							{
-								if (_bagPokemonSelectNum == i)
+								if (_bagPokemonSelectNum > 0 && _bagPokemonSelectNum == j)
 								{
 									// 하늘색
 									IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((j - 1) * 90) + CAMERA->getPosY(), 1, 0);
@@ -536,7 +537,7 @@ void battleUI::render()
 					// 메인 포켓몬
 					if (i == _currentPokemonNum && i < PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
 					{
-						if (_ppselect == SELECT_MAIN_POKEMON)
+						if (_ppselect == 0)
 						{
 							IMAGEMANAGER->findImage("메인포켓몬")->frameRender(80 + CAMERA->getPosX(), 50 + CAMERA->getPosY(), 0, 2);
 						}
@@ -581,7 +582,7 @@ void battleUI::render()
 					{
 						if (i < PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
 						{
-							if (_ppselect == i)
+							if (_ppselect > 0 && _ppselect == j)
 							{
 								// 하늘색
 								IMAGEMANAGER->findImage("서브포켓몬2")->frameRender(450 + CAMERA->getPosX(), 50 + ((j - 1) * 90) + CAMERA->getPosY(), 1, 0);

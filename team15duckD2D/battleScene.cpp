@@ -514,7 +514,7 @@ void battleScene::keyControl()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
 			{
-				if (_battleUI->getPPSelect() == PLAYERDATA->getPlayer()->getCurrentPokemonCnt())
+				if (_battleUI->getPPSelect() == PLAYERDATA->getPlayer()->getCurrentPokemonCnt() - 1)
 				{
 					_battleUI->setPPSelect(SELECT_MAIN_POKEMON);
 				}
