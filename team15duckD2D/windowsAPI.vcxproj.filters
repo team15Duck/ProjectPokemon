@@ -196,6 +196,9 @@
     <Filter Include="PlayGround\ui\hpBar">
       <UniqueIdentifier>{9f6a3cb0-d284-4408-91eb-91e1b6ce1b55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PlayGround\endingScene">
+      <UniqueIdentifier>{de29126b-a1d4-432f-87c0-a66e2e812475}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -471,6 +474,9 @@
     <ClInclude Include="trainerNpc.h">
       <Filter>PlayGround\npc</Filter>
     </ClInclude>
+    <ClInclude Include="endingScene.h">
+      <Filter>PlayGround\endingScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -724,6 +730,9 @@
     </ClCompile>
     <ClCompile Include="trainerNpc.cpp">
       <Filter>PlayGround\npc</Filter>
+    </ClCompile>
+    <ClCompile Include="endingScene.cpp">
+      <Filter>PlayGround\endingScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

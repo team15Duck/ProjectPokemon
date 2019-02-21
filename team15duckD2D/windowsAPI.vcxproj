@@ -165,6 +165,7 @@
     <ClInclude Include="d2dManager.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
+    <ClInclude Include="endingScene.h" />
     <ClInclude Include="field1Scnee.h" />
     <ClInclude Include="fieldMap.h" />
     <ClInclude Include="fieldScene.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="d2dManager.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="endingScene.cpp" />
     <ClCompile Include="field1Scnee.cpp" />
     <ClCompile Include="fieldMap.cpp" />
     <ClCompile Include="fieldScene.cpp" />
