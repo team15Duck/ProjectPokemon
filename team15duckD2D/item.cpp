@@ -344,7 +344,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = CHESTO_BERRY_VALUE;
 			_buyPrice = CHESTO_BERRY_BUY_PRICE;
 			_sellPrice = CHESTO_BERRY_SELL_PRICE;
-			_itemInfo = "유루열매는 겉과 속이 모두 딱딱하고 떫지만 충분히 전부 먹을 수 있다. 먹으면 잠듦 상태를 낫게 한다.";
+			_itemInfo = "유루열매는 겉과 속이 모두 딱딱하고 떫지만 충분히 전부 먹을 수 있다. \n먹으면 잠듦 상태를 낫게 한다.";
 			_imgSize = { 72, 76 };
 			break;
 		}
@@ -354,7 +354,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = PECHA_BERRY_VALUE;
 			_buyPrice = PECHA_BERRY_BUY_PRICE;
 			_sellPrice = PECHA_BERRY_SELL_PRICE;
-			_itemInfo = "속에 빈 공간이 있으므로 먹을 수 있는 부분은 적지만 매우 달고 맛있다. 먹으면 독 상태를 낫게 한다.";
+			_itemInfo = "속에 빈 공간이 있으므로 먹을 수 있는 부분은 적지만 매우 달고 맛있다. \n먹으면 독 상태를 낫게 한다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -364,7 +364,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = RAWST_BERRY_VALUE;
 			_buyPrice = RAWST_BERRY_BUY_PRICE;
 			_sellPrice = RAWST_BERRY_SELL_PRICE;
-			_itemInfo = "다른 것보다 잎사귀가 길고 둥글게 말려 있는 것은 약간 쓴맛이 강하다. 먹으면 화상 상태를 낫게 한다.";
+			_itemInfo = "다른 것보다 잎사귀가 길고 둥글게 말려 있는 것은 약간 쓴맛이 강하다. \n먹으면 화상 상태를 낫게 한다.";
 			_imgSize = { 84, 80 };
 			break;
 		}
@@ -374,7 +374,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = ASPEAR_BERRY_VALUE;
 			_buyPrice = ASPEAR_BERRY_BUY_PRICE;
 			_sellPrice = ASPEAR_BERRY_SELL_PRICE;
-			_itemInfo = "겉의 껍질은 딱딱하지만 속에는 매우 즙이 많다. 먹으면 얼음 상태를 낫게 한다.";
+			_itemInfo = "겉의 껍질은 딱딱하지만 속에는 매우 즙이 많다.\n 먹으면 얼음 상태를 낫게 한다.";
 			_imgSize = { 80, 80 };
 			break;
 		}
@@ -384,7 +384,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = LEPPA_BERRY_VALUE;
 			_buyPrice = LEPPA_BERRY_BUY_PRICE;
 			_sellPrice = LEPPA_BERRY_SELL_PRICE;
-			_itemInfo = "버치 등과 비교하면 조금 성장이 늦다. 열매가 작은 것일수록 맛있다. 먹으면 PP를 10 회복한다.";
+			_itemInfo = "버치 등과 비교하면 조금 성장이 늦다. 열매가 작은 것일수록 맛있다.\n 먹으면 PP를 10 회복한다.";
 			_imgSize = { 88, 84 };
 			break;
 		}
@@ -394,7 +394,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = ORAN_BERRY_VALUE;
 			_buyPrice = ORAN_BERRY_BUY_PRICE;
 			_sellPrice = ORAN_BERRY_SELL_PRICE;
-			_itemInfo = "자연의 은혜가 하나되어 입 안에서 여러가지 맛이 펼치는 신기한 맛이다. 먹으면 체력을 10 회복한다.";
+			_itemInfo = "자연의 은혜가 하나되어 입 안에서 여러가지 맛이 펼치는 신기한 맛이다. \n먹으면 체력을 10 회복한다.";
 			_imgSize = { 76, 72 };
 			break;
 		}
@@ -404,7 +404,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = LUM_BERRY_VALUE;
 			_buyPrice = LUM_BERRY_BUY_PRICE;
 			_sellPrice = LUM_BERRY_SELL_PRICE;
-			_itemInfo = "포켓몬의 몸에 좋은 성분을 내부에 천천히 비축하므로 자라나기까지는 시간이 걸린다. 먹으면 모든 상태이상을 회복한다.";
+			_itemInfo = "포켓몬의 몸에 좋은 성분을 내부에 천천히 비축하므로 자라나기까지는 시간이 걸린다. \n먹으면 모든 상태이상을 회복한다.";
 			_imgSize = { 72, 68 };
 			break;
 		}
@@ -414,7 +414,7 @@ HRESULT item::init(ITEM_TYPE type)
 			_itemValue = SITRUS_BERRY_VALUE;
 			_buyPrice = SITRUS_BERRY_BUY_PRICE;
 			_sellPrice = SITRUS_BERRY_SELL_PRICE;
-			_itemInfo = "원래는 오랭열매와 똑같은 종류에서 갈라져 나왔다. 먹으면 체력을 30 회복한다.";
+			_itemInfo = "원래는 오랭열매와 똑같은 종류에서 갈라져 나왔다. \n먹으면 체력을 30 회복한다.";
 			_imgSize = { 72, 80 };
 			break;
 		}

@@ -103,7 +103,6 @@ void report::update()
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			PLAYERDATA->dataSave((playerDataBase::DATA)(_rsPosition + 1));
-			SCRIPTMANAGER->pushScript(L"저장되었습니다");
 		}
 
 		if (KEYMANAGER->isOnceKeyDown('X'))
@@ -124,8 +123,8 @@ void report::render()
 	D2DMANAGER->drawText(string2wstring(PLAYERDATA->getPlayer()->getName()).c_str(), 32 + CAMERA->getPosX(), 66 + CAMERA->getPosY(), 34);
 	swprintf_s(report, L"포켓몬도감 : ");
 	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 34);
-	D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getCurrentPokemonCnt()).c_str(), 80 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 34);
-	swprintf_s(report, L"플레이시간 : %d", _report.playTime);
+	D2DMANAGER->drawText(to_wstring(PLAYERDATA->getPlayer()->getCurrentPokemonCnt()).c_str(), 50 + CAMERA->getPosX(), 100 + CAMERA->getPosY(), 34);
+	swprintf_s(report, L"플레이시간 :");
 	D2DMANAGER->drawText(report, 32 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
 	D2DMANAGER->drawText(to_wstring((int)PLAYERDATA->getPlayer()->getPlayTime()).c_str(), 50 + CAMERA->getPosX(), 134 + CAMERA->getPosY(), 34);
 
@@ -191,9 +190,6 @@ void report::render()
 		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 470 + CAMERA->getPosY(), 40);
 		swprintf_s(report, L"6.");
 		D2DMANAGER->drawText(report, 55 + CAMERA->getPosX(), 530 + CAMERA->getPosY(), 40);
-
-		MENUMANAGER->findMenuFrame("확인창")->render();
-
 	}
 }
 
