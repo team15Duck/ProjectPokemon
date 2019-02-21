@@ -23,8 +23,13 @@ private:
 	//화살표의 현재 지점
 	float			_pointPosX;
 	float			_pointPosY;
+	//좌우 키 누르기 전에 save쪽에 있던 좌표를 저장해야해영
+	float			_storePosX;
+	float			_storePosY;
 
+	bool			_isSaveLocation;
 	bool			_isData;
+
 	
 
 public:
