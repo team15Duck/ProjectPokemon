@@ -75,13 +75,7 @@ private:
 	float				_jumpPower;			//니드런의 점프력
 	int					_nidrunFrame;		//니드런 frame번호
 
-	bool				_isPhantomAtk;		//팬텀이 공격함?
-	bool				_isNidrunAtk;		//니드런이 공격함?
 
-	//float				_zoomImgWidthSize;	
-	//float				_zoomImgHeightSize;
-	//float				_zoomImgLeft;		
-	//float				_zoomImgTop;
 
 public:
 	startScene();

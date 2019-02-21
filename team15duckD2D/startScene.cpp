@@ -113,16 +113,6 @@ HRESULT startScene::init()
 	_jumpPower = 40.f;
 	_gravity = 6.f;
 
-	_isPhantomAtk = false;
-	_isNidrunAtk = false;
-
-	//_zoomImgLeft = 0.f;
-	//_zoomImgTop = 0.f;
-	//_zoomImgWidthSize = 0.f;
-	//_zoomImgHeightSize = 0.f;
-
-
-
 	return S_OK;
 }
 
@@ -258,7 +248,6 @@ void startScene::update()
 					if (_curTime < 6.5)
 					{
 						_frameX = 2;
-						_isPhantomAtk = true;
 					}
 					//팔 내리고!!
 					if (_curTime >= 6.6 && _curTime < 7.2)
@@ -446,18 +435,12 @@ void startScene::render()
 			}
 
 			//화면 위, 아래 까만 렉트
-			D2DMANAGER->fillRectangle(RGB(255, 0, 0), _topRect);
-			D2DMANAGER->fillRectangle(RGB(255, 0, 0), _bottomRect);
+			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _topRect);
+			D2DMANAGER->fillRectangle(RGB(0, 0, 0), _bottomRect);
 		}
 		else if (_idx == 2)
 		{
 			IMAGEMANAGER->findImage("tempStartImg3")->render(1);
 		}
 	}
-
-	WCHAR str[128];
-
-	swprintf_s(str, L"_gameTime : %d", TIMEMANAGER->getWorldTime());
-	D2DMANAGER->drawText(str, CAMERA->getPosX(), CAMERA->getPosY() + 500, 20, RGB(255, 255, 255));
-
 }
